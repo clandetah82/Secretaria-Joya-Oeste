@@ -1013,6 +1013,354 @@ svg.leaflet-image-layer.leaflet-interactive path {
   body.ro .leaflet-draw{display:none!important}
   @media print{body.ro{display:none!important}}
 </style>
+<style>
+.mod-discursos{
+    --navy:#1F3864;
+    --navy-deep:#142948;
+    --bg:#EEF2F7;
+    --card:#FFFFFF;
+    --accent:#B08A3E;
+    --accent-soft:#F4E9D5;
+    --text:#22303F;
+    --text-muted:#647186;
+    --border:#DEE5EE;
+    --green:#3C7A5B;
+    --green-bg:#E4F2EA;
+    --red:#AA3B44;
+    --red-bg:#FBE9EA;
+    --radius:10px;
+    --shadow: 0 1px 2px rgba(20,41,72,.06), 0 4px 14px rgba(20,41,72,.06);
+  }
+.mod-discursos *{box-sizing:border-box;}
+.mod-discursos, .mod-discursos{margin:0;padding:0;}
+.mod-discursos{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:15px;
+    line-height:1.5;
+  }
+.mod-discursos h1, .mod-discursos h2, .mod-discursos h3, .mod-discursos .brand{font-family:"Lora",Georgia,serif;}
+.mod-discursos a{color:var(--navy);}
+.mod-discursos #app{min-height:100vh;display:flex;flex-direction:column;}
+.mod-discursos header.topbar{
+    background:linear-gradient(180deg,var(--navy) 0%,var(--navy-deep) 100%);
+    color:#fff;
+    padding:18px 26px 16px;
+    box-shadow:var(--shadow);
+  }
+.mod-discursos .topbar-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.mod-discursos .brand{font-size:22px;font-weight:600;letter-spacing:.2px;display:flex;align-items:center;gap:10px;}
+.mod-discursos .brand .mark{
+    width:34px;height:34px;border-radius:8px;background:var(--accent);
+    display:flex;align-items:center;justify-content:center;color:var(--navy-deep);
+    font-family:"Lora",serif;font-weight:700;font-size:17px;flex:none;
+  }
+.mod-discursos nav.mainnav{display:flex;gap:6px;flex-wrap:wrap;}
+.mod-discursos nav.mainnav button{
+    background:rgba(255,255,255,.08);
+    color:#fff;border:1px solid rgba(255,255,255,.16);
+    padding:9px 14px;border-radius:8px;font-size:13.5px;font-weight:500;
+    cursor:pointer;font-family:"Inter",sans-serif;transition:background .15s;
+    white-space:nowrap;
+  }
+.mod-discursos nav.mainnav button:hover{background:rgba(255,255,255,.18);}
+.mod-discursos nav.mainnav button.active{background:var(--accent);border-color:var(--accent);color:var(--navy-deep);font-weight:700;}
+.mod-discursos main{flex:1;max-width:1180px;margin:0 auto;padding:26px;width:100%;}
+.mod-discursos .view-title{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.mod-discursos .view-title h1{font-size:24px;margin:0;color:var(--navy-deep);}
+.mod-discursos .view-title .sub{color:var(--text-muted);font-size:13.5px;}
+.mod-discursos .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);}
+.mod-discursos .card + .card{margin-top:18px;}
+.mod-discursos .card .card-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.mod-discursos .card .card-head h2{margin:0;font-size:16.5px;color:var(--navy-deep);}
+.mod-discursos .card .card-body{padding:18px 20px;}
+.mod-discursos .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:22px;}
+@media (max-width:820px){.mod-discursos .dash-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:520px){.mod-discursos .dash-grid{grid-template-columns:1fr;}}
+.mod-discursos .stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;position:relative;overflow:hidden;}
+.mod-discursos .stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);}
+.mod-discursos .stat .label{font-size:12.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+.mod-discursos .stat .value{font-family:"Lora",serif;font-size:26px;color:var(--navy-deep);font-weight:700;margin-top:4px;}
+.mod-discursos .stat .value small{font-size:14px;font-weight:500;color:var(--text-muted);}
+.mod-discursos .nav-tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px;}
+@media (max-width:900px){.mod-discursos .nav-tiles{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:560px){.mod-discursos .nav-tiles{grid-template-columns:repeat(2,1fr);}}
+.mod-discursos .tile{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:20px 14px;text-align:center;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .12s,border-color .12s;
+  }
+.mod-discursos .tile:hover{transform:translateY(-2px);border-color:var(--accent);}
+.mod-discursos .tile .ico{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:19px;}
+.mod-discursos .tile .lbl{font-weight:600;font-size:13.5px;color:var(--navy-deep);}
+.mod-discursos .quick-row{display:flex;gap:14px;flex-wrap:wrap;}
+.mod-discursos .quick-btn{
+    flex:1;min-width:220px;background:var(--navy);color:#fff;border:none;border-radius:var(--radius);
+    padding:16px 18px;text-align:left;cursor:pointer;font-family:"Inter",sans-serif;box-shadow:var(--shadow);
+  }
+.mod-discursos .quick-btn:hover{background:var(--navy-deep);}
+.mod-discursos .quick-btn .qt{font-weight:700;font-size:14.5px;}
+.mod-discursos .quick-btn .qd{font-size:12.5px;opacity:.8;margin-top:2px;}
+.mod-discursos .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:8px;border:1px solid var(--border);
+    background:#fff;color:var(--text);font-size:13.5px;font-weight:600;cursor:pointer;font-family:"Inter",sans-serif;}
+.mod-discursos .btn:hover{border-color:var(--navy);}
+.mod-discursos .btn-primary{background:var(--navy);border-color:var(--navy);color:#fff;}
+.mod-discursos .btn-primary:hover{background:var(--navy-deep);}
+.mod-discursos .btn-accent{background:var(--accent);border-color:var(--accent);color:#3a2c0f;}
+.mod-discursos .btn-danger{background:var(--red-bg);border-color:#eec9cc;color:var(--red);}
+.mod-discursos .btn-sm{padding:6px 10px;font-size:12.5px;border-radius:6px;}
+.mod-discursos .btn-ghost{background:transparent;border-color:transparent;color:var(--navy);padding:6px 8px;}
+.mod-discursos form.entryform{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media (max-width:640px){.mod-discursos form.entryform{grid-template-columns:1fr;}}
+.mod-discursos form.entryform .full{grid-column:1/-1;}
+.mod-discursos .field label{display:block;font-size:12.5px;font-weight:600;color:var(--text-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+.mod-discursos .field input, .mod-discursos .field select, .mod-discursos .field textarea{
+    width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:14px;
+    font-family:"Inter",sans-serif;background:#FBFCFE;color:var(--text);
+  }
+.mod-discursos .field input:focus, .mod-discursos .field select:focus, .mod-discursos .field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+.mod-discursos .field textarea{resize:vertical;min-height:64px;}
+.mod-discursos .field .hint{font-size:11.5px;color:var(--text-muted);margin-top:3px;}
+.mod-discursos .form-actions{grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end;padding-top:4px;}
+.mod-discursos table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.mod-discursos thead th{
+    text-align:left;background:var(--navy);color:#fff;padding:10px 12px;font-weight:600;
+    font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+  }
+.mod-discursos thead th:first-child{border-top-left-radius:7px;}
+.mod-discursos thead th:last-child{border-top-right-radius:7px;}
+.mod-discursos tbody td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.mod-discursos tbody tr:hover{background:#F7FAFD;}
+.mod-discursos tbody tr:last-child td{border-bottom:none;}
+.mod-discursos .muted{color:var(--text-muted);}
+.mod-discursos .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700;}
+.mod-discursos .badge-local{background:var(--green-bg);color:var(--green);}
+.mod-discursos .badge-visita{background:var(--accent-soft);color:#7a5a1e;}
+.mod-discursos .table-wrap{
+    max-height:62vh;
+    overflow-y:auto;
+    overflow-x:auto;
+    scrollbar-width:thin;
+    position:relative;
+  }
+.mod-discursos .table-wrap table{min-width:760px;}
+.mod-discursos .table-wrap thead th{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:var(--navy-deep);
+    color:#fff;
+    box-shadow:0 1px 0 var(--border);
+  }
+.mod-discursos .empty{padding:26px;text-align:center;color:var(--text-muted);font-size:13.5px;}
+.mod-discursos .thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;border:1px solid var(--border);background:#f2f4f7;}
+.mod-discursos .actions-cell{white-space:nowrap;}
+.mod-discursos .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.mod-discursos .tabs button{
+    background:#fff;border:1px solid var(--border);padding:8px 13px;border-radius:20px;font-size:12.8px;
+    font-weight:600;cursor:pointer;color:var(--text-muted);font-family:"Inter",sans-serif;
+  }
+.mod-discursos .tabs button.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.mod-discursos .note-box{
+    background:var(--accent-soft);border-left:4px solid var(--accent);padding:12px 14px;border-radius:6px;
+    font-size:13px;color:#5b451a;margin-bottom:16px;
+  }
+.mod-discursos footer.appfoot{text-align:center;padding:20px;color:var(--text-muted);font-size:12px;}
+@media  print{.mod-discursos header.topbar, .mod-discursos nav.mainnav, .mod-discursos .no-print{display:none !important;}.mod-discursos{background:#fff;}.mod-discursos main{max-width:100%;padding:0;}.mod-discursos .card{box-shadow:none;border:none;}}
+.mod-discursos .reporte-arreglo{font-family:Arial,Helvetica,sans-serif;background:#fff;color:#111;}
+.mod-discursos .reporte-arreglo .arreglo-mes{margin:0 0 28px;page-break-inside:avoid;}
+.mod-discursos .reporte-arreglo .arreglo-cong{background:#48B3A6;color:#fff;text-align:center;font-size:24px;font-weight:700;padding:7px 10px;border:1px solid #222;letter-spacing:.3px;}
+.mod-discursos .reporte-arreglo .arreglo-titulo{background:#4B8FD8;color:#fff;text-align:center;font-size:23px;font-weight:700;padding:7px 10px;border:1px solid #222;border-top:0;text-transform:uppercase;}
+.mod-discursos .reporte-arreglo .arreglo-subtitulo{background:#80509A;color:#fff;font-size:19px;font-weight:700;padding:6px 8px;border:1px solid #222;border-top:0;text-transform:uppercase;}
+.mod-discursos .reporte-arreglo .reporte-scroll{max-height:62vh;overflow-y:auto;overflow-x:auto;border:1px solid #222;background:#fff;scrollbar-width:thin;}
+.mod-discursos .reporte-arreglo .reporte-scroll table{width:100%;min-width:760px;border-collapse:collapse;table-layout:fixed;background:#fff;}
+.mod-discursos .reporte-arreglo th{position:sticky;top:0;z-index:3;background:#E7E7E7;color:#111;border:1px solid #222;padding:8px 6px;text-align:center;font-size:13px;font-weight:700;}
+.mod-discursos .reporte-arreglo td{border:1px solid #222;padding:8px 6px;font-size:13px;vertical-align:middle;}
+.mod-discursos .reporte-arreglo .col-fecha{width:12%;text-align:center;}
+.mod-discursos .reporte-arreglo .col-tipo{width:13%;text-align:center;}
+.mod-discursos .reporte-arreglo .col-disc{width:24%;}
+.mod-discursos .reporte-arreglo .col-tema{width:36%;}
+.mod-discursos .reporte-arreglo .col-bosquejo{width:110px;min-width:110px;max-width:110px;text-align:center;font-weight:700;}
+.mod-discursos .reporte-arreglo .sin-datos{height:42px;text-align:center;color:#777;font-style:italic;}
+.mod-discursos .reporte-arreglo .bloque-lugar{margin-top:20px;page-break-inside:avoid;}
+.mod-discursos .reporte-arreglo .lugar-titulo{background:#80509A;color:#FFD400;font-size:19px;font-weight:700;padding:6px 8px;border:1px solid #222;text-transform:uppercase;}
+.mod-discursos .reporte-arreglo .lugar-titulo span{color:#fff;}
+.mod-discursos .reporte-arreglo .arreglo-page-break{page-break-before:always;}
+.mod-discursos .reporte-filtro-mes{display:flex;align-items:center;gap:8px;margin:0 0 14px;padding:10px 12px;background:#F7F9FC;border:1px solid var(--border);border-radius:8px;}
+.mod-discursos .reporte-filtro-mes select{padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-family:"Inter",sans-serif;background:#fff;}
+.mod-discursos .arreglo-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media (max-width:700px){.mod-discursos .arreglo-form-grid{grid-template-columns:1fr;}}
+.mod-discursos .publico-lista{display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.mod-discursos .publico-row{display:grid;grid-template-columns:1.4fr 1.45fr 110px 1.35fr 1.6fr auto;gap:8px;align-items:end;padding:10px;background:#F7F9FC;border:1px solid var(--border);border-radius:8px;}
+.mod-discursos .publico-row .field label{font-size:10.5px;}
+.mod-discursos .publico-row .field input, .mod-discursos .publico-row .field select{padding:7px 8px;font-size:12.5px;}
+.mod-discursos .publico-row .publico-bosquejo{width:110px;text-align:center;font-weight:700;}
+@media (max-width:950px){.mod-discursos .publico-row{grid-template-columns:1fr 1fr 110px;}}
+.mod-discursos .publico-preview{margin-top:14px;}
+.mod-discursos .publico-card{border:1px solid var(--border);border-radius:9px;padding:14px;margin-bottom:12px;background:#fff;}
+.mod-discursos .publico-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px;}
+.mod-discursos .publico-card h3{margin:0;color:var(--navy-deep);font-size:17px;}
+.mod-discursos .publico-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:7px 14px;font-size:12.5px;color:var(--text-muted);margin-bottom:12px;}
+@media (max-width:700px){.mod-discursos .publico-meta{grid-template-columns:1fr;}}
+.mod-discursos .publico-meta strong{color:var(--text);}
+.mod-discursos .publico-table-scroll{max-height:360px;overflow-y:auto;overflow-x:auto;}
+.mod-discursos .publico-table-scroll table{min-width:760px;}
+.mod-discursos .publico-table-scroll th{position:sticky;top:0;z-index:2;}
+.mod-discursos .publico-table-scroll .col-bosquejo{width:110px;min-width:110px;max-width:110px;text-align:center;}
+@media  print{.mod-discursos .reporte-arreglo{font-size:11px;}.mod-discursos .reporte-arreglo .arreglo-mes{margin-bottom:18px;}.mod-discursos .reporte-arreglo .arreglo-cong{font-size:18px;padding:5px;}.mod-discursos .reporte-arreglo .arreglo-titulo{font-size:17px;padding:5px;}.mod-discursos .reporte-arreglo .arreglo-subtitulo, .mod-discursos .reporte-arreglo .lugar-titulo{font-size:15px;padding:4px 6px;}.mod-discursos .reporte-arreglo th, .mod-discursos .reporte-arreglo td{font-size:10.5px;padding:5px 4px;}.mod-discursos .reporte-arreglo .reporte-scroll{max-height:none;overflow:visible;border:0;}.mod-discursos .reporte-arreglo th{position:static;}.mod-discursos .publico-row, .mod-discursos .publico-editor, .mod-discursos .no-print{display:none !important;}}
+.mod-predicacion{--ink:#334155;--muted:#718096;--paper:#f8fafc;--lav:#e9e4f7;--mint:#e6f2ef;--peach:#f9ece5;--sky:#e3eef8;--butter:#f3f1ea;--rose:#f4e7ef;--line:#dbe3ec;--accent:#758ab2;--accent-dark:#596f9d;--shadow:0 10px 28px #62728a14}
+.mod-predicacion *{box-sizing:border-box}
+.mod-predicacion{margin:0;background:linear-gradient(135deg,#f6f9fc 0%,#f9f8fc 52%,#f1f5f9 100%);color:var(--ink);font:15px/1.55 Inter,Roboto,"Segoe UI",system-ui,-apple-system,sans-serif}
+.mod-predicacion header{padding:34px max(5vw,22px) 26px;background:linear-gradient(112deg,#a7c7e7 0%,#d8c8f2 52%,#e5e5e5 100%);border-bottom:1px solid #fff;box-shadow:0 2px 14px #71809618}
+.mod-predicacion h1{margin:0;font-weight:700;letter-spacing:-.035em;font-size:clamp(1.7rem,4vw,2.55rem)}
+.mod-predicacion h2{font-size:1.28rem;letter-spacing:-.02em;margin:0 0 14px;color:#425778}
+.mod-predicacion h3{font-size:1rem;margin:0 0 8px}
+.mod-predicacion .sub{margin:6px 0 0;color:#52647c}
+.mod-predicacion .wrap{max-width:1320px;margin:auto;padding:28px max(5vw,22px) 64px}
+.mod-predicacion .tabs{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+.mod-predicacion .tab, .mod-predicacion button{border:1px solid #e1e7ef;border-radius:10px;padding:10px 14px;font:inherit;cursor:pointer;color:var(--ink);background:#fff;box-shadow:0 2px 7px #56677d0c;transition:.18s ease}
+.mod-predicacion .tab.active, .mod-predicacion .primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.mod-predicacion .tab:hover, .mod-predicacion button:hover{transform:translateY(-1px);filter:brightness(.98)}
+.mod-predicacion .panel{display:none}
+.mod-predicacion .panel.active{display:block}
+.mod-predicacion .card{background:#ffffffed;border:1px solid #e4eaf1;border-radius:16px;padding:22px;margin:0 0 20px;box-shadow:var(--shadow)}
+.mod-predicacion .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.mod-predicacion .two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.mod-predicacion .pastel-lav{background:linear-gradient(135deg,#f4f1fc,#ebe7f8)}
+.mod-predicacion .pastel-mint{background:linear-gradient(135deg,#f0f8f6,#e2f1ed)}
+.mod-predicacion .pastel-peach{background:linear-gradient(135deg,#fdf6f1,#f7e8df)}
+.mod-predicacion .pastel-sky{background:linear-gradient(135deg,#f2f7fc,#e1edf8)}
+.mod-predicacion .pastel-butter{background:linear-gradient(135deg,#faf9f5,#f1f0e9)}
+.mod-predicacion .pastel-rose{background:linear-gradient(135deg,#faf4f8,#f2e5ed)}
+.mod-predicacion label{display:grid;gap:5px;font-weight:600;font-size:.9rem}
+.mod-predicacion input, .mod-predicacion select, .mod-predicacion textarea{width:100%;border:1px solid #cfd9e5;background:#fff;border-radius:8px;padding:9px 10px;font:inherit;color:inherit}
+.mod-predicacion input:focus, .mod-predicacion select:focus{outline:3px solid #dbe7f5;border-color:#90a9ca}
+.mod-predicacion .checks{display:flex;gap:9px;flex-wrap:wrap}
+.mod-predicacion .checks label{display:flex;align-items:center;gap:5px;background:#ffffffba;border:1px solid #e5eaf0;border-radius:8px;padding:6px 8px;font-weight:500}
+.mod-predicacion .checks input{width:auto}
+.mod-predicacion .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.mod-predicacion .danger{color:#98485d;background:#f9e8ee;border-color:#edccd7}
+.mod-predicacion .small{font-size:.83rem;padding:6px 9px}
+.mod-predicacion .hint, .mod-predicacion .empty{color:var(--muted);font-size:.9rem}
+.mod-predicacion .hidden{display:none!important}
+.mod-predicacion .table-wrap{max-height:500px;overflow:auto;border:1px solid #dce5ee;border-radius:11px;background:#fff}
+.mod-predicacion table{width:100%;border-collapse:separate;border-spacing:0;min-width:730px}
+.mod-predicacion th, .mod-predicacion td{text-align:left;vertical-align:top;padding:11px 12px;border-bottom:1px solid #e4ebf2}
+.mod-predicacion th{position:sticky;top:0;z-index:2;background:#d8e7f5;color:#3e5878;font-size:.82rem;letter-spacing:.02em;box-shadow:0 1px 0 #bdcfe2}
+.mod-predicacion tbody tr:nth-child(even) td{background:#f5f4fb}
+.mod-predicacion tbody tr:nth-child(odd) td{background:#fcfdff}
+.mod-predicacion tbody tr:hover td{background:#edf5fb}
+.mod-predicacion tr:last-child td{border-bottom:0}
+.mod-predicacion .tag{display:inline-block;border-radius:99px;padding:3px 8px;background:#e1ecf7;color:#48617d;font-size:.8rem;margin:1px}
+.mod-predicacion .schedule{display:grid;grid-template-columns:repeat(7,minmax(180px,1fr));gap:12px;max-height:570px;overflow:auto;padding:2px 5px 12px}
+.mod-predicacion .day{min-width:180px;background:#ffffff;border:1px solid #e0e8f0;border-radius:12px;padding:11px;box-shadow:0 4px 12px #5565770d}
+.mod-predicacion .day h3{position:sticky;top:0;z-index:1;background:#d8c8f2;color:#4c5d79;padding:8px;border-radius:7px;box-shadow:0 2px 4px #63718b15}
+.mod-predicacion .slot{border-left:4px solid #a7c7e7;background:#f2f7fc;margin:9px 0;padding:8px;border-radius:5px;font-size:.83rem}
+.mod-predicacion .slot strong{display:block}
+.mod-predicacion .photo{width:55px;height:42px;object-fit:cover;border-radius:6px;background:#eee}
+.mod-predicacion .section-title{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.mod-predicacion .radio-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.mod-predicacion .radio-row label{display:flex;align-items:center;gap:5px}
+.mod-predicacion .radio-row input{width:auto}
+@media (max-width:640px){.mod-predicacion .wrap{padding:18px 14px 42px}.mod-predicacion .card{padding:16px}.mod-predicacion .table-wrap{max-height:420px}.mod-predicacion .section-title{align-items:flex-start;flex-direction:column}.mod-predicacion .tabs{gap:6px}.mod-predicacion .tab, .mod-predicacion button{padding:9px 10px}}
+@media  print{.mod-predicacion header, .mod-predicacion .tabs, .mod-predicacion .no-print, .mod-predicacion .actions, .mod-predicacion form, .mod-predicacion .settings{display:none!important}.mod-predicacion .wrap{padding:0}.mod-predicacion .panel{display:none!important}.mod-predicacion .panel.active{display:block!important}.mod-predicacion .card{box-shadow:none;border:1px solid #ddd}.mod-predicacion .schedule{grid-template-columns:repeat(3,1fr);max-height:none;overflow:visible}.mod-predicacion .table-wrap{max-height:none;overflow:visible}.mod-predicacion th{position:static}.mod-predicacion{background:#fff}}
+
+/* ===== MÓDULOS INTEGRADOS: reajustes para convivir con los estilos de Secretaría ===== */
+.mod-discursos nav,.mod-predicacion nav{flex-direction:row}
+.mod-discursos .card{padding:0;margin-bottom:0}
+.mod-discursos .empty,.mod-predicacion .empty{border:0}
+.mod-predicacion .empty{padding:12px 0;text-align:left}
+.mod-predicacion h1,.mod-predicacion h2,.mod-predicacion h3{font-family:inherit}
+.mod-predicacion .tag{font-family:inherit}
+.mod-discursos .btn:hover{background:#fff}
+.mod-discursos .btn-accent:hover{background:var(--accent)}
+.mod-discursos .btn-danger:hover{background:var(--red-bg)}
+.mod-discursos .btn-ghost:hover{background:transparent}
+.mod-discursos .stat{min-width:0}
+.mod-discursos,.mod-predicacion{border-radius:6px;overflow:hidden}
+.mod-discursos .dmodal-bg{position:fixed;inset:0;background:rgba(20,26,25,.55);z-index:1100;display:flex;align-items:center;justify-content:center;padding:16px}
+.mod-discursos .dmodal{background:#fff;border-radius:10px;padding:22px;max-width:720px;width:100%;max-height:90vh;overflow:auto}
+.mod-discursos .dmodal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.mod-discursos .dform-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mod-discursos .dmodal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:14px}
+@media(max-width:640px){.mod-discursos .dform-grid{grid-template-columns:1fr}}
+.mod-discursos .btn,.mod-discursos .btn-sm{border-radius:8px}
+.modchk{display:flex;align-items:center;gap:8px;font-size:13px;padding:6px 0;color:var(--ink)}
+.modtag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--blue-bg);color:var(--blue);margin:1px 2px 1px 0}
+.modtag.off{background:#EEE;color:#888;text-decoration:line-through}
+
+/* ===== TEMA: todos los módulos usan la paleta de Secretaría (azul #A7C7E7 / lavanda #D8C8F2) ===== */
+.mod-discursos{
+  --navy:#2F3A4B;--navy-deep:#2F3A4B;--bg:transparent;--card:#FFFFFF;--accent:#8E7CC3;--accent-soft:#F3EFFB;
+  --text:#2F3A4B;--text-muted:#6B778C;--border:#DDE3EE;--green:#2F7A5B;--green-bg:#DDF0E7;--red:#B23A3A;--red-bg:#FBE6E6;
+  --radius:14px;--shadow:0 2px 12px rgba(90,110,160,.07);
+  font-family:var(--ff);font-size:14px;border-radius:0;
+}
+.mod-discursos h1,.mod-discursos h2,.mod-discursos h3,.mod-discursos .brand,.mod-discursos .stat .value,.mod-discursos .tile .lbl{font-family:var(--ff);letter-spacing:-.01em}
+.mod-discursos header.topbar{background:linear-gradient(90deg,#EAF2FB,#F3EEFB);color:#2F3A4B;box-shadow:none;border:1px solid #DDE3EE;border-radius:14px;margin-bottom:22px;padding:16px 20px}
+.mod-discursos main{padding:0;max-width:none}
+.mod-discursos{padding:28px 32px 48px}
+.mod-discursos .brand .mark{background:#D8C8F2;color:#2F2A4A;border-radius:10px}
+.mod-discursos nav.mainnav button{border-radius:10px;background:#fff;color:#4A5568;border:1px solid #D3DAE8}
+.mod-discursos nav.mainnav button:hover{background:#E3EAF6;color:#2F3A4B}
+.mod-discursos nav.mainnav button.active{background:#D8C8F2;border-color:#D8C8F2;color:#2F2A4A}
+.mod-discursos .btn,.mod-discursos .btn-sm,.mod-discursos .quick-btn{border-radius:8px}
+.mod-discursos .btn-primary,.mod-discursos .btn-accent,.mod-discursos .quick-btn{background:#A7C7E7;border-color:#A7C7E7;color:#1F2E45}
+.mod-discursos .btn-primary:hover,.mod-discursos .btn-accent:hover,.mod-discursos .quick-btn:hover{background:#93B9E2;border-color:#93B9E2}
+.mod-discursos .btn-danger{background:#fff;border-color:#E9BABA;color:#B23A3A}
+.mod-discursos .quick-btn .qd{opacity:.75}
+.mod-discursos .stat{border-top:4px solid #A7C7E7}
+.mod-discursos .stat::before{display:none}
+.mod-discursos .stat:nth-child(even){border-top-color:#D8C8F2}
+.mod-discursos .tile .ico{background:#F3EFFB}
+.mod-discursos .tile:hover{border-color:#D8C8F2}
+.mod-discursos .card .card-head h2{margin:0}
+.mod-discursos thead th,.mod-discursos .table-wrap thead th{background:#A7C7E7;color:#1F2E45;border-bottom:1px solid #93B9E2}
+.mod-discursos thead th:first-child,.mod-discursos thead th:last-child{border-radius:0}
+.mod-discursos tbody tr:nth-child(odd) td{background:#F4F8FC}
+.mod-discursos tbody tr:nth-child(even) td{background:#F8F5FD}
+.mod-discursos tbody tr:hover td{background:#E9F1FB}
+.mod-discursos .tabs button.active{background:#D8C8F2;border-color:#D8C8F2;color:#2F2A4A}
+.mod-discursos .note-box{background:#F3EFFB;border-left-color:#D8C8F2;color:#4A4066}
+.mod-discursos .field input,.mod-discursos .field select,.mod-discursos .field textarea{border-radius:8px;border-color:#D3DAE8;background:#fff}
+.mod-discursos .field input:focus,.mod-discursos .field select:focus,.mod-discursos .field textarea:focus{outline:2px solid #D8C8F2;border-color:#B7A3E3}
+.mod-discursos .badge-visita{background:#F3EFFB;color:#5B4A9A}
+.mod-discursos .reporte-arreglo .arreglo-cong{background:#A7C7E7;color:#1F2E45}
+.mod-discursos .reporte-arreglo .arreglo-titulo{background:#D8C8F2;color:#2F2A4A}
+.mod-discursos .reporte-arreglo .arreglo-subtitulo,.mod-discursos .reporte-arreglo .lugar-titulo{background:#D8C8F2;color:#2F2A4A}
+.mod-discursos .reporte-arreglo .lugar-titulo span{color:#2F2A4A}
+.mod-discursos .reporte-arreglo th{background:#EAF2FB;color:#1F2E45}
+.mod-discursos .empty{background:#fff}
+
+.mod-predicacion{
+  --ink:#2F3A4B;--muted:#6B778C;--paper:#F5F7FB;--lav:#F3EFFB;--mint:#DDF0E7;--peach:#FBF3E6;--sky:#EAF2FB;--butter:#F8F5FD;--rose:#F3EFFB;
+  --line:#DDE3EE;--accent:#A7C7E7;--accent-dark:#93B9E2;--shadow:0 2px 12px rgba(90,110,160,.07);
+  background:transparent;font-family:var(--ff);font-size:14px;border-radius:0;padding:28px 32px 48px;
+}
+.mod-predicacion h1,.mod-predicacion h2,.mod-predicacion h3{font-family:var(--ff);letter-spacing:-.01em}
+.mod-predicacion h2{color:#2F3A4B;font-size:18px}
+.mod-predicacion header{background:linear-gradient(90deg,#EAF2FB,#F3EEFB);border:1px solid #DDE3EE;border-radius:14px;box-shadow:none;padding:18px 24px;margin-bottom:20px}
+.mod-predicacion header h1{font-size:22px;letter-spacing:-.01em}
+.mod-predicacion .wrap{padding:0;max-width:none}
+.mod-predicacion .tab,.mod-predicacion button{border-radius:8px;border-color:#D3DAE8;box-shadow:none}
+.mod-predicacion .card{background:#fff;border-radius:14px;padding:26px 28px}
+.mod-predicacion .pastel-lav,.mod-predicacion .pastel-mint,.mod-predicacion .pastel-peach,.mod-predicacion .pastel-sky,.mod-predicacion .pastel-butter,.mod-predicacion .pastel-rose{background:#fff}
+.mod-predicacion .tab.active{background:#D8C8F2;border-color:#D8C8F2;color:#2F2A4A}
+.mod-predicacion .primary{background:#A7C7E7;border-color:#A7C7E7;color:#1F2E45;font-weight:600}
+.mod-predicacion .primary:hover{background:#93B9E2;filter:none}
+.mod-predicacion .tab:hover,.mod-predicacion button:hover{filter:none}
+.mod-predicacion .danger{color:#B23A3A;background:#fff;border-color:#E9BABA}
+.mod-predicacion th{background:#A7C7E7;color:#1F2E45;box-shadow:none;border-bottom:1px solid #93B9E2}
+.mod-predicacion tbody tr:nth-child(odd) td{background:#F4F8FC}
+.mod-predicacion tbody tr:nth-child(even) td{background:#F8F5FD}
+.mod-predicacion tbody tr:hover td{background:#E9F1FB}
+.mod-predicacion .tag{background:#EAF2FB;color:#3A5A78}
+.mod-predicacion .day h3{background:#D8C8F2;color:#2F2A4A;box-shadow:none}
+.mod-predicacion .slot{border-left-color:#A7C7E7;background:#F4F8FC}
+.mod-predicacion input:focus,.mod-predicacion select:focus{outline:2px solid #D8C8F2;border-color:#B7A3E3}
+</style>
+
 </head>
 <body>
 <div id="loginBg"><div class="login-box">
@@ -1056,6 +1404,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
       <button data-view="noTouch"><span class="icon">⊘</span><span class="lbl">No tocar</span></button>
     </nav>
 
+    <div class="navgroup-label">Discursos Públicos</div>
+    <nav id="navE">
+      <button data-view="discursos"><span class="icon">✎</span><span class="lbl">Discursos Públicos</span></button>
+    </nav>
+
+    <div class="navgroup-label">Predicación Pública</div>
+    <nav id="navF">
+      <button data-view="predicacion"><span class="icon">☀</span><span class="lbl">Predicación Pública</span></button>
+    </nav>
+
     <div id="grpSys" style="display:none">
     <div class="navgroup-label">Sistema</div>
     <nav id="navD">
@@ -1090,6 +1448,1365 @@ svg.leaflet-image-layer.leaflet-interactive path {
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script>
+/* ===== MÓDULO: DISCURSOS PÚBLICOS ===== */
+(function(){
+let ROOT = null;
+
+/* =========================================================
+   MODELO DE DATOS EN MEMORIA
+   (Esta app no usa almacenamiento del navegador: los datos
+   viven mientras la pestaña está abierta, igual que una hoja
+   de prueba. Es la versión "demo interactiva" del sistema de
+   Access — la base .accdb real conserva los datos permanentemente.)
+   ========================================================= */
+const LEGACY_KEY = "PanelDiscursosCongregacion_DB_v3";
+
+let DB = null;
+
+function saveDB(){ try{ saveData(); }catch(e){ console.error(e); } }
+
+function normalizarDatos(){
+  DB.discursos.forEach(d=>{d.imagen=(d.imagen==='Sí'||d.imagen==='Si')?'Sí':(d.imagen?'Sí':'No');d.video=(d.video==='Sí'||d.video==='Si')?'Sí':(d.video?'Sí':'No');d.especial=(d.especial==='Sí'||d.especial==='Si')?'Sí':'No';if(!d.actualizadoEn)d.actualizadoEn=d.actualizado||todayISO();});
+  DB.arreglosPublicos=Array.isArray(DB.arreglosPublicos)?DB.arreglosPublicos:[];
+  DB.arreglosPublicos.forEach(a=>{a.hermanos=Array.isArray(a.hermanos)?a.hermanos:[];a.hermanos.forEach(h=>{if(!h.discursante&&h.discursanteId)h.discursante=DB.discursantes.find(d=>d.id===h.discursanteId)?.nombre||'';});});
+}
+
+
+function exportarBase(){
+  saveDB();
+  const blob = new Blob([JSON.stringify(DB, null, 2)], {type:"application/json;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "DiscursosCongregacion_respaldo.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
+function importarBase(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(){
+    try {
+      const saved = JSON.parse(reader.result);
+      if(!saved || !Array.isArray(saved.discursantes) || !Array.isArray(saved.discursos)
+         || !Array.isArray(saved.asignaciones) || !Array.isArray(saved.visitas)) {
+        throw new Error("El archivo no tiene una estructura válida.");
+      }
+      DB.seq = Object.assign({ discursante:1, discurso:1, asignacion:1, visita:1, arregloPublico:1 }, saved.seq || {});
+      DB.discursantes = saved.discursantes;
+      DB.discursos = saved.discursos;
+      DB.asignaciones = saved.asignaciones;
+      DB.visitas = saved.visitas;
+      DB.salidas = Array.isArray(saved.salidas) ? saved.salidas : [];
+      saveDB();
+      render();
+      alert("La información fue importada correctamente.");
+    } catch(e) {
+      alert("No se pudo importar: " + e.message);
+    }
+    input.value = "";
+  };
+  reader.readAsText(file);
+}
+
+function esc(s){
+  if(s===undefined||s===null) return "";
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function fmtDate(iso){
+  if(!iso) return "—";
+  const d = new Date(iso+"T00:00:00");
+  return d.toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});
+}
+function sameMonth(iso, ref){
+  if(!iso) return false;
+  const d = new Date(iso+"T00:00:00");
+  return d.getMonth()===ref.getMonth() && d.getFullYear()===ref.getFullYear();
+}
+function daysAgo(iso){
+  if(!iso) return Infinity;
+  return (new Date() - new Date(iso+"T00:00:00")) / 86400000;
+}
+
+
+/* =========================================================
+   ESTADO DE NAVEGACIÓN
+   ========================================================= */
+const state = {
+  view: 'dashboard',
+  editing: { discursante:null, discurso:null, asignacion:null, visita:null, salidas:null, arregloPublico:null },
+  showForm: { discursante:false, discurso:false, asignacion:false, visita:false, salidas:false, arregloPublico:false },
+  prefillFecha: { asignacion:null, visita:null },
+  query: 'porDiscursante',
+  report: null,
+  reportMes: 'todos',
+  anio: Math.max(2026, new Date().getFullYear())
+};
+function aniosArreglo(){ const a=[]; const fin=Math.max(2035,new Date().getFullYear()+9,state.anio+1); for(let y=2026;y<=fin;y++)a.push(y); return a; }
+function optsAnio(sel){ return aniosArreglo().map(y=>`<option value="${y}" ${y===sel?'selected':''}>${y}</option>`).join(''); }
+
+function nav(view){
+  state.view = view;
+  state.showForm = { discursante:false, discurso:false, asignacion:false, visita:false, salidas:false, arregloPublico:false };
+  state.editing = { discursante:null, discurso:null, asignacion:null, visita:null, salidas:null, arregloPublico:null };
+  render();
+  try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){}
+}
+function quickDiscursoHoy(){
+  state.showForm.asignacion = true;
+  state.editing.asignacion = null;
+  state.prefillFecha.asignacion = todayISO();
+  state.view = 'asignaciones';
+  render();
+}
+function quickVisitaHoy(){
+  state.showForm.visita = true;
+  state.editing.visita = null;
+  state.prefillFecha.visita = todayISO();
+  state.view = 'visitas';
+  render();
+}
+
+/* =========================================================
+   RENDER PRINCIPAL
+   ========================================================= */
+function render(){
+  if(!ROOT) return;
+  DB = DATA.discursos;
+  ROOT.innerHTML = `<div class="mod-discursos">
+    ${renderHeader()}
+    <main>
+      ${renderView()}
+      ${state.showForm.salidas ? formSalidas() : ''}
+    </main>
+  </div>`;
+  if(typeof lockUI==='function') lockUI();
+}
+
+function renderHeader(){
+  const items = [
+    ['dashboard','Panel Principal'],
+    ['discursantes','Discursantes'],
+    ['discursos','Discursos'],
+    ['asignaciones','Asignaciones Locales'],
+    ['visitas','Visitas Externas'],
+    ['registroGeneral','Registro General'],
+    ['consultas','Consultas'],
+    ['reportes','Reportes'],
+    ['arregloPublico','Arreglo de Discursos Públicos'],
+  ];
+  return `
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Discursos Públicos</div>
+      <nav class="mainnav">
+        ${items.map(([id,label])=>`<button class="${state.view===id?'active':''}" onclick="MD.nav('${id}')">${label}</button>`).join('')}
+        <button onclick="MD.exportarBase()">💾 Exportar respaldo</button>
+        <button onclick="document.getElementById('importBase').click()">📥 Importar respaldo</button>
+        <input id="importBase" type="file" accept=".json,application/json" style="display:none" onchange="MD.importarBase(this)">
+      </nav>
+    </div>
+  </header>`;
+}
+
+function renderView(){
+  switch(state.view){
+    case 'dashboard': return viewDashboard();
+    case 'discursantes': return viewDiscursantes();
+    case 'discursos': return viewDiscursos();
+    case 'asignaciones': return viewAsignaciones();
+    case 'visitas': return viewVisitas();
+    case 'registroGeneral': return viewRegistroGeneral();
+    case 'consultas': return viewConsultas();
+    case 'salidas': return viewSalidas();
+      case 'reportes': return viewReportes();
+    case 'arregloPublico': return viewArregloPublico();
+    default: return '';
+  }
+}
+
+/* =========================================================
+   PANEL PRINCIPAL (DASHBOARD)
+   ========================================================= */
+function viewDashboard(){
+  const now = new Date();
+  const discursosMes = DB.asignaciones.filter(a=>sameMonth(a.fecha, now)).length;
+  const visitasMes = DB.visitas.filter(v=>sameMonth(v.fecha, now)).length;
+
+  const counts = {};
+  DB.asignaciones.forEach(a=>{ counts[a.discursoId] = (counts[a.discursoId]||0)+1; });
+  let topId=null, topN=0;
+  Object.entries(counts).forEach(([k,v])=>{ if(v>topN){topN=v;topId=k;} });
+  const topDiscurso = topId ? DB.discursos.find(d=>d.id==topId) : null;
+
+  const tiles = [
+    ['discursantes','👤','Discursantes'],
+    ['discursos','📖','Discursos'],
+    ['asignaciones','🗓️','Asignaciones Locales'],
+    ['visitas','🚩','Visitas Externas'],
+    ['registroGeneral','📚','Registro General'],
+    ['reportes','📋','Reportes'],
+    ['arregloPublico','🗣️','Arreglo de Discursos Públicos'],
+  ];
+
+  return `
+    <div class="view-title">
+      <h1>Panel de Control – Discursos Congregación</h1>
+      <div class="sub">${now.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="stat"><div class="label">Discursos este mes</div><div class="value">${discursosMes}</div></div>
+      <div class="stat"><div class="label">Visitas externas este mes</div><div class="value">${visitasMes}</div></div>
+      <div class="stat"><div class="label">Bosquejo más usado</div>
+        <div class="value" style="font-size:17px;">${topDiscurso? `N° ${topDiscurso.numero} <small>· ${esc(topDiscurso.tema)}</small>` : '<small>Sin datos aún</small>'}</div>
+      </div>
+    </div>
+
+    <div class="nav-tiles">
+      ${tiles.map(([id,ico,lbl])=>`
+        <div class="tile" onclick="MD.nav('${id}')">
+          <div class="ico">${ico}</div>
+          <div class="lbl">${lbl}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Accesos rápidos</h2></div>
+      <div class="card-body">
+        <div class="quick-row">
+          <button class="quick-btn" onclick="MD.quickDiscursoHoy()">
+            <div class="qt">＋ Registrar discurso hoy</div>
+            <div class="qd">Abre Asignaciones con la fecha de hoy lista para completar</div>
+          </button>
+          <button class="quick-btn" onclick="MD.quickVisitaHoy()">
+            <div class="qt">＋ Registrar visita</div>
+            <div class="qd">Abre Visitas Externas con la fecha de hoy lista para completar</div>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* =========================================================
+   DISCURSANTES
+   ========================================================= */
+function sincronizarDiscursantesConDiscursos(){
+  DB.discursantes.forEach(d=>{
+    if(d.discursoId){
+      const discurso = DB.discursos.find(x=>x.id===d.discursoId);
+      if(discurso){
+        d.bosquejo = discurso.numero;
+        d.tema = discurso.tema;
+        d.titulo = discurso.titulo;
+      }
+    }
+  });
+}
+
+function viewDiscursantes(){
+  const editing = state.editing.discursante!=null ? DB.discursantes.find(d=>d.id===state.editing.discursante) : null;
+  const showForm = state.showForm.discursante || editing;
+
+  const rows = DB.discursantes.map(d=>{
+    const totalAsig = DB.asignaciones.filter(a=>a.discursanteId===d.id).length;
+    return `
+    <tr>
+      <td><strong>${esc(d.nombre)}</strong></td>
+      <td>${esc(d.privilegio)}</td>
+      <td>N° ${esc(d.bosquejo)}</td>
+      <td><strong>${esc(d.tema || '')}</strong></td>
+      <td>${esc(d.titulo || '')}</td>
+      <td>${d.fechaUltimaVez? fmtDate(d.fechaUltimaVez): '<span class="muted">—</span>'}</td>
+      <td class="actions-cell">
+        <button class="btn btn-sm btn-ghost" onclick="MD.verAsignacionesDe(${d.id})" title="Ver asignaciones">Ver asignaciones (${totalAsig})</button>
+        <button class="btn btn-sm" onclick="MD.editDiscursante(${d.id})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="MD.deleteDiscursante(${d.id})">Eliminar</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <div class="view-title">
+      <h1>Discursantes</h1>
+      <div class="sub">Alta, edición y consulta de hermanos</div>
+    </div>
+
+    ${showForm ? `
+    <div class="card">
+      <div class="card-head"><h2>${editing?'Editar discursante':'Nuevo discursante'}</h2>
+        <button class="btn btn-sm btn-ghost" onclick="MD.cancelForm('discursante')">Cancelar</button>
+      </div>
+      <div class="card-body">
+        <form class="entryform" onsubmit="return MD.saveDiscursante(event)">
+          <div class="field"><label>Nombre completo *</label>
+            <input required name="nombre" value="${editing?esc(editing.nombre):''}"></div>
+          <div class="field"><label>Privilegio</label>
+            <select name="privilegio">
+              ${['Anciano','Siervo Ministerial','Publicador'].map(p=>`<option ${editing&&editing.privilegio===p?'selected':''}>${p}</option>`).join('')}
+            </select></div>
+          <div class="field"><label>Bosquejo asignado</label>
+            <select required name="bosquejo" onchange="MD.actualizarDatosDiscursoDesdeDiscursante(this)">
+              <option value="">Seleccionar bosquejo...</option>
+              ${DB.discursos.slice().sort((a,b)=>a.numero-b.numero).map(d=>`
+                <option value="${d.id}" ${editing&&editing.discursoId===d.id?'selected':''}>
+                  N° ${esc(d.numero)} — ${esc(d.tema)}
+                </option>`).join('')}
+            </select>
+            <div class="hint">El tema y título se toman automáticamente del catálogo de Discursos.</div>
+          </div>
+          <div class="field"><label>Tema</label>
+            <input readonly name="tema" value="${editing?esc(editing.tema):''}"></div>
+          <div class="field"><label>Título</label>
+            <input readonly name="titulo" value="${editing?esc(editing.titulo):''}"></div>
+          <div class="field"><label>Fecha última vez</label>
+            <input type="date" name="fechaUltimaVez" value="${editing&&editing.fechaUltimaVez?editing.fechaUltimaVez:''}"></div>
+          <div class="field full"><label>Observación</label>
+            <textarea name="observacion">${editing?esc(editing.observacion):''}</textarea></div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">${editing?'Guardar cambios':'Agregar discursante'}</button>
+          </div>
+        </form>
+      </div>
+    </div>` : `
+    <div class="no-print" style="margin-bottom:16px;">
+      <button class="btn btn-accent" onclick="MD.state.showForm.discursante=true; MD.render();">＋ Nuevo discursante</button>
+    </div>`}
+
+    <div class="card">
+      <div class="card-body table-wrap">
+        ${DB.discursantes.length? `
+        <table>
+          <thead><tr><th>Nombre</th><th>Privilegio</th><th>Bosquejo</th><th>Tema</th><th>Título</th><th>Última vez</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>` : `<div class="empty">Aún no hay discursantes registrados.</div>`}
+      </div>
+    </div>
+  `;
+}
+function editDiscursante(id){ state.editing.discursante=id; state.showForm.discursante=true; render(); }
+function deleteDiscursante(id){
+  if(!confirm('¿Eliminar este discursante? También se perderá su historial de asignaciones locales visibles aquí.')) return;
+  DB.discursantes = DB.discursantes.filter(d=>d.id!==id);
+  saveDB();
+  render();
+}
+function actualizarDatosDiscursoDesdeDiscursante(select){
+  const form = select.form;
+  const id = select.value ? parseInt(select.value) : null;
+  const discurso = id ? DB.discursos.find(d=>d.id===id) : null;
+  if(form && discurso){
+    form.tema.value = discurso.tema || '';
+    form.titulo.value = discurso.titulo || '';
+  }else if(form){
+    form.tema.value = '';
+    form.titulo.value = '';
+  }
+}
+
+function saveDiscursante(ev){
+  ev.preventDefault();
+  const f = ev.target;
+  const discursoId = f.bosquejo.value ? parseInt(f.bosquejo.value) : null;
+  const discurso = discursoId ? DB.discursos.find(d=>d.id===discursoId) : null;
+
+  const data = {
+    nombre: f.nombre.value.trim(),
+    privilegio: f.privilegio.value,
+    discursoId: discursoId,
+    bosquejo: discurso ? discurso.numero : null,
+    tema: discurso ? discurso.tema : '',
+    titulo: discurso ? discurso.titulo : '',
+    fechaUltimaVez: f.fechaUltimaVez.value || null,
+    observacion: f.observacion.value.trim(),
+    actualizado: todayISO()
+  };
+  if(state.editing.discursante!=null){
+    const obj = DB.discursantes.find(d=>d.id===state.editing.discursante);
+    Object.assign(obj,data);
+  } else {
+    data.id = DB.seq.discursante++;
+    DB.discursantes.push(data);
+  }
+  state.showForm.discursante=false; state.editing.discursante=null;
+  saveDB();
+  render();
+  return false;
+}
+function verAsignacionesDe(id){
+  state.view='asignaciones';
+  state.filtroDiscursante = id;
+  render();
+}
+
+/* =========================================================
+   DISCURSOS (catálogo de bosquejos)
+   ========================================================= */
+function viewDiscursos(){
+  const editing = state.editing.discurso!=null ? DB.discursos.find(d=>d.id===state.editing.discurso) : null;
+  const showForm = state.showForm.discurso || editing;
+  const yn=v=>(v==='Sí'||v==='Si')?'Sí':'No';
+  const rows = DB.discursos.slice().sort((a,b)=>a.numero-b.numero).map(d=>`<tr>
+    <td style="width:110px;text-align:center;font-weight:700;">N° ${esc(d.numero)}</td>
+    <td><strong>${esc(d.tema)}</strong><br><span class="muted">${esc(d.titulo)}</span></td><td>${esc(d.tiempo)} min</td><td>${fmtDate(d.actualizadoEn)}</td>
+    <td>${yn(d.imagen)}</td><td>${yn(d.video)}</td><td>${yn(d.especial)}</td>
+    <td class="actions-cell"><button class="btn btn-sm" onclick="MD.editDiscurso(${d.id})">Editar</button> <button class="btn btn-sm btn-danger" onclick="MD.deleteDiscurso(${d.id})">Eliminar</button></td>
+  </tr>`).join('');
+  return `<div class="view-title"><h1>Discursos</h1><div class="sub">Catálogo de bosquejos</div></div>
+  ${showForm?`<div class="card"><div class="card-head"><h2>${editing?'Editar discurso':'Nuevo discurso'}</h2><button class="btn btn-sm btn-ghost" onclick="MD.cancelForm('discurso')">Cancelar</button></div><div class="card-body">
+    <form class="entryform" onsubmit="return MD.saveDiscurso(event)">
+      <div class="field"><label>No. bosquejo *</label><input required type="number" min="1" name="numero" value="${editing?esc(editing.numero):''}"></div>
+      <div class="field"><label>Tiempo (min)</label><input type="number" name="tiempo" value="${editing?esc(editing.tiempo):30}"></div>
+      <div class="field"><label>Tema *</label><input required name="tema" value="${editing?esc(editing.tema):''}"></div>
+      <div class="field"><label>Título</label><input name="titulo" value="${editing?esc(editing.titulo):''}"></div>
+      <div class="field"><label>Fecha actualizado *</label><input required type="date" name="actualizadoEn" value="${editing&&editing.actualizadoEn?editing.actualizadoEn:todayISO()}"><div class="hint">Fecha manual.</div></div>
+      <div class="field"><label>Imagen</label><select name="imagen"><option ${!editing||editing.imagen==='No'?'selected':''}>No</option><option ${editing&&editing.imagen==='Sí'?'selected':''}>Sí</option></select></div>
+      <div class="field"><label>Video</label><select name="video"><option ${!editing||editing.video==='No'?'selected':''}>No</option><option ${editing&&editing.video==='Sí'?'selected':''}>Sí</option></select></div>
+      <div class="field"><label>Especial</label><select name="especial"><option ${!editing||!editing.especial||editing.especial==='No'?'selected':''}>No</option><option ${editing&&editing.especial==='Sí'?'selected':''}>Sí</option></select></div>
+      <div class="form-actions"><button type="submit" class="btn btn-primary">${editing?'Guardar cambios':'Agregar discurso'}</button></div>
+    </form></div></div>`:`<div class="no-print" style="margin-bottom:16px;"><button class="btn btn-accent" onclick="MD.state.showForm.discurso=true; MD.render();">＋ Nuevo discurso</button></div>`}
+  <div class="card"><div class="card-body table-wrap">${DB.discursos.length?`<div class="publico-table-scroll"><table><thead><tr><th style="width:110px;">No. bosquejo</th><th>Tema / Título</th><th>Tiempo</th><th>Actualizado</th><th>Imagen</th><th>Video</th><th>Especial</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`:`<div class="empty">Aún no hay discursos en el catálogo.</div>`}</div></div>`;
+}
+
+function editDiscurso(id){ state.editing.discurso=id; state.showForm.discurso=true; render(); }
+function deleteDiscurso(id){
+  if(!confirm('¿Eliminar este discurso del catálogo?')) return;
+  DB.discursos = DB.discursos.filter(d=>d.id!==id);
+  saveDB();
+  render();
+}
+function saveDiscurso(ev){
+  ev.preventDefault(); const f=ev.target;
+  const data={numero:parseInt(f.numero.value),tema:f.tema.value.trim(),titulo:f.titulo.value.trim(),tiempo:f.tiempo.value?parseInt(f.tiempo.value):30,
+    imagen:f.imagen.value==='Sí'?'Sí':'No',video:f.video.value==='Sí'?'Sí':'No',especial:f.especial.value==='Sí'?'Sí':'No',actualizadoEn:f.actualizadoEn.value||todayISO()};
+  if(!data.numero||!data.tema){alert('Completa el No. de bosquejo y el Tema.');return false;}
+  if(state.editing.discurso!=null) Object.assign(DB.discursos.find(d=>d.id===state.editing.discurso),data);
+  else {data.id=DB.seq.discurso++;DB.discursos.push(data);}
+  state.showForm.discurso=false;state.editing.discurso=null;saveDB();render();return false;
+}
+
+/* =========================================================
+   ASIGNACIONES (locales)
+   ========================================================= */
+function viewAsignaciones(){
+  const editing = state.editing.asignacion!=null ? DB.asignaciones.find(a=>a.id===state.editing.asignacion) : null;
+  const showForm = state.showForm.asignacion || editing;
+  const filtro = state.filtroDiscursante || null;
+
+  let list = [...DB.asignaciones].sort((a,b)=> b.fecha.localeCompare(a.fecha));
+  if(filtro) list = list.filter(a=>a.discursanteId===filtro);
+
+  const rows = list.map(a=>{
+    const disc = DB.discursantes.find(d=>d.id===a.discursanteId);
+    const disr = DB.discursos.find(d=>d.id===a.discursoId);
+    return `
+    <tr>
+      <td>${fmtDate(a.fecha)}</td>
+      <td>${disc?esc(disc.nombre):'<span class="muted">(eliminado)</span>'}</td>
+      <td>${disr? `N° ${esc(disr.numero)} — <strong>${esc(disr.tema)}</strong><br><span class="muted">${esc(disr.titulo||'')}</span>`:'<span class="muted">(eliminado)</span>'}</td>
+      <td>${esc(a.lugar)}</td>
+      <td><span class="badge ${a.tipo==='Local'?'badge-local':'badge-visita'}">${esc(a.tipo)}</span></td>
+      <td class="actions-cell">
+        <button class="btn btn-sm" onclick="MD.editAsignacion(${a.id})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="MD.deleteAsignacion(${a.id})">Eliminar</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const fechaDefault = editing? editing.fecha : (state.prefillFecha.asignacion || '');
+
+  return `
+    <div class="view-title">
+      <h1>Asignaciones Locales</h1>
+      <div class="sub">Registro de discursos dados por hermanos ${filtro?`· filtrado por discursante`:''}</div>
+    </div>
+    ${filtro? `<div class="no-print" style="margin-bottom:12px;"><button class="btn btn-sm btn-ghost" data-ro-ok onclick="MD.state.filtroDiscursante=null; MD.render();">✕ Quitar filtro</button></div>`:''}
+
+    ${showForm ? `
+    <div class="card">
+      <div class="card-head"><h2>${editing?'Editar asignación':'Nueva asignación'}</h2>
+        <button class="btn btn-sm btn-ghost" onclick="MD.cancelForm('asignacion')">Cancelar</button>
+      </div>
+      <div class="card-body">
+        <form class="entryform" onsubmit="return MD.saveAsignacion(event)">
+          <div class="field"><label>Fecha *</label>
+            <input required type="date" name="fecha" value="${fechaDefault}"></div>
+          <div class="field"><label>Discursante *</label>
+            <select required name="discursanteId">
+              <option value="">Seleccionar...</option>
+              ${DB.discursantes.map(d=>`<option value="${d.id}" ${editing&&editing.discursanteId===d.id?'selected':''}>${esc(d.nombre)}</option>`).join('')}
+            </select></div>
+          <div class="field"><label>Discurso / Bosquejo *</label>
+            <select required name="discursoId">
+              <option value="">Seleccionar...</option>
+              ${DB.discursos.map(d=>`<option value="${d.id}" ${editing&&editing.discursoId===d.id?'selected':''}>N° ${esc(d.numero)} — ${esc(d.tema)}</option>`).join('')}
+            </select></div>
+          <div class="field"><label>Lugar</label>
+            <input name="lugar" value="${editing?esc(editing.lugar):'Salón del Reino Central'}"></div>
+          <div class="field"><label>Tipo *</label>
+            <select required name="tipo">
+              <option ${editing&&editing.tipo==='Local'?'selected':''}>Local</option>
+              <option ${editing&&editing.tipo==='Visita'?'selected':''}>Visita</option>
+            </select></div>
+          <div class="field full"><label>Observación</label>
+            <textarea name="observacion">${editing?esc(editing.observacion):''}</textarea></div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">${editing?'Guardar cambios':'Agregar asignación'}</button>
+          </div>
+        </form>
+      </div>
+    </div>` : `
+    <div class="no-print" style="margin-bottom:16px;">
+      <button class="btn btn-accent" onclick="MD.state.showForm.asignacion=true; MD.state.prefillFecha.asignacion=''; MD.render();">＋ Nueva asignación</button>
+    </div>`}
+
+    <div class="card">
+      <div class="card-body table-wrap">
+        ${list.length? `
+        <table>
+          <thead><tr><th>Fecha</th><th>Discursante</th><th>Discurso</th><th>Lugar</th><th>Tipo</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`: `<div class="empty">No hay asignaciones registradas.</div>`}
+      </div>
+    </div>
+  `;
+}
+function editAsignacion(id){ state.editing.asignacion=id; state.showForm.asignacion=true; render(); }
+function deleteAsignacion(id){
+  if(!confirm('¿Eliminar esta asignación?')) return;
+  DB.asignaciones = DB.asignaciones.filter(a=>a.id!==id);
+  saveDB();
+  render();
+}
+function saveAsignacion(ev){
+  ev.preventDefault();
+  const f=ev.target;
+  const data={
+    fecha: f.fecha.value,
+    discursanteId: parseInt(f.discursanteId.value),
+    discursoId: parseInt(f.discursoId.value),
+    lugar: f.lugar.value.trim(),
+    tipo: f.tipo.value,
+    observacion: f.observacion.value.trim()
+  };
+  if(state.editing.asignacion!=null){
+    Object.assign(DB.asignaciones.find(a=>a.id===state.editing.asignacion), data);
+  } else {
+    data.id = DB.seq.asignacion++;
+    DB.asignaciones.push(data);
+  }
+  state.showForm.asignacion=false; state.editing.asignacion=null; state.prefillFecha.asignacion=null;
+  saveDB();
+  render();
+  return false;
+}
+
+/* =========================================================
+   VISITAS EXTERNAS
+   ========================================================= */
+function viewVisitas(){
+  const editing = state.editing.visita!=null ? DB.visitas.find(v=>v.id===state.editing.visita) : null;
+  const showForm = state.showForm.visita || editing;
+  const list = [...DB.visitas].sort((a,b)=> b.fecha.localeCompare(a.fecha));
+
+  const rows = list.map(v=>{
+    const disr = DB.discursos.find(d=>d.id===v.discursoId);
+    return `
+    <tr>
+      <td>${fmtDate(v.fecha)}</td>
+      <td><strong>${esc(v.discursante)}</strong></td>
+      <td>${esc(v.ancSm)}</td>
+      <td>${esc(v.congregacion)}</td>
+      <td>${disr? `N° ${esc(disr.numero)} — <strong>${esc(disr.tema)}</strong><br><span class="muted">${esc(disr.titulo||'')}</span>` : '<span class="muted">—</span>'}</td>
+      <td>${esc(v.lugar)}</td>
+      <td class="actions-cell">
+        <button class="btn btn-sm" onclick="MD.editVisita(${v.id})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="MD.deleteVisita(${v.id})">Eliminar</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  const fechaDefault = editing? editing.fecha : (state.prefillFecha.visita || '');
+
+  return `
+    <div class="view-title">
+      <h1>Visitas Externas</h1>
+      <div class="sub">Registro de discursantes visitantes de otras congregaciones</div>
+    </div>
+
+    ${showForm? `
+    <div class="card">
+      <div class="card-head"><h2>${editing?'Editar visita':'Nueva visita'}</h2>
+        <button class="btn btn-sm btn-ghost" onclick="MD.cancelForm('visita')">Cancelar</button>
+      </div>
+      <div class="card-body">
+        <form class="entryform" onsubmit="return MD.saveVisita(event)">
+          <div class="field"><label>Fecha *</label>
+            <input required type="date" name="fecha" value="${fechaDefault}"></div>
+          <div class="field"><label>Discursante visitante *</label>
+            <input required name="discursante" value="${editing?esc(editing.discursante):''}"></div>
+          <div class="field"><label>Privilegio</label>
+            <select name="ancSm">
+              ${['Anciano','Siervo Ministerial'].map(p=>`<option ${editing&&editing.ancSm===p?'selected':''}>${p}</option>`).join('')}
+            </select></div>
+          <div class="field"><label>Congregación *</label>
+            <input required name="congregacion" value="${editing?esc(editing.congregacion):''}"></div>
+          <div class="field"><label>Bosquejo presentado</label>
+            <select name="discursoId">
+              <option value="">Sin especificar</option>
+              ${DB.discursos.map(d=>`<option value="${d.id}" ${editing&&editing.discursoId===d.id?'selected':''}>N° ${esc(d.numero)} — ${esc(d.tema)}</option>`).join('')}
+            </select></div>
+          <div class="field"><label>Lugar</label>
+            <input name="lugar" value="${editing?esc(editing.lugar):'Salón del Reino Central'}"></div>
+          <div class="field full"><label>Dato adicional</label>
+            <textarea name="datoAdicional">${editing?esc(editing.datoAdicional):''}</textarea></div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">${editing?'Guardar cambios':'Agregar visita'}</button>
+          </div>
+        </form>
+      </div>
+    </div>`: `
+    <div class="no-print" style="margin-bottom:16px;">
+      <button class="btn btn-accent" onclick="MD.state.showForm.visita=true; MD.state.prefillFecha.visita=''; MD.render();">＋ Nueva visita</button>
+    </div>`}
+
+    <div class="card">
+      <div class="card-body table-wrap">
+        ${list.length? `
+        <table>
+          <thead><tr><th>Fecha</th><th>Discursante</th><th>Privilegio</th><th>Congregación</th><th>Bosquejo</th><th>Lugar</th><th></th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`: `<div class="empty">No hay visitas registradas.</div>`}
+      </div>
+    </div>
+  `;
+}
+function editVisita(id){ state.editing.visita=id; state.showForm.visita=true; render(); }
+function deleteVisita(id){
+  if(!confirm('¿Eliminar esta visita?')) return;
+  DB.visitas = DB.visitas.filter(v=>v.id!==id);
+  saveDB();
+  render();
+}
+function saveVisita(ev){
+  ev.preventDefault();
+  const f=ev.target;
+  const data={
+    fecha: f.fecha.value,
+    discursante: f.discursante.value.trim(),
+    ancSm: f.ancSm.value,
+    congregacion: f.congregacion.value.trim(),
+    discursoId: f.discursoId.value? parseInt(f.discursoId.value): null,
+    lugar: f.lugar.value.trim(),
+    datoAdicional: f.datoAdicional.value.trim()
+  };
+  if(state.editing.visita!=null){
+    Object.assign(DB.visitas.find(v=>v.id===state.editing.visita), data);
+  } else {
+    data.id = DB.seq.visita++;
+    DB.visitas.push(data);
+  }
+  state.showForm.visita=false; state.editing.visita=null; state.prefillFecha.visita=null;
+  saveDB();
+  render();
+  return false;
+}
+
+function cancelForm(kind){
+  state.showForm[kind]=false;
+  state.editing[kind]=null;
+  render();
+}
+
+/* =========================================================
+   REGISTRO GENERAL
+   Alimentado automáticamente por:
+   1) Asignaciones cuyo Tipo = Local
+   2) Visitas Externas
+   No se duplica ni requiere volver a registrar la información.
+   ========================================================= */
+function viewRegistroGeneral(){
+  const locales = DB.asignaciones
+    .filter(a=>a.tipo==='Local')
+    .map(a=>{
+      const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+      const r=DB.discursos.find(x=>x.id===a.discursoId);
+      return {
+        fecha:a.fecha, tipo:'Local', discursante:d?.nombre||'', privilegio:d?.privilegio||'',
+        numero:r?.numero??'', tema:r?.tema||'', titulo:r?.titulo||'',
+        congregacion:'Esta congregación', lugar:a.lugar||'', observacion:a.observacion||''
+      };
+    });
+
+  const externas = DB.visitas.map(v=>{
+    const r=DB.discursos.find(x=>x.id===v.discursoId);
+    return {
+      fecha:v.fecha, tipo:'Visita externa', discursante:v.discursante||'', privilegio:v.ancSm||'',
+      numero:r?.numero??'', tema:r?.tema||'', titulo:r?.titulo||'',
+      congregacion:v.congregacion||'', lugar:v.lugar||'', observacion:v.datoAdicional||''
+    };
+  });
+
+  const registros=[...locales,...externas].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  const totalLocal=locales.length, totalExterna=externas.length;
+
+  const rows=registros.map(x=>`
+    <tr>
+      <td>${fmtDate(x.fecha)}</td>
+      <td><span class="badge ${x.tipo==='Local'?'badge-local':'badge-visita'}">${esc(x.tipo)}</span></td>
+      <td><strong>${esc(x.discursante)}</strong></td>
+      <td>${x.numero!==''?'N° '+esc(x.numero):'—'}</td>
+      <td><strong>${esc(x.tema)}</strong></td>
+      <td>${esc(x.titulo)}</td>
+      <td>${esc(x.privilegio)}</td>
+      <td>${esc(x.congregacion)}</td>
+      <td>${esc(x.lugar)}</td>
+    </tr>`).join('');
+
+  return `
+    <div class="view-title">
+      <div>
+        <h1>Registro General de Discursos</h1>
+        <div class="sub">Vista consolidada: discursos locales + visitas externas</div>
+      </div>
+      <button class="btn btn-primary no-print" onclick="window.print()">🖶 Imprimir / PDF</button>
+    </div>
+
+    <div class="dash-grid">
+      <div class="stat"><div class="label">Total de registros</div><div class="value">${registros.length}</div></div>
+      <div class="stat"><div class="label">Discursos locales</div><div class="value">${totalLocal}</div></div>
+      <div class="stat"><div class="label">Visitas externas</div><div class="value">${totalExterna}</div></div>
+    </div>
+
+    <div class="note-box">
+      <strong>Esta tabla se alimenta automáticamente.</strong><br>
+      Los registros marcados como <strong>Local</strong> en “Asignaciones Locales” aparecen aquí, junto con todos los registros de “Visitas Externas”.
+      Si modificas cualquiera de esas dos pestañas, este registro se actualiza automáticamente.
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <h2>Historial consolidado</h2>
+        <span class="muted">${registros.length} registro(s)</span>
+      </div>
+      <div class="card-body table-wrap">
+        ${registros.length ? `
+        <table>
+          <thead><tr>
+            <th>Fecha</th><th>Tipo</th><th>Discursante</th><th>Bosquejo</th>
+            <th>Tema</th><th>Título</th><th>Privilegio</th><th>Congregación</th><th>Lugar</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>` : `<div class="empty">No hay discursos locales ni visitas externas registradas.</div>`}
+      </div>
+    </div>`;
+}
+
+/* =========================================================
+   CONSULTAS
+   ========================================================= */
+const QUERY_DEFS = [
+  ['porDiscursante','Discursos por discursante'],
+  ['porFecha','Discursos por fecha'],
+  ['fueraCongregacion','Discursos fuera de la congregación'],
+  ['visitasPorFecha','Visitas externas por fecha'],
+  ['vecesPorBosquejo','Veces que cada discursante dio cada bosquejo'],
+  ['masUsados','Bosquejos más usados'],
+  ['actualizadosReciente','Discursos actualizados recientemente'],
+];
+
+function setQuery(q){ state.query=q; render(); }
+
+function viewConsultas(){
+  return `
+    <div class="view-title"><h1>Consultas</h1><div class="sub">Vistas de datos combinadas, equivalentes a las consultas de Access</div></div>
+    <div class="tabs no-print">
+      ${QUERY_DEFS.map(([id,lbl])=>`<button class="${state.query===id?'active':''}" onclick="MD.setQuery('${id}')">${lbl}</button>`).join('')}
+    </div>
+    <div class="card"><div class="card-body table-wrap">${renderQuery(state.query)}</div></div>
+  `;
+}
+
+function renderQuery(id){
+  const table = (headers, rows) => rows.length? `
+    <table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${rows.join('')}</tbody></table>` : `<div class="empty">Sin resultados.</div>`;
+
+  if(id==='porDiscursante'){
+    const rows=[];
+    DB.discursantes.forEach(d=>{
+      DB.asignaciones.filter(a=>a.discursanteId===d.id).sort((a,b)=>b.fecha.localeCompare(a.fecha)).forEach(a=>{
+        const disr=DB.discursos.find(x=>x.id===a.discursoId);
+        rows.push(`<tr><td>${esc(d.nombre)}</td><td>${disr?esc(disr.tema):''}</td><td>${disr?esc(disr.titulo):''}</td><td>${fmtDate(a.fecha)}</td><td>${esc(a.lugar)}</td></tr>`);
+      });
+    });
+    return table(['Discursante','Tema','Título','Fecha','Lugar'], rows);
+  }
+  if(id==='porFecha'){
+    const rows = [...DB.asignaciones].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(a=>{
+      const d=DB.discursantes.find(x=>x.id===a.discursanteId), r=DB.discursos.find(x=>x.id===a.discursoId);
+      return `<tr><td>${fmtDate(a.fecha)}</td><td>${d?esc(d.nombre):''}</td><td>${r?esc(r.tema):''}</td><td>${esc(a.lugar)}</td><td><span class="badge ${a.tipo==='Local'?'badge-local':'badge-visita'}">${esc(a.tipo)}</span></td></tr>`;
+    });
+    return table(['Fecha','Discursante','Tema','Lugar','Tipo'], rows);
+  }
+  if(id==='fueraCongregacion'){
+    const rows = DB.asignaciones.filter(a=>a.tipo==='Visita').sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(a=>{
+      const d=DB.discursantes.find(x=>x.id===a.discursanteId), r=DB.discursos.find(x=>x.id===a.discursoId);
+      return `<tr><td>${d?esc(d.nombre):''}</td><td>${r?esc(r.tema):''}</td><td>${fmtDate(a.fecha)}</td><td>${esc(a.lugar)}</td><td>${esc(a.observacion)}</td></tr>`;
+    });
+    return table(['Discursante','Tema','Fecha','Lugar','Observación'], rows);
+  }
+  if(id==='visitasPorFecha'){
+    const rows = [...DB.visitas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(v=>{
+      const r=DB.discursos.find(x=>x.id===v.discursoId);
+      return `<tr><td>${fmtDate(v.fecha)}</td><td>${esc(v.discursante)}</td><td>${esc(v.congregacion)}</td><td>${esc(v.ancSm)}</td><td>${r?esc(r.tema):'—'}</td><td>${esc(v.lugar)}</td></tr>`;
+    });
+    return table(['Fecha','Discursante','Congregación','Privilegio','Tema','Lugar'], rows);
+  }
+  if(id==='vecesPorBosquejo'){
+    const map={};
+    DB.asignaciones.forEach(a=>{
+      const key=a.discursanteId+'-'+a.discursoId;
+      map[key]=(map[key]||0)+1;
+    });
+    const rows = Object.entries(map).map(([k,v])=>{
+      const [di,dc]=k.split('-').map(Number);
+      const d=DB.discursantes.find(x=>x.id===di), r=DB.discursos.find(x=>x.id===dc);
+      return {d,r,v};
+    }).sort((a,b)=> (a.d?.nombre||'').localeCompare(b.d?.nombre||''))
+      .map(({d,r,v})=>`<tr><td>${d?esc(d.nombre):''}</td><td>N° ${r?esc(r.numero):''} — ${r?esc(r.tema):''}</td><td>${v}</td></tr>`);
+    return table(['Discursante','Bosquejo','Veces dado'], rows);
+  }
+  if(id==='registroGeneral'){
+    const locales=DB.asignaciones.filter(a=>a.tipo==='Local').map(a=>{
+      const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+      const r=DB.discursos.find(x=>x.id===a.discursoId);
+      return {fecha:a.fecha,tipo:'Local',nombre:d?.nombre||'',privilegio:d?.privilegio||'',r,lugar:a.lugar||'',congregacion:'Esta congregación'};
+    });
+    const externas=DB.visitas.map(v=>{
+      const r=DB.discursos.find(x=>x.id===v.discursoId);
+      return {fecha:v.fecha,tipo:'Visita externa',nombre:v.discursante||'',privilegio:v.ancSm||'',r,lugar:v.lugar||'',congregacion:v.congregacion||''};
+    });
+    const registros=[...locales,...externas].sort((a,b)=>b.fecha.localeCompare(a.fecha));
+    const rows=registros.map(x=>`<tr>
+      <td>${fmtDate(x.fecha)}</td>
+      <td><span class="badge ${x.tipo==='Local'?'badge-local':'badge-visita'}">${x.tipo}</span></td>
+      <td>${esc(x.nombre)}</td>
+      <td>${esc(x.privilegio)}</td>
+      <td>${x.r?`N° ${esc(x.r.numero)}`:'—'}</td>
+      <td><strong>${esc(x.r?.tema||'')}</strong><br><span class="muted">${esc(x.r?.titulo||'')}</span></td>
+      <td>${esc(x.congregacion)}</td>
+      <td>${esc(x.lugar)}</td>
+    </tr>`).join('');
+    return `<p class="muted">Total: ${registros.length} · Locales: ${locales.length} · Visitas externas: ${externas.length}</p>
+      <table><thead><tr><th>Fecha</th><th>Tipo</th><th>Discursante</th><th>Privilegio</th><th>Bosquejo</th><th>Tema / Título</th><th>Congregación</th><th>Lugar</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan=8 class="empty">Sin registros.</td></tr>'}</tbody></table>`;
+  }
+  if(id==='masUsados'){
+    const map={};
+    DB.asignaciones.forEach(a=>{ map[a.discursoId]=(map[a.discursoId]||0)+1; });
+    const rows = Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([id,v])=>{
+      const r=DB.discursos.find(x=>x.id==id);
+      return `<tr><td>N° ${r?esc(r.numero):''}</td><td>${r?esc(r.tema):''}</td><td>${r?esc(r.titulo):''}</td><td>${v}</td></tr>`;
+    });
+    return table(['N°','Tema','Título','Veces usado'], rows);
+  }
+  if(id==='actualizadosReciente'){
+    const rows = DB.discursos.filter(d=>daysAgo(d.actualizadoEn)<=90).sort((a,b)=>b.actualizadoEn.localeCompare(a.actualizadoEn)).map(d=>
+      `<tr><td>N° ${esc(d.numero)}</td><td>${esc(d.tema)}</td><td>${esc(d.titulo)}</td><td>${fmtDate(d.actualizadoEn)}</td></tr>`);
+    return table(['N°','Tema','Título','Actualizado'], rows);
+  }
+  return '';
+}
+
+/* =========================================================
+   REPORTES
+   ========================================================= */
+const REPORT_DEFS = [
+  ['mensualLocal','Reporte mensual de discursos locales'],
+  ['porDiscursante','Reporte de discursos por discursante'],
+  ['visitasExternas','Reporte de visitas externas'],
+  ['masUsados','Reporte de bosquejos más usados'],
+  ['actualizados','Reporte de discursos actualizados'],
+  ['arregloMensual','Arreglo mensual de conferencias · Joya Oeste'],
+];
+function openReport(id){ state.report=id; if(id!=='arregloMensual') state.reportMes='todos'; render(); }
+
+function viewReportes(){
+  if(!state.report){
+    return `
+      <div class="view-title"><h1>Reportes</h1><div class="sub">Selecciona un reporte para verlo e imprimirlo</div></div>
+      <div class="nav-tiles" style="grid-template-columns:repeat(3,1fr);">
+        ${REPORT_DEFS.map(([id,lbl])=>`
+        <div class="tile" onclick="MD.openReport('${id}')">
+          <div class="ico">📋</div><div class="lbl">${lbl}</div>
+        </div>`).join('')}
+      </div>
+    `;
+  }
+  const lbl = REPORT_DEFS.find(r=>r[0]===state.report)[1];
+  return `
+    <div class="view-title">
+      <h1>${lbl}</h1>
+      <div class="sub no-print"><button class="btn btn-sm btn-ghost" onclick="MD.state.report=null; MD.render();">← Volver a Reportes</button></div>
+    </div>
+    <div class="card">
+      <div class="card-head no-print"><h2>Vista previa</h2>
+        <button class="btn btn-primary btn-sm" onclick="window.print()">🖶 Imprimir / PDF</button>
+         <button class="btn btn-sm" onclick="MD.descargarReporteCSV('${state.report}')">⬇ Descargar CSV</button>
+      </div>
+      <div class="card-body table-wrap">${renderReport(state.report)}</div>
+    </div>
+  `;
+}
+
+function descargarReporteCSV(id){
+  const rows = [];
+  const add = (...cells) => rows.push(cells.map(v => `"${String(v ?? "").replace(/"/g,'""')}"`).join(";"));
+  let filename = "reporte_discursos.csv";
+
+  if(id==="mensualLocal"){
+    filename="reporte_mensual_local.csv";
+    add("Fecha","Discursante","Tema","Lugar");
+    const now=new Date();
+    DB.asignaciones.filter(a=>a.tipo==="Local" && sameMonth(a.fecha,now))
+      .sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(a=>{
+        const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+        const r=DB.discursos.find(x=>x.id===a.discursoId);
+        add(a.fecha,d?.nombre||"",r?.tema||"",a.lugar||"");
+      });
+  } else if(id==="porDiscursante"){
+    filename="reporte_por_discursante.csv";
+    add("Discursante","Fecha","Tema","Lugar");
+    DB.asignaciones.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).forEach(a=>{
+      const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+      const r=DB.discursos.find(x=>x.id===a.discursoId);
+      add(d?.nombre||"",a.fecha,r?.tema||"",a.lugar||"");
+    });
+  } else if(id==="visitasExternas"){
+    filename="reporte_visitas_externas.csv";
+    add("Fecha","Discursante","Congregación","Tema","Lugar");
+    DB.visitas.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).forEach(v=>{
+      const r=DB.discursos.find(x=>x.id===v.discursoId);
+      add(v.fecha,v.discursante||"",v.congregacion||"",r?.tema||"",v.lugar||"");
+    });
+  } else if(id==="arregloMensual"){
+    filename="arreglo_conferencias_joya_oeste_"+state.anio+".csv";
+    add("Mes","Fecha","Tipo","Discursante","Tema","Bosquejo","Lugar");
+    const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    const filtro=state.reportMes==='todos'?null:parseInt(state.reportMes);
+    obtenerRegistroGeneralCompleto().filter(x=>x.fecha&&new Date(x.fecha+'T00:00:00').getFullYear()===state.anio).filter(x=>filtro===null||new Date(x.fecha+'T00:00:00').getMonth()===filtro).sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(x=>{
+      const d=new Date(x.fecha+'T00:00:00'); add(meses[d.getMonth()],x.fecha,x.tipo,x.discursante,x.titulo||x.tema||'',x.numero||'',x.lugar||'');
+    });
+    DB.asignaciones.filter(a=>a.tipo==="Visita"&&a.fecha&&new Date(a.fecha+'T00:00:00').getFullYear()===state.anio).filter(a=>filtro===null||new Date(a.fecha+'T00:00:00').getMonth()===filtro).sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(a=>{
+      const d=DB.discursantes.find(x=>x.id===a.discursanteId),r=DB.discursos.find(x=>x.id===a.discursoId); const dt=new Date(a.fecha+'T00:00:00');
+      add(meses[dt.getMonth()],a.fecha,'Visita - salida',d?.nombre||'',r?.titulo||r?.tema||'',r?.numero||'',a.lugar||'');
+    });
+  } else if(id==="masUsados"){
+    filename="reporte_bosquejos_mas_usados.csv";
+    add("Número","Tema","Veces usado");
+    const map={};
+    DB.asignaciones.forEach(a=>map[a.discursoId]=(map[a.discursoId]||0)+1);
+    Object.entries(map).sort((a,b)=>b[1]-a[1]).forEach(([id,n])=>{
+      const r=DB.discursos.find(x=>x.id==id);
+      add(r?.numero||"",r?.tema||"",n);
+    });
+  } else if(id==="actualizados"){
+    filename="reporte_discursos_actualizados.csv";
+    add("No. bosquejo","Tema","Título","Actualizado","Imagen","Video","Especial");
+    DB.discursos.slice().sort((a,b)=>b.actualizadoEn.localeCompare(a.actualizadoEn)).forEach(d=>{
+      add(d.numero,d.tema,d.titulo,d.actualizadoEn,d.imagen||"No",d.video||"No",d.especial||"No");
+    });
+  }
+
+  const blob=new Blob(["\ufeff"+rows.join("\r\n")],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+
+function viewSalidas(){
+  return `
+    <section class="page">
+      <div class="page-title">
+        <div>
+          <h1>Hermanos locales que van a otra congregación</h1>
+          <p>Registro de hermanos de esta congregación que participan dando discursos en otra congregación.</p>
+        </div>
+        <button class="btn btn-primary" onclick="MD.nuevoSalida()">+ Registrar salida</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Salidas a otras congregaciones</h2>
+          <span class="muted">${DB.salidas.length} registro(s)</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Hermano local</th>
+                <th>Bosquejo</th>
+                <th>Tema / Título</th>
+                <th>Congregación</th>
+                <th>Lugar</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              ${DB.salidas.length ? DB.salidas.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(s=>{
+                const h=DB.discursantes.find(x=>x.id===s.discursanteId);
+                const d=DB.discursos.find(x=>x.id===s.discursoId);
+                return `<tr>
+                  <td>${fmtDate(s.fecha)}</td>
+                  <td><strong>${esc(h?.nombre || s.nombre || '')}</strong></td>
+                  <td>${d ? 'N° '+esc(d.numero) : '—'}</td>
+                  <td><strong>${esc(d?.tema || '')}</strong><br><span class="muted">${esc(d?.titulo || '')}</span></td>
+                  <td>${esc(s.congregacion || '')}</td>
+                  <td>${esc(s.lugar || '')}</td>
+                  <td class="actions">
+                    <button class="btn btn-sm" onclick="MD.editarSalida(${s.id})">Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="MD.eliminarSalida(${s.id})">Eliminar</button>
+                  </td>
+                </tr>`;
+              }).join('') : `<tr><td colspan="7" class="empty">Todavía no hay salidas registradas.</td></tr>`}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>`;
+}
+
+function nuevoSalida(){
+  state.showForm.salidas = true;
+  state.editing.salidas = null;
+  render();
+}
+
+function editarSalida(id){
+  state.showForm.salidas = true;
+  state.editing.salidas = id;
+  render();
+}
+
+function eliminarSalida(id){
+  if(!confirm("¿Eliminar este registro de salida?")) return;
+  DB.salidas = DB.salidas.filter(s=>s.id!==id);
+  saveDB();
+  render();
+}
+
+function formSalidas(){
+  const editingId = state.editing.salidas;
+  const editing = editingId ? DB.salidas.find(s=>s.id===editingId) : null;
+
+  return `
+    <div class="dmodal-bg">
+      <div class="dmodal">
+        <div class="dmodal-head">
+          <h2>${editing ? 'Editar salida' : 'Registrar salida a otra congregación'}</h2>
+          <button class="btn" onclick="MD.cerrarFormSalida()">Cerrar</button>
+        </div>
+        <form onsubmit="MD.saveSalida(event)">
+          <div class="dform-grid">
+            <div class="field">
+              <label>Fecha *</label>
+              <input required type="date" name="fecha" value="${editing?.fecha || todayISO()}">
+            </div>
+            <div class="field">
+              <label>Hermano local *</label>
+              <select required name="discursanteId">
+                <option value="">Seleccionar hermano...</option>
+                ${DB.discursantes.slice().sort((a,b)=>a.nombre.localeCompare(b.nombre)).map(h=>`
+                  <option value="${h.id}" ${editing?.discursanteId===h.id?'selected':''}>${esc(h.nombre)}</option>
+                `).join('')}
+              </select>
+            </div>
+            <div class="field">
+              <label>Bosquejo / discurso *</label>
+              <select required name="discursoId">
+                <option value="">Seleccionar bosquejo...</option>
+                ${DB.discursos.slice().sort((a,b)=>a.numero-b.numero).map(d=>`
+                  <option value="${d.id}" ${editing?.discursoId===d.id?'selected':''}>
+                    N° ${esc(d.numero)} — ${esc(d.tema)} — ${esc(d.titulo)}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+            <div class="field">
+              <label>Congregación *</label>
+              <input required name="congregacion" value="${esc(editing?.congregacion || '')}" placeholder="Nombre de la congregación">
+            </div>
+            <div class="field">
+              <label>Lugar</label>
+              <input name="lugar" value="${esc(editing?.lugar || '')}" placeholder="Ciudad / dirección">
+            </div>
+            <div class="field">
+              <label>Dato adicional</label>
+              <textarea name="observacion" rows="3">${esc(editing?.observacion || '')}</textarea>
+            </div>
+          </div>
+          <div class="dmodal-actions">
+            <button type="button" class="btn" onclick="MD.cerrarFormSalida()">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>`;
+}
+
+function cerrarFormSalida(){
+  state.showForm.salidas = false;
+  state.editing.salidas = null;
+  render();
+}
+
+function saveSalida(ev){
+  ev.preventDefault();
+  const f=ev.target;
+  const data={
+    id: state.editing.salidas || Date.now(),
+    fecha: f.fecha.value,
+    discursanteId: parseInt(f.discursanteId.value),
+    discursoId: parseInt(f.discursoId.value),
+    congregacion: f.congregacion.value.trim(),
+    lugar: f.lugar.value.trim(),
+    observacion: f.observacion.value.trim()
+  };
+
+  if(!data.fecha || !data.discursanteId || !data.discursoId || !data.congregacion){
+    alert("Completa los campos obligatorios.");
+    return;
+  }
+
+  const idx=DB.salidas.findIndex(s=>s.id===data.id);
+  if(idx>=0) DB.salidas[idx]=data;
+  else DB.salidas.push(data);
+
+  saveDB();
+  cerrarFormSalida();
+}
+
+function renderReport(id){
+  const now=new Date();
+  if(id==='arregloMensual'){
+    const meses=['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'], año=state.anio;
+    const registros=obtenerRegistroGeneralCompleto().filter(x=>x.fecha&&new Date(x.fecha+'T00:00:00').getFullYear()===año);
+    const mesesCargados=[...new Set(registros.map(x=>new Date(x.fecha+'T00:00:00').getMonth()))].sort((a,b)=>a-b);
+    const mesSeleccionado=state.reportMes==='todos'?'todos':parseInt(state.reportMes);
+    const mesesMostrar=mesSeleccionado==='todos'?mesesCargados:mesesCargados.filter(mi=>mi===mesSeleccionado);
+
+    const tablaMes=mi=>{
+      const rows=registros.filter(x=>new Date(x.fecha+'T00:00:00').getMonth()===mi)
+        .sort((a,b)=>a.fecha.localeCompare(b.fecha))
+        .map(x=>`<tr><td class="col-fecha">${fmtDate(x.fecha)}</td><td class="col-tipo">${esc(x.tipo)}</td><td class="col-disc"><strong>${esc(x.discursante)}</strong></td><td class="col-tema">${esc(x.titulo||x.tema||'')}</td><td class="col-bosquejo">${x.numero!==''?'N° '+esc(x.numero):'—'}</td></tr>`).join('');
+      return `<div class="reporte-scroll"><table><thead><tr><th class="col-fecha">FECHA</th><th class="col-tipo">TIPO</th><th class="col-disc">DISCURSANTES</th><th class="col-tema">TEMA</th><th class="col-bosquejo">NO. BOSQUEJO</th></tr></thead><tbody>${rows||'<tr><td colspan="5" class="sin-datos">Sin registros para este mes.</td></tr>'}</tbody></table></div>`;
+    };
+
+    const salidasPorMes=mesesMostrar.map(mi=>{
+      const salidasMes=DB.asignaciones.filter(a=>a.tipo==='Visita'&&a.fecha&&new Date(a.fecha+'T00:00:00').getFullYear()===año&&new Date(a.fecha+'T00:00:00').getMonth()===mi);
+      const lugares=[...new Set(salidasMes.map(a=>(a.lugar||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+      const bloques=lugares.map(lugar=>{
+        const rows=salidasMes.filter(a=>(a.lugar||'').trim()===lugar)
+          .sort((a,b)=>a.fecha.localeCompare(b.fecha))
+          .map(a=>{const d=DB.discursantes.find(x=>x.id===a.discursanteId),r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td class="col-fecha">${fmtDate(a.fecha)}</td><td class="col-disc"><strong>${esc(d?.nombre||'')}</strong></td><td class="col-tema">${esc(r?.titulo||r?.tema||'')}</td><td class="col-bosquejo">${r?.numero!==undefined?'N° '+esc(r.numero):'—'}</td></tr>`}).join('');
+        return `<div class="bloque-lugar"><div class="lugar-titulo"><span>CONGREGACION </span>"${esc(lugar)}"</div><div class="reporte-scroll"><table><thead><tr><th class="col-fecha">FECHA</th><th class="col-disc">DISCURSANTES QUE SALEN</th><th class="col-tema">TEMA</th><th class="col-bosquejo">NO. BOSQUEJO</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="sin-datos">Sin salidas de esta congregación en el mes.</td></tr>'}</tbody></table></div></div>`;
+      }).join('');
+      return `<div class="arreglo-mes"><div class="arreglo-titulo">ARREGLO DE CONFERENCIAS ${meses[mi]} ${año}</div>${bloques||'<div class="sin-datos" style="padding:12px;border:1px solid #222;border-top:0;">No hay bloques de congregaciones para este mes.</div>'}</div>`;
+    }).join('');
+
+    const selector=`<div class="no-print reporte-filtro-mes"><label for="filtroReporteAnio"><strong>Año:</strong></label><select id="filtroReporteAnio" data-ro-ok onchange="MD.state.anio=parseInt(this.value);MD.state.reportMes='todos';MD.render();">${optsAnio(año)}</select><label for="filtroReporteMes"><strong>Mostrar:</strong></label><select id="filtroReporteMes" data-ro-ok onchange="MD.state.reportMes=this.value;MD.render();"><option value="todos" ${mesSeleccionado==='todos'?'selected':''}>Todos</option>${mesesCargados.map(mi=>`<option value="${mi}" ${mesSeleccionado===mi?'selected':''}>${meses[mi]}</option>`).join('')}</select></div>`;
+    const principales=mesesMostrar.map(mi=>`<div class="arreglo-mes" style="margin-bottom:20px;"><div class="arreglo-titulo">ARREGLO DE CONFERENCIAS ${meses[mi]} ${año}</div>${tablaMes(mi)}</div>`).join('');
+    return `<div class="reporte-arreglo">${selector}<div class="arreglo-mes"><div class="arreglo-cong">CONGREGACION "JOYA OESTE"</div>${principales||'<div class="sin-datos" style="padding:18px;">No hay registros cargados para ${año}.</div>'}</div>${salidasPorMes?`<div class="arreglo-page-break"></div><div class="arreglo-cong">ARREGLO DE SALIDAS DE HERMANOS</div>${salidasPorMes}`:''}</div>`;
+  }
+  if(id==='mensualLocal'){const rows=DB.asignaciones.filter(a=>a.tipo==='Local'&&sameMonth(a.fecha,now)).sort((a,b)=>a.fecha.localeCompare(b.fecha)).map(a=>{const d=DB.discursantes.find(x=>x.id===a.discursanteId),r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td>${fmtDate(a.fecha)}</td><td>${d?esc(d.nombre):''}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:''}</td><td>${esc(a.lugar)}</td></tr>`}).join('');return `<p class="muted">Mes: ${now.toLocaleDateString('es-ES',{month:'long',year:'numeric'})} · Total: ${DB.asignaciones.filter(a=>a.tipo==='Local'&&sameMonth(a.fecha,now)).length}</p><table><thead><tr><th>Fecha</th><th>Discursante</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=4 class="empty">Sin discursos locales este mes.</td></tr>'}</tbody></table>`;}
+  if(id==='porDiscursante') return DB.discursantes.map(d=>{const asigs=DB.asignaciones.filter(a=>a.discursanteId===d.id).sort((a,b)=>b.fecha.localeCompare(a.fecha));const rows=asigs.map(a=>{const r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td>${fmtDate(a.fecha)}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:''}</td><td>${esc(a.lugar)}</td></tr>`}).join('');return `<h3 style="margin:18px 0 6px;color:var(--navy-deep);">${esc(d.nombre)} <span class="muted">(${asigs.length} discursos)</span></h3><table><thead><tr><th>Fecha</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=3 class="empty">Sin registros.</td></tr>'}</tbody></table>`}).join('');
+  if(id==='visitasExternas'){const rows=[...DB.visitas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(v=>{const r=DB.discursos.find(x=>x.id===v.discursoId);return `<tr><td>${fmtDate(v.fecha)}</td><td>${esc(v.discursante)}</td><td>${esc(v.congregacion)}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:'—'}</td><td>${esc(v.lugar)}</td></tr>`}).join('');return `<table><thead><tr><th>Fecha</th><th>Discursante</th><th>Congregación</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=5 class="empty">Sin visitas registradas.</td></tr>'}</tbody></table>`;}
+  if(id==='masUsados'){const map={};DB.asignaciones.forEach(a=>map[a.discursoId]=(map[a.discursoId]||0)+1);const rows=Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([id,v])=>{const r=DB.discursos.find(x=>x.id==id);return `<tr><td style="width:110px;text-align:center;">N° ${r?esc(r.numero):''}</td><td>${r?esc(r.tema):''}</td><td>${v}</td></tr>`}).join('');return `<table><thead><tr><th style="width:110px;">No. bosquejo</th><th>Tema</th><th>Veces usado</th></tr></thead><tbody>${rows||'<tr><td colspan=3 class="empty">Sin datos.</td></tr>'}</tbody></table>`;}
+  if(id==='actualizados'){const rows=[...DB.discursos].sort((a,b)=>b.actualizadoEn.localeCompare(a.actualizadoEn)).map(d=>`<tr><td style="width:110px;text-align:center;">N° ${esc(d.numero)}</td><td>${esc(d.tema)}</td><td>${fmtDate(d.actualizadoEn)}</td></tr>`).join('');return `<table><thead><tr><th style="width:110px;">No. bosquejo</th><th>Tema</th><th>Actualizado</th></tr></thead><tbody>${rows}</tbody></table>`;}
+  return '';
+}
+
+function obtenerRegistroGeneralCompleto(){
+  const locales=DB.asignaciones.filter(a=>a.tipo==='Local').map(a=>{
+    const d=DB.discursantes.find(x=>x.id===a.discursanteId), r=DB.discursos.find(x=>x.id===a.discursoId);
+    return {fecha:a.fecha,tipo:'Local',discursante:d?.nombre||'',numero:r?.numero??'',tema:r?.tema||'',titulo:r?.titulo||'',lugar:a.lugar||''};
+  });
+  const externas=DB.visitas.map(v=>{
+    const r=DB.discursos.find(x=>x.id===v.discursoId);
+    return {fecha:v.fecha,tipo:'Visita externa',discursante:v.discursante||'',numero:r?.numero??'',tema:r?.tema||'',titulo:r?.titulo||'',lugar:v.lugar||''};
+  });
+  return [...locales,...externas];
+}
+
+/* =========================================================
+   ARREGLO DE DISCURSOS PÚBLICOS 2026
+   ========================================================= */
+const MESES_2026=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+function nuevoArregloPublico(mes){
+  state.editing.arregloPublico=null;
+  state.showForm.arregloPublico=mes;
+  render();
+  setTimeout(()=>document.getElementById('formArregloPublico')?.scrollIntoView({behavior:'smooth'}),50);
+}
+function editarArregloPublico(id){
+  state.editing.arregloPublico=id;
+  state.showForm.arregloPublico=true;
+  render();
+}
+function cancelarArregloPublico(){state.editing.arregloPublico=null;state.showForm.arregloPublico=false;render();}
+function eliminarArregloPublico(id){
+  if(!confirm('¿Eliminar este arreglo de discursos públicos?')) return;
+  DB.arreglosPublicos=DB.arreglosPublicos.filter(x=>x.id!==id); saveDB(); render();
+}
+function agregarFilaPublica(){
+  const box=document.getElementById('listaHermanosPublicos'); if(!box) return;
+  const idx=box.querySelectorAll('.publico-row').length;
+  box.insertAdjacentHTML('beforeend',filaPublicaHTML(idx,{},false));
+}
+function quitarFilaPublica(btn){const row=btn.closest('.publico-row'); if(row) row.remove();}
+function actualizarPublicoDesdeSelect(select){
+  const row=select.closest('.publico-row'); if(!row) return;
+  const id=select.value?parseInt(select.value):null;
+  const d=id?DB.discursos.find(x=>x.id===id):null;
+  if(d){row.querySelector('[name="pBosquejo"]').value=d.numero;row.querySelector('[name="pTema"]').value=d.tema||'';row.querySelector('[name="pTitulo"]').value=d.titulo||'';}
+  else {row.querySelector('[name="pBosquejo"]').value='';row.querySelector('[name="pTema"]').value='';row.querySelector('[name="pTitulo"]').value='';}
+}
+function filaPublicaHTML(idx,row={}){
+  const selected=row.discursoId?parseInt(row.discursoId):null;
+  const nombre=row.discursante || (row.discursanteId ? (DB.discursantes.find(d=>d.id===row.discursanteId)?.nombre || '') : '');
+  return `<div class="publico-row"><div class="field"><label>Hermano discursante externo</label><input required name="pDiscursante" value="${esc(nombre)}" placeholder="Nombre completo"></div><div class="field"><label>Discurso</label><select name="pDiscurso" onchange="MD.actualizarPublicoDesdeSelect(this)"><option value="">Seleccionar...</option>${DB.discursos.slice().sort((a,b)=>a.numero-b.numero).map(d=>`<option value="${d.id}" ${selected===d.id?'selected':''}>N° ${esc(d.numero)} — ${esc(d.titulo||d.tema)}</option>`).join('')}</select></div><div class="field"><label>No. bosquejo</label><input class="publico-bosquejo" name="pBosquejo" readonly value="${esc(row.bosquejo??'')}" placeholder="N°"></div><div class="field"><label>Tema</label><input name="pTema" readonly value="${esc(row.tema||'')}"></div><div class="field"><label>Título</label><input name="pTitulo" readonly value="${esc(row.titulo||'')}"></div><button type="button" class="btn btn-danger btn-sm" onclick="MD.quitarFilaPublica(this)">✕</button></div>`;
+}
+function formArregloPublico(){
+  const editing=state.editing.arregloPublico ? DB.arreglosPublicos.find(x=>x.id===state.editing.arregloPublico) : null;
+  const mes=editing?.mes ?? (typeof state.showForm.arregloPublico==='number'?state.showForm.arregloPublico:0);
+  const anioForm=editing?.año ?? state.anio;
+  const filas=(editing?.hermanos?.length?editing.hermanos:[{}]).map((x,i)=>filaPublicaHTML(i,x)).join('');
+  return `<div class="card" id="formArregloPublico"><div class="card-head"><h2>${editing?'Editar':'Registrar'} arreglo · ${MESES_2026[mes]} ${anioForm}</h2><button class="btn btn-sm btn-ghost" onclick="MD.cancelarArregloPublico()">Cancelar</button></div><div class="card-body"><form onsubmit="return MD.guardarArregloPublico(event)"><div class="arreglo-form-grid"><div class="field"><label>Mes *</label><select required name="mes">${MESES_2026.map((m,i)=>`<option value="${i}" ${mes===i?'selected':''}>${m}</option>`).join('')}</select></div><div class="field"><label>Año *</label><select required name="anio">${optsAnio(anioForm)}</select></div><div class="field"><label>Congregación *</label><input required name="congregacion" value="${esc(editing?.congregacion||'')}"></div><div class="field"><label>Lugar *</label><input required name="lugar" value="${esc(editing?.lugar||'')}"></div><div class="field"><label>Ciudad</label><input name="ciudad" value="${esc(editing?.ciudad||'')}"></div><div class="field"><label>Provincia</label><input name="provincia" value="${esc(editing?.provincia||'')}"></div><div class="field"><label>Encargado</label><input name="encargado" value="${esc(editing?.encargado||'')}"></div><div class="field"><label>Número celular</label><input name="celular" inputmode="tel" value="${esc(editing?.celular||'')}"></div></div><div class="publico-preview"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;"><h3 style="margin:0;color:var(--navy-deep);">Lista de hermanos discursantes externos</h3><button type="button" class="btn btn-accent btn-sm" onclick="MD.agregarFilaPublica()">＋ Agregar hermano</button></div><div id="listaHermanosPublicos" class="publico-lista">${filas}</div></div><div class="form-actions"><button type="submit" class="btn btn-primary">${editing?'Guardar cambios':'Guardar arreglo'}</button></div></form></div></div>`;
+}
+function guardarArregloPublico(ev){
+  ev.preventDefault();const f=ev.target;
+  const hermanos=[...f.querySelectorAll('.publico-row')].map(row=>({discursante:row.querySelector('[name="pDiscursante"]').value.trim(),discursoId:row.querySelector('[name="pDiscurso"]').value?parseInt(row.querySelector('[name="pDiscurso"]').value):null,bosquejo:row.querySelector('[name="pBosquejo"]').value,tema:row.querySelector('[name="pTema"]').value,titulo:row.querySelector('[name="pTitulo"]').value})).filter(x=>x.discursante||x.discursoId||x.bosquejo||x.tema||x.titulo);
+  const data={id:state.editing.arregloPublico||DB.seq.arregloPublico++,año:parseInt(f.anio.value),mes:parseInt(f.mes.value),congregacion:f.congregacion.value.trim(),lugar:f.lugar.value.trim(),ciudad:f.ciudad.value.trim(),provincia:f.provincia.value.trim(),encargado:f.encargado.value.trim(),celular:f.celular.value.trim(),hermanos};
+  if(!data.congregacion||!data.lugar){alert('Completa Congregación y Lugar.');return false;}
+  const idx=DB.arreglosPublicos.findIndex(x=>x.id===data.id);if(idx>=0)DB.arreglosPublicos[idx]=data;else DB.arreglosPublicos.push(data);saveDB();state.anio=data.año;state.editing.arregloPublico=null;state.showForm.arregloPublico=false;render();return false;
+}
+function viewArregloPublico(){
+  const cards=MESES_2026.map((mes,mi)=>{
+    const items=DB.arreglosPublicos.filter(x=>x.año===state.anio&&x.mes===mi).sort((a,b)=>a.congregacion.localeCompare(b.congregacion,'es'));
+    const contenido=items.length ? items.map(x=>{
+      return `<div class="publico-card"><div class="publico-card-head"><div><h3>${esc(x.congregacion)}</h3><div class="muted">${esc(x.lugar)}${x.ciudad?' · '+esc(x.ciudad):''}${x.provincia?' · '+esc(x.provincia):''}</div></div><div class="no-print"><button class="btn btn-sm" onclick="MD.editarArregloPublico(${x.id})">Editar</button> <button class="btn btn-danger btn-sm" onclick="MD.eliminarArregloPublico(${x.id})">Eliminar</button></div></div><div class="publico-meta"><span><strong>Encargado:</strong> ${esc(x.encargado||'—')}</span><span><strong>Celular:</strong> ${esc(x.celular||'—')}</span><span><strong>Hermanos:</strong> ${x.hermanos?.length||0}</span></div><div class="publico-table-scroll"><table><thead><tr><th>Discursante</th><th>Discurso</th><th class="col-bosquejo">No. bosquejo</th><th>Tema</th><th>Título</th></tr></thead><tbody>${(x.hermanos||[]).map(h=>{const r=DB.discursos.find(d=>d.id===h.discursoId);const n=h.discursante||(h.discursanteId?(DB.discursantes.find(d=>d.id===h.discursanteId)?.nombre||''):'');return `<tr><td>${esc(n)}</td><td>${r?'N° '+esc(r.numero):'—'}</td><td class="col-bosquejo">${esc(h.bosquejo||r?.numero||'')}</td><td>${esc(h.tema||r?.tema||'')}</td><td>${esc(h.titulo||r?.titulo||'')}</td></tr>`}).join('')||'<tr><td colspan="5" class="empty">Sin hermanos agregados.</td></tr>'}</tbody></table></div></div>`;
+    }).join('') : '<div class="empty">No hay arreglos registrados para este mes.</div>';
+    return `<section class="card" style="margin-bottom:16px;"><div class="card-head"><h2>${mes.toUpperCase()} ${state.anio}</h2><button class="btn btn-accent btn-sm no-print" onclick="MD.nuevoArregloPublico(${mi})">＋ ${items.length?'Agregar otro arreglo':'Agregar arreglo'}</button></div><div class="card-body">${contenido}</div></section>`;
+  }).join('');
+  return `<div class="view-title"><div><h1>ARREGLO DE DISCURSOS PUBLICOS · ${state.anio}</h1><div class="sub">Varios arreglos por mes. Los discursantes externos se escriben directamente y no dependen de la base local.</div></div></div><div class="reporte-filtro-mes no-print"><label for="filtroAnioArreglo"><strong>Año:</strong></label><select id="filtroAnioArreglo" data-ro-ok onchange="MD.state.anio=parseInt(this.value);MD.render();">${optsAnio(state.anio)}</select><span class="muted">Puedes registrar arreglos en cualquier año; elige otro año para ver o agregar sus meses.</span></div>${(state.showForm.arregloPublico!==false)?formArregloPublico():''}${cards}`;
+}
+
+
+/* ---- migración única desde la página independiente (mismo navegador) ---- */
+function migrarLocal(){
+  if(READONLY) return;
+  try{
+    const raw = localStorage.getItem(LEGACY_KEY);
+    if(!raw || localStorage.getItem(LEGACY_KEY+'_migrado')) return;
+    const vacio = !DB.discursantes.length && !DB.discursos.length && !DB.asignaciones.length && !DB.visitas.length && !DB.salidas.length && !DB.arreglosPublicos.length;
+    if(!vacio) return;
+    const s = JSON.parse(raw);
+    if(!s || !Array.isArray(s.discursantes) || !Array.isArray(s.discursos) || !Array.isArray(s.asignaciones) || !Array.isArray(s.visitas)) return;
+    DB.seq = Object.assign({ discursante:1, discurso:1, asignacion:1, visita:1, arregloPublico:1 }, s.seq || {});
+    DB.discursantes = s.discursantes; DB.discursos = s.discursos; DB.asignaciones = s.asignaciones; DB.visitas = s.visitas;
+    DB.salidas = Array.isArray(s.salidas) ? s.salidas : [];
+    DB.arreglosPublicos = Array.isArray(s.arreglosPublicos) ? s.arreglosPublicos : [];
+    localStorage.setItem(LEGACY_KEY+'_migrado','1');
+    saveDB();
+    if(typeof showToast==='function') showToast('Discursos: se migraron los datos guardados en este navegador');
+  }catch(e){ console.warn('Migración de Discursos:', e); }
+}
+
+function mount(el){
+  ROOT = el;
+  DB = DATA.discursos;
+  migrarLocal();
+  if(!READONLY){ try{ normalizarDatos(); sincronizarDiscursantesConDiscursos(); }catch(e){ console.warn(e); } }
+  render();
+}
+window.MD = Object.assign({ state: state, mount: mount }, { actualizarDatosDiscursoDesdeDiscursante, actualizarPublicoDesdeSelect, agregarFilaPublica, aniosArreglo, cancelForm, cancelarArregloPublico, cerrarFormSalida, daysAgo, deleteAsignacion, deleteDiscursante, deleteDiscurso, deleteVisita, descargarReporteCSV, editAsignacion, editDiscursante, editDiscurso, editVisita, editarArregloPublico, editarSalida, eliminarArregloPublico, eliminarSalida, esc, exportarBase, filaPublicaHTML, fmtDate, formArregloPublico, formSalidas, guardarArregloPublico, importarBase, nav, normalizarDatos, nuevoArregloPublico, nuevoSalida, obtenerRegistroGeneralCompleto, openReport, optsAnio, quickDiscursoHoy, quickVisitaHoy, quitarFilaPublica, render, renderHeader, renderQuery, renderReport, renderView, sameMonth, saveAsignacion, saveDB, saveDiscursante, saveDiscurso, saveSalida, saveVisita, setQuery, sincronizarDiscursantesConDiscursos, todayISO, verAsignacionesDe, viewArregloPublico, viewAsignaciones, viewConsultas, viewDashboard, viewDiscursantes, viewDiscursos, viewRegistroGeneral, viewReportes, viewSalidas, viewVisitas });
+})();
+</script>
+<script>
+/* ===== MÓDULO: PREDICACIÓN PÚBLICA ===== */
+(function(){
+let ROOT=null;
+const $p=i=>ROOT.querySelector('#'+i);
+const PP_HTML="<header><h1>Predicación Pública</h1></header>\n<main class=\"wrap\"><nav class=\"tabs no-print\"><button class=\"tab active\" data-tab=\"inicio\">Inicio</button><button class=\"tab\" data-tab=\"etapas\">Por etapas</button><button class=\"tab\" data-tab=\"comercial\">Comercial</button><button class=\"tab\" data-tab=\"horario\">Horario</button><button class=\"tab\" data-tab=\"reportes\">Reportes</button><button class=\"tab\" data-tab=\"config\">Configuración</button><button class=\"tab\" data-tab=\"aprobados\">Publicadores aprobados</button><button class=\"tab\" data-tab=\"datos\">Respaldo</button></nav>\n<section id=\"pp-inicio\" class=\"panel active\"><div class=\"card pastel-lav\"><h2>Elige el tipo de predicación</h2><p>Registra disponibilidades y consulta el horario de cada modalidad.</p><div class=\"grid\"><button class=\"primary choose\" data-target=\"etapas\">Predicación por etapas<br><small>11 etapas y sus carritos</small></button><button class=\"primary choose\" data-target=\"comercial\">Predicación Comercial<br><small>Locales y publicadores aprobados</small></button></div></div><div class=\"card pastel-mint\"><h2>Horario de esta semana</h2><p class=\"hint\">El horario se genera automáticamente con las disponibilidades registradas.</p><button class=\"primary choose\" data-target=\"horario\">Ver e imprimir horario</button></div></section>\n<section id=\"pp-etapas\" class=\"panel\"><div class=\"card pastel-peach\"><div class=\"section-title\"><h2>Disponibilidad · Predicación por etapas</h2><span class=\"tag\">Registro libre</span></div><p class=\"hint\">Puede anotarse individualmente o en pareja. El carrito aparece al seleccionar el lugar.</p><form id=\"stageForm\"></form></div><div class=\"card\"><h2>Disponibilidades por etapas</h2><div id=\"stageList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-comercial\" class=\"panel\"><div class=\"card pastel-sky\"><div class=\"section-title\"><h2>Disponibilidad · Predicación Comercial</h2><span class=\"tag\">Solo aprobados</span></div><p class=\"hint\">La primera persona se elige exclusivamente de la tabla de publicadores aprobados.</p><form id=\"commercialForm\"></form></div><div class=\"card\"><h2>Disponibilidades comerciales</h2><div id=\"commercialList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-horario\" class=\"panel\"><div class=\"card pastel-butter\"><div class=\"section-title\"><div><h2>Horario semanal</h2><p class=\"hint\">Incluye las disponibilidades del mes y año elegidos, ordenadas por día y hora.</p></div><button class=\"primary no-print\" onclick=\"window.print()\">Imprimir horario</button></div><div class=\"grid no-print\" style=\"max-width:540px\"><label>Mes del horario<select id=\"scheduleMonth\" data-ro-ok></select></label><label>Año<select id=\"scheduleYear\" data-ro-ok></select></label></div><div id=\"schedule\" class=\"schedule\"></div></div></section>\n<section id=\"pp-reportes\" class=\"panel\"><div class=\"card pastel-rose\"><div class=\"section-title\"><div><h2>Reporte mensual de horarios y participantes</h2><p class=\"hint\">Resumen de las participaciones registradas para el mes y año seleccionados.</p></div><button class=\"primary no-print\" onclick=\"window.print()\">Imprimir reporte</button></div><div class=\"grid no-print\" style=\"max-width:540px\"><label>Mes a reportar<select id=\"reportMonth\" data-ro-ok></select></label><label>Año a reportar<select id=\"reportYear\" data-ro-ok></select></label></div><div id=\"monthlyReport\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-config\" class=\"panel\"><div class=\"card pastel-rose\"><h2>Configuración de lugares y carritos</h2><p class=\"hint\">Registre las etapas o locales, su ubicación, carrito y estado. Los locales comerciales permiten guardar una foto.</p><form id=\"configForm\" class=\"grid\"></form></div><div class=\"card\"><h2>Lugares configurados</h2><div id=\"configList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-aprobados\" class=\"panel\"><div class=\"card pastel-mint\"><h2>Publicadores Aprobados para la Predicación Comercial</h2><form id=\"approvedForm\" class=\"grid\"></form></div><div class=\"card\"><h2>Lista de aprobados</h2><div id=\"approvedList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-datos\" class=\"panel\"><div class=\"card pastel-lav\"><h2>Respaldo de datos</h2><p class=\"hint\">Los cambios se guardan automáticamente y se comparten con los demás usuarios. Exporte un respaldo antes de borrar datos.</p><div class=\"actions\"><button id=\"ppExportBtn\" type=\"button\" class=\"primary\">Exportar JSON</button><button id=\"ppImportBtn\" type=\"button\" class=\"primary\">Importar JSON</button><input id=\"ppImportFile\" type=\"file\" accept=\"application/json\" class=\"hidden\"><button id=\"ppRestoreBtn\" type=\"button\" class=\"danger\">Restaurar datos iniciales</button><button id=\"ppClearBtn\" type=\"button\" class=\"danger\">Borrar todos los datos</button></div></div></section>\n</main>";
+
+const DAYS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'], TIMES=['08:00–10:00','10:00–12:00','16:00–18:00'], MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'], YEARS=[2026,2027,2028,2029,2030];
+const STAGES=['Onix','Brillante','Diamante','Esmeralda','Tiara','Platino','Turquesa','Perla','Gema','Oro','Aquamarina']; const COMM=['Gran Aki','Veris','Tuti','Plaza Orlando','Plaza San Miguel'];
+const LEGACY_KEY='joyaOestePredicacionV2', esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function initial(){const carts=['Carrito con Ruedas','Una sola Cara','en V'], make=(id,kind,person,phone,mode,partner,partnerPhone,month,days,times,places,approvedId)=>({id,kind,person,phone,mode,partner,partnerPhone,month,year:2026,days,times,places,approvedId});return {config:[...STAGES.map((n,i)=>({id:'s'+i,kind:'etapas',name:n,place:'Etapa '+n,cart:carts[i%3],status:'Activo',photo:''})),...COMM.map((n,i)=>({id:'c'+i,kind:'comercial',name:n,place:n,cart:carts[(i+1)%3],status:'Activo',photo:''}))],approved:[{id:'a1',first:'María',last:'López',service:'PA',age:34,sex:'Femenino',phone:'099 123 4567',vehicle:'Sí',months:['Septiembre','Octubre','Noviembre']},{id:'a2',first:'Carlos',last:'Mendoza',service:'PB',age:41,sex:'Masculino',phone:'098 456 7890',vehicle:'No',months:['Septiembre','Octubre']},{id:'a3',first:'Ana',last:'Vega',service:'PAI',age:28,sex:'Femenino',phone:'097 234 5678',vehicle:'Sí',months:['Septiembre','Noviembre']},{id:'a4',first:'Luis',last:'Paredes',service:'PR',age:39,sex:'Masculino',phone:'096 345 6789',vehicle:'Sí',months:['Septiembre','Octubre']},{id:'a5',first:'Elena',last:'Cruz',service:'PS',age:45,sex:'Femenino',phone:'095 678 9012',vehicle:'No',months:['Septiembre','Noviembre']}],availability:[make('d1','etapas','Sofía Ramírez','099 555 1020','Pareja','Daniel Torres','098 555 1030','Septiembre',['Sábado'],['08:00–10:00'],['Onix']),make('d2','etapas','Jorge Almeida','098 777 1212','Solo','','','Septiembre',['Miércoles','Viernes'],['16:00–18:00'],['Diamante']),make('d3','etapas','Lucía Herrera','099 802 1122','Pareja','Pedro Ruiz','098 802 1133','Octubre',['Lunes'],['10:00–12:00'],['Esmeralda']),make('d4','etapas','Marta Silva','098 603 2244','Solo','','','Octubre',['Jueves'],['08:00–10:00'],['Turquesa']),make('d5','etapas','Andrés León','097 904 3355','Pareja','Paola Cedeño','097 904 3366','Noviembre',['Domingo'],['16:00–18:00'],['Oro']),make('d6','comercial','María López','099 123 4567','Pareja','Carlos Mendoza','098 456 7890','Septiembre',['Martes'],['10:00–12:00'],['Gran Aki'],'a1'),make('d7','comercial','Carlos Mendoza','098 456 7890','Solo','','','Septiembre',['Viernes'],['08:00–10:00'],['Veris'],'a2'),make('d8','comercial','Ana Vega','097 234 5678','Pareja','Luis Paredes','096 345 6789','Septiembre',['Sábado'],['16:00–18:00'],['Tuti'],'a3'),make('d9','comercial','Luis Paredes','096 345 6789','Solo','','','Octubre',['Miércoles'],['10:00–12:00'],['Plaza Orlando'],'a4'),make('d10','comercial','Elena Cruz','095 678 9012','Solo','','','Noviembre',['Domingo'],['08:00–10:00'],['Plaza San Miguel'],'a5')]}};
+let db=null;function save(){try{saveData()}catch(e){console.error(e)}}function setDb(q){DATA.predicacion=q;db=q}const id=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function opts(items,selected=''){return items.map(x=>`<option ${x===selected?'selected':''}>${esc(x)}</option>`).join('')};function checks(items,selected=[]){return `<div class="checks">${items.map(x=>`<label><input type="checkbox" name="${esc(x)}" ${selected.includes(x)?'checked':''}>${esc(x)}</label>`).join('')}</div>`};function selected(container,items){return items.filter(x=>container.querySelector(`[name="${CSS.escape(x)}"]`)?.checked)}
+function configFor(kind){return db.config.filter(x=>x.kind===kind)}function cartOf(name){return db.config.find(x=>x.name===name)?.cart||'Sin asignar'}
+function availabilityForm(kind, record={}){let commercial=kind==='comercial', places=configFor(kind).map(x=>x.name);let person=commercial?`<label>Publicador aprobado<select name="approvedId" required><option value="">Seleccione…</option>${db.approved.map(a=>`<option value="${a.id}" ${record.approvedId===a.id?'selected':''}>${esc(a.first+' '+a.last+' · '+a.service)}</option>`).join('')}</select></label><p id="approvedNote" class="hint"></p>`:`<label>Nombre completo<input name="person" required value="${esc(record.person||'')}"></label><label>Teléfono<input name="phone" required value="${esc(record.phone||'')}"></label>`;return `<label>Mes del horario<select name="month" required>${opts(MONTHS,record.month||'Septiembre')}</select></label><label>Año del horario<select name="year" required>${opts(YEARS,record.year||2026)}</select></label>${person}<label>Modalidad<select name="mode"><option value="Solo" ${record.mode==='Solo'?'selected':''}>Predicaré solo/a</option><option value="Pareja" ${record.mode==='Pareja'?'selected':''}>Predicaré en Pareja</option></select></label><div class="pair ${record.mode==='Pareja'?'':'hidden'}"><label>Nombre de la pareja<input name="partner" ${record.mode==='Pareja'?'required':''} value="${esc(record.partner||'')}"></label><label>Teléfono de la pareja<input name="partnerPhone" ${record.mode==='Pareja'?'required':''} value="${esc(record.partnerPhone||'')}"></label></div><div class="grid" style="grid-column:1/-1"><label>Días disponibles${checks(DAYS,record.days||[])}</label><label>Horas disponibles${checks(TIMES,record.times||[])}</label><label>Lugares preferidos${checks(places,record.places||[])}</label></div><div id="cartHint" class="hint" style="grid-column:1/-1"></div><div class="actions" style="grid-column:1/-1"><button class="primary" type="submit">${record.id?'Guardar cambios':'Registrar disponibilidad'}</button>${record.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`}
+function renderAvailability(kind, editId=''){let form=$p(kind==='etapas'?'stageForm':'commercialForm'),r=db.availability.find(x=>x.id===editId);form.innerHTML=availabilityForm(kind,r);bindAvailability(form,kind,r);let rows=db.availability.filter(x=>x.kind===kind);$p(kind==='etapas'?'stageList':'commercialList').innerHTML=rows.length?`<table><thead><tr><th>Mes</th><th>Persona(s)</th><th>Días / horas</th><th>Lugares y carrito</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td><span class="tag">${esc(x.month||'Sin mes')}</span></td><td>${esc(x.person)}<br>${esc(x.phone)}${x.mode==='Pareja'?`<br>+ ${esc(x.partner)} · ${esc(x.partnerPhone)}`:''}</td><td>${x.days.map(d=>`<span class="tag">${d}</span>`).join('')}<br>${x.times.map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${x.places.map(p=>`<b>${esc(p)}</b><br><span class="hint">${esc(cartOf(p))}</span>`).join('<br>')}</td><td><button class="small editAvail" data-id="${x.id}" data-kind="${kind}">Editar</button> <button class="small danger delAvail" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Aún no hay disponibilidades registradas.</p>';ROOT.querySelectorAll('.editAvail').forEach(b=>b.onclick=()=>renderAvailability(b.dataset.kind,b.dataset.id));ROOT.querySelectorAll('.delAvail').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este registro?')){db.availability=db.availability.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
+function bindAvailability(form,kind,record){let update=()=>{let pair=form.mode.value==='Pareja';form.querySelector('.pair').classList.toggle('hidden',!pair);form.partner.required=form.partnerPhone.required=pair;let ps=selected(form,configFor(kind).map(x=>x.name));form.querySelector('#cartHint').innerHTML=ps.length?'<b>Carritos asignados:</b> '+ps.map(p=>`${esc(p)}: ${esc(cartOf(p))}`).join(' · '):'Seleccione uno o más lugares para ver el carrito asignado.';if(kind==='comercial'){let a=db.approved.find(x=>x.id===form.approvedId.value);form.querySelector('#approvedNote').textContent=a?`Teléfono registrado: ${a.phone} · Vehículo: ${a.vehicle} · Privilegio: ${(a.months||[]).join(', ')||'sin meses definidos'}`:'Seleccione un publicador aprobado.'}};form.onchange=update;update();form.onsubmit=e=>{e.preventDefault();let places=configFor(kind).map(x=>x.name),a=kind==='comercial'&&db.approved.find(x=>x.id===form.approvedId.value);if(kind==='comercial'&&!(a.months||[]).includes(form.month.value))return alert('Este publicador no tiene el privilegio asignado para el mes seleccionado.');let data={id:record?.id||id(),kind,month:form.month.value,year:Number(form.year.value),person:kind==='comercial'?a.first+' '+a.last:form.person.value.trim(),phone:kind==='comercial'?a.phone:form.phone.value.trim(),approvedId:kind==='comercial'?a.id:undefined,mode:form.mode.value,partner:form.partner.value.trim(),partnerPhone:form.partnerPhone.value.trim(),days:selected(form,DAYS),times:selected(form,TIMES),places:selected(form,places)};if(!data.days.length||!data.times.length||!data.places.length)return alert('Seleccione al menos un día, hora y lugar.');if(record){Object.assign(record,data)}else db.availability.push(data);save();renderAll()};form.querySelector('.cancel')?.addEventListener('click',()=>renderAvailability(kind))}
+function renderConfig(editId=''){let r=db.config.find(x=>x.id===editId)||{},f=$p('configForm');f.innerHTML=`<label>Tipo<select name="kind"><option value="etapas" ${r.kind==='etapas'?'selected':''}>Por etapas</option><option value="comercial" ${r.kind==='comercial'?'selected':''}>Comercial</option></select></label><label>Etapa / local<input name="name" required value="${esc(r.name||'')}"></label><label>Lugar / ubicación<input name="place" required value="${esc(r.place||'')}"></label><label>Tipo de carrito<select name="cart">${opts(['Carrito con Ruedas','Una sola Cara','en V'],r.cart)}</select></label><label>Estado<select name="status">${opts(['Activo','Inactivo','Mantenimiento'],r.status||'Activo')}</select></label><label>Foto (solo comercial)<input name="photoFile" type="file" accept="image/*">${r.photo?'<img class="photo" src="'+r.photo+'">':''}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar lugar'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;f.onsubmit=async e=>{e.preventDefault();let pic=f.photoFile.files[0],photo=r.photo||'';if(pic)photo=await new Promise(ok=>{let q=new FileReader;q.onload=()=>ok(q.result);q.readAsDataURL(pic)});let x={id:r.id||id(),kind:f.kind.value,name:f.name.value.trim(),place:f.place.value.trim(),cart:f.cart.value,status:f.status.value,photo};if(r.id)Object.assign(r,x);else db.config.push(x);save();renderAll()};f.querySelector('.cancel')?.addEventListener('click',()=>renderConfig());let rows=db.config;$p('configList').innerHTML=`<table><thead><tr><th>Tipo</th><th>Etapa / local</th><th>Lugar</th><th>Carrito</th><th>Estado</th><th>Foto</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.kind==='etapas'?'Por etapas':'Comercial'}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.place)}</td><td>${esc(x.cart)}</td><td><span class="tag">${esc(x.status)}</span></td><td>${x.photo?`<img class="photo" src="${x.photo}">`:'—'}</td><td><button class="small editConfig" data-id="${x.id}">Editar</button> <button class="small danger delConfig" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;ROOT.querySelectorAll('.editConfig').forEach(b=>b.onclick=()=>renderConfig(b.dataset.id));ROOT.querySelectorAll('.delConfig').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este lugar?')){db.config=db.config.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
+function renderApproved(editId=''){let r=db.approved.find(x=>x.id===editId)||{},f=$p('approvedForm');f.innerHTML=`<label>Nombre<input name="first" required value="${esc(r.first||'')}"></label><label>Apellido<input name="last" required value="${esc(r.last||'')}"></label><label>Servicio<select name="service">${opts(['PNB','PB','PA','PAI','PR','PS'],r.service||'PNB')}</select></label><label>Edad<input name="age" required type="number" min="1" value="${esc(r.age||'')}"></label><label>Sexo<select name="sex">${opts(['Femenino','Masculino'],r.sex||'Femenino')}</select></label><label>Teléfono<input name="phone" required value="${esc(r.phone||'')}"></label><label>Tiene vehículo<select name="vehicle">${opts(['Sí','No'],r.vehicle||'No')}</select></label><label style="grid-column:1/-1">Meses en que tiene este privilegio${checks(MONTHS,r.months||[])}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar publicador'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;f.onsubmit=e=>{e.preventDefault();let x={id:r.id||id(),first:f.first.value.trim(),last:f.last.value.trim(),service:f.service.value,age:f.age.value,sex:f.sex.value,phone:f.phone.value.trim(),vehicle:f.vehicle.value,months:selected(f,MONTHS)};if(!x.months.length)return alert('Seleccione al menos un mes de privilegio.');if(r.id)Object.assign(r,x);else db.approved.push(x);save();renderAll()};f.querySelector('.cancel')?.addEventListener('click',()=>renderApproved());$p('approvedList').innerHTML=`<table><thead><tr><th>Nombre</th><th>Servicio</th><th>Edad</th><th>Sexo</th><th>Teléfono</th><th>Vehículo</th><th>Meses de privilegio</th><th></th></tr></thead><tbody>${db.approved.map(x=>`<tr><td>${esc(x.first+' '+x.last)}</td><td>${esc(x.service)}</td><td>${esc(x.age)}</td><td>${esc(x.sex)}</td><td>${esc(x.phone)}</td><td>${esc(x.vehicle)}</td><td>${(x.months||[]).map(m=>`<span class="tag">${esc(m)}</span>`).join('')}</td><td><button class="small editApproved" data-id="${x.id}">Editar</button> <button class="small danger delApproved" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;ROOT.querySelectorAll('.editApproved').forEach(b=>b.onclick=()=>renderApproved(b.dataset.id));ROOT.querySelectorAll('.delApproved').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este publicador?')){db.approved=db.approved.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
+function renderSchedule(){let month=$p('scheduleMonth').value||'Septiembre',year=Number($p('scheduleYear').value||2026),html=DAYS.map(d=>{let slots=TIMES.map(t=>{let matches=db.availability.filter(x=>(x.month||'Septiembre')===month&&Number(x.year||2026)===year&&x.days.includes(d)&&x.times.includes(t));let cards=matches.map(x=>x.places.map(p=>`<div class="slot"><strong>${esc(t)} · ${esc(p)}</strong>${esc(x.person)}${x.mode==='Pareja'?` + ${esc(x.partner)}`:''}<br><span class="hint">${esc(cartOf(p))} · ${x.kind==='comercial'?'Comercial':'Por etapas'}</span></div>`).join('')).join('');return cards}).join('')||'<p class="empty">Sin asignaciones</p>';return `<article class="day"><h3>${d}</h3>${slots}</article>`}).join('');$p('schedule').innerHTML=html}
+function renderReport(){let month=$p('reportMonth').value||'Septiembre',year=Number($p('reportYear').value||2026),rows=db.availability.filter(x=>(x.month||'Septiembre')===month&&Number(x.year||2026)===year),participants=[];rows.forEach(x=>{participants.push(x.person);if(x.mode==='Pareja'&&x.partner)participants.push(x.partner)});let unique=[...new Set(participants)];$p('monthlyReport').innerHTML=rows.length?`<p><b>${esc(month)} ${year}:</b> ${rows.length} disponibilidades y ${unique.length} participantes.</p><table><thead><tr><th>Participante(s)</th><th>Tipo</th><th>Día(s)</th><th>Hora(s)</th><th>Lugar(es)</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.person)}${x.mode==='Pareja'?`<br>+ ${esc(x.partner)}`:''}</td><td>${x.kind==='comercial'?'Comercial':'Por etapas'}</td><td>${x.days.map(esc).join(', ')}</td><td>${x.times.map(esc).join(', ')}</td><td>${x.places.map(esc).join(', ')}</td></tr>`).join('')}</tbody></table><h3 style="margin-top:18px">Hermanos y hermanas que participaron</h3><p>${unique.map(n=>`<span class="tag">${esc(n)}</span>`).join(' ')}</p>`:`<p class="empty">No hay horarios registrados para ${esc(month)} ${year}.</p>`}
+function setupMonthSelects(){['scheduleMonth','reportMonth'].forEach(i=>{let s=$p(i),current=s.value||'Septiembre';s.innerHTML=opts(MONTHS,current);s.onchange=()=>{renderSchedule();renderReport()}});['scheduleYear','reportYear'].forEach(i=>{let s=$p(i),current=s.value||2026;s.innerHTML=opts(YEARS,current);s.onchange=()=>{renderSchedule();renderReport()}})}function renderAll(){setupMonthSelects();renderAvailability('etapas');renderAvailability('comercial');renderConfig();renderApproved();renderSchedule();renderReport();if(typeof lockUI==='function')lockUI()}
+let curTab='inicio';
+function show(x){curTab=x;ROOT.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='pp-'+x));ROOT.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===x));try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}}
+function bindStatic(){
+  ROOT.querySelectorAll('.tab').forEach(b=>b.onclick=()=>show(b.dataset.tab));
+  ROOT.querySelectorAll('.choose').forEach(b=>b.onclick=()=>show(b.dataset.target));
+  $p('ppExportBtn').onclick=()=>{let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='predicacion-joya-oeste.json';a.click();URL.revokeObjectURL(a.href)};
+  $p('ppImportBtn').onclick=()=>$p('ppImportFile').click();
+  $p('ppImportFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader;r.onload=()=>{try{let q=JSON.parse(r.result);if(!q.config||!q.approved||!q.availability)throw 0;setDb(q);save();renderAll();alert('Datos importados correctamente.')}catch{alert('El archivo no tiene el formato esperado.')}};r.readAsText(f)};
+  $p('ppRestoreBtn').onclick=()=>{if(confirm('¿Restaurar los datos iniciales? Se reemplazarán los datos guardados.')){setDb(initial());save();renderAll()}};
+  $p('ppClearBtn').onclick=()=>{if(confirm('¿Borrar TODOS los datos guardados? Esta acción no se puede deshacer.')){setDb({config:[],approved:[],availability:[]});save();renderAll()}};
+}
+function migrarLocal(){
+  if(READONLY)return;
+  try{
+    const raw=localStorage.getItem(LEGACY_KEY);
+    if(!raw||localStorage.getItem(LEGACY_KEY+'_migrado'))return;
+    if(db.config.length||db.approved.length||db.availability.length)return;
+    const q=JSON.parse(raw);
+    if(!q||!q.config||!q.approved||!q.availability)return;
+    setDb(q);localStorage.setItem(LEGACY_KEY+'_migrado','1');save();
+    if(typeof showToast==='function')showToast('Predicación: se migraron los datos guardados en este navegador');
+  }catch(e){console.warn('Migración de Predicación:',e)}
+}
+function mount(el){
+  ROOT=el;
+  db=DATA.predicacion;
+  migrarLocal();
+  if(!READONLY){try{db.approved.forEach(x=>x.months=x.months||['Septiembre']);db.availability.forEach(x=>{x.month=x.month||'Septiembre';x.year=x.year||2026})}catch(e){}}
+  ROOT.innerHTML='<div class="mod-predicacion">'+PP_HTML+'</div>';
+  bindStatic();
+  renderAll();
+  show(curTab);
+  if(typeof lockUI==='function')lockUI();
+}
+window.MP={mount:mount};
+
+})();
+</script>
 <script>
 /* =========================================================
    CONSTANTES Y PERSISTENCIA
@@ -1140,7 +2857,9 @@ function defaultData(){
     mapCenter: { lat: -0.1807, lng: -78.4678, zoom: 13 },
     publishers: [],
     meetingAttendance: {},
-    territories: [], preachingGroups: [], territoryAssignments: [], noTouch: [], meetingSettings: { weekendDay:"Sábado", midweekDay:"Miércoles" }
+    territories: [], preachingGroups: [], territoryAssignments: [], noTouch: [], meetingSettings: { weekendDay:"Sábado", midweekDay:"Miércoles" },
+    discursos: { seq:{discursante:1,discurso:1,asignacion:1,visita:1,arregloPublico:1}, discursantes:[], discursos:[], asignaciones:[], visitas:[], salidas:[], arreglosPublicos:[] },
+    predicacion: { config:[], approved:[], availability:[] }
   };
 }
 function normalizeData(parsed){
@@ -1158,6 +2877,12 @@ function normalizeData(parsed){
   parsed.publishers.forEach(p=>{p.inactive=!!p.inactive;});
   if(!parsed.meetingAttendance) parsed.meetingAttendance={};
   if(!parsed.mapCenter) parsed.mapCenter=defaultData().mapCenter;
+  /* módulos nuevos: Discursos Públicos y Predicación Pública (solo se extiende el esquema) */
+  if(!parsed.discursos||typeof parsed.discursos!=='object') parsed.discursos={};
+  parsed.discursos.seq=Object.assign({discursante:1,discurso:1,asignacion:1,visita:1,arregloPublico:1},parsed.discursos.seq||{});
+  ['discursantes','discursos','asignaciones','visitas','salidas','arreglosPublicos'].forEach(k=>{ if(!Array.isArray(parsed.discursos[k])) parsed.discursos[k]=[]; });
+  if(!parsed.predicacion||typeof parsed.predicacion!=='object') parsed.predicacion={};
+  ['config','approved','availability'].forEach(k=>{ if(!Array.isArray(parsed.predicacion[k])) parsed.predicacion[k]=[]; });
   return parsed;
 }
 let NEED_IDB_RESTORE=false;
@@ -1344,7 +3069,7 @@ let SELECTED_MONTH = (()=>{ const n=new Date(); return n.getFullYear()+'-'+Strin
 let SELECTED_TERR = null;
 let DRAW_MODE = null; // {territoryId, type:'boundary'|'address'}
 
-['navA','navB','navC','navD'].forEach(id=>{
+['navA','navB','navC','navD','navE','navF'].forEach(id=>{
   document.getElementById(id).addEventListener('click', e=>{
     const btn = e.target.closest('button[data-view]');
     if(!btn) return;
@@ -1355,6 +3080,7 @@ function setView(view, extra){
   if(view==='users'&&!isAdmin()) view='panel';
   if(view==='backup'&&(!CUR||CUR.role==='lector')) view='panel';
   VIEW = view;
+  try{ if(history.replaceState) history.replaceState(null,'',(view==='discursos'||view==='predicacion')?'#'+view:location.pathname+location.search); }catch(e){}
   if(view==='record' && extra) SELECTED_PUB = extra;
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.view===view));
   render();
@@ -1363,12 +3089,13 @@ function setView(view, extra){
 function render(){
   if(VIEW==='users'&&!isAdmin()) VIEW='panel';
   if(VIEW==='backup'&&(!CUR||CUR.role==='lector')) VIEW='panel';
+  READONLY=computeReadOnly(VIEW);
   document.getElementById('congName').value = DATA.congregation || '';
   const content = document.getElementById('content');
   const title = document.getElementById('viewTitle');
   const meta = document.getElementById('viewMeta');
   const actions = document.getElementById('topbarActions');
-  actions.innerHTML = ''; content.innerHTML = '';
+  actions.innerHTML = ''; content.innerHTML = ''; content.style.padding='';
 
   if(VIEW==='panel'){ title.textContent='Panel'; meta.textContent='Vista general de la congregación'; renderPanel(content); }
   else if(VIEW==='publishers'){ title.textContent='Publicadores'; meta.textContent='Registro del publicador por persona'; renderPublishers(content, actions); }
@@ -1382,6 +3109,8 @@ function render(){
   else if(VIEW==='territoryRegister'){ title.textContent='Registro de asignación de territorio'; meta.textContent='Etapas y año de servicio'; renderTerritoryRegister(content, actions); }
   else if(VIEW==='noTouch'){ title.textContent='No tocar'; meta.textContent='Control por grupo y manzana'; renderNoTouch(content, actions); }
   else if(VIEW==='backup'){ title.textContent='Respaldo'; meta.textContent='Exporta o restaura la información'; renderBackup(content); }
+  else if(VIEW==='discursos'){ title.textContent='Discursos Públicos'; meta.textContent=READONLY?'Módulo en modo lectura':'Discursantes, discursos, asignaciones, visitas y arreglos'; content.style.padding='0'; window.MD.mount(content); }
+  else if(VIEW==='predicacion'){ title.textContent='Predicación Pública'; meta.textContent=READONLY?'Módulo en modo lectura':'Etapas, comercial, horario y reportes'; content.style.padding='0'; window.MP.mount(content); }
   else if(VIEW==='users'){ title.textContent='Usuarios y accesos'; meta.textContent='Administradores, colaboradores y lectores'; renderUsers(content, actions); }
   if(typeof lockUI==='function') lockUI();
 }
@@ -2224,9 +3953,9 @@ function renderTerritoryRegister(content,actions){
     <div class="s13-year"><strong>Año de servicio:</strong> ${state.year} ${selected?`<span style="float:right"><strong>Etapa:</strong> ${escapeHtml(state.stage)}</span>`:''}</div>
     <div class="s13-sub">${selected?`<strong>Núm. de terr.:</strong> #${escapeHtml(selected.number)} &nbsp; <strong>Grupo:</strong> ${escapeHtml(group?.name||'—')} &nbsp; <strong>Territorio:</strong> ${escapeHtml(selected.name||'')} &nbsp; <strong>Manzanas:</strong> ${blockCount||rows.length||0}`:'Selecciona un grupo y territorio.'}</div>
     <div class="s13-scroll"><table class="s13-table"><thead>
-      <tr><th rowspan="2">Núm.<br>de terr.</th><th rowspan="2">Núm.<br>de manzana</th><th rowspan="2">Última fecha<br>en que se<br>completó*</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th></tr>
+      <tr><th rowspan="2">Núm.<br>de manzana</th><th rowspan="2">Última fecha<br>en que se<br>completó*</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th></tr>
       <tr><th>Fecha en que se asignó</th><th>Fecha en que se completó</th><th>Fecha en que se asignó</th><th>Fecha en que se completó</th><th>Fecha en que se asignó</th><th>Fecha en que se completó</th></tr>
-    </thead><tbody>${selected?renderAssignmentRows(selected,state.stage,state.year):'<tr><td colspan="9">Selecciona un territorio.</td></tr>'}</tbody></table></div>
+    </thead><tbody>${selected?renderAssignmentRows(selected,state.stage,state.year):'<tr><td colspan="8">Selecciona un territorio.</td></tr>'}</tbody></table></div>
     <div class="s13-foot">* La última fecha se calcula automáticamente con la fecha de completado más reciente de los tres asignados. El número de manzana se puede editar.</div>
   </div>`;
 
@@ -2256,12 +3985,11 @@ function renderAssignmentRows(t,stage,year){
   let rows=assignmentRowsFor(t,stage,year);
   if(!rows.length) rows=[{id:'new',sequence:1,manzana:'1',assignments:[{},{},{}]}];
   const rowHtml=rows.map((r)=>`<tr>
-    <td>#${escapeHtml(t.number)}</td>
     <td><input data-tr="manzana" data-row="${r.id}" value="${escapeAttr(r.manzana||'')}" placeholder="1"></td>
     <td>${escapeHtml(lastCompletion([r])||'—')}</td>
     ${[0,1,2].map(j=>{const a=(r.assignments||[])[j]||{};return `<td colspan="2" class="assign-box"><div class="assign-name"><input data-tr="name" data-row="${r.id}" data-j="${j}" value="${escapeAttr(a.name||'')}" placeholder="Nombre del hermano"></div><div class="assign-dates"><input type="date" data-tr="date" data-row="${r.id}" data-j="${j}" value="${escapeAttr(a.date||'')}" title="Fecha en que se asignó"><input type="date" data-tr="completed" data-row="${r.id}" data-j="${j}" value="${escapeAttr(a.completed||'')}" title="Fecha en que se completó"></div></td>`}).join('')}
   </tr>`).join('');
-  return rowHtml+`<tr><td colspan="9"><button class="btn small" data-tradd="1">+ Agregar otra manzana / fila de asignación</button></td></tr>`;
+  return rowHtml+`<tr><td colspan="8"><button class="btn small" data-tradd="1">+ Agregar otra manzana / fila de asignación</button></td></tr>`;
 }
 function ensureAssignmentRow(t,stage,year,id){
   if(READONLY) return {id:'ro',territoryId:t.id,stage,serviceYear:Number(year),sequence:1,manzana:'1',assignments:[{},{},{}]};
@@ -2337,6 +4065,7 @@ function renderNoTouch(content,actions){
               <th>Motivo/indicación</th>
               <th>Fecha de Registro</th>
               <th>Tiempo transcurrido</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -2352,8 +4081,9 @@ function renderNoTouch(content,actions){
                 <td>${escapeHtml(r.reason||'')}</td>
                 <td>${escapeHtml(r.registered||r.registrationDate||r.updated||'')}</td>
                 <td>${escapeHtml(elapsed)}</td>
+                <td style="white-space:nowrap"><button class="btn small secondary" data-nted="${r.id}">Editar</button> <button class="btn small danger" data-ntdel="${r.id}">Eliminar</button></td>
               </tr>`;
-            }).join('') || '<tr><td colspan="7"><div class="empty">No hay registros de No tocar.</div></td></tr>'}
+            }).join('') || '<tr><td colspan="8"><div class="empty">No hay registros de No tocar.</div></td></tr>'}
           </tbody>
         </table>
       </div>
@@ -2384,6 +4114,33 @@ function renderNoTouch(content,actions){
     inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();inp.blur();}});
   });
 
+  content.querySelectorAll('[data-nted]').forEach(b=>b.onclick=()=>{
+    const r=DATA.noTouch.find(x=>x.id===b.dataset.nted); if(!r) return;
+    showModal(`
+      <h3>Editar No tocar</h3>
+      <div class="field"><label>Grupo</label><select id="nteGroup">${groups.map(g=>`<option value="${g.id}" ${g.id===r.groupId?'selected':''}>${escapeHtml(g.name)}</option>`).join('')}</select></div>
+      <div class="grid2">
+        <div class="field"><label>Etapa</label><input id="nteStage" value="${escapeAttr(r.stage||'')}"></div>
+        <div class="field"><label>Manzana</label><input id="nteBlock" value="${escapeAttr(r.block||'')}"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Villa</label><input id="nteVilla" value="${escapeAttr(r.villa!==undefined?r.villa:(r.address||''))}"></div>
+        <div class="field"><label>Fecha de Registro</label><input type="date" id="nteRegistered" value="${escapeAttr(r.registered||r.registrationDate||'')}"></div>
+      </div>
+      <div class="field"><label>Motivo/indicación</label><textarea id="nteReason" rows="3">${escapeHtml(r.reason||'')}</textarea></div>
+      <div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="nteSave">Guardar cambios</button></div>`);
+    document.getElementById('nteSave').onclick=()=>{
+      const groupId=document.getElementById('nteGroup').value, stage=document.getElementById('nteStage').value.trim(), block=document.getElementById('nteBlock').value.trim(), villa=document.getElementById('nteVilla').value.trim(), registered=document.getElementById('nteRegistered').value, reason=document.getElementById('nteReason').value.trim();
+      if(!groupId||!stage||!block||!villa||!registered){ showToast('Completa Grupo, Etapa, Manzana, Villa y Fecha de Registro.'); return; }
+      Object.assign(r,{groupId,stage,block,villa,registered,reason,updated:todayStr()});
+      saveData(); closeModal(); renderNoTouch(content,actions); showToast('Registro actualizado');
+    };
+  });
+  content.querySelectorAll('[data-ntdel]').forEach(b=>b.onclick=()=>{
+    const r=DATA.noTouch.find(x=>x.id===b.dataset.ntdel); if(!r) return;
+    showModal(`<h3>Eliminar registro</h3><p>Se eliminará este registro de No tocar (${escapeHtml(r.stage||'')} · manzana ${escapeHtml(r.block||'')} · ${escapeHtml(r.villa||'')}). Esta acción no se puede deshacer.</p><div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn danger" id="ntdOk">Eliminar</button></div>`);
+    document.getElementById('ntdOk').onclick=()=>{ DATA.noTouch=DATA.noTouch.filter(x=>x.id!==r.id); saveData(); closeModal(); renderNoTouch(content,actions); showToast('Registro eliminado'); };
+  });
   document.getElementById('ntAddRow').onclick=()=>{
     showModal(`
       <h3>Agregar No tocar</h3>
@@ -2547,6 +4304,36 @@ const CHUNK=80000;
 let USERS=[];
 const $id=id=>document.getElementById(id);
 function isAdmin(){ return !!CUR && CUR.role==='admin'; }
+function isLector(){ return !!CUR && CUR.role==='lector'; }
+/* ---------- módulos y permisos de colaborador ---------- */
+const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública']];
+const MODULE_OF_VIEW={panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
+/* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
+   Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
+function computeReadOnly(view){
+  if(!CUR) return false;
+  if(CUR.role==='lector') return true;
+  if(CUR.role!=='colab') return false;
+  if(view==='backup'||view==='users') return false;
+  if(!CUR.modules) return false;
+  const mod=MODULE_OF_VIEW[view]||'secretaria';
+  return !CUR.modules[mod];
+}
+let ACCESS_UNSUB=null;
+function watchMyAccess(){
+  if(!FIREBASE_READY||!CUR||CUR.role==='admin'||ACCESS_UNSUB) return;
+  try{
+    ACCESS_UNSUB=firebase.firestore().collection('usuarios').doc(CUR.id).onSnapshot(d=>{
+      if(!d.exists||d.data().active===false){ try{ firebase.auth().signOut(); }catch(e){} location.reload(); return; }
+      const x=d.data(), nm=(x.modules&&typeof x.modules==='object')?x.modules:null;
+      if(x.role!==CUR.role){ location.reload(); return; }
+      if(JSON.stringify(nm)!==JSON.stringify(CUR.modules||null)){ CUR.modules=nm; showToast('Tus permisos de módulos fueron actualizados'); render(); }
+    },()=>{});
+  }catch(e){}
+}
+function modsChecks(cur){ return MODULES.map(([k,l])=>`<label class="modchk"><input type="checkbox" data-mod="${k}" ${(!cur||cur[k])?'checked':''}> ${l}</label>`).join(''); }
+function readMods(root){ const m={}; root.querySelectorAll('[data-mod]').forEach(c=>{ m[c.dataset.mod]=c.checked; }); return m; }
+function modsSummary(u){ if(u.role!=='colab') return '<small>—</small>'; if(!u.modules) return '<span class="modtag">Todos (sin configurar)</span>'; return MODULES.map(([k,l])=>`<span class="modtag ${u.modules[k]?'':'off'}">${l}</span>`).join(''); }
 function randStr(n){
   const a='abcdefghjkmnpqrstuvwxyz23456789'; let s='';
   const r=(window.crypto&&crypto.getRandomValues)?crypto.getRandomValues(new Uint8Array(n)):Array.from({length:n},()=>Math.floor(Math.random()*256));
@@ -2555,11 +4342,11 @@ function randStr(n){
 
 /* ---------- usuarios: Firestore (colección "usuarios", id = correo) ---------- */
 async function loadRoster(){
-  const roster=ADMIN_EMAILS.map(email=>({id:email,name:'Administrador',username:email,role:'admin',active:true}));
+  const roster=ADMIN_EMAILS.map(email=>({id:email,name:'Administrador',username:email,role:'admin',active:true,modules:null}));
   if(SYNC.db){
     try{
       const snap=await SYNC.db.collection('usuarios').get();
-      snap.forEach(d=>{ if(ADMIN_EMAILS.includes(d.id))return; const x=d.data(); roster.push({id:d.id,name:x.name||d.id,username:d.id,role:x.role||'lector',active:x.active!==false}); });
+      snap.forEach(d=>{ if(ADMIN_EMAILS.includes(d.id))return; const x=d.data(); roster.push({id:d.id,name:x.name||d.id,username:d.id,role:x.role||'lector',active:x.active!==false,modules:(x.modules&&typeof x.modules==='object')?x.modules:null}); });
     }catch(e){}
   }
   return roster;
@@ -2590,10 +4377,16 @@ async function syncPush(){
     });
     const col=SYNC.db.collection('chunks');
     for(const id of Object.keys(want)){
-      if(SYNC.last[id]!==want[id].json){ await col.doc(id).set(want[id]); SYNC.last[id]=want[id].json; }
+      if(SYNC.last[id]!==want[id].json){
+        try{ await col.doc(id).set(want[id]); SYNC.last[id]=want[id].json; }
+        catch(e){ if(e&&e.code==='permission-denied'){ SYNC.denied=true; continue; } throw e; }
+      }
     }
     for(const id of Object.keys(SYNC.last)){
-      if(!want[id]){ await col.doc(id).delete(); delete SYNC.last[id]; }
+      if(!want[id]){
+        try{ await col.doc(id).delete(); delete SYNC.last[id]; }
+        catch(e){ if(e&&e.code==='permission-denied'){ SYNC.denied=true; continue; } throw e; }
+      }
     }
     setSyncBadge('☁ Sincronizado');
   }catch(e){ console.error(e); setSyncBadge('⚠ Error al sincronizar'); showToast('⚠ No se pudo guardar en la nube'); }
@@ -2607,7 +4400,7 @@ function applyRemote(docs){
   Object.keys(g).forEach(k=>{ const p=g[k].sort((a,b)=>a.i-b.i); if(p.length!==p[0].n) return; try{ out[k]=JSON.parse(p.map(x=>x.json).join('')); }catch(e){} });
   if(!Object.keys(out).length) return false;
   DATA=normalizeData(Object.assign(defaultData(),out)); SYNC.last=last;
-  if(READONLY) deepFreeze(DATA);
+  if(isLector()) deepFreeze(DATA);
   return true;
 }
 function remoteChanged(docs){
@@ -2643,6 +4436,7 @@ function lockUI(){
     if(el.matches('#pubSearch,.top-search,[data-ro-ok]')) return; el.disabled=true;
   });
   document.querySelectorAll('#content select').forEach(el=>{ if(el.matches(RO_SEL)||/^(np|ep)/.test(el.id)) el.disabled=true; });
+  document.querySelectorAll('#content .mod-discursos select,#content .mod-predicacion select').forEach(el=>{ if(!el.hasAttribute('data-ro-ok')) el.disabled=true; });
   const cn=$id('congName'); if(cn) cn.readOnly=true;
 }
 let lockBusy=false;
@@ -2656,7 +4450,11 @@ function installReadOnly(){
     const k=(e.key||'').toLowerCase();
     if(((e.ctrlKey||e.metaKey)&&['p','s','u','c','x'].includes(k))||k==='f12'||k==='printscreen'){ stop(e); if(k==='p') showToast('La impresión no está permitida para lectores'); }
   },true);
-  new MutationObserver(()=>{ if(lockBusy) return; lockBusy=true; requestAnimationFrame(()=>{ try{lockUI();}catch(e){} lockBusy=false; }); }).observe(document.body,{childList:true,subtree:true});
+}
+let lockObs=false;
+function installLockObserver(){
+  if(lockObs) return; lockObs=true;
+  new MutationObserver(()=>{ if(lockBusy) return; lockBusy=true; requestAnimationFrame(()=>{ try{ lockUI(); }catch(e){} lockBusy=false; }); }).observe(document.body,{childList:true,subtree:true});
 }
 
 /* ---------- pantalla de ingreso (Firebase Authentication, correo y contraseña reales) ---------- */
@@ -2679,17 +4477,17 @@ async function startAuth(){
 }
 async function resolveSession(fbUser){
   const email=(fbUser.email||'').toLowerCase();
-  let role=null,name=null,active=true;
+  let role=null,name=null,active=true,modules=null;
   if(ADMIN_EMAILS.includes(email)){ role='admin'; name='Administrador'; }
   else{
     try{
       const doc=await firebase.firestore().collection('usuarios').doc(email).get();
-      if(doc.exists){ const x=doc.data(); role=x.role; name=x.name; active=x.active!==false; }
+      if(doc.exists){ const x=doc.data(); role=x.role; name=x.name; active=x.active!==false; modules=(x.modules&&typeof x.modules==='object')?x.modules:null; }
     }catch(e){}
   }
   if(!role||!active){ setLoginMsg('Esta cuenta no tiene acceso a la aplicación.',true); enableLogin(true); try{ await firebase.auth().signOut(); }catch(e){} return; }
   SYNC.db=firebase.firestore(); SYNC.canWrite=true;
-  await enterApp({id:email,name:name||email,username:email,role});
+  await enterApp({id:email,name:name||email,username:email,role,modules});
 }
 async function doLogin(e){
   e.preventDefault();
@@ -2700,28 +4498,30 @@ async function doLogin(e){
   catch(err){ setLoginMsg('Correo o contraseña incorrectos.',true); enableLogin(true); $id('lgPass').value=''; }
 }
 async function enterApp(u){
-  CUR=u; READONLY=(u.role==='lector');
+  CUR=u; READONLY=isLector();
   setLoginMsg('Cargando datos…');
   USERS=await loadRoster();
   if(SYNC.db){
     try{
       const snap=await SYNC.db.collection('chunks').get();
       if(!snap.empty) applyRemote(snap.docs);
-      else if(!READONLY){ SYNC.enabled=true; await syncPush(); }
+      else if(!isLector()){ SYNC.enabled=true; await syncPush(); }
     }catch(e){ console.error(e); showToast('⚠ No se pudieron cargar los datos compartidos'); }
     SYNC.enabled=true; watchRemote();
   }
-  if(READONLY){ deepFreeze(DATA); installReadOnly(); }
+  if(isLector()){ deepFreeze(DATA); installReadOnly(); }
+  installLockObserver(); watchMyAccess();
   document.body.classList.add('authed');
   renderUserBox(); $id('grpSys').style.display=isAdmin()?'':'none';
   const nu=document.querySelector('button[data-view="users"]'); if(nu) nu.style.display=isAdmin()?'':'none';
   const nb=document.querySelector('button[data-view="backup"]'); if(nb) nb.style.display=(CUR.role==='lector')?'none':'';
-  setView('panel');
+  const h0=(location.hash||'').replace('#','');
+  setView((h0==='discursos'||h0==='predicacion')?h0:'panel');
 }
 function renderUserBox(){
-  const roleTxt=ROLE_LABEL[CUR.role]+(READONLY?' · solo lectura':'');
-  $id('userBox').innerHTML=`<div class="ub-name">${escapeHtml(CUR.name)}</div><div class="ub-role">${roleTxt}</div><div class="ub-links">${(READONLY||!FIREBASE_READY)?'':'<button class="linkbtn" id="ubPw">Cambiar contraseña</button>'}<button class="linkbtn" id="ubOut">Salir</button></div><div class="ub-sync" id="syncBadge">${SYNC.db?(READONLY?'☁ Datos compartidos':'☁ Sincronizado'):'Guardado en este navegador'}</div>`;
-  if(!READONLY&&FIREBASE_READY) $id('ubPw').onclick=()=>openChangePw();
+  const roleTxt=ROLE_LABEL[CUR.role]+(isLector()?' · solo lectura':'');
+  $id('userBox').innerHTML=`<div class="ub-name">${escapeHtml(CUR.name)}</div><div class="ub-role">${roleTxt}</div><div class="ub-links">${(isLector()||!FIREBASE_READY)?'':'<button class="linkbtn" id="ubPw">Cambiar contraseña</button>'}<button class="linkbtn" id="ubOut">Salir</button></div><div class="ub-sync" id="syncBadge">${SYNC.db?(isLector()?'☁ Datos compartidos':'☁ Sincronizado'):'Guardado en este navegador'}</div>`;
+  if(!isLector()&&FIREBASE_READY) $id('ubPw').onclick=()=>openChangePw();
   $id('ubOut').onclick=async()=>{ try{ if(FIREBASE_READY) await firebase.auth().signOut(); }catch(e){} location.reload(); };
   if(SYNC.db) $id('sideFoot').textContent='Los datos se guardan en la nube y se comparten con los demás usuarios.';
 }
@@ -2753,13 +4553,14 @@ function renderUsers(content,actions){
   const order={admin:0,colab:1,lector:2};
   const rows=[...USERS].sort((a,b)=>order[a.role]-order[b.role]||a.name.localeCompare(b.name));
   content.innerHTML=`
-    <div class="note"><strong>Administradores</strong>: acceso total y gestión de usuarios (se definen en el código, no aquí). <strong>Colaboradores</strong>: registran y editan información; pueden descargar el respaldo pero no cargarlo, y no ven esta sección. <strong>Lectores</strong>: solo visualizan; no pueden editar, importar/exportar ni imprimir.</div>
+    <div class="note"><strong>Administradores</strong>: acceso total y gestión de usuarios (se definen en el código, no aquí). <strong>Colaboradores</strong>: registran y editan solo los módulos que se les asignen (Secretaría, Territorios, Discursos Públicos, Predicación Pública); el resto lo ven en modo lectura. Pueden descargar el respaldo pero no cargarlo, y no ven esta sección. <strong>Lectores</strong>: solo visualizan; no pueden editar, importar/exportar ni imprimir.</div>
     <div class="stat-row"><div class="stat"><div class="num">${cnt('admin')}/${ROLE_CAP.admin}</div><div class="lbl">Administradores</div></div><div class="stat"><div class="num">${cnt('colab')}/${ROLE_CAP.colab}</div><div class="lbl">Colaboradores</div></div><div class="stat"><div class="num">${cnt('lector')}</div><div class="lbl">Lectores</div></div></div>
-    <div class="card"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(u=>`<tr>
+    <div class="card"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Módulos que edita</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(u=>`<tr>
       <td>${escapeHtml(u.name)}${u.id===CUR.id?' <small>(tú)</small>':''}</td><td>${escapeHtml(u.username)}</td>
       <td><span class="badge role-${u.role}">${ROLE_LABEL[u.role]}</span></td>
+      <td>${modsSummary(u)}</td>
       <td><span class="badge ${u.active===false?'Inactivo':'Activo'}">${u.active===false?'Desactivado':'Activo'}</span></td>
-      <td style="white-space:nowrap;text-align:right">${u.role==='admin'?'<small>Definido en el código</small>':`<button class="btn small secondary" data-u="reset" data-id="${u.id}">Restablecer contraseña</button> <button class="btn small secondary" data-u="tog" data-id="${u.id}">${u.active===false?'Activar':'Desactivar'}</button> <button class="btn small danger" data-u="del" data-id="${u.id}">Quitar acceso</button>`}</td></tr>`).join('')}</tbody></table></div>`;
+      <td style="white-space:nowrap;text-align:right">${u.role==='admin'?'<small>Definido en el código</small>':`${u.role==='colab'?`<button class="btn small" data-u="mod" data-id="${u.id}">Módulos</button> `:''}<button class="btn small secondary" data-u="reset" data-id="${u.id}">Restablecer contraseña</button> <button class="btn small secondary" data-u="tog" data-id="${u.id}">${u.active===false?'Activar':'Desactivar'}</button> <button class="btn small danger" data-u="del" data-id="${u.id}">Quitar acceso</button>`}</td></tr>`).join('')}</tbody></table></div>`;
   content.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>userAction(b.dataset.u,USERS.find(x=>x.id===b.dataset.id)));
 }
 function roleOptions(current){
@@ -2774,10 +4575,14 @@ function openUserModal(){
   <div class="field"><label>Nombre completo</label><input id="uName"></div>
   <div class="grid2"><div class="field"><label>Correo electrónico</label><input id="uUser" type="email" autocapitalize="none"></div>
   <div class="field"><label>Rol</label><select id="uRole">${roleOptions('lector')}</select></div></div>
+  <div class="field" id="uModsWrap" style="display:none"><label>Módulos que puede editar (el resto lo verá en modo lectura)</label>${modsChecks(null)}</div>
   <div class="field"><label>Contraseña temporal</label><input id="uPw" value="${randStr(8)}"></div>
   <div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="uSave">Guardar</button></div>`);
+  const syncModsBox=()=>{ $id('uModsWrap').style.display=($id('uRole').value==='colab')?'':'none'; };
+  $id('uRole').addEventListener('change',syncModsBox); syncModsBox();
   $id('uSave').onclick=async()=>{
     const name=$id('uName').value.trim(), role=$id('uRole').value, email=$id('uUser').value.trim().toLowerCase(), pw=$id('uPw').value;
+    const rec={name,role,active:true}; if(role==='colab') rec.modules=readMods($id('uModsWrap'));
     if(!name||!email){ showToast('Escribe el nombre y el correo'); return; }
     if(pw.length<6){ showToast('La contraseña debe tener al menos 6 caracteres'); return; }
     if(ADMIN_EMAILS.includes(email)||USERS.some(x=>x.id===email)){ showToast('Ese correo ya tiene acceso'); return; }
@@ -2785,18 +4590,26 @@ function openUserModal(){
       const sec=firebase.apps.find(a=>a.name==='sec')||firebase.initializeApp(firebaseConfig,'sec');
       await sec.auth().createUserWithEmailAndPassword(email,pw);
       await sec.auth().signOut();
-      await firebase.firestore().collection('usuarios').doc(email).set({name,role,active:true});
+      await firebase.firestore().collection('usuarios').doc(email).set(rec);
       showCreds([{n:name,u:email,pw}],'Usuario creado'); USERS=await loadRoster(); render();
     }catch(e){
       if(e.code==='auth/email-already-in-use'){
-        try{ await firebase.firestore().collection('usuarios').doc(email).set({name,role,active:true}); USERS=await loadRoster(); render(); closeModal(); showToast('Ese correo ya tenía cuenta; se habilitó con este rol.'); }
+        try{ await firebase.firestore().collection('usuarios').doc(email).set(rec); USERS=await loadRoster(); render(); closeModal(); showToast('Ese correo ya tenía cuenta; se habilitó con este rol.'); }
         catch(e2){ showToast('No se pudo habilitar el usuario.'); }
       } else { showToast('No se pudo crear el usuario.'); }
     }
   };
 }
+function openModulesModal(u){
+  showModal(`<h3>Módulos de ${escapeHtml(u.name)}</h3><p>Marca los módulos que este colaborador puede editar. Los demás se mostrarán en modo lectura.</p><div id="mdBox">${modsChecks(u.modules)}</div><div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="mdSave">Guardar</button></div>`);
+  $id('mdSave').onclick=async()=>{
+    try{ await firebase.firestore().collection('usuarios').doc(u.id).update({modules:readMods($id('mdBox'))}); closeModal(); showToast('Permisos de módulos actualizados'); USERS=await loadRoster(); render(); }
+    catch(e){ showToast('No se pudieron guardar los permisos.'); }
+  };
+}
 async function userAction(act,u){
   if(!u||u.role==='admin') return;
+  if(act==='mod'){ openModulesModal(u); return; }
   if(act==='reset'){
     try{ await firebase.auth().sendPasswordResetEmail(u.id); showToast('Correo de restablecimiento enviado a '+u.id); }catch(e){ showToast('No se pudo enviar el correo.'); }
     return;
