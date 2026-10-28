@@ -1666,7 +1666,7 @@ function viewDashboard(){
   const visitasMes = DB.visitas.filter(v=>sameMonth(v.fecha, now)).length;
 
   const counts = {};
-  DB.asignaciones.forEach(a=>{ counts[a.discursoId] = (counts[a.discursoId]||0)+1; });
+  DB.asignaciones.filter(a=>a.discursoId).forEach(a=>{ counts[a.discursoId] = (counts[a.discursoId]||0)+1; });
   let topId=null, topN=0;
   Object.entries(counts).forEach(([k,v])=>{ if(v>topN){topN=v;topId=k;} });
   const topDiscurso = topId ? DB.discursos.find(d=>d.id==topId) : null;
@@ -2068,6 +2068,11 @@ function modalHistorial(){
 }
 
 /* ---- campos de la asignación local: discursante, temas del discursante y autocompletado ---- */
+const ESPECIALES=['Visita Superintendente','Asamblea Regional','Asamblea Circuito','Visita Betel'];
+function discDe(a){
+  if(a&&a.especial) return {id:null,nombre:a.especial,privilegio:'',congregacion:'',telefono:'',especial:true};
+  return DB.discursantes.find(q=>q.id===a.discursanteId);
+}
 function opcionesTemasHTML(g,sel){
   if(!g) return '<option value="">Seleccione primero un discursante</option>';
   const t=temasDeGrupo(g);
@@ -2078,22 +2083,33 @@ function camposAsignacionHTML(editing){
   const grupos=agruparDiscursantes();
   const rec=editing?DB.discursantes.find(d=>d.id===editing.discursanteId):null;
   const gSel=rec?grupos.find(g=>g.ids.includes(rec.id)):null;
-  const sinTemas=!!(gSel&&!temasDeGrupo(gSel).length);
+  const esp=!!(editing&&editing.especial);
+  const sinTemas=!esp&&!!(gSel&&!temasDeGrupo(gSel).length);
   const cong=editing&&editing.congregacion!==undefined?editing.congregacion:(gSel?gSel.congregacion:'');
   const tel=editing&&editing.telefono!==undefined?editing.telefono:(gSel?gSel.telefono:'');
   return `<div class="field"><label>Discursante *</label>
       <select required name="grupo" onchange="MD.asigOnDiscursante(this)">
         <option value="">Seleccionar...</option>
-        ${grupos.map(g=>`<option value="${g.gid}" ${gSel&&gSel.gid===g.gid?'selected':''}>${esc(g.nombre)}</option>`).join('')}
+        <optgroup label="Discursantes">${grupos.map(g=>`<option value="${g.gid}" ${gSel&&gSel.gid===g.gid?'selected':''}>${esc(g.nombre)}</option>`).join('')}</optgroup>
+        <optgroup label="Visitas y eventos especiales">${ESPECIALES.map(x=>`<option value="esp:${esc(x)}" ${esp&&editing.especial===x?'selected':''}>${esc(x)}</option>`).join('')}</optgroup>
       </select></div>
-    <div class="field"><label>Discurso / Bosquejo *</label>
-      <select required name="discursoId">${opcionesTemasHTML(gSel,editing?editing.discursoId:null)}</select>
+    <div class="field fld-discurso" style="${esp?'display:none':''}"><label>Discurso / Bosquejo *</label>
+      <select ${esp?'':'required'} name="discursoId">${esp?'<option value=""></option>':opcionesTemasHTML(gSel,editing?editing.discursoId:null)}</select>
       <div class="hint" id="asigTemasMsg" style="${sinTemas?'':'display:none;'}color:#B23A3A;font-weight:600">Este discursante no tiene temas registrados.</div></div>
     <div class="field"><label>Congregación</label><input name="congregacion" value="${esc(cong)}" placeholder="Se completa al elegir el discursante"></div>
     <div class="field"><label>Teléfono</label><input name="telefono" inputmode="tel" value="${esc(tel)}"></div>`;
 }
 function asigOnDiscursante(sel){
   const f=sel.form, ds=f.discursoId, msg=f.querySelector('#asigTemasMsg');
+  const fd=f.querySelector('.fld-discurso');
+  if(sel.value.indexOf('esp:')===0){
+    if(fd) fd.style.display='none';
+    ds.removeAttribute('required'); ds.innerHTML='<option value=""></option>';
+    if(msg) msg.style.display='none';
+    f.congregacion.value=''; f.telefono.value=''; vmsg(f,''); return;
+  }
+  if(fd) fd.style.display='';
+  ds.setAttribute('required','');
   const g=agruparDiscursantes().find(x=>x.gid===sel.value);
   ds.innerHTML=opcionesTemasHTML(g,null);
   const temas=g?temasDeGrupo(g):[];
@@ -2108,6 +2124,18 @@ function asigOnDiscursante(sel){
 function saveAsignacion(ev){
   ev.preventDefault();
   const f=ev.target; vmsg(f,'');
+  if(f.grupo.value.indexOf('esp:')===0){
+    const esp=f.grupo.value.slice(4);
+    if(!ESPECIALES.includes(esp)){ vmsg(f,'Selecciona una opción válida.'); return false; }
+    if(!f.fecha.value){ vmsg(f,'Indica la fecha de la asignación.'); return false; }
+    const eId=state.editing.asignacion;
+    if(DB.asignaciones.find(a=>a.id!==eId&&a.especial===esp&&a.fecha===f.fecha.value)){ vmsg(f,'Esta asignación ya existe: '+esp+' ya está registrada el '+fmtDate(f.fecha.value)+'.'); return false; }
+    const dEsp={fecha:f.fecha.value,discursanteId:null,discursoId:null,especial:esp,lugar:f.lugar.value.trim(),tipo:f.tipo.value,congregacion:'',telefono:'',observacion:f.observacion.value.trim()};
+    if(eId!=null){ const o=DB.asignaciones.find(a=>a.id===eId); delete o.especial; Object.assign(o,dEsp); }
+    else { dEsp.id=DB.seq.asignacion++; DB.asignaciones.push(dEsp); }
+    state.showForm.asignacion=false; state.editing.asignacion=null; state.prefillFecha.asignacion=null;
+    saveDB(); render(); return false;
+  }
   const g=agruparDiscursantes().find(x=>x.gid===f.grupo.value);
   if(!g){ vmsg(f,'Selecciona un discursante.'); return false; }
   const temas=temasDeGrupo(g);
@@ -2132,6 +2160,7 @@ function saveAsignacion(ev){
     observacion: f.observacion.value.trim()
   };
   if(editId!=null){
+    delete DB.asignaciones.find(a=>a.id===editId).especial;
     Object.assign(DB.asignaciones.find(a=>a.id===editId), data);
   } else {
     data.id = DB.seq.asignacion++;
@@ -2236,13 +2265,13 @@ function viewAsignaciones(){
   if(filtro) list = list.filter(a=> gFiltro ? gFiltro.ids.includes(a.discursanteId) : a.discursanteId===filtro);
 
   const rows = list.map(a=>{
-    const disc = DB.discursantes.find(d=>d.id===a.discursanteId);
+    const disc = discDe(a);
     const disr = DB.discursos.find(d=>d.id===a.discursoId);
     return `
     <tr>
       <td>${fmtDate(a.fecha)}</td>
       <td>${disc?esc(disc.nombre):'<span class="muted">(eliminado)</span>'}</td>
-      <td>${disr? `N° ${esc(disr.numero)} — <strong>${esc(disr.tema)}</strong><br><span class="muted">${esc(disr.titulo||'')}</span>`:'<span class="muted">(eliminado)</span>'}</td>
+      <td>${a.especial?'<span class="muted">No requiere discurso</span>':disr? `N° ${esc(disr.numero)} — <strong>${esc(disr.tema)}</strong><br><span class="muted">${esc(disr.titulo||'')}</span>`:'<span class="muted">(eliminado)</span>'}</td>
       <td>${esc(a.congregacion||(disc&&disc.congregacion)||'')}</td>
       <td>${esc(a.lugar)}</td>
       <td><span class="badge ${a.tipo==='Local'?'badge-local':'badge-visita'}">${esc(a.tipo)}</span></td>
@@ -2439,7 +2468,7 @@ function viewRegistroGeneral(){
   const locales = DB.asignaciones
     .filter(a=>a.tipo==='Local')
     .map(a=>{
-      const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+      const d=discDe(a);
       const r=DB.discursos.find(x=>x.id===a.discursoId);
       return {
         fecha:a.fecha, tipo:'Local', discursante:d?.nombre||'', privilegio:d?.privilegio||'',
@@ -2554,14 +2583,14 @@ function renderQuery(id){
   }
   if(id==='porFecha'){
     const rows = [...DB.asignaciones].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(a=>{
-      const d=DB.discursantes.find(x=>x.id===a.discursanteId), r=DB.discursos.find(x=>x.id===a.discursoId);
+      const d=discDe(a), r=DB.discursos.find(x=>x.id===a.discursoId);
       return `<tr><td>${fmtDate(a.fecha)}</td><td>${d?esc(d.nombre):''}</td><td>${r?esc(r.tema):''}</td><td>${esc(a.lugar)}</td><td><span class="badge ${a.tipo==='Local'?'badge-local':'badge-visita'}">${esc(a.tipo)}</span></td></tr>`;
     });
     return table(['Fecha','Discursante','Tema','Lugar','Tipo'], rows);
   }
   if(id==='fueraCongregacion'){
     const rows = DB.asignaciones.filter(a=>a.tipo==='Visita').sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(a=>{
-      const d=DB.discursantes.find(x=>x.id===a.discursanteId), r=DB.discursos.find(x=>x.id===a.discursoId);
+      const d=discDe(a), r=DB.discursos.find(x=>x.id===a.discursoId);
       return `<tr><td>${d?esc(d.nombre):''}</td><td>${r?esc(r.tema):''}</td><td>${fmtDate(a.fecha)}</td><td>${esc(a.lugar)}</td><td>${esc(a.observacion)}</td></tr>`;
     });
     return table(['Discursante','Tema','Fecha','Lugar','Observación'], rows);
@@ -2575,7 +2604,7 @@ function renderQuery(id){
   }
   if(id==='vecesPorBosquejo'){
     const map={};
-    DB.asignaciones.forEach(a=>{
+    DB.asignaciones.filter(a=>a.discursoId&&!a.especial).forEach(a=>{
       const key=a.discursanteId+'-'+a.discursoId;
       map[key]=(map[key]||0)+1;
     });
@@ -2589,7 +2618,7 @@ function renderQuery(id){
   }
   if(id==='registroGeneral'){
     const locales=DB.asignaciones.filter(a=>a.tipo==='Local').map(a=>{
-      const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+      const d=discDe(a);
       const r=DB.discursos.find(x=>x.id===a.discursoId);
       return {fecha:a.fecha,tipo:'Local',nombre:d?.nombre||'',privilegio:d?.privilegio||'',r,lugar:a.lugar||'',congregacion:'Esta congregación'};
     });
@@ -2614,7 +2643,7 @@ function renderQuery(id){
   }
   if(id==='masUsados'){
     const map={};
-    DB.asignaciones.forEach(a=>{ map[a.discursoId]=(map[a.discursoId]||0)+1; });
+    DB.asignaciones.filter(a=>a.discursoId).forEach(a=>{ map[a.discursoId]=(map[a.discursoId]||0)+1; });
     const rows = Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([id,v])=>{
       const r=DB.discursos.find(x=>x.id==id);
       return `<tr><td>N° ${r?esc(r.numero):''}</td><td>${r?esc(r.tema):''}</td><td>${r?esc(r.titulo):''}</td><td>${v}</td></tr>`;
@@ -2681,7 +2710,7 @@ function descargarReporteCSV(id){
     const now=new Date();
     DB.asignaciones.filter(a=>a.tipo==="Local" && sameMonth(a.fecha,now))
       .sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(a=>{
-        const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+        const d=discDe(a);
         const r=DB.discursos.find(x=>x.id===a.discursoId);
         add(a.fecha,d?.nombre||"",r?.tema||"",a.lugar||"");
       });
@@ -2689,7 +2718,7 @@ function descargarReporteCSV(id){
     filename="reporte_por_discursante.csv";
     add("Discursante","Fecha","Tema","Lugar");
     DB.asignaciones.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)).forEach(a=>{
-      const d=DB.discursantes.find(x=>x.id===a.discursanteId);
+      const d=discDe(a);
       const r=DB.discursos.find(x=>x.id===a.discursoId);
       add(d?.nombre||"",a.fecha,r?.tema||"",a.lugar||"");
     });
@@ -2709,14 +2738,14 @@ function descargarReporteCSV(id){
       const d=new Date(x.fecha+'T00:00:00'); add(meses[d.getMonth()],x.fecha,x.tipo,x.discursante,x.titulo||x.tema||'',x.numero||'',x.lugar||'');
     });
     DB.asignaciones.filter(a=>a.tipo==="Visita"&&a.fecha&&new Date(a.fecha+'T00:00:00').getFullYear()===state.anio).filter(a=>filtro===null||new Date(a.fecha+'T00:00:00').getMonth()===filtro).sort((a,b)=>a.fecha.localeCompare(b.fecha)).forEach(a=>{
-      const d=DB.discursantes.find(x=>x.id===a.discursanteId),r=DB.discursos.find(x=>x.id===a.discursoId); const dt=new Date(a.fecha+'T00:00:00');
+      const d=discDe(a),r=DB.discursos.find(x=>x.id===a.discursoId); const dt=new Date(a.fecha+'T00:00:00');
       add(meses[dt.getMonth()],a.fecha,'Visita - salida',d?.nombre||'',r?.titulo||r?.tema||'',r?.numero||'',a.lugar||'');
     });
   } else if(id==="masUsados"){
     filename="reporte_bosquejos_mas_usados.csv";
     add("Número","Tema","Veces usado");
     const map={};
-    DB.asignaciones.forEach(a=>map[a.discursoId]=(map[a.discursoId]||0)+1);
+    DB.asignaciones.filter(a=>a.discursoId).forEach(a=>map[a.discursoId]=(map[a.discursoId]||0)+1);
     Object.entries(map).sort((a,b)=>b[1]-a[1]).forEach(([id,n])=>{
       const r=DB.discursos.find(x=>x.id==id);
       add(r?.numero||"",r?.tema||"",n);
@@ -2926,7 +2955,7 @@ function renderReport(id){
       const bloques=lugares.map(lugar=>{
         const rows=salidasMes.filter(a=>(a.lugar||'').trim()===lugar)
           .sort((a,b)=>a.fecha.localeCompare(b.fecha))
-          .map(a=>{const d=DB.discursantes.find(x=>x.id===a.discursanteId),r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td class="col-fecha">${fmtDate(a.fecha)}</td><td class="col-disc"><strong>${esc(d?.nombre||'')}</strong></td><td class="col-tema">${esc(r?.titulo||r?.tema||'')}</td><td class="col-bosquejo">${r?.numero!==undefined?'N° '+esc(r.numero):'—'}</td></tr>`}).join('');
+          .map(a=>{const d=discDe(a),r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td class="col-fecha">${fmtDate(a.fecha)}</td><td class="col-disc"><strong>${esc(d?.nombre||'')}</strong></td><td class="col-tema">${esc(r?.titulo||r?.tema||'')}</td><td class="col-bosquejo">${r?.numero!==undefined?'N° '+esc(r.numero):'—'}</td></tr>`}).join('');
         return `<div class="bloque-lugar"><div class="lugar-titulo"><span>CONGREGACION </span>"${esc(lugar)}"</div><div class="reporte-scroll"><table><thead><tr><th class="col-fecha">FECHA</th><th class="col-disc">DISCURSANTES QUE SALEN</th><th class="col-tema">TEMA</th><th class="col-bosquejo">NO. BOSQUEJO</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="sin-datos">Sin salidas de esta congregación en el mes.</td></tr>'}</tbody></table></div></div>`;
       }).join('');
       return `<div class="arreglo-mes"><div class="arreglo-titulo">ARREGLO DE CONFERENCIAS ${meses[mi]} ${año}</div>${bloques||'<div class="sin-datos" style="padding:12px;border:1px solid #222;border-top:0;">No hay bloques de congregaciones para este mes.</div>'}</div>`;
@@ -2936,17 +2965,17 @@ function renderReport(id){
     const principales=mesesMostrar.map(mi=>`<div class="arreglo-mes" style="margin-bottom:20px;"><div class="arreglo-titulo">ARREGLO DE CONFERENCIAS ${meses[mi]} ${año}</div>${tablaMes(mi)}</div>`).join('');
     return `<div class="reporte-arreglo">${selector}<div class="arreglo-mes"><div class="arreglo-cong">CONGREGACION "JOYA OESTE"</div>${principales||'<div class="sin-datos" style="padding:18px;">No hay registros cargados para ${año}.</div>'}</div>${salidasPorMes?`<div class="arreglo-page-break"></div><div class="arreglo-cong">ARREGLO DE SALIDAS DE HERMANOS</div>${salidasPorMes}`:''}</div>`;
   }
-  if(id==='mensualLocal'){const rows=DB.asignaciones.filter(a=>a.tipo==='Local'&&sameMonth(a.fecha,now)).sort((a,b)=>a.fecha.localeCompare(b.fecha)).map(a=>{const d=DB.discursantes.find(x=>x.id===a.discursanteId),r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td>${fmtDate(a.fecha)}</td><td>${d?esc(d.nombre):''}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:''}</td><td>${esc(a.lugar)}</td></tr>`}).join('');return `<p class="muted">Mes: ${now.toLocaleDateString('es-ES',{month:'long',year:'numeric'})} · Total: ${DB.asignaciones.filter(a=>a.tipo==='Local'&&sameMonth(a.fecha,now)).length}</p><table><thead><tr><th>Fecha</th><th>Discursante</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=4 class="empty">Sin discursos locales este mes.</td></tr>'}</tbody></table>`;}
+  if(id==='mensualLocal'){const rows=DB.asignaciones.filter(a=>a.tipo==='Local'&&sameMonth(a.fecha,now)).sort((a,b)=>a.fecha.localeCompare(b.fecha)).map(a=>{const d=discDe(a),r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td>${fmtDate(a.fecha)}</td><td>${d?esc(d.nombre):''}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:''}</td><td>${esc(a.lugar)}</td></tr>`}).join('');return `<p class="muted">Mes: ${now.toLocaleDateString('es-ES',{month:'long',year:'numeric'})} · Total: ${DB.asignaciones.filter(a=>a.tipo==='Local'&&sameMonth(a.fecha,now)).length}</p><table><thead><tr><th>Fecha</th><th>Discursante</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=4 class="empty">Sin discursos locales este mes.</td></tr>'}</tbody></table>`;}
   if(id==='porDiscursante') return agruparDiscursantes().map(d=>{const asigs=DB.asignaciones.filter(a=>d.ids.includes(a.discursanteId)).sort((a,b)=>b.fecha.localeCompare(a.fecha));const rows=asigs.map(a=>{const r=DB.discursos.find(x=>x.id===a.discursoId);return `<tr><td>${fmtDate(a.fecha)}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:''}</td><td>${esc(a.lugar)}</td></tr>`}).join('');return `<h3 style="margin:18px 0 6px;color:var(--navy-deep);">${esc(d.nombre)} <span class="muted">(${asigs.length} discursos)</span></h3><table><thead><tr><th>Fecha</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=3 class="empty">Sin registros.</td></tr>'}</tbody></table>`}).join('');
   if(id==='visitasExternas'){const rows=[...DB.visitas].sort((a,b)=>b.fecha.localeCompare(a.fecha)).map(v=>{const r=DB.discursos.find(x=>x.id===v.discursoId);return `<tr><td>${fmtDate(v.fecha)}</td><td>${esc(v.discursante)}</td><td>${esc(v.congregacion)}</td><td>${r?`<strong>${esc(r.tema)}</strong><br><span class="muted">${esc(r.titulo||'')}</span>`:'—'}</td><td>${esc(v.lugar)}</td></tr>`}).join('');return `<table><thead><tr><th>Fecha</th><th>Discursante</th><th>Congregación</th><th>Tema / Título</th><th>Lugar</th></tr></thead><tbody>${rows||'<tr><td colspan=5 class="empty">Sin visitas registradas.</td></tr>'}</tbody></table>`;}
-  if(id==='masUsados'){const map={};DB.asignaciones.forEach(a=>map[a.discursoId]=(map[a.discursoId]||0)+1);const rows=Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([id,v])=>{const r=DB.discursos.find(x=>x.id==id);return `<tr><td style="width:110px;text-align:center;">N° ${r?esc(r.numero):''}</td><td>${r?esc(r.tema):''}</td><td>${v}</td></tr>`}).join('');return `<table><thead><tr><th style="width:110px;">No. bosquejo</th><th>Tema</th><th>Veces usado</th></tr></thead><tbody>${rows||'<tr><td colspan=3 class="empty">Sin datos.</td></tr>'}</tbody></table>`;}
+  if(id==='masUsados'){const map={};DB.asignaciones.filter(a=>a.discursoId).forEach(a=>map[a.discursoId]=(map[a.discursoId]||0)+1);const rows=Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([id,v])=>{const r=DB.discursos.find(x=>x.id==id);return `<tr><td style="width:110px;text-align:center;">N° ${r?esc(r.numero):''}</td><td>${r?esc(r.tema):''}</td><td>${v}</td></tr>`}).join('');return `<table><thead><tr><th style="width:110px;">No. bosquejo</th><th>Tema</th><th>Veces usado</th></tr></thead><tbody>${rows||'<tr><td colspan=3 class="empty">Sin datos.</td></tr>'}</tbody></table>`;}
   if(id==='actualizados'){const rows=[...DB.discursos].sort((a,b)=>b.actualizadoEn.localeCompare(a.actualizadoEn)).map(d=>`<tr><td style="width:110px;text-align:center;">N° ${esc(d.numero)}</td><td>${esc(d.tema)}</td><td>${fmtDate(d.actualizadoEn)}</td></tr>`).join('');return `<table><thead><tr><th style="width:110px;">No. bosquejo</th><th>Tema</th><th>Actualizado</th></tr></thead><tbody>${rows}</tbody></table>`;}
   return '';
 }
 
 function obtenerRegistroGeneralCompleto(){
   const locales=DB.asignaciones.filter(a=>a.tipo==='Local').map(a=>{
-    const d=DB.discursantes.find(x=>x.id===a.discursanteId), r=DB.discursos.find(x=>x.id===a.discursoId);
+    const d=discDe(a), r=DB.discursos.find(x=>x.id===a.discursoId);
     return {fecha:a.fecha,tipo:'Local',discursante:d?.nombre||'',numero:r?.numero??'',tema:r?.tema||'',titulo:r?.titulo||'',lugar:a.lugar||''};
   });
   const externas=DB.visitas.map(v=>{
@@ -3047,7 +3076,7 @@ function mount(el){
   if(!READONLY){ try{ normalizarDatos(); sincronizarDiscursantesConDiscursos(); }catch(e){ console.warn(e); } }
   render();
 }
-window.MD = Object.assign({ state: state, mount: mount }, { actualizarDatosDiscursoDesdeDiscursante, actualizarPublicoDesdeSelect, agregarFilaPublica, agruparDiscursantes, aniosArreglo, asigOnDiscursante, autocompletarDiscursante, camposAsignacionHTML, cancelForm, cancelarArregloPublico, cerrarFormSalida, cerrarHistorial, coincideDiscurso, coincideGrupo, daysAgo, deleteAsignacion, deleteDiscursante, deleteDiscurso, deleteVisita, descargarReporteCSV, editAsignacion, editDiscursante, editDiscurso, editVisita, editarArregloPublico, editarSalida, eliminarArregloPublico, eliminarDiscursanteGrupo, eliminarSalida, eliminarTemaDiscursante, esc, exportarBase, filaPublicaHTML, filtrarDiscursantes, filtrarDiscursos, fmtDate, formArregloPublico, formSalidas, fusionarDuplicados, guardarArregloPublico, hashClave, historialDe, hl, htmlListaDiscursantes, htmlTablaDiscursos, importarBase, limpiarBusquedaDiscursante, limpiarBusquedaDiscurso, modalHistorial, nav, normNombre, normSimple, normalizarDatos, nuevoArregloPublico, nuevoDiscursante, nuevoSalida, nuevoTemaDiscursante, obtenerRegistroGeneralCompleto, opcionesTemasHTML, openReport, optsAnio, quickDiscursoHoy, quickVisitaHoy, quitarFilaPublica, render, renderHeader, renderQuery, renderReport, renderView, sameMonth, saveAsignacion, saveDB, saveDiscursante, saveDiscurso, saveSalida, saveVisita, setQuery, sincronizarDiscursantesConDiscursos, temasDeGrupo, todayISO, verAsignacionesDe, verHistorial, viewArregloPublico, viewAsignaciones, viewConsultas, viewDashboard, viewDiscursantes, viewDiscursos, viewRegistroGeneral, viewReportes, viewSalidas, viewVisitas, vmsg });
+window.MD = Object.assign({ state: state, mount: mount }, { actualizarDatosDiscursoDesdeDiscursante, actualizarPublicoDesdeSelect, agregarFilaPublica, agruparDiscursantes, aniosArreglo, asigOnDiscursante, autocompletarDiscursante, camposAsignacionHTML, cancelForm, cancelarArregloPublico, cerrarFormSalida, cerrarHistorial, coincideDiscurso, coincideGrupo, daysAgo, deleteAsignacion, deleteDiscursante, deleteDiscurso, deleteVisita, descargarReporteCSV, discDe, editAsignacion, editDiscursante, editDiscurso, editVisita, editarArregloPublico, editarSalida, eliminarArregloPublico, eliminarDiscursanteGrupo, eliminarSalida, eliminarTemaDiscursante, esc, exportarBase, filaPublicaHTML, filtrarDiscursantes, filtrarDiscursos, fmtDate, formArregloPublico, formSalidas, fusionarDuplicados, guardarArregloPublico, hashClave, historialDe, hl, htmlListaDiscursantes, htmlTablaDiscursos, importarBase, limpiarBusquedaDiscursante, limpiarBusquedaDiscurso, modalHistorial, nav, normNombre, normSimple, normalizarDatos, nuevoArregloPublico, nuevoDiscursante, nuevoSalida, nuevoTemaDiscursante, obtenerRegistroGeneralCompleto, opcionesTemasHTML, openReport, optsAnio, quickDiscursoHoy, quickVisitaHoy, quitarFilaPublica, render, renderHeader, renderQuery, renderReport, renderView, sameMonth, saveAsignacion, saveDB, saveDiscursante, saveDiscurso, saveSalida, saveVisita, setQuery, sincronizarDiscursantesConDiscursos, temasDeGrupo, todayISO, verAsignacionesDe, verHistorial, viewArregloPublico, viewAsignaciones, viewConsultas, viewDashboard, viewDiscursantes, viewDiscursos, viewRegistroGeneral, viewReportes, viewSalidas, viewVisitas, vmsg });
 })();
 </script>
 <script>
@@ -4937,3 +4966,4 @@ startAuth();
 </script>
 </body>
 </html>
+
