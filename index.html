@@ -1667,6 +1667,56 @@ img,video,canvas{max-width:100%}
 @media print{.nav-toggle,.nav-overlay{display:none!important}}
 .ct-wrap{max-height:none!important;overflow-x:auto}
 
+/* ===== Contabilidad por periodos ===== */
+.ct-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;overflow-x:auto}
+.ct-tab{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 16px;border-radius:999px;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap}
+.ct-tab.on{background:#D8C8F2;border-color:#D8C8F2;color:#2F2A4A}
+.ct-per{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.ct-per h2{margin:4px 0 0}
+.ct-etq{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-soft);font-weight:700}
+.ct-ro{font-size:12px;background:#EEF1F6;color:var(--ink-soft);padding:4px 12px;border-radius:999px}
+.ct-folders{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.ct-folder{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;background:#F5F7FB;border:1px solid var(--line);border-radius:14px;padding:16px;transition:transform .12s,box-shadow .12s}
+.ct-folder:hover,.ct-folder:focus-visible{transform:translateY(-2px);box-shadow:0 6px 18px rgba(90,110,160,.16);outline:2px solid #D8C8F2}
+.ct-fico{font-size:26px}
+.ct-folder small{color:var(--ink-soft)}
+.ct-pend{font-style:normal;font-size:12px;color:var(--irregular)}
+.ct-bar{display:block;height:7px;background:#E3E8F1;border-radius:99px;overflow:hidden;min-width:60px}
+.ct-bar i{display:block;height:100%;background:#8E7CC3;border-radius:99px}
+.ct-cat{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.ct-cat.pend{background:#FCFBFE}
+.ct-cathead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.ct-cathead h3{margin:0;font-size:14.5px;flex:1;min-width:200px}
+.ct-cathead h3 span{display:inline-block;min-width:30px;color:#6C58A8}
+.ct-doc{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:9px 0;border-top:1px dashed var(--line);flex-wrap:wrap}
+.ct-dinfo{flex:1;min-width:220px}
+.ct-dinfo small{display:block;color:var(--ink-soft);font-size:12px;margin-top:2px}
+.ct-dacc{display:flex;gap:6px;flex-wrap:wrap}
+.ct-vacio{color:var(--ink-soft);font-size:13px;padding:6px 0}
+.ct-file{cursor:pointer;display:inline-flex;align-items:center}
+.ct-apr{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.ct-aprh{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+.ct-aprh small{display:block;color:var(--ink-soft);font-size:12px}
+.ct-hist{margin-top:8px;padding-left:10px;border-left:3px solid #D8C8F2}
+.ct-filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:10px 0 14px}
+.ct-filtros .wide{grid-column:span 2}
+.ct-tile .sm{font-size:15px}
+.ct-tile small{display:block;color:var(--ink-soft);font-size:12px}
+.ct-top{display:grid;grid-template-columns:minmax(120px,1.2fr) 2fr 40px;gap:10px;align-items:center;padding:6px 0}
+.ct-top b{text-align:right}
+.au-meses{display:flex;gap:8px;flex-wrap:wrap}
+.au-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.au-chip{display:inline-flex;align-items:center;gap:6px;background:#EFEAFB;color:#4A3F7A;border-radius:999px;padding:4px 10px;font-size:12.5px}
+.au-chip button{all:unset;cursor:pointer;font-weight:700;padding:0 2px}
+.au-chip.ro{background:#E6EEF8;color:#3B5F8A}
+.au-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px}
+.au-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.au-top small{display:block;color:var(--ink-soft)}
+.au-obs-t{white-space:pre-line;margin:8px 0}
+.au-item textarea{width:100%;margin:8px 0}
+@media (max-width:900px){.ct-filtros .wide{grid-column:auto}.ct-folders{grid-template-columns:repeat(2,minmax(0,1fr))}.ct-top{grid-template-columns:1fr 40px}.ct-top .ct-bar{grid-column:1/-1;order:3}.ct-tab{padding:8px 12px;font-size:13px}.ct-tabs{flex-wrap:nowrap}}
+@media (max-width:420px){.ct-folders{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -1698,6 +1748,11 @@ img,video,canvas{max-width:100%}
       <button data-view="actividades"><span class="icon">☰</span><span class="lbl">Actividades</span></button>
     </nav>
 
+    <div class="navgroup-label">Vida y Ministerio</div>
+    <nav id="navH">
+      <button data-view="vidaministerio"><span class="icon">☑</span><span class="lbl">Vida y Ministerio</span></button>
+    </nav>
+
     <div class="navgroup-label">Secretaría</div>
     <nav id="navB">
       <button data-view="publishers"><span class="icon">☰</span><span class="lbl">Publicadores</span></button>
@@ -1719,19 +1774,14 @@ img,video,canvas{max-width:100%}
       <button data-view="noTouch"><span class="icon">⊘</span><span class="lbl">No tocar</span></button>
     </nav>
 
-    <div class="navgroup-label">Discursos Públicos</div>
-    <nav id="navE">
-      <button data-view="discursos"><span class="icon">✎</span><span class="lbl">Discursos Públicos</span></button>
-    </nav>
-
     <div class="navgroup-label">Predicación Pública</div>
     <nav id="navF">
       <button data-view="predicacion"><span class="icon">☀</span><span class="lbl">Predicación Pública</span></button>
     </nav>
 
-    <div class="navgroup-label">Vida y Ministerio</div>
-    <nav id="navH">
-      <button data-view="vidaministerio"><span class="icon">☑</span><span class="lbl">Vida y Ministerio</span></button>
+    <div class="navgroup-label">Discursos Públicos</div>
+    <nav id="navE">
+      <button data-view="discursos"><span class="icon">✎</span><span class="lbl">Discursos Públicos</span></button>
     </nav>
 
     <div id="grpSys" style="display:none">
@@ -3953,218 +4003,405 @@ async function binSubir(colName,id,file){
   catch(e){ for(let i=0;i<n;i++){ try{ await col.doc('p_'+id+'_'+i).delete(); }catch(_){} } throw e; }
   return n;
 }
-async function binBorrar(colName,id,n){
-  const col=binCol(colName); if(!col) return;
-  for(let i=0;i<(n||1);i++){ try{ await col.doc('p_'+id+'_'+i).delete(); }catch(_){} }
-  await col.doc('m_'+id).delete();
-}
+async function binPartes(colName,id,n){ const col=binCol(colName); if(!col) return; for(let i=0;i<(n||1);i++){ try{ await col.doc('p_'+id+'_'+i).delete(); }catch(_){} } }
+async function binBorrar(colName,id,n){ const col=binCol(colName); if(!col) return; await binPartes(colName,id,n); await col.doc('m_'+id).delete(); }
 async function binBlob(colName,meta){
-  const col=binCol(colName);
-  const docs=await Promise.all(Array.from({length:meta.n},(_,i)=>col.doc('p_'+meta.id+'_'+i).get()));
+  const col=binCol(colName), fid=meta.fid||meta.id;
+  const docs=await Promise.all(Array.from({length:meta.n},(_,i)=>col.doc('p_'+fid+'_'+i).get()));
   if(docs.some(d=>!d.exists)) throw new Error('incompleto');
   const bin=atob(docs.map(d=>d.data().data).join('')), bytes=new Uint8Array(bin.length);
   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
   return new Blob([bytes],{type:binMime(meta.archivo)});
 }
-function binAbrir(titulo,blob,archivo){
-  const mime=blob.type, url=URL.createObjectURL(blob), puedeDescargar=!isLector();
+/* dl: true/false = se permite descargar; onDl: se llama al descargar */
+function binAbrir(titulo,blob,archivo,dl,onDl){
+  const mime=blob.type, url=URL.createObjectURL(blob), puede=(dl===undefined)?!isLector():!!dl;
   const visible=/pdf|image/.test(mime);
   if(!visible){
-    if(!puedeDescargar){ URL.revokeObjectURL(url); showToast('Este tipo de archivo solo se puede descargar'); return; }
-    const a=document.createElement('a'); a.href=url; a.download=archivo||'archivo'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),4000); return;
+    if(!puede){ URL.revokeObjectURL(url); showToast('Este tipo de archivo solo se puede descargar'); return; }
+    const a=document.createElement('a'); a.href=url; a.download=archivo||'archivo'; document.body.appendChild(a); a.click(); a.remove(); if(onDl) onDl(); setTimeout(()=>URL.revokeObjectURL(url),4000); return;
   }
   const ov=document.createElement('div'); ov.className='carta-viewer';
   const media=/image/.test(mime)?`<div class="cv-img"><img src="${url}" alt=""></div>`:`<iframe src="${url}" title="Archivo"></iframe>`;
-  ov.innerHTML=`<div class="cv-box"><div class="cv-head"><strong>${escapeHtml(titulo||'')}</strong><span>${puedeDescargar?`<a class="btn secondary" href="${url}" download="${escapeAttr(archivo||'archivo')}">Descargar</a> `:''}<button class="btn" data-ro-ok id="cvClose">Cerrar</button></span></div>${media}</div>`;
+  ov.innerHTML=`<div class="cv-box"><div class="cv-head"><strong>${escapeHtml(titulo||'')}</strong><span>${puede?`<a class="btn secondary" id="cvDl" href="${url}" download="${escapeAttr(archivo||'archivo')}">Descargar</a> `:''}<button class="btn" data-ro-ok id="cvClose">Cerrar</button></span></div>${media}</div>`;
   document.body.appendChild(ov);
   const close=()=>{ ov.remove(); URL.revokeObjectURL(url); };
   ov.querySelector('#cvClose').onclick=close; ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
+  const d=ov.querySelector('#cvDl'); if(d&&onDl) d.addEventListener('click',()=>onDl());
+}
+function binDescargar(blob,archivo){ const url=URL.createObjectURL(blob), a=document.createElement('a'); a.href=url; a.download=archivo||'archivo'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),4000); }
+
+/* ===== Permisos ===== */
+function canContab(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.contabilidad===true); }
+function audMs(h){ return h?(h.toMillis?h.toMillis():Date.parse(h)):0; }
+function audVigente(m){
+  if(!m||m.auditoria!==true) return false;
+  const hasta=audMs(m.auditoriaHasta), desde=audMs(m.auditoriaDesde), ahora=Date.now();
+  return hasta>ahora&&(!desde||desde<=ahora);
+}
+function canAudit(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&audVigente(CUR.modules)); }
+function audFecha(ms){ return ms?new Date(ms).toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'}):''; }
+function audHastaTxt(m){ return audFecha(audMs(m&&m.auditoriaHasta)); }
+function audISO(d){ const t=new Date(d); return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0'); }
+function audMasMes(iso){ const [y,m,d]=iso.split('-').map(Number), t=new Date(y,m,d); if(t.getMonth()!==(m%12)) return audISO(new Date(y,m+1,0)); return audISO(t); }
+function audHastaHtml(cur){
+  const hoy=audISO(new Date()), vig=cur&&cur.auditoria===true&&audMs(cur.auditoriaHasta)>Date.now();
+  const d=vig&&audMs(cur.auditoriaDesde)?audISO(audMs(cur.auditoriaDesde)):hoy, h=vig?audISO(audMs(cur.auditoriaHasta)):audMasMes(hoy);
+  return `<div class="field" id="audBox" style="margin-top:8px;${vig?'':'display:none'}"><label>Auditor: acceso temporal (máximo 1 mes)</label><div class="grid2"><div><small>Desde</small><input type="date" id="audDesde" value="${d}"></div><div><small>Hasta</small><input type="date" id="audHasta" value="${h}"></div></div></div>`;
+}
+function audLeerHasta(root,m){
+  if(!m.auditoria){ delete m.auditoriaHasta; delete m.auditoriaDesde; return m; }
+  const hoy=audISO(new Date()), e1=root.querySelector('#audDesde'), e2=root.querySelector('#audHasta');
+  let d=(e1&&e1.value)||hoy, h=(e2&&e2.value)||audMasMes(d);
+  if(d<hoy) d=hoy; const tope=audMasMes(d); if(h>tope) h=tope; if(h<d) h=d;
+  const TS=(typeof firebase!=='undefined'&&firebase.firestore&&firebase.firestore.Timestamp)||null, a=new Date(d+'T00:00:00'), z=new Date(h+'T23:59:59');
+  m.auditoriaDesde=TS?TS.fromDate(a):a.toISOString(); m.auditoriaHasta=TS?TS.fromDate(z):z.toISOString(); return m;
+}
+document.addEventListener('change',e=>{ const t=e.target; if(t&&t.matches&&t.matches('[data-mod="auditoria"]')){ const box=t.closest('#uModsWrap,#mdBox'), ab=box&&box.querySelector('#audBox'); if(ab) ab.style.display=t.checked?'':'none'; }
+  if(t&&t.id==='audDesde'){ const h=document.getElementById('audHasta'); if(h){ h.value=audMasMes(t.value||audISO(new Date())); } } });
+
+/* ===== Utilidades ===== */
+function ctUid(p){ return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+const CT_MN=['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const CT_ORDEN=[9,10,11,12,1,2,3,4,5,6,7,8];
+const CT_CATS=[['1.1','Estado de Cuenta'],['1.2','Movimiento Bancario'],['2.1','Recibos de Donaciones'],['2.2','Recibos de Depósitos'],['3.0','Hoja de Cuentas (S-26)'],['4.0','Informe Mensual de las Cuentas (S-30)'],['5.1','Registro de Gastos de Mantenimiento del Salón'],['5.2','Transferencia de Mantenimiento'],['6.0','Registro de Traspaso de Fondos (TO-62)'],['6.1','Recibo Transferencia Obra Mundial'],['6.2','Envío de Remesa Obra Mundial'],['6.3','Acuse de Recibo'],['7.0','Varios Gastos Adicionales']];
+function ctCatNombre(c){ const x=CT_CATS.find(k=>k[0]===c); return x?(x[0]+' '+x[1]):c; }
+function ctMesNombre(m){ try{ const [y,mm]=m.split('-'); return CT_MN[+mm]+' '+y; }catch(e){ return m; } }
+function ctPerActual(){ const d=new Date(); return d.getMonth()>=8?d.getFullYear():d.getFullYear()-1; }
+function ctPerTxt(y){ return 'Septiembre '+y+' - Agosto '+(y+1); }
+function ctAnioMes(y,m){ return m>=9?y:y+1; }
+function ctFechaHora(iso){ try{ return new Date(iso).toLocaleString('es-EC',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }catch(e){ return iso||''; } }
+function ctNorm(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
+/* meses ya transcurridos del periodo (para saber qué está pendiente) */
+function ctMesesVencidos(y){
+  const act=ctPerActual(); if(y<act) return CT_ORDEN.slice(); if(y>act) return [];
+  const hoy=new Date(), m=hoy.getMonth()+1; const idx=CT_ORDEN.indexOf(m); return CT_ORDEN.slice(0,idx+1);
 }
 
-/* ===== Permisos de Contabilidad y Auditoría ===== */
-function canContab(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.contabilidad===true); }
-function canAudit(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.auditoria===true); }
-function ctMoney(n){ return (n<0?'-':'')+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function ctMesNombre(m){ try{ const [y,mm]=m.split('-'); return new Date(+y,+mm-1,1).toLocaleDateString('es-EC',{month:'long',year:'numeric'}); }catch(e){ return m; } }
-function ctHoy(){ return new Date().toISOString().slice(0,10); }
-function ctUid(p){ return p+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
-
-/* ===== CONTABILIDAD ===== */
-const CT={movs:[],files:[],obs:[],revs:[],logs:[],ok:{mov:false,file:false,obs:false,rev:false,log:false},err:null,unsubs:{},mes:ctHoy().slice(0,7)};
+const CT={docs:[],aprs:[],logs:[],auds:[],ok:{doc:false,apr:false,log:false,aud:false},err:null,unsubs:{},tab:'actual',per:null,mes:null,q:'',f:{anio:'',mes:'',cat:'',user:''},hist:null,abierta:{},logF:''};
 function ctWatch(col,kind,key,store){
   if(CT.unsubs[key]) return; const c=binCol(col); if(!c) return;
   CT.unsubs[key]=c.where('kind','==',kind).onSnapshot(s=>{ CT[store]=s.docs.map(d=>d.data()); CT.ok[key]=true; CT.err=null; ctRefresh(); },e=>{ CT.err=e; CT.ok[key]=true; CT.unsubs[key]=null; ctRefresh(); });
 }
 function ctWatchAll(){
-  ctWatch('contabilidad','mov','mov','movs'); ctWatch('contabilidad','meta','file','files');
-  if(canAudit()){ ctWatch('auditoria','obs','obs','obs'); ctWatch('auditoria','rev','rev','revs'); ctWatch('auditoria','log','log','logs'); }
+  ctWatch('contabilidad','doc','doc','docs'); ctWatch('contabilidad','apr','apr','aprs');
+  if(canAudit()){ ctWatch('auditoria','log','log','logs'); ctWatch('auditoria','aud','aud','auds'); }
 }
 function ctRefresh(){ if(typeof VIEW==='undefined') return; if(VIEW==='contabilidad') ctPintar(); else if(VIEW==='auditoria') auPintar(); }
-function ctLog(accion,detalle){ const c=binCol('auditoria'); if(!c) return; const id=ctUid('l'); try{ c.doc('l_'+id).set({kind:'log',id,accion,detalle,por:(CUR&&CUR.name)||'',email:(CUR&&CUR.id)||'',fecha:new Date().toISOString()}).catch(()=>{}); }catch(e){} }
-function ctResumen(mes){
-  const del=CT.movs.filter(m=>(m.fecha||'').slice(0,7)===mes);
-  const ing=del.filter(m=>m.tipo==='Ingreso').reduce((a,m)=>a+(+m.monto||0),0), egr=del.filter(m=>m.tipo==='Egreso').reduce((a,m)=>a+(+m.monto||0),0);
-  const fin=mes+'-31', acum=CT.movs.filter(m=>(m.fecha||'')<=fin).reduce((a,m)=>a+(m.tipo==='Ingreso'?1:-1)*(+m.monto||0),0);
-  return {del:del.sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||'')),ing,egr,saldo:ing-egr,acum};
-}
-function ctTiles(r){
-  return `<div class="ct-tiles"><div class="ct-tile in"><span>Ingresos del mes</span><b>${ctMoney(r.ing)}</b></div><div class="ct-tile out"><span>Egresos del mes</span><b>${ctMoney(r.egr)}</b></div><div class="ct-tile"><span>Saldo del mes</span><b>${ctMoney(r.saldo)}</b></div><div class="ct-tile acc"><span>Saldo acumulado</span><b>${ctMoney(r.acum)}</b></div></div>`;
+function ctLog(accion,detalle){
+  const c=binCol('auditoria'); if(!c||!CUR) return; const id=ctUid('l');
+  try{ c.doc('l_'+id).set({kind:'log',id,accion,detalle:String(detalle||'').slice(0,300),por:CUR.name||'',email:CUR.id||'',fecha:new Date().toISOString()}).catch(()=>{}); }catch(e){}
 }
 function ctEstado(){
   if(!binCol('contabilidad')) return '<div class="empty">Contabilidad requiere la conexión con Firebase.</div>';
   if(CT.err) return '<div class="empty">No se pudo cargar ('+escapeHtml(CT.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>';
-  if(!CT.ok.mov||!CT.ok.file) return '<div class="empty">Cargando…</div>';
+  if(!CT.ok.doc||!CT.ok.apr) return '<div class="empty">Cargando…</div>';
   return '';
 }
-function ctFilasMov(del,editar){
-  if(!del.length) return '<div class="empty">No hay movimientos en este mes.</div>';
-  return `<div class="table-scroll ct-wrap"><table class="ct-table stack"><thead><tr><th>Fecha</th><th>Tipo</th><th>Categoría</th><th>Concepto</th><th class="r">Monto</th><th>Registró</th>${editar?'<th></th>':''}</tr></thead><tbody>${del.map(m=>`<tr><td data-label="Fecha">${escapeHtml(m.fecha||'')}</td><td data-label="Tipo"><span class="ct-badge ${m.tipo==='Ingreso'?'in':'out'}">${escapeHtml(m.tipo)}</span></td><td data-label="Categoría">${escapeHtml(m.categoria||'')}</td><td data-label="Concepto">${escapeHtml(m.concepto||'')}</td><td data-label="Monto" class="r">${ctMoney(+m.monto||0)}</td><td data-label="Registró">${escapeHtml(m.por||'')}</td>${editar?`<td class="act"><button class="btn danger small" data-ctdel="${escapeAttr(m.id)}">Eliminar</button></td>`:''}</tr>`).join('')}</tbody></table></div>`;
-}
-function ctListaArchivos(mes,editar){
-  const l=CT.files.filter(f=>f.mes===mes).sort((a,b)=>String(b.fecha||'').localeCompare(String(a.fecha||'')));
-  if(!l.length) return '<div class="empty">No hay archivos en este mes.</div>';
-  return l.map(f=>`<div class="carta-item"><div class="carta-ico">${escapeHtml((String(f.archivo||'').split('.').pop()||'ARCH').slice(0,4).toUpperCase())}</div><div class="carta-info"><div class="carta-title">${escapeHtml(f.titulo||'')}</div><div class="carta-sum">${escapeHtml(f.resumen||'')}</div><div class="carta-meta">${escapeHtml(f.archivo||'')} · ${binSize(f.size||0)}${f.por?' · Subido por '+escapeHtml(f.por):''}</div></div><div class="carta-acc"><button class="btn" data-ro-ok data-ctver="${escapeAttr(f.id)}">Ver</button>${editar?`<button class="btn danger" data-ctfdel="${escapeAttr(f.id)}">Eliminar</button>`:''}</div></div>`).join('');
-}
-function ctBind(root,editar){
-  root.querySelectorAll('[data-ctver]').forEach(b=>b.onclick=()=>ctVer(b.dataset.ctver));
-  if(editar){
-    root.querySelectorAll('[data-ctdel]').forEach(b=>b.onclick=()=>ctEliminarMov(b.dataset.ctdel));
-    root.querySelectorAll('[data-ctfdel]').forEach(b=>b.onclick=()=>ctEliminarArchivo(b.dataset.ctfdel));
-  }
-}
+/* ¿puede cargar/reemplazar/eliminar en este periodo? Actual: administradores y designados. Histórico: administradores */
+function ctPuede(per){ return per>=ctPerActual()?canContab():isAdmin(); }
+function ctPuedeDescargar(){ return canContab(); }
+
+/* ===== CONTABILIDAD ===== */
 function renderContab(content,actions){
-  ctWatchAll();
-  const ed=canContab();
-  actions.innerHTML=isLector()?'':'<button class="btn secondary" id="ctCsv" data-ro-ok>Exportar movimientos (CSV)</button>';
-  const csv=document.getElementById('ctCsv'); if(csv) csv.onclick=ctExportar;
-  const form=ed?`<div class="card"><h2>Registrar movimiento<small>Solo administradores y usuarios designados pueden cargar información.</small></h2>
-    <div class="grid3"><div class="field"><label>Fecha *</label><input type="date" id="ctFecha" value="${ctHoy()}"></div><div class="field"><label>Tipo *</label><select id="ctTipo"><option>Ingreso</option><option>Egreso</option></select></div><div class="field"><label>Monto (USD) *</label><input type="number" id="ctMonto" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div></div>
-    <div class="grid2"><div class="field"><label>Categoría</label><input id="ctCat" list="ctCats" maxlength="60" placeholder="Ej. Donaciones"><datalist id="ctCats"><option>Donaciones</option><option>Obra mundial</option><option>Gastos del salón</option><option>Servicios básicos</option><option>Mantenimiento</option><option>Otros</option></datalist></div><div class="field"><label>Concepto *</label><input id="ctConc" maxlength="160" placeholder="Detalle del movimiento"></div></div>
-    <div class="actions"><button class="btn" id="ctGuardar">Guardar movimiento</button></div></div>`:'';
-  const formArch=ed?`<div class="grid2"><div class="field"><label>Título *</label><input id="ctaTitulo" maxlength="120" placeholder="Ej. Estado de cuenta"></div><div class="field"><label>Archivo (PDF, Excel, imagen) *</label><input type="file" id="ctaFile" accept=".pdf,.xlsx,.xls,.csv,.png,.jpg,.jpeg"></div></div><div class="field"><label>Resumen *</label><textarea id="ctaSum" rows="2" maxlength="300" placeholder="De qué trata el archivo"></textarea></div><div class="actions"><button class="btn" id="ctaGuardar">Subir archivo</button></div>`:'';
-  content.innerHTML=`<div class="card"><div class="ct-head"><h2>Resumen mensual</h2><div class="field ct-mes"><label>Mes</label><input type="month" id="ctMes" data-ro-ok value="${CT.mes}"></div></div><div id="ctResumen"></div></div>${form}<div class="card"><h2>Movimientos del mes</h2><div id="ctMovs"></div></div><div class="card"><h2>Archivos del mes<small>Los archivos se ubican por el mes que elija al subirlos (máx. 5 MB).</small></h2>${formArch}<div id="ctArchivos"></div></div>`;
-  document.getElementById('ctMes').onchange=e=>{ if(e.target.value){ CT.mes=e.target.value; ctPintar(); } };
-  const g=document.getElementById('ctGuardar'); if(g) g.onclick=ctGuardarMov;
-  const ga=document.getElementById('ctaGuardar'); if(ga) ga.onclick=ctSubirArchivo;
+  ctWatchAll(); actions.innerHTML='';
+  const tabs=[['actual','Periodo actual'],['aprob','Aprobaciones vigentes'],['hist','Histórico'],['buscar','Buscar documentos'],['stats','Estadísticas']];
+  if(canAudit()) tabs.push(['log','Registro de actividad']);
+  if(!tabs.some(t=>t[0]===CT.tab)) CT.tab='actual';
+  content.innerHTML=`<div class="ct-tabs" role="tablist">${tabs.map(t=>`<button class="ct-tab ${CT.tab===t[0]?'on':''}" data-ro-ok data-cttab="${t[0]}">${t[1]}</button>`).join('')}</div><div id="ctBody"></div>`;
+  content.querySelectorAll('[data-cttab]').forEach(b=>b.onclick=()=>{ CT.tab=b.dataset.cttab; CT.mes=null; renderContab(content,actions); });
   ctPintar();
 }
 function ctPintar(){
-  const r0=document.getElementById('ctResumen'); if(!r0) return;
-  const est=ctEstado(), ed=canContab();
-  if(est){ r0.innerHTML=est; document.getElementById('ctMovs').innerHTML=''; document.getElementById('ctArchivos').innerHTML=''; return; }
-  const r=ctResumen(CT.mes);
-  r0.innerHTML=ctTiles(r);
-  const m=document.getElementById('ctMovs'); m.innerHTML=ctFilasMov(r.del,ed); ctBind(m,ed);
-  const a=document.getElementById('ctArchivos'); a.innerHTML=ctListaArchivos(CT.mes,ed); ctBind(a,ed);
+  const body=document.getElementById('ctBody'); if(!body) return;
+  const est=ctEstado(); if(est){ body.innerHTML=est; return; }
+  let html='';
+  if(CT.tab==='actual') html=ctVistaPeriodo(ctPerActual(),'Periodo actual');
+  else if(CT.tab==='hist') html=ctVistaHist();
+  else if(CT.tab==='aprob') html=ctVistaAprob();
+  else if(CT.tab==='buscar') html=ctVistaBuscar();
+  else if(CT.tab==='stats') html=ctVistaStats();
+  else if(CT.tab==='log') html=ctVistaLog();
+  body.innerHTML=html; ctBind(body);
   if(typeof lockUI==='function') lockUI();
 }
-async function ctGuardarMov(){
-  if(!canContab()){ showToast('Sin permiso para cargar información'); return; }
-  const c=binCol('contabilidad'); if(!c){ showToast('Sin conexión con Firebase'); return; }
-  const fecha=document.getElementById('ctFecha').value, tipo=document.getElementById('ctTipo').value, monto=parseFloat(document.getElementById('ctMonto').value), cat=document.getElementById('ctCat').value.trim(), conc=document.getElementById('ctConc').value.trim();
-  if(!fecha){ showToast('Indica la fecha'); return; }
-  if(!(monto>0)){ showToast('El monto debe ser mayor que cero'); return; }
-  if(!conc){ showToast('Escribe el concepto'); return; }
-  const id=ctUid('m'), btn=document.getElementById('ctGuardar'); btn.disabled=true;
+function ctDocsDe(per,mes,cat){ return CT.docs.filter(d=>d.periodo===per&&(mes==null||d.mes===mes)&&(cat==null||d.cat===cat)).sort((a,b)=>String(a.fecha||'').localeCompare(String(b.fecha||''))); }
+function ctVistaPeriodo(per,etq){
+  const puede=ctPuede(per);
+  if(CT.mes==null){
+    const venc=ctMesesVencidos(per);
+    const cards=CT_ORDEN.map(m=>{
+      const ds=ctDocsDe(per,m), cats=new Set(ds.map(d=>d.cat)).size, pct=Math.round(cats/CT_CATS.length*100);
+      return `<button class="ct-folder" data-ro-ok data-ctmes="${m}"><span class="ct-fico">📁</span><b>${CT_MN[m]} ${ctAnioMes(per,m)}</b><small>${ds.length} documento${ds.length===1?'':'s'} · ${cats}/${CT_CATS.length} categorías</small><span class="ct-bar"><i style="width:${pct}%"></i></span>${venc.includes(m)&&cats<CT_CATS.length?`<em class="ct-pend">${CT_CATS.length-cats} pendientes</em>`:''}</button>`;
+    }).join('');
+    return `<div class="card"><div class="ct-per"><div><span class="ct-etq">${etq}</span><h2>${ctPerTxt(per)}</h2></div>${puede?'':'<span class="ct-ro">Solo consulta</span>'}</div><div class="ct-folders">${cards}</div></div>`;
+  }
+  const m=CT.mes, mesTxt=CT_MN[m]+' '+ctAnioMes(per,m);
+  const secs=CT_CATS.map(([cod,nom])=>{
+    const ds=ctDocsDe(per,m,cod);
+    const lista=ds.length?ds.map(d=>`<div class="ct-doc"><div class="ct-dinfo"><b>${escapeHtml(d.titulo||d.archivo||'')}</b><small>${escapeHtml(d.archivo||'')} · ${binSize(d.size||0)} · Cargado el ${escapeHtml(ctFechaHora(d.fecha))} por ${escapeHtml(d.por||'')}${d.modificado?` · Reemplazado el ${escapeHtml(ctFechaHora(d.modificado))} por ${escapeHtml(d.porMod||'')}`:''}</small></div><div class="ct-dacc"><button class="btn small" data-ro-ok data-ctver="${escapeAttr(d.id)}">Ver</button>${ctPuedeDescargar()?`<button class="btn small secondary" data-ro-ok data-ctdl="${escapeAttr(d.id)}">Descargar</button>`:''}${puede?`<label class="btn small secondary ct-file">Reemplazar<input type="file" accept="application/pdf,.pdf" hidden data-ctrep="${escapeAttr(d.id)}"></label><button class="btn small danger" data-ctdel="${escapeAttr(d.id)}">Eliminar</button>`:''}</div></div>`).join(''):'<div class="ct-vacio">Sin documentos</div>';
+    return `<div class="ct-cat ${ds.length?'':'pend'}"><div class="ct-cathead"><h3><span>${cod}</span> ${escapeHtml(nom)}</h3>${ds.length?`<span class="ct-badge in">${ds.length}</span>`:'<span class="ct-badge out">Pendiente</span>'}${puede?`<label class="btn small ct-file">+ Subir PDF<input type="file" accept="application/pdf,.pdf" multiple hidden data-ctup="${cod}"></label>`:''}</div>${lista}</div>`;
+  }).join('');
+  return `<div class="card"><div class="ct-per"><div><button class="btn small secondary" data-ro-ok data-ctback="1">← Meses</button><span class="ct-etq" style="margin-left:10px">${etq} · ${ctPerTxt(per)}</span><h2>${mesTxt}</h2></div>${puede?'':'<span class="ct-ro">Solo consulta</span>'}</div>${secs}</div>`;
+}
+function ctVistaHist(){
+  const act=ctPerActual(), pers=[1,2,3,4,5].map(i=>act-i);
+  if(CT.per==null||!pers.includes(CT.per)) CT.per=pers[0];
+  const sel=`<div class="card"><div class="ct-head"><h2>Histórico<small>Hasta 5 periodos contables anteriores. Al iniciar un nuevo periodo (septiembre) el actual pasa aquí automáticamente.</small></h2><div class="field ct-mes"><label>Periodo</label><select id="ctPer" data-ro-ok>${pers.map(p=>`<option value="${p}" ${p===CT.per?'selected':''}>${ctPerTxt(p)} (${CT.docs.filter(d=>d.periodo===p).length})</option>`).join('')}</select></div></div>${isAdmin()?'<p class="muted">Modo manual: como administrador puede cargar documentos directamente en cualquier periodo histórico.</p>':''}</div>`;
+  return sel+ctVistaPeriodo(CT.per,'Histórico');
+}
+
+/* ----- Aprobaciones vigentes (con control de versiones) ----- */
+function ctVistaAprob(){
+  const ed=canContab(), grupos={};
+  CT.aprs.forEach(a=>{ (grupos[a.gid]=grupos[a.gid]||[]).push(a); });
+  const ids=Object.keys(grupos).sort((x,y)=>{ const f=g=>grupos[g].reduce((m,a)=>String(a.fecha)>m?String(a.fecha):m,''); return f(y).localeCompare(f(x)); });
+  const form=ed?`<div class="card"><h2>Subir aprobación<small>Cada archivo nuevo queda como versión 1. Para actualizarlo use "Nueva versión".</small></h2><div class="grid2"><div class="field"><label>Título *</label><input id="apTit" maxlength="140" placeholder="Ej. Aprobación de gastos de mantenimiento"></div><div class="field"><label>Archivo PDF *</label><input type="file" id="apFileN" accept="application/pdf,.pdf"></div></div><div class="field"><label>Nota (opcional)</label><input id="apNota" maxlength="200" placeholder="Detalle breve"></div><div class="actions"><button class="btn" id="apSubir">Subir aprobación</button></div></div>`:'';
+  const lista=ids.length?ids.map(g=>{
+    const vs=grupos[g].sort((a,b)=>(b.version||0)-(a.version||0)), cur=vs[0];
+    return `<div class="ct-apr"><div class="ct-aprh"><div><b>${escapeHtml(cur.titulo||'')}</b><span class="ct-badge in">Versión ${cur.version||1}</span><small>${escapeHtml(cur.nota||'')}</small><small>Actualizada el ${escapeHtml(ctFechaHora(cur.fecha))} por ${escapeHtml(cur.por||'')}</small></div><div class="ct-dacc"><button class="btn small" data-ro-ok data-ctaver="${escapeAttr(cur.id)}">Ver</button>${ctPuedeDescargar()?`<button class="btn small secondary" data-ro-ok data-ctadl="${escapeAttr(cur.id)}">Descargar</button>`:''}${ed?`<label class="btn small secondary ct-file">Nueva versión<input type="file" accept="application/pdf,.pdf" hidden data-ctanv="${escapeAttr(g)}"></label>`:''}<button class="btn small secondary" data-ro-ok data-cthist="${escapeAttr(g)}">Historial (${vs.length})</button>${isAdmin()?`<button class="btn small danger" data-ctadel="${escapeAttr(g)}">Eliminar</button>`:''}</div></div>${CT.abierta[g]?`<div class="ct-hist">${vs.map(v=>`<div class="ct-doc"><div class="ct-dinfo"><b>Versión ${v.version||1}${v.id===cur.id?' (vigente)':''}</b><small>${escapeHtml(v.archivo||'')} · ${binSize(v.size||0)} · ${escapeHtml(ctFechaHora(v.fecha))} · ${escapeHtml(v.por||'')}</small></div><div class="ct-dacc"><button class="btn small" data-ro-ok data-ctaver="${escapeAttr(v.id)}">Ver</button>${ctPuedeDescargar()?`<button class="btn small secondary" data-ro-ok data-ctadl="${escapeAttr(v.id)}">Descargar</button>`:''}${isAdmin()&&vs.length>1?`<button class="btn small danger" data-ctavdel="${escapeAttr(v.id)}">Eliminar versión</button>`:''}</div></div>`).join('')}</div>`:''}</div>`;
+  }).join(''):'<div class="empty">Aún no hay aprobaciones cargadas.</div>';
+  return `${form}<div class="card"><h2>Aprobaciones vigentes</h2>${lista}</div>`;
+}
+
+/* ----- Búsqueda global y filtros ----- */
+function ctTodos(){
+  const l=CT.docs.map(d=>({...d,_t:'doc',_cat:ctCatNombre(d.cat),_per:ctPerTxt(d.periodo),_anio:String(d.periodo),_mes:d.mes}));
+  CT.aprs.filter(a=>a.actual!==false).forEach(a=>l.push({...a,_t:'apr',_cat:'Aprobaciones vigentes',_per:'—',_anio:'',_mes:null,cat:'apr'}));
+  return l;
+}
+function ctVistaBuscar(){
+  const todos=ctTodos(), act=ctPerActual();
+  const anios=[...new Set(todos.map(d=>d._anio).filter(Boolean).concat([0,1,2,3,4,5].map(i=>String(act-i))))].sort().reverse();
+  const users=[...new Set(todos.map(d=>d.por).filter(Boolean))].sort();
+  return `<div class="card"><h2>Buscar documentos</h2><div class="ct-filtros"><div class="field wide"><label>Búsqueda</label><input type="search" id="ctQ" data-ro-ok value="${escapeAttr(CT.q)}" placeholder="Nombre, tipo, usuario, mes…"></div>
+  <div class="field"><label>Año (periodo)</label><select id="ctFa" data-ro-ok><option value="">Todos</option>${anios.map(a=>`<option value="${a}" ${CT.f.anio===a?'selected':''}>${ctPerTxt(+a)}</option>`).join('')}</select></div>
+  <div class="field"><label>Mes</label><select id="ctFm" data-ro-ok><option value="">Todos</option>${CT_ORDEN.map(m=>`<option value="${m}" ${CT.f.mes==String(m)?'selected':''}>${CT_MN[m]}</option>`).join('')}</select></div>
+  <div class="field"><label>Tipo de documento</label><select id="ctFc" data-ro-ok><option value="">Todos</option>${CT_CATS.map(c=>`<option value="${c[0]}" ${CT.f.cat===c[0]?'selected':''}>${escapeHtml(c[0]+' '+c[1])}</option>`).join('')}<option value="apr" ${CT.f.cat==='apr'?'selected':''}>Aprobaciones vigentes</option></select></div>
+  <div class="field"><label>Cargado por</label><select id="ctFu" data-ro-ok><option value="">Todos</option>${users.map(u=>`<option ${CT.f.user===u?'selected':''}>${escapeHtml(u)}</option>`).join('')}</select></div></div><div id="ctRes">${ctResultados()}</div></div>`;
+}
+function ctResultados(){
+  const q=ctNorm(CT.q).split(/\s+/).filter(Boolean), f=CT.f;
+  const r=ctTodos().filter(d=>{
+    if(f.anio&&d._anio!==f.anio) return false; if(f.mes&&String(d._mes)!==String(f.mes)) return false; if(f.cat&&d.cat!==f.cat) return false; if(f.user&&d.por!==f.user) return false;
+    const txt=ctNorm([d.titulo,d.archivo,d._cat,d.por,d._per,d._mes?CT_MN[d._mes]:'',d.nota].join(' ')); return q.every(w=>txt.includes(w));
+  }).sort((a,b)=>String(b.fecha||'').localeCompare(String(a.fecha||'')));
+  if(!r.length) return '<div class="empty">No se encontraron documentos.</div>';
+  return `<p class="muted">${r.length} resultado${r.length===1?'':'s'}${r.length>200?' (se muestran 200)':''}</p><div class="table-scroll ct-wrap"><table class="ct-table stack"><thead><tr><th>Documento</th><th>Periodo</th><th>Mes</th><th>Tipo</th><th>Fecha de carga</th><th>Cargado por</th><th></th></tr></thead><tbody>${r.slice(0,200).map(d=>`<tr><td data-label="Documento">${escapeHtml(d.titulo||d.archivo||'')}</td><td data-label="Periodo">${escapeHtml(d._per)}</td><td data-label="Mes">${d._mes?CT_MN[d._mes]:'—'}</td><td data-label="Tipo">${escapeHtml(d._cat)}</td><td data-label="Fecha">${escapeHtml(ctFechaHora(d.fecha))}</td><td data-label="Cargado por">${escapeHtml(d.por||'')}</td><td class="act"><button class="btn small" data-ro-ok ${d._t==='apr'?'data-ctaver':'data-ctver'}="${escapeAttr(d.id)}">Ver</button>${d._t==='doc'?`<button class="btn small secondary" data-ro-ok data-ctgo="${escapeAttr(d.id)}">Abrir carpeta</button>`:''}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+/* ----- Estadísticas ----- */
+function ctVistaStats(){
+  const act=ctPerActual(), todos=CT.docs;
+  let pend=0; ctMesesVencidos(act).forEach(m=>{ const ds=ctDocsDe(act,m); CT_CATS.forEach(c=>{ if(!ds.some(d=>d.cat===c[0])) pend++; }); });
+  const ult=todos.concat(CT.aprs).reduce((m,d)=>String(d.modificado||d.fecha||'')>String(m?(m.modificado||m.fecha):'')?d:m,null);
+  const pers=[...new Set(todos.map(d=>d.periodo).concat([act]))].sort((a,b)=>b-a);
+  const filas=pers.map(p=>{ const ds=todos.filter(d=>d.periodo===p), meses=new Set(ds.map(d=>d.mes)).size, cats=new Set(ds.map(d=>d.mes+'-'+d.cat)).size, tot=12*CT_CATS.length; return `<tr><td data-label="Periodo">${ctPerTxt(p)}${p===act?' <span class="ct-badge in">Actual</span>':''}</td><td data-label="Documentos" class="r">${ds.length}</td><td data-label="Meses con documentos" class="r">${meses}/12</td><td data-label="Avance"><span class="ct-bar"><i style="width:${Math.round(cats/tot*100)}%"></i></span></td></tr>`; }).join('');
+  const act2={}; todos.concat(CT.aprs).forEach(d=>{ if(d.por) act2[d.por]=(act2[d.por]||0)+1; }); CT.logs.forEach(l=>{ if(l.por) act2[l.por]=(act2[l.por]||0)+1; });
+  const top=Object.entries(act2).sort((a,b)=>b[1]-a[1]).slice(0,5), mx=top.length?top[0][1]:1;
+  return `<div class="ct-tiles"><div class="ct-tile acc"><span>Documentos del periodo actual</span><b>${todos.filter(d=>d.periodo===act).length}</b></div><div class="ct-tile out"><span>Documentos pendientes (periodo actual)</span><b>${pend}</b></div><div class="ct-tile"><span>Documentos totales</span><b>${todos.length}</b></div><div class="ct-tile in"><span>Última actualización</span><b class="sm">${ult?escapeHtml(ctFechaHora(ult.modificado||ult.fecha)):'—'}</b><small>${ult?escapeHtml((ult.modificado?ult.porMod:ult.por)||''):''}</small></div></div>
+  <div class="card"><h2>Documentos por periodo</h2><div class="table-scroll ct-wrap"><table class="ct-table stack"><thead><tr><th>Periodo</th><th class="r">Documentos</th><th class="r">Meses con documentos</th><th>Avance</th></tr></thead><tbody>${filas}</tbody></table></div><p class="muted">Se considera pendiente cada categoría sin documento en los meses ya transcurridos (${CT_CATS.length} categorías por mes).</p></div>
+  <div class="card"><h2>Usuarios con más actividad${canAudit()?'':'<small>Según documentos cargados</small>'}</h2>${top.length?top.map(([u,n])=>`<div class="ct-top"><span>${escapeHtml(u)}</span><span class="ct-bar"><i style="width:${Math.round(n/mx*100)}%"></i></span><b>${n}</b></div>`).join(''):'<div class="empty">Sin actividad todavía.</div>'}</div>`;
+}
+
+/* ----- Registro de actividad (administradores y auditores) ----- */
+function ctVistaLog(){
+  if(!canAudit()) return '<div class="empty">Sin acceso.</div>';
+  if(!CT.ok.log) return '<div class="empty">Cargando…</div>';
+  const accs=[...new Set(CT.logs.map(l=>l.accion))].sort(), l=CT.logs.filter(x=>!CT.logF||x.accion===CT.logF).sort((a,b)=>String(b.fecha||'').localeCompare(String(a.fecha||''))).slice(0,300);
+  return `<div class="card"><div class="ct-head"><h2>Registro de actividad<small>Subidas, eliminaciones, modificaciones y descargas</small></h2><div class="field ct-mes"><label>Acción</label><select id="ctLogF" data-ro-ok><option value="">Todas</option>${accs.map(a=>`<option ${CT.logF===a?'selected':''}>${escapeHtml(a)}</option>`).join('')}</select></div></div>${l.length?`<div class="table-scroll ct-wrap"><table class="ct-table stack"><thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Detalle</th></tr></thead><tbody>${l.map(x=>`<tr><td data-label="Fecha">${escapeHtml(ctFechaHora(x.fecha))}</td><td data-label="Usuario">${escapeHtml(x.por||x.email||'')}</td><td data-label="Acción">${escapeHtml(x.accion||'')}</td><td data-label="Detalle">${escapeHtml(x.detalle||'')}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Sin registros.</div>'}</div>`;
+}
+
+/* ----- eventos ----- */
+function ctBind(root){
+  const on=(sel,fn)=>root.querySelectorAll(sel).forEach(fn);
+  on('[data-ctmes]',b=>b.onclick=()=>{ CT.mes=+b.dataset.ctmes; ctPintar(); });
+  on('[data-ctback]',b=>b.onclick=()=>{ CT.mes=null; ctPintar(); });
+  on('[data-ctup]',i=>i.onchange=()=>ctSubirDocs(i));
+  on('[data-ctrep]',i=>i.onchange=()=>ctReemplazar(i));
+  on('[data-ctdel]',b=>b.onclick=()=>ctEliminarDoc(b.dataset.ctdel));
+  on('[data-ctver]',b=>b.onclick=()=>ctAbrir('doc',b.dataset.ctver,false));
+  on('[data-ctdl]',b=>b.onclick=()=>ctAbrir('doc',b.dataset.ctdl,true));
+  on('[data-ctaver]',b=>b.onclick=()=>ctAbrir('apr',b.dataset.ctaver,false));
+  on('[data-ctadl]',b=>b.onclick=()=>ctAbrir('apr',b.dataset.ctadl,true));
+  on('[data-ctgo]',b=>b.onclick=()=>{ const d=CT.docs.find(x=>x.id===b.dataset.ctgo); if(!d) return; CT.tab=d.periodo>=ctPerActual()?'actual':'hist'; CT.per=d.periodo; CT.mes=d.mes; renderContab(document.getElementById('content'),document.getElementById('topbarActions')); });
+  on('[data-cthist]',b=>b.onclick=()=>{ CT.abierta[b.dataset.cthist]=!CT.abierta[b.dataset.cthist]; ctPintar(); });
+  on('[data-ctanv]',i=>i.onchange=()=>ctNuevaVersion(i));
+  on('[data-ctadel]',b=>b.onclick=()=>ctEliminarApr(b.dataset.ctadel));
+  on('[data-ctavdel]',b=>b.onclick=()=>ctEliminarVersion(b.dataset.ctavdel));
+  const s=root.querySelector('#apSubir'); if(s) s.onclick=ctSubirApr;
+  const p=root.querySelector('#ctPer'); if(p) p.onchange=()=>{ CT.per=+p.value; CT.mes=null; ctPintar(); };
+  const q=root.querySelector('#ctQ'); if(q) q.oninput=()=>{ CT.q=q.value; document.getElementById('ctRes').innerHTML=ctResultados(); ctBind(document.getElementById('ctRes')); };
+  [['ctFa','anio'],['ctFm','mes'],['ctFc','cat'],['ctFu','user']].forEach(([id,k])=>{ const e=root.querySelector('#'+id); if(e) e.onchange=()=>{ CT.f[k]=e.value; document.getElementById('ctRes').innerHTML=ctResultados(); ctBind(document.getElementById('ctRes')); }; });
+  const lf=root.querySelector('#ctLogF'); if(lf) lf.onchange=()=>{ CT.logF=lf.value; ctPintar(); };
+}
+function ctValidarPdf(f){
+  if(f.type!=='application/pdf'&&!/\.pdf$/i.test(f.name)){ showToast('"'+f.name+'" no es un PDF'); return false; }
+  if(f.size>BIN_MAX){ showToast('"'+f.name+'" supera los 5 MB'); return false; }
+  return true;
+}
+async function ctSubirDocs(inp){
+  const per=CT.tab==='actual'?ctPerActual():CT.per, mes=CT.mes, cat=inp.dataset.ctup, files=[...inp.files];
+  if(!ctPuede(per)){ showToast('No tienes permiso para cargar en este periodo'); return; }
+  const c=binCol('contabilidad'); if(!c||mes==null||!files.length) return;
+  let ok=0; showToast('Subiendo '+files.length+' archivo'+(files.length>1?'s':'')+'…');
+  for(const f of files){
+    if(!ctValidarPdf(f)) continue;
+    const id=ctUid('d');
+    try{
+      const n=await binSubir('contabilidad',id,f);
+      await c.doc('d_'+id).set({kind:'doc',id,fid:id,periodo:per,mes,cat,titulo:f.name.replace(/\.pdf$/i,''),archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||'',email:(CUR&&CUR.id)||''});
+      ctLog('Subida',ctCatNombre(cat)+' · '+CT_MN[mes]+' '+ctAnioMes(per,mes)+' · '+f.name); ok++;
+    }catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo subir "'+f.name+'"'); }
+  }
+  inp.value=''; if(ok) showToast(ok+' documento'+(ok>1?'s':'')+' guardado'+(ok>1?'s':''));
+}
+async function ctReemplazar(inp){
+  const d=CT.docs.find(x=>x.id===inp.dataset.ctrep), f=inp.files[0]; if(!d||!f) return;
+  if(!ctPuede(d.periodo)){ showToast('No tienes permiso para reemplazar'); return; }
+  if(!ctValidarPdf(f)){ inp.value=''; return; }
+  const c=binCol('contabilidad'), nf=ctUid('f'); showToast('Reemplazando…');
   try{
-    await c.doc('mv_'+id).set({kind:'mov',id,fecha,tipo,monto:Math.round(monto*100)/100,categoria:cat,concepto:conc,por:(CUR&&CUR.name)||'',email:(CUR&&CUR.id)||'',creado:new Date().toISOString()});
-    ctLog('Movimiento registrado',tipo+' '+ctMoney(monto)+' – '+conc+' ('+fecha+')');
-    CT.mes=fecha.slice(0,7); const mi=document.getElementById('ctMes'); if(mi) mi.value=CT.mes;
-    document.getElementById('ctMonto').value=''; document.getElementById('ctConc').value=''; showToast('Movimiento guardado');
-  }catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar'); }
+    const n=await binSubir('contabilidad',nf,f), viejo={fid:d.fid||d.id,n:d.n};
+    await c.doc('d_'+d.id).update({fid:nf,n,archivo:f.name,size:f.size,titulo:f.name.replace(/\.pdf$/i,''),modificado:new Date().toISOString(),porMod:(CUR&&CUR.name)||''});
+    await binPartes('contabilidad',viejo.fid,viejo.n);
+    ctLog('Modificación (reemplazo)',ctCatNombre(d.cat)+' · '+d.archivo+' → '+f.name); showToast('Documento reemplazado');
+  }catch(e){ console.error(e); showToast('No se pudo reemplazar'); }
+  inp.value='';
+}
+async function ctEliminarDoc(id){
+  const d=CT.docs.find(x=>x.id===id); if(!d||!ctPuede(d.periodo)) return;
+  if(!confirm('¿Eliminar "'+(d.titulo||d.archivo)+'"? Quedará registrado en la actividad.')) return;
+  try{ await binPartes('contabilidad',d.fid||d.id,d.n); await binCol('contabilidad').doc('d_'+id).delete(); ctLog('Eliminación',ctCatNombre(d.cat)+' · '+d.archivo+' · '+CT_MN[d.mes]+' '+ctAnioMes(d.periodo,d.mes)); showToast('Documento eliminado'); }
+  catch(e){ showToast('No se pudo eliminar'); }
+}
+async function ctAbrir(tipo,id,descargar){
+  const d=(tipo==='doc'?CT.docs:CT.aprs).find(x=>x.id===id); if(!d) return;
+  const dl=ctPuedeDescargar(); if(descargar&&!dl){ showToast('Solo los administradores y usuarios designados pueden descargar'); return; }
+  showToast(descargar?'Descargando…':'Abriendo…');
+  try{
+    const blob=await binBlob('contabilidad',d), reg=()=>ctLog('Descarga',(tipo==='apr'?'Aprobación v'+(d.version||1)+' · ':ctCatNombre(d.cat)+' · ')+d.archivo);
+    if(descargar){ binDescargar(blob,d.archivo); reg(); } else binAbrir(d.titulo||d.archivo,blob,d.archivo,dl,reg);
+  }catch(e){ console.error(e); showToast(e.message==='incompleto'?'El archivo está incompleto':'No se pudo abrir el archivo'); }
+}
+/* ----- aprobaciones ----- */
+async function ctSubirApr(){
+  if(!canContab()){ showToast('Sin permiso'); return; }
+  const c=binCol('contabilidad'), t=document.getElementById('apTit').value.trim(), f=document.getElementById('apFileN').files[0], nota=document.getElementById('apNota').value.trim();
+  if(!t){ showToast('Escribe el título'); return; } if(!f){ showToast('Selecciona un PDF'); return; } if(!ctValidarPdf(f)) return;
+  const id=ctUid('g'), btn=document.getElementById('apSubir'); btn.disabled=true; showToast('Subiendo…');
+  try{ const n=await binSubir('contabilidad',id,f); await c.doc('a_'+id).set({kind:'apr',id,fid:id,gid:id,version:1,actual:true,titulo:t,nota,archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||'',email:(CUR&&CUR.id)||''}); ctLog('Subida','Aprobación · '+t+' (v1)'); showToast('Aprobación guardada'); }
+  catch(e){ console.error(e); showToast('No se pudo guardar'); }
   btn.disabled=false;
 }
-function ctEliminarMov(id){
-  const m=CT.movs.find(x=>x.id===id); if(!m||!canContab()) return;
-  if(!confirm('¿Eliminar este movimiento?\n'+m.tipo+' '+ctMoney(+m.monto||0)+' – '+(m.concepto||'')+'\nQuedará registrado en la bitácora de auditoría.')) return;
-  binCol('contabilidad').doc('mv_'+id).delete().then(()=>{ ctLog('Movimiento eliminado',m.tipo+' '+ctMoney(+m.monto||0)+' – '+(m.concepto||'')+' ('+(m.fecha||'')+')'); showToast('Movimiento eliminado'); }).catch(()=>showToast('No se pudo eliminar'));
-}
-async function ctSubirArchivo(){
-  if(!canContab()){ showToast('Sin permiso para cargar información'); return; }
-  const c=binCol('contabilidad'); if(!c){ showToast('Sin conexión con Firebase'); return; }
-  const f=document.getElementById('ctaFile').files[0], t=document.getElementById('ctaTitulo').value.trim(), r=document.getElementById('ctaSum').value.trim();
-  if(!t){ showToast('Escribe el título'); return; }
-  if(!f){ showToast('Selecciona un archivo'); return; }
-  if(!/\.(pdf|xlsx|xls|csv|png|jpe?g)$/i.test(f.name)){ showToast('Formato no permitido'); return; }
-  if(f.size>BIN_MAX){ showToast('El archivo supera los 5 MB'); return; }
-  if(!r){ showToast('Escribe un pequeño resumen'); return; }
-  const btn=document.getElementById('ctaGuardar'); btn.disabled=true; showToast('Subiendo archivo…');
-  const id=ctUid('f');
+async function ctNuevaVersion(inp){
+  const g=inp.dataset.ctanv, vs=CT.aprs.filter(a=>a.gid===g).sort((a,b)=>(b.version||0)-(a.version||0)), cur=vs[0], f=inp.files[0]; if(!cur||!f||!canContab()) return;
+  if(!ctValidarPdf(f)){ inp.value=''; return; }
+  const c=binCol('contabilidad'), id=ctUid('g'); showToast('Subiendo nueva versión…');
   try{
     const n=await binSubir('contabilidad',id,f);
-    await c.doc('m_'+id).set({kind:'meta',id,mes:CT.mes,titulo:t,resumen:r,archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''});
-    ctLog('Archivo subido',t+' ('+f.name+') – '+ctMesNombre(CT.mes));
-    document.getElementById('ctaTitulo').value=''; document.getElementById('ctaSum').value=''; document.getElementById('ctaFile').value=''; showToast('Archivo guardado en '+ctMesNombre(CT.mes));
-  }catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar el archivo'); }
-  btn.disabled=false;
+    await c.doc('a_'+id).set({kind:'apr',id,fid:id,gid:g,version:(cur.version||1)+1,actual:true,titulo:cur.titulo,nota:cur.nota||'',archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||'',email:(CUR&&CUR.id)||''});
+    for(const v of vs){ if(v.actual!==false) await c.doc('a_'+v.id).update({actual:false}); }
+    ctLog('Modificación (nueva versión)',cur.titulo+' → v'+((cur.version||1)+1)); showToast('Versión '+((cur.version||1)+1)+' guardada');
+  }catch(e){ console.error(e); showToast('No se pudo guardar'); }
+  inp.value='';
 }
-function ctEliminarArchivo(id){
-  const f=CT.files.find(x=>x.id===id); if(!f||!canContab()) return;
-  if(!confirm('¿Eliminar el archivo "'+f.titulo+'"?')) return;
-  binBorrar('contabilidad',id,f.n).then(()=>{ ctLog('Archivo eliminado',(f.titulo||'')+' ('+(f.archivo||'')+')'); showToast('Archivo eliminado'); }).catch(()=>showToast('No se pudo eliminar'));
+async function ctEliminarApr(g){
+  if(!isAdmin()) return; const vs=CT.aprs.filter(a=>a.gid===g); if(!vs.length) return;
+  if(!confirm('¿Eliminar "'+vs[0].titulo+'" con sus '+vs.length+' versión(es)?')) return;
+  try{ for(const v of vs){ await binPartes('contabilidad',v.fid||v.id,v.n); await binCol('contabilidad').doc('a_'+v.id).delete(); } ctLog('Eliminación','Aprobación · '+vs[0].titulo+' (todas las versiones)'); showToast('Aprobación eliminada'); }catch(e){ showToast('No se pudo eliminar'); }
 }
-async function ctVer(id){
-  const f=CT.files.find(x=>x.id===id); if(!f) return;
-  showToast('Abriendo archivo…');
-  try{ binAbrir(f.titulo,await binBlob('contabilidad',f),f.archivo); }catch(e){ console.error(e); showToast(e.message==='incompleto'?'El archivo está incompleto':'No se pudo abrir el archivo'); }
-}
-function ctExportar(){
-  if(isLector()) return;
-  const r=ctResumen(CT.mes), q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
-  const lines=[['Fecha','Tipo','Categoría','Concepto','Monto','Registró'].join(',')].concat(r.del.map(m=>[m.fecha,m.tipo,q(m.categoria),q(m.concepto),(+m.monto||0).toFixed(2),q(m.por)].join(',')));
-  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+lines.join('\n')],{type:'text/csv'})); a.download='contabilidad-'+CT.mes+'.csv'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+async function ctEliminarVersion(id){
+  if(!isAdmin()) return; const v=CT.aprs.find(a=>a.id===id); if(!v) return; if(!confirm('¿Eliminar la versión '+(v.version||1)+'?')) return;
+  const c=binCol('contabilidad');
+  try{ await binPartes('contabilidad',v.fid||v.id,v.n); await c.doc('a_'+id).delete();
+    const rest=CT.aprs.filter(a=>a.gid===v.gid&&a.id!==id).sort((a,b)=>(b.version||0)-(a.version||0)); if(rest[0]&&rest[0].actual===false) await c.doc('a_'+rest[0].id).update({actual:true});
+    ctLog('Eliminación','Aprobación · '+v.titulo+' v'+(v.version||1)); showToast('Versión eliminada'); }catch(e){ showToast('No se pudo eliminar'); }
 }
 
 /* ===== AUDITORÍA CONTABILIDAD ===== */
+const AU={meses:[],q:'',desde:'',hasta:'',auditor:'',per:'',editId:null};
 function renderAuditoria(content,actions){
   actions.innerHTML='';
-  if(!canAudit()){ content.innerHTML='<div class="card"><div class="empty">No tienes acceso a Auditoría Contabilidad. Pide a un administrador que te designe.</div></div>'; return; }
-  ctWatchAll();
-  content.innerHTML=`<div class="card"><div class="ct-head"><h2>Revisión del mes</h2><div class="field ct-mes"><label>Mes</label><input type="month" id="auMes" data-ro-ok value="${CT.mes}"></div></div><div id="auEstado"></div><div id="auResumen"></div></div>
-  <div class="card"><h2>Movimientos del mes <small>Solo lectura</small></h2><div id="auMovs"></div></div>
-  <div class="card"><h2>Archivos del mes <small>Solo lectura</small></h2><div id="auArchivos"></div></div>
-  <div class="card"><h2>Observaciones</h2><div class="grid2"><div class="field"><label>Tipo</label><select id="auTipo"><option>Observación</option><option>Recomendación</option><option>Hallazgo</option></select></div><div class="field"><label>Observación *</label><textarea id="auTexto" rows="2" maxlength="500" placeholder="Escribe tu observación sobre este mes"></textarea></div></div><div class="actions"><button class="btn" id="auAgregar">Agregar observación</button></div><div id="auObs"></div></div>
-  <div class="card"><h2>Bitácora de cambios <small>Quién subió o eliminó información en Contabilidad</small></h2><div id="auLog"></div></div>`;
-  document.getElementById('auMes').onchange=e=>{ if(e.target.value){ CT.mes=e.target.value; auPintar(); } };
-  document.getElementById('auAgregar').onclick=auAgregar;
-  auPintar();
+  if(!canAudit()){ content.innerHTML='<div class="card"><div class="empty">No tienes acceso vigente a Auditoría Contabilidad. Un administrador debe designarte como auditor.</div></div>'; return; }
+  ctWatchAll(); AU.meses=[]; AU.editId=null;
+  const vig=(!isAdmin()&&CUR&&CUR.modules&&CUR.modules.auditoriaHasta)?`<div class="vym-det ok" style="margin-bottom:10px">Acceso de auditor: del ${escapeHtml(audFecha(audMs(CUR.modules.auditoriaDesde)||Date.now()))} al ${escapeHtml(audHastaTxt(CUR.modules))}. Después se desactiva automáticamente.</div>`:'';
+  content.innerHTML=`${vig}<div class="card"><h2>Registrar auditoría<small>Suba el informe en PDF (máx. 5 MB) con los datos de la auditoría.</small></h2>
+   <div class="grid3"><div class="field"><label>Fecha de auditoría *</label><input type="date" id="auFecha" value="${audISO(new Date())}"></div><div class="field"><label>Nombre del auditor *</label><input id="auAuditor" maxlength="100" value="${escapeAttr((CUR&&CUR.name)||'')}"></div><div class="field"><label>Archivo PDF *</label><input type="file" id="auFile" accept="application/pdf,.pdf"></div></div>
+   <div class="field"><label>Mes o meses auditados *</label><div class="au-meses"><input type="month" id="auMesIn" value="${audISO(new Date()).slice(0,7)}"><button class="btn secondary small" id="auAddMes" type="button">Añadir mes</button></div><div id="auChips" class="au-chips"></div></div>
+   <div class="field"><label>Observaciones</label><textarea id="auObs" rows="3" maxlength="1500" placeholder="Observaciones de la auditoría"></textarea></div>
+   <div class="actions"><button class="btn" id="auGuardar">Guardar auditoría</button></div></div>
+   <div class="card"><h2>Auditorías registradas</h2><div class="ct-filtros"><div class="field wide"><label>Buscar</label><input type="search" id="auQ" data-ro-ok placeholder="Auditor, mes, observaciones…"></div><div class="field"><label>Fecha desde</label><input type="date" id="auD" data-ro-ok></div><div class="field"><label>Fecha hasta</label><input type="date" id="auH" data-ro-ok></div><div class="field"><label>Auditor</label><select id="auA" data-ro-ok></select></div><div class="field"><label>Periodo auditado</label><select id="auP" data-ro-ok></select></div></div><div id="auLista"></div></div>`;
+  document.getElementById('auAddMes').onclick=()=>{ const v=document.getElementById('auMesIn').value; if(v&&!AU.meses.includes(v)){ AU.meses.push(v); AU.meses.sort(); auChips(); } };
+  document.getElementById('auGuardar').onclick=auGuardar;
+  const wire=(id,k)=>{ const e=document.getElementById(id); e.oninput=e.onchange=()=>{ AU[k]=e.value; auLista(); }; };
+  wire('auQ','q'); wire('auD','desde'); wire('auH','hasta'); wire('auA','auditor'); wire('auP','per');
+  auChips(); auPintar();
 }
+function auChips(){ const b=document.getElementById('auChips'); if(!b) return; b.innerHTML=AU.meses.length?AU.meses.map(m=>`<span class="au-chip">${escapeHtml(ctMesNombre(m))}<button type="button" data-auquitar="${m}" aria-label="Quitar">×</button></span>`).join(''):'<small class="muted">Aún no añadió meses.</small>'; b.querySelectorAll('[data-auquitar]').forEach(x=>x.onclick=()=>{ AU.meses=AU.meses.filter(m=>m!==x.dataset.auquitar); auChips(); }); }
+function auPerDe(mes){ const [y,m]=mes.split('-').map(Number); return m>=9?y:y-1; }
 function auPintar(){
-  const box=document.getElementById('auResumen'); if(!box||!canAudit()) return;
-  const est=ctEstado(); if(est){ box.innerHTML=est; return; }
-  const mes=CT.mes, r=ctResumen(mes);
-  const rev=CT.revs.find(x=>x.mes===mes&&x.revisado);
-  document.getElementById('auEstado').innerHTML=`<div class="au-estado ${rev?'ok':''}"><span>${rev?'✔ Mes revisado por <b>'+escapeHtml(rev.por||'')+'</b> el '+escapeHtml(String(rev.fecha||'').slice(0,10)):'Mes pendiente de revisión'}</span><button class="btn ${rev?'secondary':''}" id="auRev">${rev?'Quitar revisión':'Marcar como revisado'}</button></div>`;
-  document.getElementById('auRev').onclick=()=>auRevisar(!rev);
-  box.innerHTML=ctTiles(r);
-  const m=document.getElementById('auMovs'); m.innerHTML=ctFilasMov(r.del,false);
-  const a=document.getElementById('auArchivos'); a.innerHTML=ctListaArchivos(mes,false); ctBind(a,false);
-  const ob=CT.obs.filter(o=>o.mes===mes).sort((x,y)=>String(y.fecha||'').localeCompare(String(x.fecha||'')));
-  const ol=document.getElementById('auObs');
-  ol.innerHTML=ob.length?ob.map(o=>`<div class="au-obs ${o.resuelta?'res':''}"><div><span class="ct-badge ${o.resuelta?'in':'out'}">${escapeHtml(o.tipo||'Observación')}${o.resuelta?' · Resuelta':''}</span> <small>${escapeHtml(o.por||'')} · ${escapeHtml(String(o.fecha||'').slice(0,10))}</small></div><p>${escapeHtml(o.texto||'')}</p><div class="act"><button class="btn small" data-aures="${escapeAttr(o.id)}">${o.resuelta?'Reabrir':'Marcar resuelta'}</button><button class="btn danger small" data-audel="${escapeAttr(o.id)}">Eliminar</button></div></div>`).join(''):'<div class="empty">Sin observaciones en este mes.</div>';
-  ol.querySelectorAll('[data-aures]').forEach(b=>b.onclick=()=>auResolver(b.dataset.aures));
-  ol.querySelectorAll('[data-audel]').forEach(b=>b.onclick=()=>auBorrar(b.dataset.audel));
-  const lg=CT.logs.slice().sort((x,y)=>String(y.fecha||'').localeCompare(String(x.fecha||''))).slice(0,40);
-  document.getElementById('auLog').innerHTML=lg.length?`<div class="table-scroll ct-wrap"><table class="ct-table stack"><thead><tr><th>Fecha</th><th>Usuario</th><th>Acción</th><th>Detalle</th></tr></thead><tbody>${lg.map(l=>`<tr><td data-label="Fecha">${escapeHtml(String(l.fecha||'').replace('T',' ').slice(0,16))}</td><td data-label="Usuario">${escapeHtml(l.por||l.email||'')}</td><td data-label="Acción">${escapeHtml(l.accion||'')}</td><td data-label="Detalle">${escapeHtml(l.detalle||'')}</td></tr>`).join('')}</tbody></table></div>`:'<div class="empty">Aún no hay movimientos en la bitácora.</div>';
+  if(!document.getElementById('auLista')||!canAudit()) return;
+  const aSel=document.getElementById('auA'), pSel=document.getElementById('auP');
+  const aud=[...new Set(CT.auds.map(a=>a.auditor).filter(Boolean))].sort(), pers=[...new Set(CT.auds.flatMap(a=>(a.meses||[]).map(auPerDe)))].sort((x,y)=>y-x);
+  aSel.innerHTML='<option value="">Todos</option>'+aud.map(a=>`<option ${AU.auditor===a?'selected':''}>${escapeHtml(a)}</option>`).join('');
+  pSel.innerHTML='<option value="">Todos</option>'+pers.map(p=>`<option value="${p}" ${AU.per==String(p)?'selected':''}>${ctPerTxt(p)}</option>`).join('');
+  auLista();
+}
+function auLista(){
+  const box=document.getElementById('auLista'); if(!box) return;
+  if(!CT.ok.aud) { box.innerHTML='<div class="empty">Cargando…</div>'; return; }
+  const q=ctNorm(AU.q).split(/\s+/).filter(Boolean);
+  const l=CT.auds.filter(a=>{
+    if(AU.desde&&a.fecha<AU.desde) return false; if(AU.hasta&&a.fecha>AU.hasta) return false; if(AU.auditor&&a.auditor!==AU.auditor) return false;
+    if(AU.per&&!(a.meses||[]).some(m=>String(auPerDe(m))===AU.per)) return false;
+    const t=ctNorm([a.auditor,a.observaciones,a.fecha,(a.meses||[]).map(ctMesNombre).join(' '),a.por].join(' ')); return q.every(w=>t.includes(w));
+  }).sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha))||String(b.cargado).localeCompare(String(a.cargado)));
+  if(!l.length){ box.innerHTML='<div class="empty">No hay auditorías que coincidan.</div>'; return; }
+  box.innerHTML=l.map(a=>`<div class="au-item"><div class="au-top"><div><b>Auditoría del ${escapeHtml(a.fecha||'')}</b><small>Auditor: ${escapeHtml(a.auditor||'')}</small></div><div class="ct-dacc"><button class="btn small" data-ro-ok data-auver="${escapeAttr(a.id)}">Ver PDF</button>${isAdmin()?`<button class="btn small secondary" data-ro-ok data-audl="${escapeAttr(a.id)}">Descargar</button>`:''}<button class="btn small secondary" data-auedit="${escapeAttr(a.id)}">Editar observaciones</button>${(isAdmin()||a.email===(CUR&&CUR.id))?`<button class="btn small danger" data-audel="${escapeAttr(a.id)}">Eliminar</button>`:''}</div></div><div class="au-chips">${(a.meses||[]).map(m=>`<span class="au-chip ro">${escapeHtml(ctMesNombre(m))}</span>`).join('')}</div>${AU.editId===a.id?`<textarea id="auEditTxt" rows="3" maxlength="1500">${escapeHtml(a.observaciones||'')}</textarea><div class="actions"><button class="btn small" data-ausave="${escapeAttr(a.id)}">Guardar</button><button class="btn small secondary" data-ro-ok data-aucancel="1">Cancelar</button></div>`:`<p class="au-obs-t">${a.observaciones?escapeHtml(a.observaciones):'<span class="muted">Sin observaciones.</span>'}</p>`}<small class="muted">${escapeHtml(a.archivo||'')} · ${binSize(a.size||0)} · Cargada el ${escapeHtml(ctFechaHora(a.cargado))} · Registrada por ${escapeHtml(a.por||'')}${a.editado?` · Observaciones editadas el ${escapeHtml(ctFechaHora(a.editado))} por ${escapeHtml(a.porEd||'')}`:''}</small></div>`).join('');
+  box.querySelectorAll('[data-auver]').forEach(b=>b.onclick=()=>auAbrir(b.dataset.auver,false));
+  box.querySelectorAll('[data-audl]').forEach(b=>b.onclick=()=>auAbrir(b.dataset.audl,true));
+  box.querySelectorAll('[data-auedit]').forEach(b=>b.onclick=()=>{ AU.editId=b.dataset.auedit; auLista(); });
+  box.querySelectorAll('[data-aucancel]').forEach(b=>b.onclick=()=>{ AU.editId=null; auLista(); });
+  box.querySelectorAll('[data-ausave]').forEach(b=>b.onclick=()=>auGuardarObs(b.dataset.ausave));
+  box.querySelectorAll('[data-audel]').forEach(b=>b.onclick=()=>auEliminar(b.dataset.audel));
   if(typeof lockUI==='function') lockUI();
 }
-async function auRevisar(on){
-  const c=binCol('auditoria'); if(!c||!canAudit()) return;
-  try{ await c.doc('rev_'+CT.mes).set({kind:'rev',mes:CT.mes,revisado:on,por:(CUR&&CUR.name)||'',fecha:new Date().toISOString()}); showToast(on?'Mes marcado como revisado':'Revisión retirada'); }
+async function auGuardar(){
+  if(!canAudit()){ showToast('Tu acceso de auditor no está vigente'); return; }
+  const c=binCol('auditoria'); if(!c){ showToast('Sin conexión con Firebase'); return; }
+  const fecha=document.getElementById('auFecha').value, aud=document.getElementById('auAuditor').value.trim(), f=document.getElementById('auFile').files[0], obs=document.getElementById('auObs').value.trim();
+  if(!fecha){ showToast('Indica la fecha de la auditoría'); return; } if(!aud){ showToast('Escribe el nombre del auditor'); return; }
+  if(!AU.meses.length){ showToast('Añade al menos un mes auditado'); return; } if(!f){ showToast('Selecciona el PDF'); return; } if(!ctValidarPdf(f)) return;
+  const btn=document.getElementById('auGuardar'); btn.disabled=true; showToast('Guardando auditoría…'); const id=ctUid('a');
+  try{
+    const n=await binSubir('auditoria',id,f);
+    await c.doc('a_'+id).set({kind:'aud',id,fid:id,fecha,meses:AU.meses.slice(),auditor:aud,observaciones:obs,archivo:f.name,size:f.size,n,cargado:new Date().toISOString(),por:(CUR&&CUR.name)||'',email:(CUR&&CUR.id)||''});
+    ctLog('Auditoría registrada',aud+' · '+AU.meses.map(ctMesNombre).join(', '));
+    AU.meses=[]; auChips(); document.getElementById('auFile').value=''; document.getElementById('auObs').value=''; showToast('Auditoría guardada');
+  }catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar'); }
+  btn.disabled=false;
+}
+async function auGuardarObs(id){
+  const a=CT.auds.find(x=>x.id===id); if(!a||!canAudit()) return; const t=document.getElementById('auEditTxt').value.trim();
+  try{ await binCol('auditoria').doc('a_'+id).update({observaciones:t,editado:new Date().toISOString(),porEd:(CUR&&CUR.name)||''}); ctLog('Modificación','Observaciones de la auditoría del '+a.fecha); AU.editId=null; showToast('Observaciones actualizadas'); }
   catch(e){ showToast('No se pudo guardar'); }
 }
-async function auAgregar(){
-  const c=binCol('auditoria'); if(!c||!canAudit()) return;
-  const t=document.getElementById('auTexto').value.trim(); if(!t){ showToast('Escribe la observación'); return; }
-  const id=ctUid('o');
-  try{ await c.doc('o_'+id).set({kind:'obs',id,mes:CT.mes,tipo:document.getElementById('auTipo').value,texto:t,resuelta:false,por:(CUR&&CUR.name)||'',fecha:new Date().toISOString()}); document.getElementById('auTexto').value=''; showToast('Observación agregada'); }
-  catch(e){ showToast('No se pudo guardar'); }
+async function auAbrir(id,descargar){
+  const a=CT.auds.find(x=>x.id===id); if(!a) return; if(descargar&&!isAdmin()){ showToast('Solo los administradores pueden descargar'); return; }
+  showToast(descargar?'Descargando…':'Abriendo…');
+  try{ const blob=await binBlob('auditoria',a), reg=()=>ctLog('Descarga','Auditoría del '+a.fecha+' · '+a.archivo); if(descargar){ binDescargar(blob,a.archivo); reg(); } else binAbrir('Auditoría del '+a.fecha,blob,a.archivo,isAdmin(),reg); }
+  catch(e){ showToast('No se pudo abrir el PDF'); }
 }
-function auResolver(id){ const o=CT.obs.find(x=>x.id===id); if(!o) return; binCol('auditoria').doc('o_'+id).update({resuelta:!o.resuelta}).catch(()=>showToast('No se pudo actualizar')); }
-function auBorrar(id){ if(confirm('¿Eliminar esta observación?')) binCol('auditoria').doc('o_'+id).delete().catch(()=>showToast('No se pudo eliminar')); }
+async function auEliminar(id){
+  const a=CT.auds.find(x=>x.id===id); if(!a) return; if(!confirm('¿Eliminar la auditoría del '+a.fecha+'?')) return;
+  try{ await binPartes('auditoria',a.fid||a.id,a.n); await binCol('auditoria').doc('a_'+id).delete(); ctLog('Eliminación','Auditoría del '+a.fecha+' · '+a.auditor); showToast('Auditoría eliminada'); }
+  catch(e){ showToast('No se pudo eliminar'); }
+}
 
 
 /* ===== VIDA Y MINISTERIO (PDF por semana; el mes se toma de la fecha del PDF) ===== */
+function canVym(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.vidaministerio===true); }
 const VYM={list:[],loaded:false,unsub:null,err:null,det:null};
 const VYM_MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','setiembre','octubre','noviembre','diciembre'];
 const VYM_MNUM={enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,setiembre:9,octubre:10,noviembre:11,diciembre:12};
@@ -4221,7 +4458,7 @@ function vymListaHtml(){
   if(VYM.err) return '<div class="empty">No se pudieron cargar los PDF ('+escapeHtml(VYM.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>';
   if(!VYM.loaded) return '<div class="empty">Cargando…</div>';
   if(!VYM.list.length) return '<div class="empty">Aún no hay PDF cargados.</div>';
-  const adm=isAdmin(), grupos={};
+  const adm=canVym(), grupos={};
   VYM.list.forEach(c=>{ const k=vymMesClave(c.semana); (grupos[k]=grupos[k]||[]).push(c); });
   return Object.keys(grupos).sort().reverse().map(k=>`<div class="vym-mes"><h3>${escapeHtml(ctMesNombre(k))}<small>${grupos[k].length} archivo${grupos[k].length>1?'s':''}</small></h3>${grupos[k].sort((a,b)=>String(a.semana).localeCompare(String(b.semana))).map(c=>`<div class="carta-item"><div class="carta-ico">PDF</div><div class="carta-info"><div class="carta-title">${escapeHtml(c.titulo||'')}</div><div class="carta-meta">Semana del ${escapeHtml(vymFechaLarga(c.semana))} · ${escapeHtml(c.archivo||'')} · ${binSize(c.size||0)}${c.por?' · Subido por '+escapeHtml(c.por):''}</div></div><div class="carta-acc"><button class="btn" data-ro-ok data-vver="${escapeAttr(c.id)}">Ver</button>${adm?`<button class="btn danger" data-vdel="${escapeAttr(c.id)}">Eliminar</button>`:''}</div></div>`).join('')}</div>`).join('');
 }
@@ -4234,7 +4471,7 @@ function vymPintar(){
 }
 function renderVym(content,actions){
   actions.innerHTML=''; vymWatch(); VYM.det=null;
-  const form=isAdmin()?`<div class="card"><h2>Subir PDF<small>Solo los administradores pueden cargar. La página lee la fecha del PDF y lo ubica en su mes. Máximo 5 MB.</small></h2>
+  const form=canVym()?`<div class="card"><h2>Subir PDF<small>Solo los administradores y los colaboradores designados pueden cargar. La página lee la fecha del PDF y lo ubica en su mes. Máximo 5 MB.</small></h2>
     <div class="grid2"><div class="field"><label>Archivo PDF *</label><input type="file" id="vyFile" accept="application/pdf,.pdf"></div><div class="field"><label>Título</label><input id="vyTitle" maxlength="120" placeholder="Se completa solo con la semana"></div></div>
     <div class="field"><label>Fecha de la semana (confirme o corrija) *</label><input type="date" id="vyFecha"><div class="vym-det" id="vyDet">Seleccione un PDF para detectar su fecha.</div></div>
     <div class="actions"><button class="btn" id="vySave">Guardar PDF</button></div></div>`:'';
@@ -4253,7 +4490,7 @@ async function vymAlElegir(){
   else{ det.className='vym-det warn'; det.textContent='No se pudo leer una fecha en el PDF. Elija la fecha manualmente.'; }
 }
 async function vymGuardar(){
-  if(!isAdmin()){ showToast('Solo los administradores pueden cargar PDF'); return; }
+  if(!canVym()){ showToast('No tienes permiso para cargar PDF'); return; }
   const col=binCol('vidaministerio'); if(!col){ showToast('Sin conexión con Firebase'); return; }
   const f=document.getElementById('vyFile').files[0], fe=document.getElementById('vyFecha').value;
   if(!f){ showToast('Selecciona un archivo PDF'); return; }
@@ -4272,7 +4509,7 @@ async function vymGuardar(){
   btn.disabled=false;
 }
 function vymEliminar(id){
-  const c=VYM.list.find(x=>x.id===id); if(!c||!isAdmin()) return;
+  const c=VYM.list.find(x=>x.id===id); if(!c||!canVym()) return;
   if(!confirm('¿Eliminar "'+c.titulo+'"?')) return;
   binBorrar('vidaministerio',id,c.n).then(()=>showToast('PDF eliminado')).catch(()=>showToast('No se pudo eliminar'));
 }
@@ -4285,7 +4522,8 @@ async function vymVer(id){
 /* ===== AVISOS POR CORREO (Google Apps Script, gratis) =====
    Envía un correo cuando una persona con correo registrado recibe una tarea, asignación, discurso o privilegio.
    Sin duplicados: cada aviso se registra en Firestore (colección "avisos"). */
-const AV={cfg:{activo:false,url:''},sent:new Set(),sentOk:false,cfgOk:false,started:false,timer:null,busy:false};
+const AV_URL_DEFECTO='https://script.google.com/macros/s/AKfycbzC3sMrpgAds2CCjNLcw9vTuMKZ64Lu8RakSxeC-A6WTl-H8FPrmvy_jFC2RIjIsQ4B5w/exec';
+const AV={cfg:{activo:false,url:AV_URL_DEFECTO},sent:new Set(),sentOk:false,cfgOk:false,started:false,timer:null,busy:false};
 function avNorm(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9ñ ]+/g,' ').replace(/\s+/g,' ').trim(); }
 function avHash(s){ let h=5381; for(let i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return (h>>>0).toString(36)+s.length.toString(36); }
 function avEmailOk(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e||'').trim()); }
@@ -4351,7 +4589,7 @@ function avDocRef(k){ return SYNC.db.collection('avisos').doc('k_'+avHash(k)); }
 function avIniciar(){
   if(AV.started||!FIREBASE_READY||!SYNC||!SYNC.db||!CUR||CUR.role==='lector') return;
   AV.started=true; const col=SYNC.db.collection('avisos');
-  col.doc('config').onSnapshot(d=>{ AV.cfg=Object.assign({activo:false,url:''},d.exists?d.data():{}); AV.cfgOk=true; if(VIEW==='users') avCard(); avProgramar(); },()=>{ AV.cfgOk=true; });
+  col.doc('config').onSnapshot(d=>{ AV.cfg=Object.assign({activo:false,url:''},d.exists?d.data():{}); if(!AV.cfg.url) AV.cfg.url=AV_URL_DEFECTO; AV.cfgOk=true; if(VIEW==='users') avCard(); avProgramar(); },()=>{ AV.cfgOk=true; });
   col.where('kind','==','sent').onSnapshot(s=>{ AV.sent=new Set(s.docs.map(d=>d.id)); AV.sentOk=true; avProgramar(); },()=>{ AV.sentOk=false; });
 }
 function avProgramar(){ clearTimeout(AV.timer); AV.timer=setTimeout(avEscanear,2500); }
@@ -4467,7 +4705,7 @@ function render(){
   else if(VIEW==='discursos'){ title.textContent='Discursos Públicos'; meta.textContent=READONLY?'Módulo en modo lectura':'Discursantes, discursos, asignaciones, visitas y arreglos'; content.style.padding='0'; window.MD.mount(content); }
   else if(VIEW==='predicacion'){ title.textContent='Predicación Pública'; meta.textContent=READONLY?'Módulo en modo lectura':'Etapas, comercial, horario y reportes'; content.style.padding='0'; window.MP.mount(content); }
   else if(VIEW==='cartas'){ title.textContent='Cartas'; meta.textContent='Cartas en PDF con su resumen'; renderCartas(content, actions); }
-  else if(VIEW==='contabilidad'){ title.textContent='Contabilidad'; meta.textContent=canContab()?'Movimientos y archivos por mes':'Consulta (solo lectura)'; renderContab(content, actions); }
+  else if(VIEW==='contabilidad'){ title.textContent='Contabilidad'; meta.textContent=canContab()?'Documentos por periodo (septiembre a agosto) y mes':'Consulta (solo lectura)'; renderContab(content, actions); }
   else if(VIEW==='auditoria'){ title.textContent='Auditoría Contabilidad'; meta.textContent='Revisión, observaciones y bitácora'; renderAuditoria(content, actions); }
   else if(VIEW==='vidaministerio'){ title.textContent='Vida y Ministerio'; meta.textContent='Programas en PDF ordenados por mes'; renderVym(content, actions); }
   else if(VIEW==='users'){ title.textContent='Usuarios y accesos'; meta.textContent='Administradores, colaboradores y lectores'; renderUsers(content, actions); content.insertAdjacentHTML('beforeend','<div class="card" id="avCard"></div>'); avIniciar(); avCard(); }
@@ -5657,7 +5895,7 @@ const firebaseConfig = {
 const FIREBASE_READY = !String(firebaseConfig.apiKey||"").startsWith("PON_TU");
 if(FIREBASE_READY){ firebase.initializeApp(firebaseConfig); }
 const ROLE_LABEL={admin:'Administrador',colab:'Colaborador',lector:'Lector'};
-const ROLE_CAP={admin:3,colab:2};
+const ROLE_CAP={admin:3};
 /* Los 3 administradores se definen aquí y deben existir en Firebase > Authentication. */
 const ADMIN_EMAILS=['jwjuanjo725@gmail.com','israelwilfridogarciavelez@gmail.com','clandetah@gmail.com'];
 const CHUNK=80000;
@@ -5666,7 +5904,7 @@ const $id=id=>document.getElementById(id);
 function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
-const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['auditoria','Auditoría Contabilidad']];
+const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['auditoria','Auditoría Contabilidad (temporal, máx. 1 mes)']];
 const MODULE_OF_VIEW={contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
@@ -5674,7 +5912,7 @@ function computeReadOnly(view){
   if(!CUR) return false;
   if(view==='contabilidad') return !canContab();
   if(view==='auditoria') return !canAudit();
-  if(view==='vidaministerio') return CUR.role!=='admin';
+  if(view==='vidaministerio') return !canVym();
   if(CUR.role==='lector') return true;
   if(view==='actividades') return CUR.role!=='admin';
   if(CUR.role!=='colab') return false;
@@ -5695,9 +5933,9 @@ function watchMyAccess(){
     },()=>{});
   }catch(e){}
 }
-function modsChecks(cur){ return MODULES.map(([k,l])=>`<label class="modchk"><input type="checkbox" data-mod="${k}" ${(cur?cur[k]:!['contabilidad','auditoria'].includes(k))?'checked':''}> ${l}</label>`).join(''); }
-function readMods(root){ const m={}; root.querySelectorAll('[data-mod]').forEach(c=>{ m[c.dataset.mod]=c.checked; }); return m; }
-function modsSummary(u){ if(u.role!=='colab') return '<small>—</small>'; if(!u.modules) return '<span class="modtag">Todos (sin configurar)</span>'; return MODULES.map(([k,l])=>`<span class="modtag ${u.modules[k]?'':'off'}">${l}</span>`).join(''); }
+function modsChecks(cur){ return MODULES.map(([k,l])=>`<label class="modchk"><input type="checkbox" data-mod="${k}" ${(cur?cur[k]:!['contabilidad','auditoria','vidaministerio'].includes(k))?'checked':''}> ${l}</label>`).join('')+audHastaHtml(cur); }
+function readMods(root){ const m={}; root.querySelectorAll('[data-mod]').forEach(c=>{ m[c.dataset.mod]=c.checked; }); return audLeerHasta(root,m); }
+function modsSummary(u){ if(u.role!=='colab') return '<small>—</small>'; if(!u.modules) return '<span class="modtag">Todos (sin configurar)</span>'; return MODULES.map(([k,l])=>`<span class="modtag ${u.modules[k]&&!(k==='auditoria'&&!audVigente(u.modules))?'':'off'}">${l}${k==='auditoria'&&u.modules[k]&&u.modules.auditoriaHasta?' · hasta '+audHastaTxt(u.modules):''}</span>`).join(''); }
 function randStr(n){
   const a='abcdefghjkmnpqrstuvwxyz23456789'; let s='';
   const r=(window.crypto&&crypto.getRandomValues)?crypto.getRandomValues(new Uint8Array(n)):Array.from({length:n},()=>Math.floor(Math.random()*256));
@@ -5918,7 +6156,7 @@ function renderUsers(content,actions){
   const rows=[...USERS].sort((a,b)=>order[a.role]-order[b.role]||a.name.localeCompare(b.name));
   content.innerHTML=`
     <div class="note"><strong>Administradores</strong>: acceso total y gestión de usuarios (se definen en el código, no aquí). <strong>Colaboradores</strong>: registran y editan solo los módulos que se les asignen (Secretaría, Territorios, Discursos Públicos, Predicación Pública); el resto lo ven en modo lectura. Pueden descargar el respaldo pero no cargarlo, y no ven esta sección. <strong>Lectores</strong>: solo visualizan; no pueden editar, importar/exportar ni imprimir.</div>
-    <div class="stat-row"><div class="stat"><div class="num">${cnt('admin')}/${ROLE_CAP.admin}</div><div class="lbl">Administradores</div></div><div class="stat"><div class="num">${cnt('colab')}/${ROLE_CAP.colab}</div><div class="lbl">Colaboradores</div></div><div class="stat"><div class="num">${cnt('lector')}</div><div class="lbl">Lectores</div></div></div>
+    <div class="stat-row"><div class="stat"><div class="num">${cnt('admin')}/${ROLE_CAP.admin}</div><div class="lbl">Administradores</div></div><div class="stat"><div class="num">${cnt('colab')}</div><div class="lbl">Colaboradores</div></div><div class="stat"><div class="num">${cnt('lector')}</div><div class="lbl">Lectores</div></div></div>
     <div class="card"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Módulos que edita</th><th>Estado</th><th></th></tr></thead><tbody>${rows.map(u=>`<tr>
       <td>${escapeHtml(u.name)}${u.id===CUR.id?' <small>(tú)</small>':''}</td><td>${escapeHtml(u.username)}</td>
       <td><span class="badge role-${u.role}">${ROLE_LABEL[u.role]}</span></td>
