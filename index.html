@@ -1717,6 +1717,97 @@ img,video,canvas{max-width:100%}
 @media (max-width:900px){.ct-filtros .wide{grid-column:auto}.ct-folders{grid-template-columns:repeat(2,minmax(0,1fr))}.ct-top{grid-template-columns:1fr 40px}.ct-top .ct-bar{grid-column:1/-1;order:3}.ct-tab{padding:8px 12px;font-size:13px}.ct-tabs{flex-wrap:nowrap}}
 @media (max-width:420px){.ct-folders{grid-template-columns:1fr}}
 
+/* ===== Limpieza & Asistencia ===== */
+.lp-top{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.lp-tabs{margin:0}
+.lp-print-title{text-align:center;margin-bottom:12px}
+.lp-print-title h2{margin:2px 0;font-size:20px;letter-spacing:.5px}
+.lp-cong{font-size:12px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:1px}
+.lp-sub{font-size:13px;color:var(--ink-soft)}
+.lp-stats{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 14px}
+.lp-stats span{background:#F1F4F9;border-radius:999px;padding:5px 14px;font-size:13px}
+.lp-stats .si{background:#E6F6EC;color:#166534}.lp-stats .no{background:#FDECEC;color:#991B1B}
+.lp-tabla td.lp-mes{background:#1F4E79;color:#fff;font-weight:700;text-align:center;vertical-align:middle;letter-spacing:1px;width:120px}
+.lp-tabla tr.lp-nm td{border-top:2px solid #1F4E79}
+.lp-tabla td,.lp-tabla th{text-align:center;vertical-align:middle}
+.lp-gb{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#1F4E79;color:#fff;font-weight:700;font-size:14px}
+.lp-gb.g2{background:#2E7D32}.lp-gb.g3{background:#B45309}.lp-gb.g4{background:#7B1FA2}.lp-gb.g5{background:#C62828}.lp-gb.g6{background:#00838F}.lp-gb.g7{background:#5D4037}
+.lp-cum{font-weight:700}.lp-cum.si,.lp-cumsel.si{color:#166534}.lp-cum.no,.lp-cumsel.no{color:#991B1B}
+.lp-cumsel.si{background:#E6F6EC}.lp-cumsel.no{background:#FDECEC}
+.lp-tabla select,.lp-form select{max-width:100%}
+.lp-cfg{margin-top:14px}.lp-cfg summary{cursor:pointer;font-weight:600;color:var(--brand,#1F4E79)}
+.lp-cfgbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:10px}
+.lp-hint{font-size:12px;color:var(--ink-soft);margin:10px 0 0;grid-column:1/-1}
+.lp-gwrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:16px}
+.lp-gcard{border:1px solid var(--line);border-radius:12px;padding:12px}
+.lp-gcard h3{margin:0 0 8px;font-size:15px;display:flex;align-items:center;gap:8px}.lp-gcard h3 small{margin-left:auto;font-weight:400;color:var(--ink-soft)}
+.lp-chips{display:flex;flex-wrap:wrap;gap:5px}
+.lp-chip{font-size:11.5px;background:#F1F4F9;border-radius:6px;padding:3px 7px}
+.lp-chip.si{background:#E6F6EC;color:#166534}.lp-chip.no{background:#FDECEC;color:#991B1B}
+.lp-form{display:grid;grid-template-columns:150px 110px 1fr;gap:10px;align-items:end;margin-bottom:14px}
+.lp-form .actions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.lp-wrap{overflow-x:auto}
+@media (max-width:700px){
+  .lp-form{grid-template-columns:1fr 1fr}.lp-form .lp-wide{grid-column:1/-1}
+  .lp-tabla.stack td.lp-mes{display:block;width:100%;text-align:left;padding:8px 12px;border-radius:8px}
+  .ct-table.stack td[data-l]::before{content:attr(data-l);display:block;font-size:11px;color:var(--ink-soft);text-transform:uppercase}
+  .lp-tabla.stack td{text-align:left}
+}
+@media print{
+  body.print-limp .sidebar,body.print-limp .topbar,body.print-limp .lp-head,body.print-limp .lp-cfg,body.print-limp .lp-form,body.print-limp .ct-note,body.print-limp .nav-overlay,body.print-limp .lp-ro{display:none!important}
+  body.print-limp .main{margin:0!important;padding:0!important}
+  body.print-limp .lp-tabla select,body.print-limp select{appearance:none;border:0;background:none;font:inherit;color:inherit}
+  body.print-limp .lp-tabla td.lp-mes,body.print-limp .lp-gb{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+.lp-tabla td.lp-mes{background:#1F4E79!important;color:#fff!important}
+.lp-wrap.ct-wrap{max-height:none!important;overflow-y:visible}
+.lp-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.lp-tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:13.5px;cursor:pointer;color:var(--ink-soft)}
+.lp-tabs button.on{background:#1F4E79;color:#fff;border-color:#1F4E79;font-weight:600}
+@media (max-width:700px){
+  .lp-tabla.stack select{width:100%}
+  .lp-tabla.stack td.lp-mes{font-size:14px}
+  .lp-tabla.stack td{border-bottom:0}
+}
+.lp-wrap .tbl-wrap,.lp-wrap.ct-wrap{max-height:none!important;overflow:visible!important}.lp-wrap{overflow-x:auto}
+
+/* ===== Limpieza v2 · Minutas ===== */
+.lp-ico{vertical-align:-4px;color:var(--brand,#1F4E79)}
+.lp-ico-t .lp-ico{margin-right:8px;width:26px;height:26px}
+.lp-navico .lp-ico{width:15px;height:15px;vertical-align:-3px;margin-left:4px}
+.sidebar nav .icon .lp-ico{width:18px;height:18px;vertical-align:middle}
+.lp-brand{display:flex;align-items:center}.lp-brand .lp-ico{width:44px;height:44px}
+.lp-gn{margin-left:8px;font-weight:600;font-size:13px}
+.lp-g{white-space:nowrap}
+.lp-rg{display:inline-flex;gap:4px;align-items:center}.lp-rg input{width:138px;padding:5px 6px}.lp-rg i{font-style:normal}
+.lp-obs{width:100%;min-width:120px}
+.lp-h3{margin:20px 0 8px;font-size:15px}
+.lp-pct{white-space:nowrap}.lp-bar{display:inline-block;width:70px;height:8px;background:#E8ECF3;border-radius:99px;vertical-align:middle;margin-right:8px;overflow:hidden}.lp-bar i{display:block;height:100%;background:#2E7D32}
+.lp-total td{border-top:2px solid #1F4E79;background:#F5F7FB}
+.lp-nombres{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.min-chk{display:flex;gap:8px;align-items:center;margin:14px 0 6px;font-weight:600}
+.min-box{border:1px solid var(--line);border-radius:12px;padding:14px;margin:6px 0 12px;background:#FAFBFD}
+.min-box[hidden]{display:none}
+.min-des-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.min-lin{display:grid;grid-template-columns:2fr 2fr 160px auto;gap:10px;align-items:end;margin-bottom:8px}
+.min-seg{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}.min-obs{flex:1;min-width:200px}
+.min-item{border-bottom:1px solid var(--line);padding:6px 0 14px;margin-bottom:10px}
+.min-blk{margin:8px 0 0 54px;padding:10px 12px;border-left:3px solid #1F4E79;background:#F7F9FC;border-radius:0 10px 10px 0}
+.min-blk h4{margin:0 0 6px;font-size:14px}
+.min-dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.min-dgrid small{display:block;color:var(--ink-soft);font-size:11px;text-transform:uppercase}
+@media (max-width:700px){.min-lin{grid-template-columns:1fr}.min-blk{margin-left:0}.lp-rg input{width:100%}.lp-rg{display:flex}}
+@media (max-width:700px){.lp-rg{flex-wrap:wrap}.lp-rg input{min-width:0;flex:1 1 120px;width:auto}}
+.lp-cumh{text-align:center!important;background:#DCE8F5}
+.lp-cum.nt,.lp-cumsel.nt{color:#6B7280;background:#F1F4F9}
+.lp-asam{display:inline-block;background:#FFF4D6;color:#8A5A00;border-radius:999px;padding:4px 10px;font-weight:700;font-size:12.5px}
+.lp-ev{margin-left:8px;max-width:150px;font-size:12px}
+.lp-asrow td{background:#FFFBEF}
+.lp-asc{color:var(--ink-soft);font-size:12.5px;font-style:italic}
+.lp-g{white-space:normal}
+.lp-tabla td[data-l="Citas médicas"] select{min-width:92px}
+.lp-tabla td select{min-width:70px}
+@media (min-width:701px){.lp-rg input{width:122px;font-size:12px;padding:4px 5px}.lp-tabla td,.lp-tabla th{padding:8px 8px}.lp-tabla td select{font-size:12.5px;padding:5px 6px}}
+
 </style>
 </head>
 <body>
@@ -1758,7 +1849,8 @@ img,video,canvas{max-width:100%}
       <button data-view="publishers"><span class="icon">☰</span><span class="lbl">Publicadores</span></button>
        <button data-view="groupReport"><span class="icon">▦</span><span class="lbl">Informe por grupo y mes</span></button>
       <button data-view="publisherData"><span class="icon">▤</span><span class="lbl">Datos de Publicadores</span></button>
-      <button data-view="cartas"><span class="icon">✉</span><span class="lbl">Cartas</span></button>
+      <button data-view="cartas"><span class="icon">✉</span><span class="lbl">Cartas &amp; Anuncios</span></button>
+      <button data-view="minutas" style="display:none"><span class="icon">☰</span><span class="lbl">Minutas Reunión de Ancianos</span></button>
     </nav>
 
     <div class="navgroup-label">Contabilidad</div>
@@ -1782,6 +1874,14 @@ img,video,canvas{max-width:100%}
     <div class="navgroup-label">Discursos Públicos</div>
     <nav id="navE">
       <button data-view="discursos"><span class="icon">✎</span><span class="lbl">Discursos Públicos</span></button>
+    </nav>
+
+    <div class="navgroup-label">Limpieza &amp; Asistencia <span class="lp-navico"><svg class="lp-ico" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="14" width="12" height="15" rx="3" fill="currentColor" fill-opacity=".2"/><path d="M10 14V9h7l4 2v3"/><path d="M21 11.5h3M17 9V6.5h-4"/><path d="M26 4v4M24 6h4M27 14v3M25.5 15.5h3"/></svg></span></div>
+    <nav id="navI">
+      <button data-view="limpieza"><span class="icon"><svg class="lp-ico" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="20" height="23" rx="3" fill="currentColor" fill-opacity=".15"/><rect x="12" y="3" width="8" height="5" rx="1.5" fill="currentColor" fill-opacity=".3"/><path d="M11 17.5l3.2 3.2 6.3-6.7"/><path d="M11 25h10"/></svg></span><span class="lbl">Asistencia · Familia Andrews</span></button>
+      <button data-view="limpgeneral"><span class="icon">▦</span><span class="lbl">Limpieza General por Grupo</span></button>
+      <button data-view="limphosp"><span class="icon"><svg class="lp-ico" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15L16 5l12 10"/><path d="M7 13v15h18V13" fill="currentColor" fill-opacity=".15"/><path d="M16 24.5s-4.5-2.8-4.5-6a2.5 2.5 0 0 1 4.5-1.4 2.5 2.5 0 0 1 4.5 1.4c0 3.2-4.5 6-4.5 6z"/></svg></span><span class="lbl">Hospitalidad</span></button>
+      <button data-view="limpprofunda"><span class="icon">✧</span><span class="lbl">Limpieza Profunda</span></button>
     </nav>
 
     <div id="grpSys" style="display:none">
@@ -3702,6 +3802,7 @@ function normalizeData(parsed){
   /* módulos nuevos: Discursos Públicos y Predicación Pública (solo se extiende el esquema) */
   if(!parsed.actividades||typeof parsed.actividades!=='object'||!Array.isArray(parsed.actividades.items)) parsed.actividades={"items": [{"id": 1, "fecha": "2026-10-08", "evento": "Capacitación", "departamento": "Servicio", "actividad": "Ministerio", "descripcion": "Capacitar a los Hnos que participan en la Pred.Publica - sfg cap.3 puntos 4 al 8", "sugerencia": "Anunciar a la congregación a los Hnos a participar en la Pred. Publica y asistir a la capacitación que se dara por zoom - SR", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Rafael Quimi", "auxiliares": ["Cesar Rivas", "Javier Gonzalez"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 2, "fecha": "2026-10-08", "evento": "Recordatorio", "departamento": "Secretaria", "actividad": "Informes", "descripcion": "Actualización de Datos", "sugerencia": "Solicitar mediante recordatorio los informes de Actualización de datos faltantes por medio del chat", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Henrry Cumbicos", "auxiliares": ["David Quinde"], "asignado": "David Quinde", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 3, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Servicio", "actividad": "Ministerio", "descripcion": "Predicación Etapas", "sugerencia": "", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Rafael Quimi", "auxiliares": ["Cesar Rivas", "Javier Gonzalez"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 4, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Servicio", "actividad": "Ministerio", "descripcion": "Predicación Publica", "sugerencia": "", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Rafael Quimi", "auxiliares": ["Cesar Rivas", "Javier Gonzalez"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 5, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Reunión", "descripcion": "Reunión de Prec. Regulares y Auxiliares", "sugerencia": "Reunión con el CA", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 6, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Reunión", "descripcion": "Reunión de ANC y SM", "sugerencia": "Se programó para que varios Hnos preparen temas de acuerdo a las necesidades de la congregación en el SR", "fechaPresentacion": "2026-10-18", "estado": "En Proceso", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "Juan Bermeo", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 7, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Hospitalidad", "descripcion": "Arreglo de Almuerzos para el Hno Guillermo y esposa", "sugerencia": "Asignar a un Hno que ayude con el privilegio de Hospitalidad -  Hno Cesar Rivas Asignado", "fechaPresentacion": "2026-10-08", "estado": "Terminado", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "Juan Bermeo", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 8, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Reunión", "descripcion": "Establecer los arreglos de Pastoreo y acompañantes", "sugerencia": "Reunión con el CA", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "Carlos Landeta", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 9, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Secretaria", "actividad": "Informes", "descripcion": "Revisión de los informes para presentar al Superintendente", "sugerencia": "", "fechaPresentacion": "", "estado": "Pendiente", "principal": "", "auxiliares": [], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}], "roster": [{"departamento": "Coordinación", "persona": "Carlos Landeta", "estado": "Terminado"}, {"departamento": "Secretaria", "persona": "Cesar Rivas", "estado": "En Proceso"}, {"departamento": "Servicio", "persona": "David Quinde", "estado": "Pendiente"}, {"departamento": "", "persona": "Henrry Cumbicos", "estado": ""}, {"departamento": "", "persona": "Israel Garcia", "estado": ""}, {"departamento": "", "persona": "Javier Gonzalez", "estado": ""}, {"departamento": "", "persona": "Juan Bermeo", "estado": ""}, {"departamento": "", "persona": "Rafael Quimi", "estado": ""}]};
   if(!Array.isArray(parsed.actividades.roster)) parsed.actividades.roster=[];
+  if(!parsed.limpieza||typeof parsed.limpieza!=='object') parsed.limpieza={cfg:{ref:'2026-10-19',refGrupo:1,grupos:7},semanas:{},profunda:{}};
   if(!parsed.discursos||typeof parsed.discursos!=='object') parsed.discursos={};
   parsed.discursos.seq=Object.assign({discursante:1,discurso:1,asignacion:1,visita:1,arregloPublico:1},parsed.discursos.seq||{});
   ['discursantes','discursos','asignaciones','visitas','salidas','arreglosPublicos'].forEach(k=>{ if(!Array.isArray(parsed.discursos[k])) parsed.discursos[k]=[]; });
@@ -3893,7 +3994,7 @@ let SELECTED_MONTH = (()=>{ const n=new Date(); return n.getFullYear()+'-'+Strin
 let SELECTED_TERR = null;
 let DRAW_MODE = null; // {territoryId, type:'boundary'|'address'}
 
-['navA','navB','navC','navD','navE','navF','navG','navH'].forEach(id=>{
+['navA','navB','navC','navD','navE','navF','navG','navH','navI'].forEach(id=>{
   document.getElementById(id).addEventListener('click', e=>{
     const btn = e.target.closest('button[data-view]');
     if(!btn) return;
@@ -3935,7 +4036,7 @@ function renderCartas(content,actions){
     <div class="grid2"><div class="field"><label>Título *</label><input id="cfTitle" maxlength="120" placeholder="Título de la carta"></div><div class="field"><label>Archivo PDF *</label><input type="file" id="cfFile" accept="application/pdf,.pdf"></div></div>
     <div class="field"><label>Resumen *</label><textarea id="cfSum" rows="3" maxlength="400" placeholder="Pequeño resumen de qué trata la carta"></textarea></div>
     <div class="actions"><button class="btn" id="cfSave">Guardar carta</button></div></div>`:'';
-  content.innerHTML=`${form}<div class="card"><h2>Cartas</h2><div id="cartasLista"></div></div>`;
+  content.innerHTML=`${form}<div class="card"><h2>Cartas &amp; Anuncios</h2><div id="cartasLista"></div></div>`;
   const sv=document.getElementById('cfSave'); if(sv) sv.onclick=subirCarta;
   refreshCartasList();
 }
@@ -4657,6 +4758,412 @@ if(typeof window!=='undefined'){ window.addEventListener('load',()=>{
 }); }
 
 
+/* ===== LIMPIEZA & ASISTENCIA (solo supervisores modifican) ===== */
+function canLimp(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.limpieza===true); }
+const LP_EVENTOS=['Conmemoración','Asamblea Regional','Asamblea de Circuito','Visitas del Super','Visitas a Betel'];
+const LP_ASAMBLEAS=['Asamblea Circuito','Asamblea Regional'];
+const LP_CITA=['Sí','No','No tenía'];
+const LP_MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const LP_MESC=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const LP_SVG=(d)=>'<svg class="lp-ico" viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d+'</svg>';
+/* limpieza: atomizador con destellos */
+const LP_ICO=LP_SVG('<rect x="7" y="14" width="12" height="15" rx="3" fill="currentColor" fill-opacity=".2"/><path d="M10 14V9h7l4 2v3"/><path d="M21 11.5h3M17 9V6.5h-4"/><path d="M26 4v4M24 6h4M27 14v3M25.5 15.5h3"/>');
+/* asistencia: tablero con visto bueno */
+const LP_ICO_AS=LP_SVG('<rect x="6" y="6" width="20" height="23" rx="3" fill="currentColor" fill-opacity=".15"/><rect x="12" y="3" width="8" height="5" rx="1.5" fill="currentColor" fill-opacity=".3"/><path d="M11 17.5l3.2 3.2 6.3-6.7"/><path d="M11 25h10"/>');
+/* hospitalidad: casa con corazón */
+const LP_ICO_H=LP_SVG('<path d="M4 15L16 5l12 10"/><path d="M7 13v15h18V13" fill="currentColor" fill-opacity=".15"/><path d="M16 24.5s-4.5-2.8-4.5-6a2.5 2.5 0 0 1 4.5-1.4 2.5 2.5 0 0 1 4.5 1.4c0 3.2-4.5 6-4.5 6z"/>');
+const LP_MODS={
+  asistencia:{store:'semanas',cfg:'cfg',ref:'2026-10-19',refG:1,asam:false,tit:'PROGRAMA AYUDA FAMILIA ANDREWS',ico:LP_ICO_AS},
+  general:{store:'general',cfg:'cfgG',ref:'2026-10-05',refG:1,asam:true,tit:'LIMPIEZA GENERAL POR GRUPO',ico:LP_ICO},
+  hosp:{store:'hosp',cfg:'cfgH',ref:'2026-10-05',refG:7,asam:true,tit:'HOSPITALIDAD',ico:LP_ICO_H},
+  profunda:{store:'profunda',tit:'LIMPIEZA PROFUNDA',ico:LP_ICO}
+};
+const LP={per:null,tab:'asistencia'};
+function lpCfg(m){
+  if(!DATA.limpieza||typeof DATA.limpieza!=='object') DATA.limpieza={};
+  const L=DATA.limpieza, d=LP_MODS[m]; if(!L[d.cfg]||typeof L[d.cfg]!=='object') L[d.cfg]={};
+  const c=L[d.cfg];
+  if(!c.ref) c.ref=d.ref; if(!(+c.refGrupo>=1)) c.refGrupo=d.refG; if(!(+c.grupos>=1)) c.grupos=7;
+  if(+c.refGrupo>+c.grupos) c.refGrupo=1;
+  if(!c.nombres||typeof c.nombres!=='object') c.nombres={};
+  return c;
+}
+function lpDatos(){
+  if(!DATA.limpieza||typeof DATA.limpieza!=='object') DATA.limpieza={};
+  const L=DATA.limpieza;
+  ['semanas','general','hosp','profunda'].forEach(k=>{ if(!L[k]||typeof L[k]!=='object') L[k]={}; });
+  ['asistencia','general','hosp'].forEach(lpCfg);
+  return L;
+}
+function lpNombre(m,g){ return (lpCfg(m).nombres[g]||'').trim(); }
+function lpPerActual(){ const d=new Date(); return d.getMonth()+1>=9?d.getFullYear():d.getFullYear()-1; }
+function lpFecha(iso){ const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d); }
+function lpISO(dt){ return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0'); }
+function lpSuma(dt,n){ return new Date(dt.getFullYear(),dt.getMonth(),dt.getDate()+n); }
+function lpLunes(dt){ const w=(dt.getDay()+6)%7; return lpSuma(dt,-w); }
+/* Secuencia de grupos desde la semana de referencia. Una semana con Asamblea no usa grupo: el grupo pasa a la siguiente fecha y la secuencia continúa. */
+function lpMapa(m,desdeISO,hastaISO){
+  const L=lpDatos(), cfg=lpCfg(m), n=+cfg.grupos, st=L[LP_MODS[m].store], asam=LP_MODS[m].asam;
+  const esAs=l=>asam&&LP_ASAMBLEAS.includes((st[l]||{}).evento);
+  const ref=lpLunes(lpFecha(cfg.ref)), map={}; let cur=+cfg.refGrupo;
+  const fin=lpLunes(lpFecha(hastaISO)), ini=lpLunes(lpFecha(desdeISO));
+  for(let d=ref;d<=fin;d=lpSuma(d,7)){ const l=lpISO(d); if(esAs(l)) map[l]=null; else { map[l]=cur; cur=cur%n+1; } }
+  cur=((+cfg.refGrupo-2+n)%n)+1;
+  for(let d=lpSuma(ref,-7);d>=ini;d=lpSuma(d,-7)){ const l=lpISO(d); if(esAs(l)) map[l]=null; else { map[l]=cur; cur=((cur-2+n)%n)+1; } }
+  return map;
+}
+function lpGrupo(lunesISO){ const m=lpMapa('general',lunesISO,lunesISO); return m[lpISO(lpLunes(lpFecha(lunesISO)))]||1; }
+function lpRangoTxt(i,f){
+  const a=lpFecha(i), z=lpFecha(f);
+  return a.getMonth()===z.getMonth()&&a.getFullYear()===z.getFullYear()?(a.getDate()+'-'+z.getDate()):(a.getDate()+' '+LP_MESC[a.getMonth()]+' – '+z.getDate()+' '+LP_MESC[z.getMonth()]);
+}
+/* Semanas del periodo septiembre–agosto. Orden y grupo son automáticos; las fechas se pueden corregir. */
+function lpSemanas(per,m){
+  const L=lpDatos(), st=L[LP_MODS[m].store], out=[]; const primero=lpLunes(new Date(per,8,1)), fin=new Date(per+1,7,31);
+  const mapa=lpMapa(m,lpISO(primero),lpISO(lpSuma(fin,7)));
+  for(let lun=primero; lun<=lpSuma(fin,3); lun=lpSuma(lun,7)){
+    const jue=lpSuma(lun,3), dom=lpSuma(lun,6);
+    if(jue>=new Date(per,8,1)&&jue<=fin){
+      const mes=jue.getMonth(), l=lpISO(lun), r=st[l]||{}, ini=r.ini||l, fi=r.fin||lpISO(dom);
+      out.push({lunes:l,domingo:lpISO(dom),ini,fin:fi,mes,mesNom:LP_MES[mes],rango:lpRangoTxt(ini,fi),grupo:mapa[l],evento:r.evento||''});
+    }
+  }
+  return out;
+}
+function lpReg(store,lunes){ return lpDatos()[store][lunes]||{}; }
+function lpGuardar(){ try{ saveData(); }catch(e){ console.error(e); } }
+function lpSet(store,lunes,campo,val){
+  if(!canLimp()) return; const L=lpDatos(); const r=L[store][lunes]||(L[store][lunes]={});
+  if(val===''||val==null) delete r[campo]; else r[campo]=val;
+  if(!Object.keys(r).length) delete L[store][lunes];
+  lpGuardar(); if(campo!=='obs') lpPintar();
+}
+function lpFechas(store,lunes,dom,campo,val){
+  if(!canLimp()) return; const L=lpDatos(); const r=L[store][lunes]||(L[store][lunes]={});
+  if(!val||val===(campo==='ini'?lunes:dom)) delete r[campo]; else r[campo]=val;
+  if(r.ini&&r.fin&&r.fin<r.ini){ alert('La fecha final no puede ser anterior a la inicial.'); delete r[campo]; }
+  if(!Object.keys(r).length) delete L[store][lunes];
+  lpGuardar(); lpPintar();
+}
+function lpPeriodoTxt(per){ return 'Septiembre '+per+' – Agosto '+(per+1); }
+function lpSelPeriodo(){
+  const act=lpPerActual(); const s=new Set([act-1,act,act+1]); const L=lpDatos();
+  [...Object.keys(L.semanas),...Object.keys(L.general),...Object.keys(L.hosp)].forEach(k=>{ const d=lpFecha(k); if(!isNaN(d)) s.add(d.getMonth()>=8?d.getFullYear():d.getFullYear()-1); });
+  Object.keys(L.profunda).forEach(k=>{ const d=lpFecha(L.profunda[k].fecha||''); if(!isNaN(d)) s.add(d.getMonth()>=8?d.getFullYear():d.getFullYear()-1); });
+  return [...s].sort((a,b)=>b-a);
+}
+function renderLimpieza(content,actions,tab){
+  lpDatos(); LP.tab=LP_MODS[tab]?tab:'asistencia'; if(LP.per==null) LP.per=lpPerActual();
+  const ro=!canLimp();
+  actions.innerHTML='<button class="btn secondary" id="lpPrint" type="button">🖨 Imprimir / PDF</button>';
+  content.innerHTML=`${ro?'<div class="ct-note">Modo lectura: solo los supervisores pueden modificar o ingresar datos en este módulo.</div>':''}
+  <div class="card lp-head"><div class="lp-top"><div class="lp-brand">${LP_MODS[LP.tab].ico}</div>
+    <div class="field"><label>Periodo (septiembre a agosto)</label><select id="lpPer">${lpSelPeriodo().map(p=>`<option value="${p}" ${p===LP.per?'selected':''}>${lpPeriodoTxt(p)}</option>`).join('')}</select></div></div></div>
+  <div id="lpCuerpo"></div>`;
+  document.getElementById('lpPer').onchange=e=>{ LP.per=+e.target.value; lpPintar(); };
+  document.getElementById('lpPrint').onclick=()=>{ document.body.classList.add('print-limp'); setTimeout(()=>{ window.print(); setTimeout(()=>document.body.classList.remove('print-limp'),500); },50); };
+  lpPintar();
+}
+function lpPintar(){
+  const c=document.getElementById('lpCuerpo'); if(!c) return;
+  c.innerHTML=LP.tab==='profunda'?lpHtmlProfunda():LP.tab==='asistencia'?lpHtmlAsistencia():lpHtmlGrupos(LP.tab);
+  lpEnlazar(c); try{ lockUI&&lockUI(); }catch(e){}
+}
+function lpTitulo(){ const d=LP_MODS[LP.tab]; return `<div class="lp-print-title"><div class="lp-cong">Congregación Joya Oeste</div><h2><span class="lp-ico-t">${d.ico}</span>${d.tit}</h2><div class="lp-sub">${lpPeriodoTxt(LP.per)}</div></div>`; }
+function lpGrupoCel(m,g){ const n=lpNombre(m,g); return `<span class="lp-gb g${((g-1)%7)+1}">${g}</span>${n?`<span class="lp-gn">${escapeHtml(n)}</span>`:''}`; }
+const lpCls=v=>v==='Sí'?'si':v==='No'?'no':v==='No tenía'?'nt':'';
+/* Selector Sí/No (o Sí/No/No tenía) */
+function lpSelCum(attrs,val,ro,ops){
+  ops=ops||['Sí','No'];
+  if(ro) return `<span class="lp-cum ${lpCls(val)}">${escapeHtml(val||'—')}</span>`;
+  return `<select ${attrs} class="lp-cumsel ${lpCls(val)}"><option value="">—</option>${ops.map(o=>`<option ${val===o?'selected':''}>${o}</option>`).join('')}</select>`;
+}
+const lpSel=(store,w,campo,val,ro,ops)=>lpSelCum(`data-lp="${campo}" data-st="${store}" data-w="${w}"`,val,ro,ops);
+const lpPct=(si,no)=>(si+no)?Math.round(si*100/(si+no)):null;
+const lpPctTxt=p=>p==null?'—':p+'%';
+const lpBarra=p=>`<span class="lp-bar"><i style="width:${p||0}%"></i></span><b>${lpPctTxt(p)}</b>`;
+function lpGruposN(m){ return +lpCfg(m).grupos; }
+/* Resumen asistencia: % por cada columna y total */
+const LP_CAMPOS=[['cita','Citas médicas'],['movil','Movilización'],['limp','Limpieza'],['compra','Compra de alimentos']];
+function lpResumenAs(sem){
+  const n=lpGruposN('asistencia'); let filas=''; const T={}; LP_CAMPOS.forEach(([k])=>T[k]=[0,0]);
+  for(let i=1;i<=n;i++){
+    const l=sem.filter(s=>s.grupo===i); const c={}; LP_CAMPOS.forEach(([k])=>{ let si=0,no=0; l.forEach(s=>{ const v=lpReg('semanas',s.lunes)[k]; if(v==='Sí')si++; else if(v==='No')no++; }); c[k]=[si,no]; T[k][0]+=si; T[k][1]+=no; });
+    const ts=LP_CAMPOS.reduce((a,[k])=>a+c[k][0],0), tn=LP_CAMPOS.reduce((a,[k])=>a+c[k][1],0);
+    filas+=`<tr><td data-l="Grupo">${lpGrupoCel('asistencia',i)}</td><td data-l="Semanas" class="r">${l.length}</td>${LP_CAMPOS.map(([k,t])=>`<td data-l="% ${t}" class="r">${lpPctTxt(lpPct(c[k][0],c[k][1]))}</td>`).join('')}<td data-l="% cumplimiento total" class="r lp-pct">${lpBarra(lpPct(ts,tn))}</td></tr>`;
+  }
+  const ts=LP_CAMPOS.reduce((a,[k])=>a+T[k][0],0), tn=LP_CAMPOS.reduce((a,[k])=>a+T[k][1],0);
+  filas+=`<tr class="lp-total"><td data-l="Grupo"><b>Total</b></td><td data-l="Semanas" class="r">${sem.length}</td>${LP_CAMPOS.map(([k,t])=>`<td data-l="% ${t}" class="r">${lpPctTxt(lpPct(T[k][0],T[k][1]))}</td>`).join('')}<td data-l="% cumplimiento total" class="r"><b>${lpPctTxt(lpPct(ts,tn))}</b></td></tr>`;
+  return `<h3 class="lp-h3">% de cumplimiento por grupo</h3><div class="lp-wrap ct-wrap"><table class="ct-table stack lp-res"><thead><tr><th>Grupo</th><th class="r">Semanas</th>${LP_CAMPOS.map(([k,t])=>`<th class="r">% ${t}</th>`).join('')}<th class="r">% total</th></tr></thead><tbody>${filas}</tbody></table></div><p class="lp-hint">Cada % se calcula sobre lo marcado Sí o No («No tenía» en citas médicas no cuenta).</p>`;
+}
+function lpStatsAs(sem){ let si=0,no=0,reg=0; sem.forEach(s=>{ const r=lpReg('semanas',s.lunes); let alg=false; LP_CAMPOS.forEach(([k])=>{ if(r[k]==='Sí'){si++;alg=true;} else if(r[k]==='No'){no++;alg=true;} }); if(alg)reg++; });
+  return `<div class="lp-stats"><span><b>${sem.length}</b> semanas</span><span><b>${reg}</b> con registro</span><span class="si"><b>${si}</b> Sí</span><span class="no"><b>${no}</b> No</span><span><b>${lpPctTxt(lpPct(si,no))}</b> cumplimiento</span></div>`; }
+function lpRangoCel(m,s,ro){
+  const st=LP_MODS[m].store;
+  return ro?s.rango:`<span class="lp-rg"><input type="date" data-lpf="ini" data-st="${st}" data-w="${s.lunes}" data-d="${s.domingo}" value="${s.ini}" aria-label="Desde"><i>–</i><input type="date" data-lpf="fin" data-st="${st}" data-w="${s.lunes}" data-d="${s.domingo}" value="${s.fin}" aria-label="Hasta"></span>`;
+}
+function lpFilasAs(sem){
+  const ro=!canLimp(); let filas='', ult=-1; const porMes=sem.reduce((a,s)=>{ a[s.mes]=(a[s.mes]||0)+1; return a; },{});
+  sem.forEach(s=>{
+    const r=lpReg('semanas',s.lunes), nuevoMes=s.mes!==ult; ult=s.mes;
+    const ev=ro?escapeHtml(r.evento||'—'):`<select data-lp="evento" data-st="semanas" data-w="${s.lunes}"><option value="">—</option>${LP_EVENTOS.map(e=>`<option ${r.evento===e?'selected':''}>${e}</option>`).join('')}</select>`;
+    filas+=`<tr class="${nuevoMes?'lp-nm':''}">${nuevoMes?`<td class="lp-mes" rowspan="${porMes[s.mes]}">${s.mesNom.toUpperCase()}</td>`:''}<td data-l="Rango de días">${lpRangoCel('asistencia',s,ro)}</td><td data-l="Grupo asignado" class="lp-g">${lpGrupoCel('asistencia',s.grupo)}</td><td data-l="Eventos especiales">${ev}</td>`+
+      `<td data-l="Citas médicas">${lpSel('semanas',s.lunes,'cita',r.cita,ro,LP_CITA)}</td><td data-l="Movilización">${lpSel('semanas',s.lunes,'movil',r.movil,ro)}</td><td data-l="Limpieza">${lpSel('semanas',s.lunes,'limp',r.limp,ro)}</td><td data-l="Compra de alimentos">${lpSel('semanas',s.lunes,'compra',r.compra,ro)}</td></tr>`;
+  });
+  return filas;
+}
+function lpCfgHtml(m){
+  if(!canLimp()) return ''; const c=lpCfg(m), n=+c.grupos;
+  return `<details class="lp-cfg"><summary>Ajustar grupos, nombres y secuencia</summary><div class="lp-cfgbox">
+      <div class="field"><label>Semana de referencia (lunes)</label><input type="date" id="lpRef" value="${c.ref}"></div>
+      <div class="field"><label>Grupo asignado en esa semana</label><input type="number" min="1" max="${n}" id="lpRefG" value="${c.refGrupo}"></div>
+      <div class="field"><label>Cantidad de grupos</label><input type="number" min="2" max="30" id="lpNG" value="${n}"></div>
+      <div class="lp-nombres">${Array.from({length:n},(_,i)=>`<div class="field"><label>Nombre del grupo ${i+1}</label><input data-lpn="${i+1}" maxlength="60" value="${escapeAttr(lpNombre(m,i+1))}" placeholder="Grupo ${i+1}"></div>`).join('')}</div>
+      <div class="actions"><button class="btn" type="button" id="lpCfgSave">Aplicar</button></div>
+      <p class="lp-hint">Los grupos siguen siempre la secuencia 1…${n} semana tras semana (se calcula solo)${LP_MODS[m].asam?'. Si una semana se marca como Asamblea, esa semana no usa grupo y la secuencia continúa en la siguiente fecha':''}. Puedes cambiar los nombres, la cantidad de grupos y las fechas de cada semana.</p></div></details>`;
+}
+function lpHtmlAsistencia(){
+  const sem=lpSemanas(LP.per,'asistencia');
+  return `<div class="card" id="lpReporte">${lpTitulo()}${lpStatsAs(sem)}
+    <div class="lp-wrap ct-wrap"><table class="ct-table lp-tabla stack"><thead><tr><th rowspan="2">Mes</th><th rowspan="2">Rango de días</th><th rowspan="2">Grupo asignado</th><th rowspan="2">Eventos especiales</th><th colspan="4" class="lp-cumh">¿Cumplió?</th></tr><tr><th>Citas médicas</th><th>Movilización</th><th>Limpieza</th><th>Compra de alimentos</th></tr></thead><tbody>${lpFilasAs(sem)}</tbody></table></div>
+    ${lpResumenAs(sem)}${lpCfgHtml('asistencia')}</div>`;
+}
+/* Limpieza General y Hospitalidad: misma estructura; grupo con opción de Asamblea */
+function lpResumenGr(m,sem){
+  const store=LP_MODS[m].store, n=lpGruposN(m), hoy=lpISO(new Date()), hosp=m==='hosp'; let filas='', tSi=0,tNo=0,tAs=0,tIs=0,tIn=0;
+  for(let i=1;i<=n;i++){
+    const l=sem.filter(s=>s.grupo===i); let si=0,no=0,pen=0,is=0,inn=0;
+    l.forEach(s=>{ const r=lpReg(store,s.lunes); if(r.cumplio==='Sí')si++; else if(r.cumplio==='No')no++; else if(s.fin<hoy)pen++; if(r.intervino==='Sí')is++; else if(r.intervino==='No')inn++; });
+    tSi+=si;tNo+=no;tAs+=l.length;tIs+=is;tIn+=inn;
+    filas+=`<tr><td data-l="Grupo">${lpGrupoCel(m,i)}</td><td data-l="Semanas asignadas" class="r">${l.length}</td><td data-l="Cumplió Sí" class="r">${si}</td><td data-l="Cumplió No" class="r">${no}</td><td data-l="Pendientes" class="r">${pen}</td>${hosp?`<td data-l="Intervino Sí" class="r">${is}</td><td data-l="Intervino No" class="r">${inn}</td>`:''}<td data-l="% cumplimiento" class="r lp-pct">${lpBarra(lpPct(si,no))}</td></tr>`;
+  }
+  filas+=`<tr class="lp-total"><td data-l="Grupo"><b>Total</b></td><td data-l="Semanas asignadas" class="r">${tAs}</td><td data-l="Cumplió Sí" class="r">${tSi}</td><td data-l="Cumplió No" class="r">${tNo}</td><td data-l="Pendientes" class="r"></td>${hosp?`<td data-l="Intervino Sí" class="r">${tIs}</td><td data-l="Intervino No" class="r">${tIn}</td>`:''}<td data-l="% cumplimiento" class="r"><b>${lpPctTxt(lpPct(tSi,tNo))}</b></td></tr>`;
+  return `<h3 class="lp-h3">% de cumplimiento por grupo</h3><div class="lp-wrap ct-wrap"><table class="ct-table stack lp-res"><thead><tr><th>Grupo</th><th class="r">Semanas asignadas</th><th class="r">Cumplió Sí</th><th class="r">Cumplió No</th><th class="r">Pendientes</th>${hosp?'<th class="r">Intervino Sí</th><th class="r">Intervino No</th>':''}<th class="r">% cumplimiento</th></tr></thead><tbody>${filas}</tbody></table></div><p class="lp-hint">El % se calcula sobre las semanas ya marcadas Sí o No. «Pendientes» son semanas pasadas sin marcar. Las semanas de Asamblea no cuentan.</p>`;
+}
+function lpHtmlGrupos(m){
+  const store=LP_MODS[m].store, sem=lpSemanas(LP.per,m), ro=!canLimp(), hosp=m==='hosp';
+  let si=0,no=0,asm=0; sem.forEach(s=>{ const r=lpReg(store,s.lunes); if(s.grupo==null)asm++; else if(r.cumplio==='Sí')si++; else if(r.cumplio==='No')no++; });
+  let filas='', ult=-1; const porMes=sem.reduce((a,s)=>{ a[s.mes]=(a[s.mes]||0)+1; return a; },{});
+  sem.forEach(s=>{
+    const r=lpReg(store,s.lunes), nuevoMes=s.mes!==ult; ult=s.mes; const as=s.grupo==null;
+    const evSel=ro?'':`<select class="lp-ev" data-lp="evento" data-st="${store}" data-w="${s.lunes}"><option value="">${as?'—':'Asamblea…'}</option>${LP_ASAMBLEAS.map(e=>`<option ${r.evento===e?'selected':''}>${e}</option>`).join('')}</select>`;
+    const gcel=as?`<span class="lp-asam">${escapeHtml(r.evento)}</span>${evSel}`:`${lpGrupoCel(m,s.grupo)}${evSel}`;
+    const cols=as?`<td colspan="${hosp?3:2}" class="lp-asc" data-l="Estado">Sin grupo: la secuencia continúa la siguiente semana</td>`:
+      `<td data-l="¿Cumplió?">${lpSel(store,s.lunes,'cumplio',r.cumplio,ro)}</td>${hosp?`<td data-l="Intervino Grupo Hospitalidad">${lpSel(store,s.lunes,'intervino',r.intervino,ro)}</td>`:''}<td data-l="Observación">${ro?escapeHtml(r.obs||''):`<input class="lp-obs" data-lpi="obs" data-st="${store}" data-w="${s.lunes}" maxlength="120" value="${escapeAttr(r.obs||'')}" placeholder="Opcional">`}</td>`;
+    filas+=`<tr class="${nuevoMes?'lp-nm':''} ${as?'lp-asrow':''}">${nuevoMes?`<td class="lp-mes" rowspan="${porMes[s.mes]}">${s.mesNom.toUpperCase()}</td>`:''}<td data-l="Rango de días">${lpRangoCel(m,s,ro)}</td><td data-l="Grupo asignado" class="lp-g">${gcel}</td>${cols}</tr>`;
+  });
+  return `<div class="card" id="lpReporte">${lpTitulo()}<div class="lp-stats"><span><b>${sem.length}</b> semanas</span><span><b>${asm}</b> asambleas</span><span class="si"><b>${si}</b> cumplidas</span><span class="no"><b>${no}</b> no cumplidas</span><span><b>${lpPctTxt(lpPct(si,no))}</b> cumplimiento</span></div>
+    <div class="lp-wrap ct-wrap"><table class="ct-table lp-tabla stack"><thead><tr><th>Mes</th><th>Rango de días</th><th>Grupo asignado</th><th>¿Cumplió?</th>${hosp?'<th>Intervino Grupo Hospitalidad</th>':''}<th>Observación</th></tr></thead><tbody>${filas}</tbody></table></div>
+    ${lpResumenGr(m,sem)}${lpCfgHtml(m)}</div>`;
+}
+/* Limpieza profunda: registros con fecha, grupo, área y cumplimiento */
+function lpListaProfunda(){
+  const L=lpDatos(), ini=lpISO(new Date(LP.per,8,1)), fin=lpISO(new Date(LP.per+1,7,31));
+  return Object.keys(L.profunda).map(k=>({id:k,...L.profunda[k]})).filter(x=>x.fecha>=ini&&x.fecha<=fin).sort((a,b)=>a.fecha<b.fecha?-1:1);
+}
+function lpHtmlProfunda(){
+  const ro=!canLimp(), lista=lpListaProfunda();
+  const si=lista.filter(x=>x.cumplio==='Sí').length, no=lista.filter(x=>x.cumplio==='No').length;
+  const form=ro?'':`<div class="lp-form"><div class="field"><label>Fecha *</label><input type="date" id="lpdFecha"></div>
+      <div class="field"><label>Grupo</label><input type="number" id="lpdGrupo" min="1" max="${lpCfg('general').grupos}" placeholder="auto"></div>
+      <div class="field lp-wide"><label>Área / detalle</label><input id="lpdArea" maxlength="160" placeholder="Salón, baños, patio, cocina…"></div>
+      <div class="actions"><button class="btn" type="button" id="lpdAdd">Agregar</button><button class="btn secondary" type="button" id="lpdGen" title="Crea un sábado por mes con el grupo de esa semana">Generar un sábado por mes</button></div></div>`;
+  const filas=lista.map(x=>{ const d=lpFecha(x.fecha);
+    return `<tr><td data-l="Mes">${LP_MES[d.getMonth()].toUpperCase()}</td><td data-l="Fecha">${d.getDate()} ${LP_MESC[d.getMonth()]} ${d.getFullYear()}</td><td data-l="Grupo"><span class="lp-gb g${x.grupo}">${x.grupo||'—'}</span></td><td data-l="Área / detalle">${escapeHtml(x.area||'')}</td><td data-l="¿Cumplió?">${lpSelCum(`data-lpd="cumplio" data-id="${x.id}"`,x.cumplio,ro)}</td><td class="act lp-ro">${ro?'':`<button class="btn small danger" type="button" data-lpd-del="${x.id}">Eliminar</button>`}</td></tr>`; }).join('');
+  return `<div class="card" id="lpReporte">${lpTitulo()}
+    <div class="lp-stats"><span><b>${lista.length}</b> programadas</span><span class="si"><b>${si}</b> cumplidas</span><span class="no"><b>${no}</b> no cumplidas</span></div>
+    ${form}<div class="lp-wrap ct-wrap"><table class="ct-table stack"><thead><tr><th>Mes</th><th>Fecha</th><th>Grupo</th><th>Área / detalle</th><th>¿Cumplió?</th><th></th></tr></thead><tbody>${filas||'<tr><td colspan="6"><div class="empty">Sin limpiezas profundas en este periodo.</div></td></tr>'}</tbody></table></div></div>`;
+}
+function lpEnlazar(c){
+  c.querySelectorAll('[data-lp]').forEach(s=>s.onchange=()=>lpSet(s.dataset.st,s.dataset.w,s.dataset.lp,s.value));
+  c.querySelectorAll('[data-lpi]').forEach(i=>i.onchange=()=>lpSet(i.dataset.st,i.dataset.w,i.dataset.lpi,i.value.trim()));
+  c.querySelectorAll('[data-lpf]').forEach(i=>i.onchange=()=>lpFechas(i.dataset.st,i.dataset.w,i.dataset.d,i.dataset.lpf,i.value));
+  const cs=c.querySelector('#lpCfgSave'); if(cs) cs.onclick=()=>{
+    if(!canLimp()) return; const cfg=lpCfg(LP.tab); const ref=document.getElementById('lpRef').value, g=+document.getElementById('lpRefG').value, n=+document.getElementById('lpNG').value;
+    if(!ref||!(n>=2)||!(g>=1&&g<=n)){ alert('Revise la fecha, el grupo de referencia y la cantidad de grupos.'); return; }
+    cfg.ref=ref; cfg.refGrupo=g; cfg.grupos=n; cfg.nombres={};
+    c.querySelectorAll('[data-lpn]').forEach(i=>{ const v=i.value.trim(); if(v&&+i.dataset.lpn<=n) cfg.nombres[i.dataset.lpn]=v; });
+    lpGuardar(); lpPintar();
+  };
+  const add=c.querySelector('#lpdAdd'); if(add) add.onclick=()=>{
+    if(!canLimp()) return; const f=document.getElementById('lpdFecha').value; if(!f){ alert('Indique la fecha.'); return; }
+    const lun=lpISO(lpLunes(lpFecha(f))); const gv=+document.getElementById('lpdGrupo').value; const L=lpDatos();
+    const id='d'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+    L.profunda[id]={fecha:f,grupo:gv>=1?gv:lpGrupo(lun),area:document.getElementById('lpdArea').value.trim()};
+    lpGuardar(); lpPintar();
+  };
+  const gen=c.querySelector('#lpdGen'); if(gen) gen.onclick=()=>{
+    if(!canLimp()) return; const L=lpDatos(); let creadas=0;
+    const existentes=new Set(lpListaProfunda().map(x=>x.fecha.slice(0,7)));
+    for(let m=0;m<12;m++){
+      const y=m<4?LP.per:LP.per+1, mes=(8+m)%12; const clave=y+'-'+String(mes+1).padStart(2,'0'); if(existentes.has(clave)) continue;
+      let d=new Date(y,mes,1); while(d.getDay()!==6) d=lpSuma(d,1);
+      const id='d'+Date.now().toString(36)+m; L.profunda[id]={fecha:lpISO(d),grupo:lpGrupo(lpISO(lpLunes(d))),area:'Limpieza profunda del salón'}; creadas++;
+    }
+    if(!creadas){ alert('Ya existe una limpieza profunda en cada mes de este periodo.'); return; }
+    lpGuardar(); lpPintar();
+  };
+  c.querySelectorAll('[data-lpd]').forEach(s=>s.onchange=()=>{ if(!canLimp()) return; const r=lpDatos().profunda[s.dataset.id]; if(!r) return; if(s.value) r.cumplio=s.value; else delete r.cumplio; lpGuardar(); lpPintar(); });
+  c.querySelectorAll('[data-lpd-del]').forEach(b=>b.onclick=()=>{ if(!canLimp()) return; if(!confirm('¿Eliminar esta limpieza profunda?')) return; delete lpDatos().profunda[b.dataset.lpdDel]; lpGuardar(); lpPintar(); });
+}
+
+/* ===== MINUTAS · REUNIÓN DE ANCIANOS (PDF + visitas + discursante) ===== */
+function minHoy(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function canMin(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.minutas===true); }
+const MIN={list:[],loaded:false,unsub:null,err:null,desig:0,lineas:[{}]};
+function minFechaTxt(iso){ if(!iso) return ''; try{ const [y,m,d]=iso.slice(0,10).split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'}); }catch(e){ return iso; } }
+function minWatch(){
+  const col=binCol('minutas'); if(!col||MIN.unsub) return;
+  MIN.unsub=col.where('kind','==','meta').onSnapshot(snap=>{
+    MIN.list=snap.docs.map(d=>d.data()).sort((a,b)=>String(b.reunion||b.fecha||'').localeCompare(String(a.reunion||a.fecha||'')));
+    MIN.loaded=true; MIN.err=null; minPintarLista();
+  },e=>{ MIN.err=e; MIN.loaded=true; MIN.unsub=null; minPintarLista(); });
+}
+function minVisHtml(m){
+  const v=m.visitas; if(!v||!v.on) return '';
+  const lin=(v.lineas||[]).map(l=>`<tr><td data-l="Tema a tratar">${escapeHtml(l.tema||'')}</td><td data-l="Hermanos a visitar">${escapeHtml(l.hermanos||'')}</td><td data-l="Fecha">${escapeHtml(minFechaTxt(l.fecha))}</td></tr>`).join('');
+  const seg=canMin()?`<div class="min-seg"><label class="min-chk"><input type="checkbox" data-mvis="${m.id}" ${v.visitado?'checked':''}> Se realizó la visita</label>
+      <input class="min-obs" data-mobs="${m.id}" maxlength="300" value="${escapeAttr(v.obs||'')}" placeholder="Observación del seguimiento"><button class="btn small" type="button" data-mseg="${m.id}">Guardar seguimiento</button></div>`
+    :`<div class="min-seg"><b>${v.visitado?'✔ Visita realizada':'Visita pendiente'}</b>${v.obs?' · '+escapeHtml(v.obs):''}</div>`;
+  return `<div class="min-blk"><h4>Visitas a hermanos</h4><div class="min-des"><b>Hermanos designados:</b> ${(v.designados||[]).filter(Boolean).map(n=>`<span class="lp-chip">${escapeHtml(n)}</span>`).join(' ')||'—'}</div>
+    <div class="lp-wrap ct-wrap"><table class="ct-table stack"><thead><tr><th>Tema a tratar</th><th>Hermanos a visitar</th><th>Fecha</th></tr></thead><tbody>${lin}</tbody></table></div>${seg}
+    <p class="lp-hint">Cada línea se agrega a Actividades en «Pendiente» bajo el departamento Visita C.A.</p></div>`;
+}
+function minDiscHtml(m){
+  const d=m.discursante; if(!d||!d.on) return '';
+  return `<div class="min-blk"><h4>Discursante · ${escapeHtml(d.tipo||'')}</h4><div class="min-dgrid"><div><small>Nombre</small>${escapeHtml(d.nombre||'')}</div><div><small>Tema</small>${escapeHtml(d.tema||'')}${d.bosquejo?' · Bosquejo N.º '+escapeHtml(d.bosquejo):''}</div><div><small>Día designado</small>${escapeHtml(minFechaTxt(d.fecha))}</div></div></div>`;
+}
+function minListaHtml(){
+  if(!canMin()) return '<div class="empty">Solo los administradores y los usuarios designados pueden ver las minutas.</div>';
+  if(!binCol('minutas')) return '<div class="empty">Las minutas requieren la conexión con Firebase.</div>';
+  if(MIN.err) return '<div class="empty">No se pudieron cargar las minutas ('+escapeHtml(MIN.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>';
+  if(!MIN.loaded) return '<div class="empty">Cargando…</div>';
+  if(!MIN.list.length) return '<div class="empty">Aún no hay minutas cargadas.</div>';
+  return MIN.list.map(m=>`<div class="min-item"><div class="carta-item"><div class="carta-ico">PDF</div><div class="carta-info"><div class="carta-title">${escapeHtml(m.titulo||'')}</div><div class="carta-sum">${escapeHtml(m.resumen||'')}</div><div class="carta-meta">Reunión: ${escapeHtml(minFechaTxt(m.reunion))} · Cargada por ${escapeHtml(m.por||'')} · ${escapeHtml(minFechaTxt(m.fecha))} · ${binSize(m.size||0)}</div></div>
+    <div class="carta-actions"><button class="btn secondary" data-minver="${m.id}">Ver</button>${isAdmin()?`<button class="btn danger small" data-mindel="${m.id}">Eliminar</button>`:''}</div></div>${minVisHtml(m)}${minDiscHtml(m)}</div>`).join('');
+}
+function minPintarLista(){
+  const box=document.getElementById('minLista'); if(!box) return; box.innerHTML=minListaHtml();
+  box.querySelectorAll('[data-minver]').forEach(b=>b.onclick=()=>minVer(b.dataset.minver));
+  box.querySelectorAll('[data-mindel]').forEach(b=>b.onclick=()=>minEliminar(b.dataset.mindel));
+  box.querySelectorAll('[data-mseg]').forEach(b=>b.onclick=()=>minSeguimiento(b.dataset.mseg));
+  try{ lockUI(); }catch(e){}
+}
+/* ---- formulario ---- */
+function minLineasHtml(){
+  return MIN.lineas.map((l,i)=>`<div class="min-lin"><div class="field"><label>Tema a tratar</label><input data-mlt="${i}" maxlength="200" value="${escapeAttr(l.tema||'')}"></div>
+    <div class="field"><label>Hermano(s) que se van a visitar</label><input data-mlh="${i}" maxlength="200" value="${escapeAttr(l.hermanos||'')}"></div>
+    <div class="field"><label>Fecha</label><input type="date" data-mlf="${i}" value="${escapeAttr(l.fecha||'')}"></div>
+    ${MIN.lineas.length>1?`<button class="btn danger small" type="button" data-mlx="${i}">Quitar</button>`:''}</div>`).join('');
+}
+function minLeerLineas(){ document.querySelectorAll('[data-mlt]').forEach(i=>{ const k=+i.dataset.mlt; MIN.lineas[k]=MIN.lineas[k]||{}; MIN.lineas[k].tema=i.value; }); document.querySelectorAll('[data-mlh]').forEach(i=>{ MIN.lineas[+i.dataset.mlh].hermanos=i.value; }); document.querySelectorAll('[data-mlf]').forEach(i=>{ MIN.lineas[+i.dataset.mlf].fecha=i.value; }); }
+function minPintarLineas(){
+  const b=document.getElementById('minLineas'); b.innerHTML=minLineasHtml();
+  b.querySelectorAll('[data-mlx]').forEach(x=>x.onclick=()=>{ minLeerLineas(); MIN.lineas.splice(+x.dataset.mlx,1); minPintarLineas(); });
+}
+function minPintarDesig(){
+  const n=Math.max(0,Math.min(12,+document.getElementById('minNDes').value||0)), box=document.getElementById('minDes');
+  const prev=[...box.querySelectorAll('input')].map(i=>i.value);
+  box.innerHTML=Array.from({length:n},(_,i)=>`<div class="field"><label>Hermano designado ${i+1}</label><input data-mdn="${i}" maxlength="80" value="${escapeAttr(prev[i]||'')}"></div>`).join('');
+}
+function renderMinutas(content,actions){
+  actions.innerHTML=''; minWatch();
+  if(!canMin()){ content.innerHTML='<div class="card"><h2>Minutas Reunión de Ancianos</h2><div class="empty">Solo los administradores y los usuarios designados pueden ver o cargar las minutas.</div></div>'; return; }
+  MIN.lineas=[{}];
+  content.innerHTML=`<div class="card"><h2>Subir Minuta de Reuniones Ancianos<small>PDF de la minuta con título y un breve resumen. Tamaño máximo: 5 MB.</small></h2>
+    <div class="grid2"><div class="field"><label>Título *</label><input id="mnTitle" maxlength="120" placeholder="Título de la minuta"></div><div class="field"><label>Archivo PDF *</label><input type="file" id="mnFile" accept="application/pdf,.pdf"></div></div>
+    <div class="grid2"><div class="field"><label>Fecha de la reunión *</label><input type="date" id="mnFecha"></div></div>
+    <div class="field"><label>Resumen *</label><textarea id="mnSum" rows="3" maxlength="400" placeholder="Pequeño resumen de lo tratado"></textarea></div>
+    <label class="min-chk"><input type="checkbox" id="mnVis"> Se generan visitas a otros hermanos</label>
+    <div id="mnVisBox" class="min-box" hidden>
+      <div class="field" style="max-width:260px"><label>¿Cuántos hermanos designados?</label><input type="number" min="1" max="12" id="minNDes" placeholder="Ej. 2"></div>
+      <div id="minDes" class="min-des-grid"></div>
+      <h4>Visitas</h4><div id="minLineas"></div>
+      <button class="btn secondary small" type="button" id="minAddLin">+ Agregar otra línea</button>
+      <div class="min-seg"><label class="min-chk"><input type="checkbox" id="mnVisitado"> Se realizó la visita</label><input class="min-obs" id="mnObs" maxlength="300" placeholder="Observación (se puede completar después)"></div>
+      <p class="lp-hint">Cada línea se agregará automáticamente a Actividades en «Pendiente» bajo el departamento «Visita C.A» para dar seguimiento.</p></div>
+    <label class="min-chk"><input type="checkbox" id="mnDisc"> Se escoge discursante (Conmemoración / discursos especiales)</label>
+    <div id="mnDiscBox" class="min-box" hidden><div class="grid2"><div class="field"><label>Tipo</label><select id="mdTipo"><option>Conmemoración</option><option>Discurso especial</option></select></div><div class="field"><label>Nombre de la persona</label><input id="mdNombre" maxlength="80"></div></div>
+      <div class="grid2"><div class="field"><label>Tema</label><input id="mdTema" maxlength="160"></div><div class="field"><label>N.º de bosquejo</label><input id="mdBosq" maxlength="12"></div></div>
+      <div class="field" style="max-width:260px"><label>Día designado (fecha del discurso)</label><input type="date" id="mdFecha"></div></div>
+    <div class="actions"><button class="btn" id="mnSave">Subir Minuta de Reuniones Ancianos</button></div></div>
+    <div class="card"><h2>Minutas Reunión de Ancianos</h2><div id="minLista"></div></div>`;
+  document.getElementById('mnVis').onchange=e=>{ document.getElementById('mnVisBox').hidden=!e.target.checked; if(e.target.checked&&!document.getElementById('minLineas').innerHTML) minPintarLineas(); };
+  document.getElementById('mnDisc').onchange=e=>{ document.getElementById('mnDiscBox').hidden=!e.target.checked; };
+  document.getElementById('minNDes').oninput=minPintarDesig;
+  document.getElementById('minAddLin').onclick=()=>{ minLeerLineas(); MIN.lineas.push({}); minPintarLineas(); };
+  document.getElementById('mnSave').onclick=minGuardar;
+  minPintarLista();
+}
+async function minGuardar(){
+  if(!canMin()){ showToast('No tienes permiso para cargar minutas'); return; }
+  const col=binCol('minutas'); if(!col){ showToast('Sin conexión con Firebase'); return; }
+  const v=id=>document.getElementById(id), f=v('mnFile').files[0], t=v('mnTitle').value.trim(), r=v('mnSum').value.trim(), fe=v('mnFecha').value;
+  if(!t){ showToast('Escribe el título'); return; }
+  if(!fe){ showToast('Indica la fecha de la reunión'); return; }
+  if(!f){ showToast('Selecciona un archivo PDF'); return; }
+  if(f.type!=='application/pdf'&&!/\.pdf$/i.test(f.name)){ showToast('El archivo debe ser un PDF'); return; }
+  if(f.size>BIN_MAX){ showToast('El PDF supera los 5 MB'); return; }
+  if(!r){ showToast('Escribe un pequeño resumen'); return; }
+  const meta={kind:'meta',titulo:t,resumen:r,reunion:fe,archivo:f.name,size:f.size,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''};
+  if(v('mnVis').checked){
+    minLeerLineas();
+    const lineas=MIN.lineas.filter(l=>(l.tema||'').trim()||(l.hermanos||'').trim()).map(l=>({tema:(l.tema||'').trim(),hermanos:(l.hermanos||'').trim(),fecha:l.fecha||''}));
+    if(!lineas.length){ showToast('Agrega al menos una línea de visita (tema y hermanos)'); return; }
+    if(lineas.some(l=>!l.fecha)){ showToast('Indica la fecha de cada visita'); return; }
+    meta.visitas={on:true,designados:[...document.querySelectorAll('[data-mdn]')].map(i=>i.value.trim()).filter(Boolean),lineas,visitado:v('mnVisitado').checked,obs:v('mnObs').value.trim()};
+  }
+  if(v('mnDisc').checked){
+    const d={on:true,tipo:v('mdTipo').value,nombre:v('mdNombre').value.trim(),tema:v('mdTema').value.trim(),bosquejo:v('mdBosq').value.trim(),fecha:v('mdFecha').value};
+    if(!d.nombre||!d.tema||!d.fecha){ showToast('Completa nombre, tema y fecha del discursante'); return; }
+    meta.discursante=d;
+  }
+  const btn=v('mnSave'); btn.disabled=true; showToast('Subiendo minuta…');
+  const id=ctUid('n'); meta.id=id;
+  try{
+    meta.n=await binSubir('minutas',id,f);
+    await col.doc('m_'+id).set(meta);
+    if(meta.visitas) minActividades(meta);
+    setView('minutas');
+    showToast('Minuta guardada');
+  }catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar la minuta'); btn.disabled=false; }
+}
+/* ---- enlace con Actividades: «Pendiente» bajo el departamento Visita C.A ---- */
+function minActividades(m){
+  try{
+    if(!DATA.actividades||!Array.isArray(DATA.actividades.items)) DATA.actividades={items:[],roster:[]};
+    const items=DATA.actividades.items, v=m.visitas, des=(v.designados||[]).filter(Boolean);
+    (v.lineas||[]).forEach((l,i)=>{
+      const origen='minuta:'+m.id+':'+i; if(items.some(x=>x.origen===origen)) return;
+      items.push({id:Date.now()+i,origen,fecha:l.fecha,evento:'Visita a hermanos',departamento:'Visita C.A',actividad:l.tema||'Visita a hermanos',
+        descripcion:'Visitar a: '+(l.hermanos||'—')+' · Minuta: '+(m.titulo||''),sugerencia:'',fechaPresentacion:'',estado:v.visitado?'Terminado':'Pendiente',
+        principal:des[0]||'',auxiliares:des.slice(1),asignado:'',sprint:'',prioridad:'Media',fechaInicio:'',fechaFin:'',criterios:'',dod:'',bloqueos:'',dependencias:'',...(v.visitado?{fechaCierre:minHoy()}:{})});
+    });
+    saveData();
+  }catch(e){ console.error(e); }
+}
+function minQuitarActividades(id){
+  try{ const a=DATA.actividades; if(!a||!Array.isArray(a.items)) return; const n=a.items.length; a.items=a.items.filter(x=>!String(x.origen||'').startsWith('minuta:'+id+':')); if(a.items.length!==n) saveData(); }catch(e){ console.error(e); }
+}
+async function minSeguimiento(id){
+  const m=MIN.list.find(x=>x.id===id); if(!m||!canMin()||!m.visitas) return;
+  const chk=document.querySelector(`[data-mvis="${id}"]`).checked, obs=document.querySelector(`[data-mobs="${id}"]`).value.trim();
+  try{
+    await binCol('minutas').doc('m_'+id).set({...m,visitas:{...m.visitas,visitado:chk,obs}});
+    try{ (DATA.actividades.items||[]).forEach(x=>{ if(String(x.origen||'').startsWith('minuta:'+id+':')){ x.estado=chk?'Terminado':'Pendiente'; if(chk) x.fechaCierre=minHoy(); else delete x.fechaCierre; } }); saveData(); }catch(e){ console.error('SEG',e); }
+    showToast('Seguimiento guardado');
+  }catch(e){ console.error(e); showToast('No se pudo guardar el seguimiento'); }
+}
+async function minVer(id){
+  const m=MIN.list.find(x=>x.id===id); if(!m) return; showToast('Abriendo minuta…');
+  try{ binAbrir(m.titulo,await binBlob('minutas',m),m.archivo,!isLector()); }catch(e){ console.error(e); showToast('No se pudo abrir la minuta'); }
+}
+function minEliminar(id){
+  const m=MIN.list.find(x=>x.id===id); if(!m||!isAdmin()) return;
+  if(!confirm('¿Eliminar la minuta "'+m.titulo+'"? También se quitarán sus visitas de Actividades.')) return;
+  binBorrar('minutas',id,m.n).then(()=>{ minQuitarActividades(id); showToast('Minuta eliminada'); }).catch(()=>showToast('No se pudo eliminar'));
+}
+
 function navAdaptable(){
   const cerrar=()=>document.body.classList.remove('nav-open');
   const t=document.getElementById('navToggle'), o=document.getElementById('navOverlay');
@@ -4666,7 +5173,7 @@ function navAdaptable(){
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
   window.addEventListener('resize',()=>{ if(window.innerWidth>900) cerrar(); });
 }
-function navVisibilidad(){ const na=document.querySelector('button[data-view="auditoria"]'); if(na) na.style.display=(typeof canAudit==='function'&&CUR&&canAudit())?'':'none'; }
+function navVisibilidad(){ const na=document.querySelector('button[data-view="auditoria"]'); if(na) na.style.display=(typeof canAudit==='function'&&CUR&&canAudit())?'':'none'; const nm=document.querySelector('button[data-view="minutas"]'); if(nm) nm.style.display=(typeof canMin==='function'&&CUR&&canMin())?'':'none'; }
 window.addEventListener('load',navAdaptable);
 function setView(view, extra){
   if(view==='users'&&!isAdmin()) view='panel';
@@ -4707,6 +5214,12 @@ function render(){
   else if(VIEW==='cartas'){ title.textContent='Cartas'; meta.textContent='Cartas en PDF con su resumen'; renderCartas(content, actions); }
   else if(VIEW==='contabilidad'){ title.textContent='Contabilidad'; meta.textContent=canContab()?'Documentos por periodo (septiembre a agosto) y mes':'Consulta (solo lectura)'; renderContab(content, actions); }
   else if(VIEW==='auditoria'){ title.textContent='Auditoría Contabilidad'; meta.textContent='Revisión, observaciones y bitácora'; renderAuditoria(content, actions); }
+  else if(VIEW==='limpieza'){ title.innerHTML=LP_ICO_AS+' Asistencia · Ayuda Familia Andrews'; meta.textContent=canLimp()?'Programa por periodo (septiembre a agosto)':'Consulta (solo lectura)'; renderLimpieza(content, actions,'asistencia'); }
+  else if(VIEW==='limpgeneral'){ title.innerHTML=LP_ICO+' Limpieza General por Grupo'; meta.textContent=canLimp()?'Semanas por grupo y cumplimiento':'Consulta (solo lectura)'; renderLimpieza(content, actions,'general'); }
+  else if(VIEW==='limphosp'){ title.innerHTML=LP_ICO_H+' Hospitalidad'; meta.textContent=canLimp()?'Semanas por grupo de hospitalidad':'Consulta (solo lectura)'; renderLimpieza(content, actions,'hosp'); }
+  else if(VIEW==='limpprofunda'){ title.innerHTML=LP_ICO+' Limpieza Profunda'; meta.textContent=canLimp()?'Programa de limpieza profunda':'Consulta (solo lectura)'; renderLimpieza(content, actions,'profunda'); }
+  else if(VIEW==='minutas'){ title.textContent='Minutas Reunión de Ancianos'; meta.textContent='Minutas en PDF, visitas y discursantes'; renderMinutas(content, actions); }
+  else if(VIEW==='cartas'){ title.textContent='Cartas & Anuncios'; meta.textContent='Cartas y anuncios en PDF con su resumen'; renderCartas(content, actions); }
   else if(VIEW==='vidaministerio'){ title.textContent='Vida y Ministerio'; meta.textContent='Programas en PDF ordenados por mes'; renderVym(content, actions); }
   else if(VIEW==='users'){ title.textContent='Usuarios y accesos'; meta.textContent='Administradores, colaboradores y lectores'; renderUsers(content, actions); content.insertAdjacentHTML('beforeend','<div class="card" id="avCard"></div>'); avIniciar(); avCard(); }
   if(typeof lockUI==='function') lockUI();
@@ -5904,8 +6417,8 @@ const $id=id=>document.getElementById(id);
 function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
-const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['auditoria','Auditoría Contabilidad (temporal, máx. 1 mes)']];
-const MODULE_OF_VIEW={contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
+const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['auditoria','Auditoría Contabilidad (temporal, máx. 1 mes)']];
+const MODULE_OF_VIEW={limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
 function computeReadOnly(view){
@@ -5913,6 +6426,8 @@ function computeReadOnly(view){
   if(view==='contabilidad') return !canContab();
   if(view==='auditoria') return !canAudit();
   if(view==='vidaministerio') return !canVym();
+  if(view==='limpieza'||view==='limpgeneral'||view==='limpprofunda'||view==='limphosp') return !canLimp();
+  if(view==='minutas') return !canMin();
   if(CUR.role==='lector') return true;
   if(view==='actividades') return CUR.role!=='admin';
   if(CUR.role!=='colab') return false;
@@ -5933,7 +6448,7 @@ function watchMyAccess(){
     },()=>{});
   }catch(e){}
 }
-function modsChecks(cur){ return MODULES.map(([k,l])=>`<label class="modchk"><input type="checkbox" data-mod="${k}" ${(cur?cur[k]:!['contabilidad','auditoria','vidaministerio'].includes(k))?'checked':''}> ${l}</label>`).join('')+audHastaHtml(cur); }
+function modsChecks(cur){ return MODULES.map(([k,l])=>`<label class="modchk"><input type="checkbox" data-mod="${k}" ${(cur?cur[k]:!['contabilidad','auditoria','vidaministerio','limpieza','minutas'].includes(k))?'checked':''}> ${l}</label>`).join('')+audHastaHtml(cur); }
 function readMods(root){ const m={}; root.querySelectorAll('[data-mod]').forEach(c=>{ m[c.dataset.mod]=c.checked; }); return audLeerHasta(root,m); }
 function modsSummary(u){ if(u.role!=='colab') return '<small>—</small>'; if(!u.modules) return '<span class="modtag">Todos (sin configurar)</span>'; return MODULES.map(([k,l])=>`<span class="modtag ${u.modules[k]&&!(k==='auditoria'&&!audVigente(u.modules))?'':'off'}">${l}${k==='auditoria'&&u.modules[k]&&u.modules.auditoriaHasta?' · hasta '+audHastaTxt(u.modules):''}</span>`).join(''); }
 function randStr(n){
