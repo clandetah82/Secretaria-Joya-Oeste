@@ -1898,6 +1898,17 @@ img,video,canvas{max-width:100%}
 .rg-et{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
 .rg-mz{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}.rg-mz label{display:flex;align-items:center;gap:6px}.rg-mz b{min-width:22px;text-align:right}.rg-mz select{flex:1;min-width:0}
 
+/* Registro: encabezado fijo con barras de desplazamiento */
+.s13-scroll{max-height:68vh;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.s13-table{border-collapse:separate;border-spacing:0}
+.s13-table thead tr:first-child th{position:sticky;top:0;z-index:5;background:#A7C7E7}
+.s13-table thead tr:nth-child(2) th{position:sticky;top:var(--s13h,36px);z-index:5;background:#A7C7E7}
+.s13-table thead th:first-child{left:0;z-index:7}
+.s13-table tbody td:first-child{position:sticky;left:0;z-index:2;background:#fff}
+.s13-table th,.s13-table td{border-width:1px;border-color:#555}
+.tr-mz{min-width:92px}.tr-nh{display:block;margin:4px auto 0;font-size:11px}
+.org-cargo{display:flex;align-items:center;gap:6px;font-size:12px;color:#556;margin:2px 0 6px}.org-cargo select{padding:2px 4px;font-size:12px;max-width:200px;min-width:0}.org-cargo.ro b{color:#1F4E79}
+
 </style>
 </head>
 <body>
@@ -5495,6 +5506,15 @@ function renderOrganigrama(content,actions){
 }
 function orgAuxInputs(sel,vals){ return `<div class="org-aux">${Array.from({length:sel},(_,i)=>`<div class="field"><label>Auxiliar ${i+1}</label><input list="orgDL" data-orgaux="${i}" value="${escapeAttr((vals||[])[i]||'')}" placeholder="Escoge o escribe para filtrar…"></div>`).join('')}</div>`;
 }
+function orgMiembros(d){
+  if(d.tipo==='cuerpo') return orgAncianos();
+  if(d.tipo==='comite') return orgIntegrantes().map(x=>x[1]).filter(Boolean);
+  return [d.responsable,...(d.aux||[])].filter(Boolean);
+}
+function orgCargoSel(d,si,txt){
+  d.cargo=d.cargo||{}; const k=si+'|'+txt, cur=d.cargo[k]||''; const m=orgMiembros(d); if(cur&&!m.includes(cur)) m.push(cur);
+  return `<label class="org-cargo">A cargo de: <select data-orgcargo="${escapeAttr(k)}"><option value="">—</option>${m.map(x=>`<option ${x===cur?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select></label>`;
+}
 function orgDetalle(){
   const box=document.getElementById('orgDetail'); if(!box) return; const d=orgDep(ORG.sel); if(!d){ box.innerHTML='<div class="empty">Sin departamentos.</div>'; return; }
   const ed=!READONLY, edit=ed&&ORG.edit; d.aux=Array.isArray(d.aux)?d.aux:[]; const nAux=Math.max(Number(d.nAux)||0,d.aux.length);
@@ -5510,7 +5530,7 @@ function orgDetalle(){
       ${ed?orgAuxInputs(nSel,d.aux):`<ul class="org-chips">${d.aux.filter(Boolean).map(x=>`<li>${escapeHtml(x)}</li>`).join('')||'<li class="muted">Sin auxiliares</li>'}</ul>`}</div>`;
   }
   const secs=(d.resp||[]);
-  const cuerpoR=secs.length?secs.map((s,si)=>edit?`<div class="org-sec ed"><div class="org-sh"><input data-orgt="${si}" value="${escapeAttr(s.t)}"><button class="btn danger small" data-orgdelsec="${si}" type="button">Quitar</button></div><textarea data-orgi="${si}" rows="${Math.min(12,Math.max(3,(s.i||[]).length+1))}" placeholder="Una responsabilidad por línea">${escapeHtml((s.i||[]).join('\n'))}</textarea></div>`:`<div class="org-sec"><h4>${escapeHtml(s.t)}</h4>${(s.i||[]).length?`<ul>${s.i.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>`:''}</div>`).join(''):'<div class="empty">Sin responsabilidades registradas.</div>';
+  const cuerpoR=secs.length?secs.map((s,si)=>edit?`<div class="org-sec ed"><div class="org-sh"><input data-orgt="${si}" value="${escapeAttr(s.t)}"><button class="btn danger small" data-orgdelsec="${si}" type="button">Quitar</button></div><textarea data-orgi="${si}" rows="${Math.min(12,Math.max(3,(s.i||[]).length+1))}" placeholder="Una responsabilidad por línea">${escapeHtml((s.i||[]).join('\n'))}</textarea></div>`:`<div class="org-sec"><h4>${escapeHtml(s.t)}</h4>${(s.i||[]).length?`<ul>${s.i.map(x=>{ const c=(d.cargo||{})[si+'|'+x]; return `<li>${escapeHtml(x)}${ed?orgCargoSel(d,si,x):(c?`<div class="org-cargo ro">A cargo de: <b>${escapeHtml(c)}</b></div>`:'')}</li>`; }).join('')}</ul>`:''}</div>`).join(''):'<div class="empty">Sin responsabilidades registradas.</div>';
   box.innerHTML=head+pers+`<h3 class="org-rt">Responsabilidades</h3><div class="org-secs">${cuerpoR}</div>`+(edit?`<div style="margin-top:10px"><button class="btn secondary small" id="orgAddSec" type="button">+ Agregar sección</button></div>`:'')+`<datalist id="orgDL">${orgNombres().map(x=>`<option value="${escapeAttr(x)}">`).join('')}</datalist>`;
   const g=id=>document.getElementById(id);
   if(g('orgEd')) g('orgEd').onclick=()=>{ ORG.edit=!ORG.edit; orgDetalle(); };
@@ -5518,6 +5538,7 @@ function orgDetalle(){
   if(g('orgResp')) g('orgResp').onchange=e=>{ d.responsable=e.target.value.trim(); orgGuardar(); orgRender(); };
   if(g('orgN')) g('orgN').onchange=e=>{ const n=Math.max(0,Math.min(20,Number(e.target.value)||0)); d.nAux=n; d.aux=(d.aux||[]).slice(0,n); while(d.aux.length<n) d.aux.push(''); orgGuardar(); orgRender(); };
   box.querySelectorAll('[data-orgaux]').forEach(i=>i.onchange=()=>{ d.aux[Number(i.dataset.orgaux)]=i.value.trim(); orgGuardar(); orgRender(); });
+  box.querySelectorAll('[data-orgcargo]').forEach(s=>s.onchange=()=>{ d.cargo=d.cargo||{}; if(s.value) d.cargo[s.dataset.orgcargo]=s.value; else delete d.cargo[s.dataset.orgcargo]; orgGuardar(); });
   box.querySelectorAll('[data-orgt]').forEach(i=>i.onchange=()=>{ d.resp[Number(i.dataset.orgt)].t=i.value.trim()||'Sección'; orgGuardar(); });
   box.querySelectorAll('[data-orgi]').forEach(i=>i.onchange=()=>{ d.resp[Number(i.dataset.orgi)].i=i.value.split('\n').map(x=>x.trim()).filter(Boolean); orgGuardar(); });
   box.querySelectorAll('[data-orgdelsec]').forEach(b=>b.onclick=()=>{ d.resp.splice(Number(b.dataset.orgdelsec),1); orgGuardar(); orgDetalle(); });
@@ -5760,8 +5781,7 @@ function renderAssignmentRows(t,stage,year){
   let filas=labels.map(l=>all.find(r=>String(r.manzana)===l)).map((r,i)=>r||(h===1?{id:'new',manzana:labels[i],assignments:[{},{},{}],_v:1}:null)).filter(Boolean);
   all.filter(r=>!labels.includes(String(r.manzana))).forEach(r=>filas.push(r));
   return filas.map(r=>`<tr>
-    <td>#${escapeHtml(t.number)}</td>
-    <td class="tr-mz"><b>${escapeHtml(r.manzana||'')}</b></td>
+    <td class="tr-mz"><b>${escapeHtml(r.manzana||'')}</b>${regBotonHoja(t,stage,year,r,h)}</td>
     <td>${escapeHtml(lastCompletion([r])||'—')}</td>
     ${[0,1,2].map(j=>{const a=(r.assignments||[])[j]||{};return `<td colspan="2" class="assign-box"><div class="assign-name"><input data-tr="name" data-row="${r.id}" data-mz="${escapeAttr(r.manzana||'')}" data-j="${j}" value="${escapeAttr(a.name||'')}" placeholder="Nombre del hermano"></div><div class="assign-dates"><input type="date" data-tr="date" data-row="${r.id}" data-mz="${escapeAttr(r.manzana||'')}" data-j="${j}" value="${escapeAttr(a.date||'')}" title="Fecha en que se asignó"><input type="date" data-tr="completed" data-row="${r.id}" data-mz="${escapeAttr(r.manzana||'')}" data-j="${j}" value="${escapeAttr(a.completed||'')}" title="Fecha en que se completó"></div></td>`}).join('')}
   </tr>`).join('')||'<tr><td colspan="9">Sin manzanas definidas.</td></tr>';
@@ -5791,6 +5811,22 @@ function regDefinir(t){
     saveData(); closeModal(); renderTerritoryRegister(document.getElementById('content'),document.getElementById('topbarActions')); showToast('Etapas y manzanas actualizadas');
   };
 }
+
+function regBotonHoja(t,stage,year,r,h){
+  if(READONLY||r._v) return '';
+  const hecha=regLleno(r)||(r.assignments||[]).some(a=>a&&a.completed); if(!hecha) return '';
+  if(regFilas(t,stage,year).some(x=>(x.hoja||1)===h+1&&String(x.manzana)===String(r.manzana))) return '<small class="muted tr-nh">Hoja '+(h+1)+' abierta</small>';
+  return `<button type="button" class="btn small tr-nh" onclick="regNuevaHoja(this.dataset.mz)" data-mz="${escapeAttr(r.manzana||'')}">+ Nueva hoja</button>`;
+}
+function regNuevaHoja(label){
+  const st=window.TERR_REG_STATE; if(!st||READONLY) return; const t=(DATA.territories||[]).find(x=>x.id===st.territory); if(!t) return;
+  const h=st.hoja||1, y=Number(st.year); if(!DATA.territoryAssignments) DATA.territoryAssignments=[];
+  if(!regFilas(t,st.stage,y).some(x=>(x.hoja||1)===h+1&&String(x.manzana)===String(label))){
+    DATA.territoryAssignments.push({id:uid('ta'),territoryId:t.id,stage:st.stage,serviceYear:y,sequence:regManzanas(t,st.stage).indexOf(label)+1,manzana:String(label),hoja:h+1,assignments:[{},{},{}]}); saveData();
+  }
+  st.hoja=h+1; renderTerritoryRegister(document.getElementById('content'),document.getElementById('topbarActions')); showToast('Hoja '+(h+1)+' abierta para la manzana '+label);
+}
+function regFijar(){ const sc=document.querySelector('.s13-scroll'), tr=document.querySelector('.s13-table thead tr'); if(sc&&tr) sc.style.setProperty('--s13h',tr.getBoundingClientRect().height+'px'); }
 
 function setView(view, extra){
   if(view==='users'&&!isAdmin()) view='panel';
@@ -6643,7 +6679,7 @@ function lastCompletion(rows){
   const dates=rows.flatMap(r=>(r.assignments||[]).map(a=>a.completed)).filter(Boolean).sort();
   return dates.length?dates[dates.length-1]:'';
 }
-function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpAttach(content); }catch(e){ console.error(e); } },0);
+function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ regFijar(); mapGrpAttach(content); }catch(e){ console.error(e); } },0);
   const state=window.TERR_REG_STATE||{year:currentServiceYear(),group:'',territory:'',stage:''}; window.TERR_REG_STATE=state;
   const groups=[...(DATA.preachingGroups||[])].sort(regCmpG);
   const terrs=[...DATA.territories].sort((a,b)=>String(a.number).localeCompare(String(b.number),undefined,{numeric:true}));
