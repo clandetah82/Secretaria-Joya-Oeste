@@ -1872,6 +1872,7 @@ img,video,canvas{max-width:100%}
 @media (max-width:620px){.ar-t th{font-size:10px;padding:4px 1px;letter-spacing:0}.ar-t td{overflow-wrap:break-word;word-break:normal}.ar-t td,.ar-t th{hyphens:auto}}
 @media (max-width:620px){.ar-t{table-layout:auto}.ar-t th{white-space:nowrap;overflow:visible}.ar-t td{height:auto;overflow:visible;vertical-align:middle;line-height:1.25}.ar-t td,.ar-wrap td{max-height:none}}
 @media (max-width:620px){.ar-t{table-layout:fixed;width:100%;min-width:0}.ar-t th{white-space:normal;font-size:9px;padding:4px 0;overflow:visible}.ar-t td{font-size:11px;padding:4px 2px}.ar-t td,.ar-t th{word-break:break-word}.ar-main{overflow-x:auto}}
+.tr-hojas{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.tr-mz{font-size:14px;white-space:nowrap}
 
 </style>
 </head>
@@ -5523,11 +5524,11 @@ function mgPintar(){
   const box=document.getElementById('mapGrpCard'); if(!box) return; const ed=!READONLY;
   if(!binCol('mapasgrupos')){ box.innerHTML='<h2>Mapas de cada grupo</h2><div class="empty">Requiere la conexión con Firebase.</div>'; return; }
   if(MG.err){ box.innerHTML='<h2>Mapas de cada grupo</h2><div class="empty">No se pudieron cargar los mapas ('+escapeHtml(MG.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>'; return; }
-  const sel=String((window.TERR_REG_STATE&&window.TERR_REG_STATE.group)||''); let gs=mgGrupos(); const one=gs.filter(g=>g.id===sel); if(one.length) gs=one;
-  box.innerHTML=`<h2>Mapa del grupo seleccionado<small>${ed?'Sube el mapa del grupo elegido arriba en PDF o imagen (máx. 5 MB por archivo).':'Mapa del grupo elegido arriba.'}</small></h2>`+
-   (gs.length?gs.map(g=>{ const l=MG.list.filter(m=>String(m.grupoId)===g.id);
-     return `<div class="mg-g"><div class="mg-top"><b>${escapeHtml(g.nombre)}</b>${ed?`<label class="btn secondary small mg-up">Subir mapa<input type="file" multiple accept="application/pdf,image/*" hidden data-mgup="${escapeAttr(g.id)}" data-mgn="${escapeAttr(g.nombre)}"></label>`:''}</div>
-     ${l.length?l.map(m=>`<div class="mg-f"><span>${escapeHtml(m.titulo||m.archivo)}<small> · ${binSize(m.size||0)} · ${escapeHtml(m.por||'')}</small></span><span><button class="btn small" data-ro-ok data-mgver="${escapeAttr(m.id)}" type="button">Ver</button>${isLector()?'':` <button class="btn secondary small" data-ro-ok data-mgdl="${escapeAttr(m.id)}" type="button">Descargar</button>`}${ed?` <button class="btn danger small" data-mgdel="${escapeAttr(m.id)}" type="button">Eliminar</button>`:''}</span></div>`).join(''):'<small class="muted">Sin mapas.</small>'}</div>`; }).join(''):'<div class="empty">No hay grupos definidos.</div>');
+  const sel=String((window.TERR_REG_STATE&&window.TERR_REG_STATE.territory)||''); const tt=(DATA.territories||[]).find(x=>x.id===sel); const gs=tt?[{id:tt.id,nombre:'#'+tt.number+' '+(tt.name||''),grupo:tt.preachingGroupId||''}]:[];
+  box.innerHTML=`<h2>Mapa del territorio seleccionado<small>${ed?'Sube el mapa del territorio elegido arriba en PDF o imagen (máx. 5 MB por archivo).':'Mapa del territorio elegido arriba.'}</small></h2>`+
+   (gs.length?gs.map(g=>{ const l=MG.list.filter(m=>String(m.territorioId||'')===g.id);
+     return `<div class="mg-g"><div class="mg-top"><b>${escapeHtml(g.nombre)}</b>${ed?`<label class="btn secondary small mg-up">Subir mapa<input type="file" multiple accept="application/pdf,image/*" hidden data-mgup="${escapeAttr(g.id)}" data-mgn="${escapeAttr(g.nombre)}" data-mgg="${escapeAttr(g.grupo||'')}"></label>`:''}</div>
+     ${l.length?l.map(m=>`<div class="mg-f"><span>${escapeHtml(m.titulo||m.archivo)}<small> · ${binSize(m.size||0)} · ${escapeHtml(m.por||'')}</small></span><span><button class="btn small" data-ro-ok data-mgver="${escapeAttr(m.id)}" type="button">Ver</button>${isLector()?'':` <button class="btn secondary small" data-ro-ok data-mgdl="${escapeAttr(m.id)}" type="button">Descargar</button>`}${ed?` <button class="btn danger small" data-mgdel="${escapeAttr(m.id)}" type="button">Eliminar</button>`:''}</span></div>`).join(''):'<small class="muted">Sin mapas.</small>'}</div>`; }).join(''):'<div class="empty">Selecciona un territorio arriba.</div>');
   box.querySelectorAll('[data-mgup]').forEach(i=>i.onchange=()=>mgSubir(i));
   box.querySelectorAll('[data-mgver]').forEach(b=>b.onclick=()=>mgAbrir(b.dataset.mgver,false));
   box.querySelectorAll('[data-mgdl]').forEach(b=>b.onclick=()=>mgAbrir(b.dataset.mgdl,true));
@@ -5540,7 +5541,7 @@ async function mgSubir(inp){
     if(!/pdf|image/.test(f.type)&&!/\.(pdf|png|jpe?g|webp)$/i.test(f.name)){ showToast('"'+f.name+'" no es PDF ni imagen'); continue; }
     if(f.size>BIN_MAX){ showToast('"'+f.name+'" supera los 5 MB'); continue; }
     const id=ctUid('m'); showToast('Subiendo '+f.name+'…');
-    try{ const n=await binSubir('mapasgrupos',id,f); await c.doc('m_'+id).set({kind:'meta',id,grupoId:inp.dataset.mgup,grupoNombre:inp.dataset.mgn,titulo:f.name.replace(/\.[^.]+$/,''),archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''}); showToast('Mapa guardado'); }
+    try{ const n=await binSubir('mapasgrupos',id,f); await c.doc('m_'+id).set({kind:'meta',id,territorioId:inp.dataset.mgup,grupoId:inp.dataset.mgg||'',grupoNombre:inp.dataset.mgn,titulo:f.name.replace(/\.[^.]+$/,''),archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''}); showToast('Mapa guardado'); }
     catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar el mapa'); }
   }
 }
@@ -5551,6 +5552,71 @@ async function mgAbrir(id,dl){
 function mgEliminar(id){
   const m=MG.list.find(x=>x.id===id); if(!m||READONLY||!confirm('¿Eliminar el mapa "'+(m.titulo||m.archivo)+'"?')) return;
   binBorrar('mapasgrupos',id,m.n).then(()=>showToast('Mapa eliminado')).catch(()=>showToast('No se pudo eliminar'));
+}
+
+/* ---------- Registro de asignación: manzanas por territorio y hojas ---------- */
+const RG_ESPECIALES=['Club Social','Piscina','Administración'];
+function regManzanas(t){
+  if(t&&Array.isArray(t.manzanas)&&t.manzanas.length) return t.manzanas.map(String);
+  const g=(DATA.preachingGroups||[]).find(x=>x.id===(t&&t.preachingGroupId)); let n=0;
+  if(g&&g.stageConfig&&Array.isArray(g.stageConfig.blocks)) n=Math.max(0,...g.stageConfig.blocks.map(x=>Number(x)||0));
+  n=n||1; return Array.from({length:n},(_,i)=>String(i+1));
+}
+function regLleno(r){ return !!r&&[0,1,2].every(j=>{const a=(r.assignments||[])[j]||{}; return a.name&&a.date;}); }
+function regTieneDatos(r){ return (r.assignments||[]).some(a=>a&&(a.name||a.date||a.completed)); }
+function regFilas(t,stage,year){ return assignmentRowsFor(t,stage,year); }
+function regHojas(t,stage,year){ const hs=new Set([1]); regFilas(t,stage,year).forEach(r=>hs.add(r.hoja||1)); return [...hs].sort((a,b)=>a-b); }
+function regSync(t,stage,year){
+  if(!t||READONLY) return; if(!DATA.territoryAssignments) DATA.territoryAssignments=[];
+  const labels=regManzanas(t); let cambio=false; const y=Number(year);
+  const todas=()=>regFilas(t,stage,year);
+  const nueva=(label,h)=>{ DATA.territoryAssignments.push({id:uid('ta'),territoryId:t.id,stage,serviceYear:y,sequence:labels.indexOf(label)+1,manzana:label,hoja:h,assignments:[{},{},{}]}); cambio=true; };
+  labels.forEach(l=>{ if(!todas().some(r=>(r.hoja||1)===1&&String(r.manzana)===l)) nueva(l,1); });
+  // hoja siguiente solo para las manzanas cuyo registro de la hoja anterior se llenó
+  let guard=0, h=1;
+  while(guard++<50){
+    const llenas=todas().filter(r=>(r.hoja||1)===h&&regLleno(r));
+    if(!llenas.length) break;
+    llenas.forEach(r=>{ if(!todas().some(x=>(x.hoja||1)===h+1&&String(x.manzana)===String(r.manzana))) nueva(String(r.manzana),h+1); });
+    h++;
+  }
+  // limpiar filas vacías de manzanas que ya no existen
+  DATA.territoryAssignments=DATA.territoryAssignments.filter(r=>!(r.territoryId===t.id&&r.stage===stage&&Number(r.serviceYear)===y&&!labels.includes(String(r.manzana))&&!regTieneDatos(r)&&(cambio=true)));
+  if(cambio) saveData();
+}
+function regHoja(n){ if(window.TERR_REG_STATE) TERR_REG_STATE.hoja=n; renderTerritoryRegister(document.getElementById('content'),document.getElementById('topbarActions')); }
+function regTabs(t,st){
+  if(!t) return ''; const hs=regHojas(t,st.stage,st.year); const act=st.hoja||1;
+  if(hs.length<2) return '';
+  return `<div class="tr-hojas">${hs.map(h=>`<button type="button" class="btn small ${h===act?'':'secondary'}" onclick="regHoja(${h})">Hoja ${h}</button>`).join('')}<small class="muted">Se abre una hoja nueva con las manzanas cuyo registro se llenó.</small></div>`;
+}
+function renderAssignmentRows(t,stage,year){
+  const st=window.TERR_REG_STATE||{}; const key=[t.id,stage,year].join('|'); if(st.hojaKey!==key){ st.hojaKey=key; st.hoja=1; }
+  const hs=regHojas(t,stage,year); if(!hs.includes(st.hoja||1)) st.hoja=1; const h=st.hoja||1;
+  const labels=regManzanas(t); const all=regFilas(t,stage,year).filter(r=>(r.hoja||1)===h);
+  let filas=labels.map(l=>all.find(r=>String(r.manzana)===l)).map((r,i)=>r||(h===1?{id:'new',manzana:labels[i],assignments:[{},{},{}],_v:1}:null)).filter(Boolean);
+  all.filter(r=>!labels.includes(String(r.manzana))).forEach(r=>filas.push(r));
+  return filas.map(r=>`<tr>
+    <td>#${escapeHtml(t.number)}</td>
+    <td class="tr-mz"><b>${escapeHtml(r.manzana||'')}</b></td>
+    <td>${escapeHtml(lastCompletion([r])||'—')}</td>
+    ${[0,1,2].map(j=>{const a=(r.assignments||[])[j]||{};return `<td colspan="2" class="assign-box"><div class="assign-name"><input data-tr="name" data-row="${r.id}" data-mz="${escapeAttr(r.manzana||'')}" data-j="${j}" value="${escapeAttr(a.name||'')}" placeholder="Nombre del hermano"></div><div class="assign-dates"><input type="date" data-tr="date" data-row="${r.id}" data-mz="${escapeAttr(r.manzana||'')}" data-j="${j}" value="${escapeAttr(a.date||'')}" title="Fecha en que se asignó"><input type="date" data-tr="completed" data-row="${r.id}" data-mz="${escapeAttr(r.manzana||'')}" data-j="${j}" value="${escapeAttr(a.completed||'')}" title="Fecha en que se completó"></div></td>`}).join('')}
+  </tr>`).join('')||'<tr><td colspan="9">Sin manzanas definidas.</td></tr>';
+}
+function regDefinir(t){
+  if(!t||READONLY) return; const l=regManzanas(t);
+  const nums=l.filter(x=>/^\d+$/.test(x)).length, esp=RG_ESPECIALES.filter(e=>l.includes(e)), otras=l.filter(x=>!/^\d+$/.test(x)&&!RG_ESPECIALES.includes(x));
+  showModal(`<h3>Manzanas — #${escapeHtml(t.number)} ${escapeHtml(t.name||'')}</h3>
+   <div class="field"><label>Número de manzanas (1, 2, 3…)</label><input type="number" id="rgN" min="0" max="99" value="${nums}"></div>
+   <div class="field"><label>Si no son casas, agrega el sitio como manzana</label>${RG_ESPECIALES.map((e,i)=>`<label class="chk"><input type="checkbox" id="rgE${i}" ${esp.includes(e)?'checked':''}> ${e}</label>`).join('<br>')}</div>
+   <div class="field"><label>Otras (separadas por coma)</label><input id="rgO" value="${escapeAttr(otras.join(', '))}" placeholder="Ej.: Parque, Garita"></div>
+   <p class="note">Solo se mostrarán estas manzanas en el registro del territorio. Al quitar una manzana sin datos se elimina su fila; las que tienen asignaciones se conservan.</p>
+   <div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="rgOk">Guardar</button></div>`);
+  document.getElementById('rgOk').onclick=()=>{
+    const n=Math.max(0,Math.min(99,Number(document.getElementById('rgN').value)||0));
+    const out=[...Array.from({length:n},(_,i)=>String(i+1)),...RG_ESPECIALES.filter((e,i)=>document.getElementById('rgE'+i).checked),...document.getElementById('rgO').value.split(',').map(x=>x.trim()).filter(Boolean)];
+    t.manzanas=out.length?out:['1']; saveData(); closeModal(); renderTerritoryRegister(document.getElementById('content'),document.getElementById('topbarActions')); showToast('Manzanas actualizadas');
+  };
 }
 
 function setView(view, extra){
@@ -6432,10 +6498,12 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
     <select id="trTerr"><option value="">Seleccionar territorio...</option>${groupTerrs.map(t=>`<option value="${t.id}" ${t.id===state.territory?'selected':''}>#${escapeHtml(t.number)} ${escapeHtml(t.name)}</option>`).join('')}</select>
     <select id="trStage">${stageNames.map(x=>`<option ${x===state.stage?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select>
     <button class="btn secondary" id="trConfig">Configurar etapas y manzanas</button>
-    <button class="btn secondary" id="trPrint">Imprimir / PDF</button>`;
+    ${READONLY?'':'<button class="btn secondary" id="trMz">Definir manzanas</button>'}<button class="btn secondary" id="trPrint">Imprimir / PDF</button>`;
 
+  if(state.hojaKey!==[selected&&selected.id,state.stage,state.year].join('|')){ state.hojaKey=[selected&&selected.id,state.stage,state.year].join('|'); state.hoja=1; }
+  regSync(selected,state.stage,state.year);
   let rows=assignmentRowsFor(selected||{id:''},state.stage,state.year);
-  const needed=Math.max(blockCount,rows.length,0);
+  const needed=0;
   if(selected && rows.length<needed){
     for(let i=rows.length;i<needed;i++) DATA.territoryAssignments.push({id:uid('ta'),territoryId:selected.id,stage:state.stage,serviceYear:Number(state.year),sequence:i+1,manzana:String(i+1),assignments:[{},{},{}]});
     saveData(); rows=assignmentRowsFor(selected,state.stage,state.year);
@@ -6444,8 +6512,8 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
   content.innerHTML=`<div class="card territory-register">
     <div class="s13-title">REGISTRO DE ASIGNACIÓN DE TERRITORIO</div>
     <div class="s13-year"><strong>Año de servicio:</strong> ${state.year} ${selected?`<span style="float:right"><strong>Etapa:</strong> ${escapeHtml(state.stage)}</span>`:''}</div>
-    <div class="s13-sub">${selected?`<strong>Núm. de terr.:</strong> #${escapeHtml(selected.number)} &nbsp; <strong>Grupo:</strong> ${escapeHtml(group?.name||'—')} &nbsp; <strong>Territorio:</strong> ${escapeHtml(selected.name||'')} &nbsp; <strong>Manzanas:</strong> ${blockCount||rows.length||0}`:'Selecciona un grupo y territorio.'}</div>
-    <div class="s13-scroll"><table class="s13-table"><thead>
+    <div class="s13-sub">${selected?`<strong>Núm. de terr.:</strong> #${escapeHtml(selected.number)} &nbsp; <strong>Grupo:</strong> ${escapeHtml(group?.name||'—')} &nbsp; <strong>Territorio:</strong> ${escapeHtml(selected.name||'')} &nbsp; <strong>Manzanas:</strong> ${regManzanas(selected).length}`:'Selecciona un grupo y territorio.'}</div>
+    ${regTabs(selected,state)}<div class="s13-scroll"><table class="s13-table"><thead>
       <tr><th rowspan="2">Núm.<br>de manzana</th><th rowspan="2">Última fecha<br>en que se<br>completó*</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th></tr>
       <tr><th>Fecha en que se asignó</th><th>Fecha en que se completó</th><th>Fecha en que se asignó</th><th>Fecha en que se completó</th><th>Fecha en que se asignó</th><th>Fecha en que se completó</th></tr>
     </thead><tbody>${selected?renderAssignmentRows(selected,state.stage,state.year):'<tr><td colspan="8">Selecciona un territorio.</td></tr>'}</tbody></table></div>
@@ -6456,7 +6524,7 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
   document.getElementById('trGroup').onchange=e=>{state.group=e.target.value;state.territory='';state.stage='';renderTerritoryRegister(content,actions)};
   document.getElementById('trTerr').onchange=e=>{state.territory=e.target.value;state.stage='';renderTerritoryRegister(content,actions)};
   document.getElementById('trStage').onchange=e=>{state.stage=e.target.value;renderTerritoryRegister(content,actions)};
-  document.getElementById('trPrint').onclick=()=>window.print();
+  document.getElementById('trPrint').onclick=()=>window.print(); { const mz=document.getElementById('trMz'); if(mz) mz.onclick=()=>regDefinir(selected); }
   document.getElementById('trConfig').onclick=()=>openTerritoryStageConfig(group,state.stage,()=>renderTerritoryRegister(content,actions));
   content.querySelectorAll('[data-tr]').forEach(el=>el.onchange=()=>saveAssignmentCell(el,selected,state.stage,state.year));
   content.querySelectorAll('[data-tradd]').forEach(btn=>btn.onclick=()=>addAssignmentRow(selected,state.stage,state.year));
@@ -6474,7 +6542,7 @@ function openTerritoryStageConfig(group,currentStage,rerender){
   document.getElementById('saveStageConfig').onclick=()=>{const n=Math.max(1,Number(document.getElementById('stageCount').value)||1);const names=Array.from({length:n},(_,i)=>document.getElementById('stageName'+i).value.trim()||`Etapa ${i+1}`);const nums=Array.from({length:n},(_,i)=>Math.max(0,Number(document.getElementById('stageBlocks'+i).value)||0));group.stageConfig={count:n,blocks:nums};group.customStages=names;saveData();closeModal();rerender();showToast('Etapas y manzanas actualizadas')};
 }
 
-function renderAssignmentRows(t,stage,year){
+function renderAssignmentRows_base(t,stage,year){
   let rows=assignmentRowsFor(t,stage,year);
   if(!rows.length) rows=[{id:'new',sequence:1,manzana:'1',assignments:[{},{},{}]}];
   const rowHtml=rows.map((r)=>`<tr>
