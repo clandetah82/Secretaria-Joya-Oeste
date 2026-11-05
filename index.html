@@ -1873,6 +1873,28 @@ img,video,canvas{max-width:100%}
 @media (max-width:620px){.ar-t{table-layout:auto}.ar-t th{white-space:nowrap;overflow:visible}.ar-t td{height:auto;overflow:visible;vertical-align:middle;line-height:1.25}.ar-t td,.ar-wrap td{max-height:none}}
 @media (max-width:620px){.ar-t{table-layout:fixed;width:100%;min-width:0}.ar-t th{white-space:normal;font-size:9px;padding:4px 0;overflow:visible}.ar-t td{font-size:11px;padding:4px 2px}.ar-t td,.ar-t th{word-break:break-word}.ar-main{overflow-x:auto}}
 .tr-hojas{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}.tr-mz{font-size:14px;white-space:nowrap}
+/* organigrama */
+.org-card{overflow:hidden}.org-chart{display:flex;flex-direction:column;align-items:center;gap:0}
+.org-top{display:flex;justify-content:center;width:100%}.org-line{width:2px;height:22px;background:#9AA7B8}
+.org-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;width:100%;position:relative;padding-top:16px}
+.org-row:before{content:"";position:absolute;top:0;left:12%;right:12%;height:2px;background:#9AA7B8}
+.org-box{--oc:#1F4E79;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center;border:2px solid var(--oc);border-radius:14px;background:#fff;padding:12px 14px;cursor:pointer;min-width:0;font:inherit;color:inherit;box-sizing:border-box}
+.org-top .org-box{min-width:min(100%,280px)}
+.org-box b{background:var(--oc);color:#fff;border-radius:8px;padding:6px 10px;width:100%;box-sizing:border-box;font-size:14px;overflow-wrap:anywhere}
+.org-box span{font-size:14px;font-weight:600;overflow-wrap:anywhere}.org-box small{color:var(--muted,#667)}
+.org-box.on{box-shadow:0 0 0 3px color-mix(in srgb,var(--oc) 30%,transparent)}
+.org-dh{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-left:6px solid var(--oc);padding-left:10px;margin-bottom:12px}.org-dh h2{margin:0}
+.org-acts{display:flex;gap:6px;flex-wrap:wrap}
+.org-pers{margin-bottom:12px}.org-chips{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.org-chips li{background:#EEF3FA;border-radius:999px;padding:4px 12px;font-size:13px}.org-chips li small{color:#667;margin-right:4px}
+.org-ro{padding:8px 0;font-weight:600}.org-aux{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:8px}
+.org-secs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;align-items:start}
+.org-sec{border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:0}.org-sec h4{margin:0 0 6px;color:var(--oc,#1F4E79)}
+.org-sec ul{margin:0;padding-left:18px}.org-sec li{margin:3px 0;overflow-wrap:anywhere}
+.org-sec.ed textarea{width:100%;box-sizing:border-box}.org-sh{display:flex;gap:6px;margin-bottom:6px}.org-sh input{flex:1;min-width:0}
+@media (max-width:620px){.org-row{grid-template-columns:1fr}.org-row:before{display:none}.org-secs{grid-template-columns:1fr}}
+@media print{body.print-rep .org-acts,body.print-rep .org-aux input{display:none}}
+.mg-img{display:block;width:100%;max-height:70vh;object-fit:contain;background:#f4f6fa;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:zoom-in}
 
 </style>
 </head>
@@ -1918,6 +1940,7 @@ img,video,canvas{max-width:100%}
        <button data-view="groupReport"><span class="icon">▦</span><span class="lbl">Informe por grupo y mes</span></button>
       <button data-view="publisherData"><span class="icon">▤</span><span class="lbl">Datos de Publicadores</span></button>
       <button data-view="cartas"><span class="icon">✉</span><span class="lbl">Cartas &amp; Anuncios</span></button>
+      <button data-view="organigrama"><span class="icon">⌘</span><span class="lbl">Organigrama</span></button>
       <button data-view="minutas" style="display:none"><span class="icon">☰</span><span class="lbl">Minutas Reunión de Ancianos</span></button>
     </nav>
 
@@ -5410,6 +5433,114 @@ function anLista(){
   b.querySelectorAll('[data-andel]').forEach(x=>x.onclick=()=>{ if(READONLY||!confirm('¿Eliminar este anuncio?')) return; const d=anData(); d.items=d.items.filter(i=>i.id!==x.dataset.andel); try{ saveData(); }catch(e){} anLista(); });
 }
 
+/* ---------- Organigrama (modelo: JUANJOSE_1.xlsx) ---------- */
+const ORG_COLORES={cuerpo:'#1F4E79',coordinador:'#3FB5A5',secretario:'#7D4E9A',superintendente:'#4A8EDB',comite:'#D9822B',otro:'#5B6B7F'};
+const ORG_SEED=[
+ {id:'cuerpo',tipo:'cuerpo',nombre:'Cuerpo de Ancianos',aux:0,resp:[
+  {t:'Responsabilidades',i:['Secretario','Superintendente de Servicio','Auxiliares','Discursos Públicos','Audio y Video','Acomodadores','Presidentes','Lectores de La Atalaya','Tablero de Anuncios','Auditorías','Superintendente de Circuito','Publicadores No Bautizados','Bautismo']}]},
+ {id:'coordinador',tipo:'coordinador',nombre:'Coordinador',aux:2,resp:[
+  {t:'Designación',i:['El cuerpo de ancianos puede designar a uno o dos ancianos para que lo ayuden']},
+  {t:'Responsabilidades',i:['Reuniones de Ancianos','Cartas - Correspondencia','Audio y Video','Discursos Públicos','Presidentes','Lectores de La Atalaya','Acomodadores','Anuncios - Tablero','Vida y Ministerio Cristiano','Contabilidad - Auditorías','Comité de Servicio','Superintendente de Circuito','Comité de Mantenimiento','Publicadores No Bautizados','Bautismo','Capacitaciones','Cumplimiento','Programa de Privilegios','Reuniones','Capacitación','Nuevos Publicadores y Bautismo','Seguimiento']},
+  {t:'Reuniones de Ancianos · Agenda',i:['Prepara la agenda','Solicita a los demás ancianos qué asuntos les gustaría tratar, acompañado si es posible con alguna referencia','Decidir quién presentará cada punto','Entregar una copia de la agenda unos días antes de la reunión']},
+  {t:'Reuniones de Ancianos · ¿Cómo se celebra la reunión?',i:['No debe durar más de dos horas','No hace falta que cada anciano comente sobre cada punto de la agenda','El secretario, u otro anciano asignado, tomará nota de las decisiones']},
+  {t:'Reuniones de Ancianos · ¿Qué tratar?',i:['Bienestar espiritual de la congregación','La predicación','La capacitación de los varones','El cuidado de los publicadores con circunstancias especiales','Otros temas']},
+  {t:'Reuniones de Ancianos · ¿Cuándo tenerlas?',i:['3 meses después de cada visita del superintendente de circuito','Cuando sea necesario','Revisar el Informe','Revisar las minutas']},
+  {t:'Reuniones de Ancianos · ¿Qué se hace después de la reunión?',i:['Darles seguimiento y del plazo sugerido para cumplirlas','Se asegurará de que se dé seguimiento a las decisiones tomadas']},
+  {t:'Discursos Públicos',i:['Establecer un Auxiliar','Programa de Discursantes Salientes y Visitantes','Coordinar con otras congregaciones','Temas','Horarios','Designar un Discursante reemplazo','Confirmar en la semana con el discursante saliente y visitante','Confirmar la estadía y hospitalidad','Revisar los temas para no repetir']},
+  {t:'Programa de Privilegios',i:['Establecer un Auxiliar','Asignar los diferentes privilegios a los hermanos aprobados']},
+  {t:'Audio y Video',i:['Aprobación de quienes colaboran','Manejo del Sistema - Seguridad','Capacitaciones','Mantenimiento']},
+  {t:'Vida y Ministerio Cristiano',i:['Informes del Cuerpo Gobernante','Asambleas - Campañas','Reunión entre Semana']},
+  {t:'Anuncios - Tablero',i:['Aprobación','Cartas','Servicio de Precursores Auxiliares, Regulares y Otros','Informe de la cuenta de la Congregación y Auditoría','Mantenimiento y Limpieza','Visitas','Campañas de Servicio']},
+  {t:'Anuncios · Recepción',i:['Sucursal','Con las congregaciones','Comité de Servicio','Acceso a jwpub.org','Revisión semanal','Seguimiento']},
+  {t:'Anuncios · Envío',i:['Correo jwpub.org','Comité de Servicio','Recomendación - Bajas']},
+  {t:'Contabilidad - Auditorías',i:['Secretario','Siervo de Cuentas','Aprobación de los hermanos del manejo de la cuenta','Aprobación de los hermanos que recogen las donaciones','Resoluciones','Auditoría','Archivos']},
+  {t:'Comité de Servicio',i:['Superintendente de Servicio','Secretario','Reuniones','Programas']},
+  {t:'Comité de Mantenimiento',i:['Coordinador de Limpieza','Limpieza del Salón del Reino Semanal','Limpieza del Salón del Reino Profunda','Control de los Programas']},
+  {t:'Superintendente de Circuito',i:['Reunión Trimestral','Programa de visita','Informes','Otros']}]},
+ {id:'secretario',tipo:'secretario',nombre:'Secretario',aux:1,resp:[
+  {t:'Responsabilidades',i:['Auxiliares','Reuniones','Registros - Informes','Correspondencias','Siervo de Cuentas','Legal y Financiero','Lista de Contactos','Actividad de Precursores','Recomendaciones','Asamblea Regional','Bautizados']}]},
+ {id:'superintendente',tipo:'superintendente',nombre:'Superintendente de Servicio',aux:1,resp:[
+  {t:'Responsabilidades',i:['Auxiliares','Predicación','Territorio','Publicaciones','Visita','Actividad de Publicadores','Actividad de Precursores','Capacitación']}]},
+ {id:'comite',tipo:'comite',nombre:'Comité de Servicio',aux:0,resp:[
+  {t:'Responsabilidades',i:['Reuniones','Programas']}]}
+];
+const ORG={sel:'coordinador',edit:false};
+function orgD(){ if(!DATA.organigrama||!Array.isArray(DATA.organigrama.deps)) DATA.organigrama={deps:JSON.parse(JSON.stringify(ORG_SEED))}; return DATA.organigrama; }
+function orgDep(id){ return orgD().deps.find(d=>d.id===id); }
+function orgNombres(){ return (DATA.publishers||[]).map(p=>pubName(p)).filter(Boolean).sort((a,b)=>a.localeCompare(b,'es')); }
+function orgAncianos(){ return (DATA.publishers||[]).filter(p=>p.elder).map(p=>pubName(p)).sort((a,b)=>a.localeCompare(b,'es')); }
+function orgUid(){ return 'o'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function orgCol(d){ return ORG_COLORES[d.tipo]||ORG_COLORES.otro; }
+function orgGuardar(){ saveData(); }
+function orgRender(){ renderOrganigrama(document.getElementById('content'),document.getElementById('topbarActions')||document.createElement('div')); }
+function orgCaja(d){
+  const n=(d.aux||[]).filter?.call(d.aux,x=>x).length||0;
+  const resp=d.tipo==='cuerpo'?(orgAncianos().length+' ancianos'):d.tipo==='comite'?orgIntegrantes().filter(x=>x[1]).length+' integrantes':(d.responsable||'Sin asignar');
+  return `<button type="button" class="org-box ${ORG.sel===d.id?'on':''}" data-orgsel="${escapeAttr(d.id)}" style="--oc:${orgCol(d)}"><b>${escapeHtml(d.nombre)}</b><span>${escapeHtml(resp)}</span>${d.tipo==='cuerpo'||d.tipo==='comite'?'':`<small>${n?n+' auxiliar'+(n>1?'es':''):'Sin auxiliares'}</small>`}</button>`;
+}
+function orgIntegrantes(){ return ['coordinador','secretario','superintendente'].map(id=>{ const x=orgDep(id); return [x?x.nombre:id,x&&x.responsable||'']; }); }
+function renderOrganigrama(content,actions){
+  const D=orgD(); const ed=!READONLY;
+  actions.innerHTML=(ed?`<button class="btn" id="orgNuevo">+ Nuevo departamento / responsable</button> `:'')+`<button class="btn secondary" id="orgPrint">Imprimir / PDF</button>`;
+  const cuerpo=D.deps.find(d=>d.tipo==='cuerpo'), resto=D.deps.filter(d=>d.tipo!=='cuerpo');
+  if(!D.deps.some(d=>d.id===ORG.sel)) ORG.sel=(resto[0]||cuerpo||{}).id;
+  content.innerHTML=`<div class="card org-card"><div class="org-chart">${cuerpo?`<div class="org-top">${orgCaja(cuerpo)}</div><div class="org-line"></div>`:''}<div class="org-row">${resto.map(orgCaja).join('')}</div></div></div><div class="card org-detail" id="orgDetail"></div>`;
+  orgDetalle();
+  content.querySelectorAll('[data-orgsel]').forEach(b=>b.onclick=()=>{ ORG.sel=b.dataset.orgsel; ORG.edit=false; orgRender(); });
+  const n=document.getElementById('orgNuevo'); if(n) n.onclick=orgNuevoModal;
+  document.getElementById('orgPrint').onclick=()=>{ document.body.classList.add('print-rep'); window.print(); setTimeout(()=>document.body.classList.remove('print-rep'),500); };
+}
+function orgAuxInputs(sel,vals){ return `<div class="org-aux">${Array.from({length:sel},(_,i)=>`<div class="field"><label>Auxiliar ${i+1}</label><input list="orgDL" data-orgaux="${i}" value="${escapeAttr((vals||[])[i]||'')}" placeholder="Escoge o escribe para filtrar…"></div>`).join('')}</div>`;
+}
+function orgDetalle(){
+  const box=document.getElementById('orgDetail'); if(!box) return; const d=orgDep(ORG.sel); if(!d){ box.innerHTML='<div class="empty">Sin departamentos.</div>'; return; }
+  const ed=!READONLY, edit=ed&&ORG.edit; d.aux=Array.isArray(d.aux)?d.aux:[]; const nAux=Math.max(Number(d.nAux)||0,d.aux.length);
+  const esCuerpo=d.tipo==='cuerpo', esComite=d.tipo==='comite';
+  let head=`<div class="org-dh" style="--oc:${orgCol(d)}"><h2>${escapeHtml(d.nombre)}</h2>${ed?`<span class="org-acts"><button class="btn small ${edit?'':'secondary'}" id="orgEd">${edit?'Terminar edición':'✎ Editar responsabilidades'}</button>${['cuerpo','coordinador','secretario','superintendente','comite'].includes(d.id)?'':'<button class="btn danger small" id="orgDel">Eliminar</button>'}</span>`:''}</div>`;
+  let pers='';
+  if(esCuerpo){ const a=orgAncianos(); pers=`<div class="org-pers"><h3>Ancianos (${a.length})</h3>${a.length?`<ul class="org-chips">${a.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>`:'<small class="muted">Marca "Anciano" en Publicadores para que aparezcan aquí.</small>'}</div>`; }
+  else if(esComite){ pers=`<div class="org-pers"><h3>Integrantes</h3><ul class="org-chips">${orgIntegrantes().map(x=>`<li><small>${escapeHtml(x[0])}</small> ${escapeHtml(x[1]||'Sin asignar')}</li>`).join('')}</ul></div>`; }
+  else{
+    const nSel=Math.max(0,Math.min(20,Number(d.nAux!=null?d.nAux:d.aux.length)||0));
+    pers=`<div class="org-pers"><div class="grid2"><div class="field"><label>Responsable</label>${ed?`<input list="orgDL" id="orgResp" value="${escapeAttr(d.responsable||'')}" placeholder="Escoge de Publicadores…">`:`<div class="org-ro">${escapeHtml(d.responsable||'Sin asignar')}</div>`}</div>
+      <div class="field"><label>Número de auxiliares</label>${ed?`<input type="number" id="orgN" min="0" max="20" value="${nSel}">`:`<div class="org-ro">${nSel}</div>`}</div></div>
+      ${ed?orgAuxInputs(nSel,d.aux):`<ul class="org-chips">${d.aux.filter(Boolean).map(x=>`<li>${escapeHtml(x)}</li>`).join('')||'<li class="muted">Sin auxiliares</li>'}</ul>`}</div>`;
+  }
+  const secs=(d.resp||[]);
+  const cuerpoR=secs.length?secs.map((s,si)=>edit?`<div class="org-sec ed"><div class="org-sh"><input data-orgt="${si}" value="${escapeAttr(s.t)}"><button class="btn danger small" data-orgdelsec="${si}" type="button">Quitar</button></div><textarea data-orgi="${si}" rows="${Math.min(12,Math.max(3,(s.i||[]).length+1))}" placeholder="Una responsabilidad por línea">${escapeHtml((s.i||[]).join('\n'))}</textarea></div>`:`<div class="org-sec"><h4>${escapeHtml(s.t)}</h4>${(s.i||[]).length?`<ul>${s.i.map(x=>`<li>${escapeHtml(x)}</li>`).join('')}</ul>`:''}</div>`).join(''):'<div class="empty">Sin responsabilidades registradas.</div>';
+  box.innerHTML=head+pers+`<h3 class="org-rt">Responsabilidades</h3><div class="org-secs">${cuerpoR}</div>`+(edit?`<div style="margin-top:10px"><button class="btn secondary small" id="orgAddSec" type="button">+ Agregar sección</button></div>`:'')+`<datalist id="orgDL">${orgNombres().map(x=>`<option value="${escapeAttr(x)}">`).join('')}</datalist>`;
+  const g=id=>document.getElementById(id);
+  if(g('orgEd')) g('orgEd').onclick=()=>{ ORG.edit=!ORG.edit; orgDetalle(); };
+  if(g('orgDel')) g('orgDel').onclick=()=>{ if(!confirm('¿Eliminar "'+d.nombre+'"?')) return; orgD().deps=orgD().deps.filter(x=>x.id!==d.id); ORG.sel='coordinador'; orgGuardar(); orgRender(); };
+  if(g('orgResp')) g('orgResp').onchange=e=>{ d.responsable=e.target.value.trim(); orgGuardar(); orgRender(); };
+  if(g('orgN')) g('orgN').onchange=e=>{ const n=Math.max(0,Math.min(20,Number(e.target.value)||0)); d.nAux=n; d.aux=(d.aux||[]).slice(0,n); while(d.aux.length<n) d.aux.push(''); orgGuardar(); orgRender(); };
+  box.querySelectorAll('[data-orgaux]').forEach(i=>i.onchange=()=>{ d.aux[Number(i.dataset.orgaux)]=i.value.trim(); orgGuardar(); orgRender(); });
+  box.querySelectorAll('[data-orgt]').forEach(i=>i.onchange=()=>{ d.resp[Number(i.dataset.orgt)].t=i.value.trim()||'Sección'; orgGuardar(); });
+  box.querySelectorAll('[data-orgi]').forEach(i=>i.onchange=()=>{ d.resp[Number(i.dataset.orgi)].i=i.value.split('\n').map(x=>x.trim()).filter(Boolean); orgGuardar(); });
+  box.querySelectorAll('[data-orgdelsec]').forEach(b=>b.onclick=()=>{ d.resp.splice(Number(b.dataset.orgdelsec),1); orgGuardar(); orgDetalle(); });
+  if(g('orgAddSec')) g('orgAddSec').onclick=()=>{ d.resp=d.resp||[]; d.resp.push({t:'Nueva sección',i:[]}); orgGuardar(); orgDetalle(); };
+}
+function orgNuevoModal(){
+  if(READONLY) return;
+  showModal(`<h3>Nuevo departamento / responsable</h3>
+   <div class="field"><label>Nombre del departamento o responsabilidad</label><input id="orgNN" placeholder="Ej.: Audio y Video"></div>
+   <div class="field"><label>Responsable</label><input list="orgDL2" id="orgNR" placeholder="Escoge de Publicadores…"></div>
+   <div class="field"><label>Número de auxiliares</label><input type="number" id="orgNA" min="0" max="20" value="0"></div>
+   <div id="orgNAX"></div>
+   <div class="field"><label>Responsabilidades (una por línea)</label><textarea id="orgNT" rows="5"></textarea></div>
+   <datalist id="orgDL2">${orgNombres().map(x=>`<option value="${escapeAttr(x)}">`).join('')}</datalist>
+   <div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="orgNOk">Crear</button></div>`);
+  const draw=()=>{ const n=Math.max(0,Math.min(20,Number(document.getElementById('orgNA').value)||0)); const old=[...document.querySelectorAll('#orgNAX input')].map(x=>x.value); document.getElementById('orgNAX').innerHTML=Array.from({length:n},(_,i)=>`<div class="field"><label>Auxiliar ${i+1}</label><input list="orgDL2" value="${escapeAttr(old[i]||'')}" placeholder="Escoge de Publicadores…"></div>`).join(''); };
+  document.getElementById('orgNA').oninput=draw;
+  document.getElementById('orgNOk').onclick=()=>{
+    const nombre=document.getElementById('orgNN').value.trim(); if(!nombre){ showToast('Escribe el nombre'); return; }
+    const aux=[...document.querySelectorAll('#orgNAX input')].map(x=>x.value.trim());
+    const items=document.getElementById('orgNT').value.split('\n').map(x=>x.trim()).filter(Boolean);
+    const d={id:orgUid(),tipo:'otro',nombre,responsable:document.getElementById('orgNR').value.trim(),nAux:aux.length,aux,resp:items.length?[{t:'Responsabilidades',i:items}]:[]};
+    orgD().deps.push(d); ORG.sel=d.id; orgGuardar(); closeModal(); orgRender(); showToast('Departamento creado');
+  };
+}
+
 /* ===== CONFORMACIÓN DE GRUPOS · ARREGLOS DE PREDICACIÓN · MAPAS POR GRUPO ===== */
 const GPST={edit:false};
 function gpD(){ if(!DATA.gruposPred||!Array.isArray(DATA.gruposPred.grupos)) DATA.gruposPred=JSON.parse(JSON.stringify(GP_SEED)); return DATA.gruposPred; }
@@ -5509,7 +5640,7 @@ function arPintar(content){
   });
 }
 /* ---------- Mapas de cada grupo (Registro de asignación de territorio) ---------- */
-const MG={list:[],loaded:false,unsub:null,err:null};
+const MG={list:[],loaded:false,unsub:null,err:null,urls:{}};
 function mgGrupos(){ const g=(DATA.preachingGroups||[]).map(x=>({id:String(x.id),nombre:x.name})); if(g.length) return g; return (gpD().grupos||[]).map(x=>({id:'g'+x.n,nombre:'Grupo '+x.n+(x.nombre?' · '+x.nombre:'')})); }
 function mgWatch(){
   const c=binCol('mapasgrupos'); if(!c||MG.unsub) return;
@@ -5528,20 +5659,42 @@ function mgPintar(){
   box.innerHTML=`<h2>Mapa del territorio seleccionado<small>${ed?'Sube el mapa del territorio elegido arriba en PDF o imagen (máx. 5 MB por archivo).':'Mapa del territorio elegido arriba.'}</small></h2>`+
    (gs.length?gs.map(g=>{ const l=MG.list.filter(m=>String(m.territorioId||'')===g.id);
      return `<div class="mg-g"><div class="mg-top"><b>${escapeHtml(g.nombre)}</b>${ed?`<label class="btn secondary small mg-up">Subir mapa<input type="file" multiple accept="application/pdf,image/*" hidden data-mgup="${escapeAttr(g.id)}" data-mgn="${escapeAttr(g.nombre)}" data-mgg="${escapeAttr(g.grupo||'')}"></label>`:''}</div>
-     ${l.length?l.map(m=>`<div class="mg-f"><span>${escapeHtml(m.titulo||m.archivo)}<small> · ${binSize(m.size||0)} · ${escapeHtml(m.por||'')}</small></span><span><button class="btn small" data-ro-ok data-mgver="${escapeAttr(m.id)}" type="button">Ver</button>${isLector()?'':` <button class="btn secondary small" data-ro-ok data-mgdl="${escapeAttr(m.id)}" type="button">Descargar</button>`}${ed?` <button class="btn danger small" data-mgdel="${escapeAttr(m.id)}" type="button">Eliminar</button>`:''}</span></div>`).join(''):'<small class="muted">Sin mapas.</small>'}</div>`; }).join(''):'<div class="empty">Selecciona un territorio arriba.</div>');
+     ${l.length?l.map(m=>`${/\.(jpe?g|png|webp)$/i.test(m.archivo||'')?`<img class="mg-img" data-mgimg="${escapeAttr(m.id)}" alt="${escapeAttr(m.titulo||'Mapa')}" ${MG.urls[m.id]?`src="${MG.urls[m.id]}"`:''}>`:''}<div class="mg-f"><span>${escapeHtml(m.titulo||m.archivo)}<small> · ${binSize(m.size||0)} · ${escapeHtml(m.por||'')}</small></span><span><button class="btn small" data-ro-ok data-mgver="${escapeAttr(m.id)}" type="button">Ver</button>${isLector()?'':` <button class="btn secondary small" data-ro-ok data-mgdl="${escapeAttr(m.id)}" type="button">Descargar</button>`}${ed?` <button class="btn danger small" data-mgdel="${escapeAttr(m.id)}" type="button">Eliminar</button>`:''}</span></div>`).join(''):'<small class="muted">Sin mapas.</small>'}</div>`; }).join(''):'<div class="empty">Selecciona un territorio arriba.</div>');
   box.querySelectorAll('[data-mgup]').forEach(i=>i.onchange=()=>mgSubir(i));
+  box.querySelectorAll('[data-mgimg]').forEach(im=>{ const m=MG.list.find(x=>x.id===im.dataset.mgimg); im.onclick=()=>mgAbrir(im.dataset.mgimg,false); if(!MG.urls[im.dataset.mgimg]&&m){ binBlob('mapasgrupos',m).then(b=>{ MG.urls[m.id]=URL.createObjectURL(b); im.src=MG.urls[m.id]; }).catch(()=>{ im.alt='No se pudo cargar el mapa'; }); } });
   box.querySelectorAll('[data-mgver]').forEach(b=>b.onclick=()=>mgAbrir(b.dataset.mgver,false));
   box.querySelectorAll('[data-mgdl]').forEach(b=>b.onclick=()=>mgAbrir(b.dataset.mgdl,true));
   box.querySelectorAll('[data-mgdel]').forEach(b=>b.onclick=()=>mgEliminar(b.dataset.mgdel));
 }
+function mgImg(f){ return new Promise((res,rej)=>{ const u=URL.createObjectURL(f), im=new Image(); im.onload=()=>{ URL.revokeObjectURL(u); res(im); }; im.onerror=()=>{ URL.revokeObjectURL(u); rej(new Error('img')); }; im.src=u; }); }
+function mgCanvasBlob(cv,q){ return new Promise(r=>cv.toBlob(b=>r(b),'image/jpeg',q)); }
+async function mgComprimir(f){
+  const base=f.name.replace(/\.[^.]+$/,'');
+  try{
+    if(/image/.test(f.type)||/\.(png|jpe?g|webp)$/i.test(f.name)){
+      const im=await mgImg(f), k=Math.min(1,1800/Math.max(im.naturalWidth,im.naturalHeight)); const cv=document.createElement('canvas'); cv.width=Math.round(im.naturalWidth*k); cv.height=Math.round(im.naturalHeight*k);
+      const cx=cv.getContext('2d'); cx.fillStyle='#fff'; cx.fillRect(0,0,cv.width,cv.height); cx.drawImage(im,0,0,cv.width,cv.height);
+      let b=await mgCanvasBlob(cv,.72); if(b&&b.size<f.size) return {blob:b,name:base+'.jpg',type:'image/jpeg'};
+      return {blob:f,name:f.name,type:f.type};
+    }
+    if(/pdf/.test(f.type)||/\.pdf$/i.test(f.name)){
+      const lib=await vymCargarPdfJs(), pdf=await lib.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise, n=Math.min(pdf.numPages,6), pgs=[];
+      for(let i=1;i<=n;i++){ const pg=await pdf.getPage(i), v0=pg.getViewport({scale:1}), sc=Math.min(2,1500/v0.width), v=pg.getViewport({scale:sc}); const c=document.createElement('canvas'); c.width=Math.round(v.width); c.height=Math.round(v.height); const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); await pg.render({canvasContext:x,viewport:v}).promise; pgs.push(c); }
+      const W=Math.max(...pgs.map(c=>c.width)), H=pgs.reduce((a,c)=>a+c.height,0); const cv=document.createElement('canvas'); cv.width=W; cv.height=H; const cx=cv.getContext('2d'); cx.fillStyle='#fff'; cx.fillRect(0,0,W,H); let y=0; pgs.forEach(c=>{ cx.drawImage(c,0,y); y+=c.height; });
+      const b=await mgCanvasBlob(cv,.7); if(b&&b.size<f.size) return {blob:b,name:base+'.jpg',type:'image/jpeg'};
+    }
+  }catch(e){ console.warn('compresión no disponible',e); }
+  return {blob:f,name:f.name,type:f.type};
+}
 async function mgSubir(inp){
   if(READONLY) return; const c=binCol('mapasgrupos'); if(!c){ showToast('Sin conexión con Firebase'); return; }
   const files=[...inp.files]; inp.value='';
-  for(const f of files){
-    if(!/pdf|image/.test(f.type)&&!/\.(pdf|png|jpe?g|webp)$/i.test(f.name)){ showToast('"'+f.name+'" no es PDF ni imagen'); continue; }
-    if(f.size>BIN_MAX){ showToast('"'+f.name+'" supera los 5 MB'); continue; }
-    const id=ctUid('m'); showToast('Subiendo '+f.name+'…');
-    try{ const n=await binSubir('mapasgrupos',id,f); await c.doc('m_'+id).set({kind:'meta',id,territorioId:inp.dataset.mgup,grupoId:inp.dataset.mgg||'',grupoNombre:inp.dataset.mgn,titulo:f.name.replace(/\.[^.]+$/,''),archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''}); showToast('Mapa guardado'); }
+  for(const f0 of files){
+    if(!/pdf|image/.test(f0.type)&&!/\.(pdf|png|jpe?g|webp)$/i.test(f0.name)){ showToast('"'+f0.name+'" no es PDF ni imagen'); continue; }
+    showToast('Comprimiendo '+f0.name+'…'); const r=await mgComprimir(f0), f=r.blob;
+    if(f.size>BIN_MAX){ showToast('"'+f0.name+'" supera los 5 MB incluso comprimido'); continue; }
+    const id=ctUid('m'); showToast('Subiendo '+r.name+' ('+binSize(f0.size)+' → '+binSize(f.size)+')…');
+    try{ const n=await binSubir('mapasgrupos',id,f); await c.doc('m_'+id).set({kind:'meta',id,territorioId:inp.dataset.mgup,grupoId:inp.dataset.mgg||'',grupoNombre:inp.dataset.mgn,titulo:r.name.replace(/\.[^.]+$/,''),archivo:r.name,size:f.size,original:f0.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''}); showToast('Mapa guardado ('+binSize(f0.size)+' → '+binSize(f.size)+')'); }
     catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar el mapa'); }
   }
 }
@@ -5663,6 +5816,7 @@ function render(){
   else if(VIEW==='limphosp'){ title.innerHTML=LP_ICO_H+' Hospitalidad'; meta.textContent=canLimp()?'Semanas por grupo de hospitalidad':'Consulta (solo lectura)'; renderLimpieza(content, actions,'hosp'); }
   else if(VIEW==='limpprofunda'){ title.innerHTML=LP_ICO+' Limpieza Profunda'; meta.textContent=canLimp()?'Programa de limpieza profunda':'Consulta (solo lectura)'; renderLimpieza(content, actions,'profunda'); }
   else if(VIEW==='privilegios'){ title.textContent='Programa de Privilegios'; meta.textContent=canPrv()?'Asignaciones, rotación, puntaje y reglas':'Consulta (solo lectura)'; renderPrivilegios(content, actions); }
+  else if(VIEW==='organigrama'){ title.textContent='Organigrama'; meta.textContent=READONLY?'Consulta (solo lectura)':'Departamentos, responsables y auxiliares'; renderOrganigrama(content, actions); }
   else if(VIEW==='anuncios'){ title.textContent='Anuncios a la Congregación'; meta.textContent=READONLY?'Consulta (solo lectura)':'Cartas, nombramientos, bajas y cambios'; renderAnuncios(content, actions); }
   else if(VIEW==='gruposPred'){ title.textContent='Conformación de grupos'; meta.textContent=READONLY?'Consulta (solo lectura)':'Grupos de predicación'; renderGruposPred(content, actions); }
   else if(VIEW==='arreglosPred'){ title.textContent='Arreglos de predicación'; meta.textContent=READONLY?'Consulta (solo lectura)':'Mañanas, noches y fin de semana'; renderArreglos(content, actions); }
@@ -6868,7 +7022,7 @@ function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
 const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['privilegios','Programa de Privilegios (modificar, puntaje y reglas)'],['auditoria','Auditoría Contabilidad (temporal, máx. 1 mes)']];
-const MODULE_OF_VIEW={anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
+const MODULE_OF_VIEW={organigrama:'secretaria',anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
 function computeReadOnly(view){
