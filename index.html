@@ -1908,6 +1908,7 @@ img,video,canvas{max-width:100%}
 .s13-table th,.s13-table td{border-width:1px;border-color:#555}
 .tr-mz{min-width:92px}.tr-nh{display:block;margin:4px auto 0;font-size:11px}
 .org-cargo{display:flex;align-items:center;gap:6px;font-size:12px;color:#556;margin:2px 0 6px}.org-cargo select{padding:2px 4px;font-size:12px;max-width:200px;min-width:0}.org-cargo.ro b{color:#1F4E79}
+.ct-mchk{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:4px 10px;margin-top:6px;max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:8px}.ct-mchk label{display:flex;gap:6px;align-items:center;font-size:13px;font-weight:400}
 
 </style>
 </head>
@@ -4244,12 +4245,16 @@ function binDescargar(blob,archivo){ const url=URL.createObjectURL(blob), a=docu
 /* ===== Permisos ===== */
 function canContab(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.contabilidad===true); }
 function audMs(h){ return h?(h.toMillis?h.toMillis():Date.parse(h)):0; }
+/* auditor temporal: colaborador designado por un administrador (desde/hasta, máx. 1 mes); solo carga en Auditoría */
 function audVigente(m){
   if(!m||m.auditoria!==true) return false;
   const hasta=audMs(m.auditoriaHasta), desde=audMs(m.auditoriaDesde), ahora=Date.now();
   return hasta>ahora&&(!desde||desde<=ahora);
 }
-function canAuditView(){ return !!CUR; }
+function ctModo(){ return canContab()?'admin':'basico'; }
+function ctCatsVis(per,mes){ return ctModo()==='admin'?CT_CATS:CT_CATS.filter(x=>x[0]==='4.0'); }
+/* Auditoría: administradores y auditores vigentes cargan; los colaboradores con Contabilidad la consultan */
+function canAuditView(){ return canAudit()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.contabilidad===true); }
 function canAudit(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&audVigente(CUR.modules)); }
 function audFecha(ms){ return ms?new Date(ms).toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'}):''; }
 function audHastaTxt(m){ return audFecha(audMs(m&&m.auditoriaHasta)); }
@@ -4290,12 +4295,19 @@ function ctMesesVencidos(y){
 }
 
 const CT={docs:[],aprs:[],logs:[],auds:[],ok:{doc:false,apr:false,log:false,aud:false},err:null,unsubs:{},tab:'actual',per:null,mes:null,q:'',f:{anio:'',mes:'',cat:'',user:''},hist:null,abierta:{},logF:''};
-function ctWatch(col,kind,key,store){
-  if(CT.unsubs[key]) return; const c=binCol(col); if(!c) return;
-  CT.unsubs[key]=c.where('kind','==',kind).onSnapshot(s=>{ CT[store]=s.docs.map(d=>d.data()); CT.ok[key]=true; CT.err=null; ctRefresh(); },e=>{ CT.err=e; CT.ok[key]=true; CT.unsubs[key]=null; ctRefresh(); });
+CT.src={};
+function ctMerge(store,keys){ const m={}; keys.forEach(k=>(CT.src[k]||[]).forEach(d=>{ m[d.id]=d; })); CT[store]=Object.values(m);
 }
+function ctWatch(col,kind,key,store,q,grp){
+  const id=grp||key; if(CT.unsubs[key]) return; const c=binCol(col); if(!c) return;
+  CT.unsubs[key]=(q?q(c.where('kind','==',kind)):c.where('kind','==',kind)).onSnapshot(s=>{ CT.src[key]=s.docs.map(d=>d.data()); ctMerge(store,CT.grp[id]||[key]); CT.ok[id]=true; CT.err=null; ctRefresh(); },e=>{ CT.err=e; CT.ok[id]=true; CT.unsubs[key]=null; ctRefresh(); });
+}
+CT.grp={};
 function ctWatchAll(){
-  ctWatch('contabilidad','doc','doc','docs'); ctWatch('contabilidad','apr','apr','aprs');
+  const modo=ctModo(), sig=modo;
+  if(CT.sig!==sig){ Object.keys(CT.unsubs).forEach(k=>{ try{ CT.unsubs[k]&&CT.unsubs[k](); }catch(_){} }); CT.unsubs={}; CT.src={}; CT.docs=[]; CT.aprs=[]; CT.auds=[]; CT.logs=[]; CT.ok={doc:false,apr:false,log:false,aud:false}; CT.sig=sig; }
+  if(modo==='admin'){ CT.grp.doc=['doc']; ctWatch('contabilidad','doc','doc','docs'); ctWatch('contabilidad','apr','apr','aprs'); }
+  else{ CT.grp.doc=['d4']; ctWatch('contabilidad','doc','d4','docs',q=>q.where('cat','==','4.0'),'doc'); CT.ok.apr=true; }
   if(canAuditView()) ctWatch('auditoria','aud','aud','auds');
   if(canAudit()) ctWatch('auditoria','log','log','logs');
 }
@@ -4307,7 +4319,7 @@ function ctLog(accion,detalle){
 function ctEstado(){
   if(!binCol('contabilidad')) return '<div class="empty">Contabilidad requiere la conexión con Firebase.</div>';
   if(CT.err) return '<div class="empty">No se pudo cargar ('+escapeHtml(CT.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>';
-  if(!CT.ok.doc||!CT.ok.apr) return '<div class="empty">Cargando…</div>';
+  if(!CT.ok.doc||(ctModo()!=='basico'&&!CT.ok.apr)) return '<div class="empty">Cargando…</div>';
   return '';
 }
 /* ¿puede cargar/reemplazar/eliminar en este periodo? Actual: administradores y designados. Histórico: administradores */
@@ -4317,10 +4329,11 @@ function ctPuedeDescargar(){ return canContab(); }
 /* ===== CONTABILIDAD ===== */
 function renderContab(content,actions){
   ctWatchAll(); actions.innerHTML='';
-  const tabs=[['actual','Periodo actual'],['aprob','Aprobaciones vigentes'],['hist','Histórico'],['buscar','Buscar documentos'],['stats','Estadísticas']];
+  const md=ctModo(), tabs=md==='admin'?[['actual','Periodo actual'],['aprob','Aprobaciones vigentes'],['hist','Histórico'],['buscar','Buscar documentos'],['stats','Estadísticas']]:[['actual','Periodo actual'],['hist','Histórico']];
   if(canAudit()) tabs.push(['log','Registro de actividad']);
   if(!tabs.some(t=>t[0]===CT.tab)) CT.tab='actual';
-  content.innerHTML=`<div class="ct-tabs" role="tablist">${tabs.map(t=>`<button class="ct-tab ${CT.tab===t[0]?'on':''}" data-ro-ok data-cttab="${t[0]}">${t[1]}</button>`).join('')}</div><div id="ctBody"></div>`;
+  const aviso=md==='admin'?'':`<div class="ct-note">Solo se muestra el 4.0 Informe Mensual de las Cuentas (S-30) de cada mes.</div>`;
+  content.innerHTML=aviso+`<div class="ct-tabs" role="tablist">${tabs.map(t=>`<button class="ct-tab ${CT.tab===t[0]?'on':''}" data-ro-ok data-cttab="${t[0]}">${t[1]}</button>`).join('')}</div><div id="ctBody"></div>`;
   content.querySelectorAll('[data-cttab]').forEach(b=>b.onclick=()=>{ CT.tab=b.dataset.cttab; CT.mes=null; renderContab(content,actions); });
   ctPintar();
 }
@@ -4343,13 +4356,13 @@ function ctVistaPeriodo(per,etq){
   if(CT.mes==null){
     const venc=ctMesesVencidos(per);
     const cards=CT_ORDEN.map(m=>{
-      const ds=ctDocsDe(per,m), cats=new Set(ds.map(d=>d.cat)).size, pct=Math.round(cats/CT_CATS.length*100);
-      return `<button class="ct-folder" data-ro-ok data-ctmes="${m}"><span class="ct-fico">📁</span><b>${CT_MN[m]} ${ctAnioMes(per,m)}</b><small>${ds.length} documento${ds.length===1?'':'s'} · ${cats}/${CT_CATS.length} categorías</small><span class="ct-bar"><i style="width:${pct}%"></i></span>${venc.includes(m)&&cats<CT_CATS.length?`<em class="ct-pend">${CT_CATS.length-cats} pendientes</em>`:''}</button>`;
+      const ds=ctDocsDe(per,m), cats=new Set(ds.map(d=>d.cat)).size, pct=Math.round(cats/CT_CATS.length*100), full=ctCatsVis(per,m).length===CT_CATS.length;
+      return `<button class="ct-folder" data-ro-ok data-ctmes="${m}"><span class="ct-fico">📁</span><b>${CT_MN[m]} ${ctAnioMes(per,m)}</b><small>${ds.length} documento${ds.length===1?'':'s'}${full?` · ${cats}/${CT_CATS.length} categorías`:' · S-30'}</small>${isAdmin()?`<span class="ct-bar"><i style="width:${pct}%"></i></span>${venc.includes(m)&&cats<CT_CATS.length?`<em class="ct-pend">${CT_CATS.length-cats} pendientes</em>`:''}`:''}</button>`;
     }).join('');
     return `<div class="card"><div class="ct-per"><div><span class="ct-etq">${etq}</span><h2>${ctPerTxt(per)}</h2></div>${puede?'':'<span class="ct-ro">Solo consulta</span>'}</div><div class="ct-folders">${cards}</div></div>`;
   }
   const m=CT.mes, mesTxt=CT_MN[m]+' '+ctAnioMes(per,m);
-  const secs=CT_CATS.map(([cod,nom])=>{
+  const secs=ctCatsVis(per,m).map(([cod,nom])=>{
     const ds=ctDocsDe(per,m,cod);
     const lista=ds.length?ds.map(d=>`<div class="ct-doc"><div class="ct-dinfo"><b>${escapeHtml(d.titulo||d.archivo||'')}</b><small>${escapeHtml(d.archivo||'')} · ${binSize(d.size||0)} · Cargado el ${escapeHtml(ctFechaHora(d.fecha))} por ${escapeHtml(d.por||'')}${d.modificado?` · Reemplazado el ${escapeHtml(ctFechaHora(d.modificado))} por ${escapeHtml(d.porMod||'')}`:''}</small></div><div class="ct-dacc"><button class="btn small" data-ro-ok data-ctver="${escapeAttr(d.id)}">Ver</button>${ctPuedeDescargar()?`<button class="btn small secondary" data-ro-ok data-ctdl="${escapeAttr(d.id)}">Descargar</button>`:''}${puede?`<label class="btn small secondary ct-file">Reemplazar<input type="file" accept="application/pdf,.pdf" hidden data-ctrep="${escapeAttr(d.id)}"></label><button class="btn small danger" data-ctdel="${escapeAttr(d.id)}">Eliminar</button>`:''}</div></div>`).join(''):'<div class="ct-vacio">Sin documentos</div>';
     return `<div class="ct-cat ${ds.length?'':'pend'}"><div class="ct-cathead"><h3><span>${cod}</span> ${escapeHtml(nom)}</h3>${ds.length?`<span class="ct-badge in">${ds.length}</span>`:'<span class="ct-badge out">Pendiente</span>'}${puede?`<label class="btn small ct-file">+ Subir PDF<input type="file" accept="application/pdf,.pdf" multiple hidden data-ctup="${cod}"></label>`:''}</div>${lista}</div>`;
@@ -4535,7 +4548,7 @@ async function ctEliminarVersion(id){
 const AU={meses:[],q:'',desde:'',hasta:'',auditor:'',per:'',editId:null};
 function renderAuditoria(content,actions){
   actions.innerHTML='';
-  if(!canAuditView()){ content.innerHTML='<div class="card"><div class="empty">Inicia sesión para consultar las auditorías.</div></div>'; return; }
+  if(!canAuditView()){ content.innerHTML='<div class="card"><div class="empty">No tienes acceso a la Auditoría de Contabilidad.</div></div>'; return; }
   ctWatchAll(); AU.meses=[]; AU.editId=null;
   const vig=(!isAdmin()&&CUR&&CUR.modules&&CUR.modules.auditoriaHasta)?`<div class="vym-det ok" style="margin-bottom:10px">Acceso de auditor: del ${escapeHtml(audFecha(audMs(CUR.modules.auditoriaDesde)||Date.now()))} al ${escapeHtml(audHastaTxt(CUR.modules))}. Después se desactiva automáticamente.</div>`:'';
   const formAud=`<div class="card"><h2>Registrar auditoría<small>Suba el informe en PDF (máx. 5 MB) con los datos de la auditoría.</small></h2>
@@ -5366,7 +5379,7 @@ function navAdaptable(){
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
   window.addEventListener('resize',()=>{ if(window.innerWidth>900) cerrar(); });
 }
-function navVisibilidad(){ const nm=document.querySelector('button[data-view="minutas"]'); if(nm) nm.style.display=(typeof canMin==='function'&&CUR&&canMin())?'':'none'; }
+function navVisibilidad(){ const na=document.querySelector('button[data-view="auditoria"]'); if(na) na.style.display=(typeof canAuditView==='function'&&CUR&&canAuditView())?'':'none'; const nm=document.querySelector('button[data-view="minutas"]'); if(nm) nm.style.display=(typeof canMin==='function'&&CUR&&canMin())?'':'none'; }
 window.addEventListener('load',navAdaptable);
 const GP_SEED={"titulo": "GRUPOS DE PREDICACIÓN - JOYA OESTE", "grupos": [{"n": 1, "nombre": "Onix - Brillante", "miembros": [{"t": "Aguirre Badillo, Elsa (PR)", "rol": "", "est": ""}, {"t": "Calderón, Lady", "rol": "", "est": ""}, {"t": "Calderón, Sonia (PR)", "rol": "", "est": ""}, {"t": "Campo Julia de", "rol": "", "est": ""}, {"t": "Coronel Rodríguez, Jerline (PNB)", "rol": "", "est": ""}, {"t": "Escalante, Leonor", "rol": "", "est": ""}, {"t": "Parrales, Grazziana (PR)", "rol": "", "est": ""}, {"t": "Pincay Calderón, Sophia", "rol": "", "est": ""}, {"t": "Quimí Terán, Yaritza de", "rol": "", "est": ""}, {"t": "Quimí, Daniel (SM) - AUX", "rol": "AUX", "est": ""}, {"t": "Quimí, Rafael (PR) (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Quimí, Teresa de (PR)", "rol": "", "est": ""}, {"t": "Rendón, Gloria (PAI)", "rol": "", "est": ""}, {"t": "Sánchez, Valeria", "rol": "", "est": ""}, {"t": "Vera Villafuerte, Bryan", "rol": "", "est": "inactivo"}, {"t": "Vera, Joselyn Valeria de", "rol": "", "est": "inactivo"}]}, {"n": 2, "nombre": "Diamante", "miembros": [{"t": "Bohórquez, Mabell", "rol": "", "est": ""}, {"t": "Delgado, Xavier", "rol": "", "est": ""}, {"t": "Delgado, Yesther de", "rol": "", "est": ""}, {"t": "Garcia, Israel (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Garcia, Maria de los Angeles de", "rol": "", "est": ""}, {"t": "Garcia, Matías (PNB)", "rol": "", "est": ""}, {"t": "Layana, Jenny de (PAI)", "rol": "", "est": ""}, {"t": "Layana, Silvia", "rol": "", "est": ""}, {"t": "Morejón, Fabiola (PAI)", "rol": "", "est": ""}, {"t": "Morejón, Jaime", "rol": "", "est": ""}, {"t": "Palma, Flora", "rol": "", "est": ""}, {"t": "Peñafiel, Alex", "rol": "", "est": ""}, {"t": "Peñafiel, Fiorela (PAI)", "rol": "", "est": ""}, {"t": "Peñafiel, Nicole (PAI)", "rol": "", "est": ""}, {"t": "Quinde, David (PR) (ANC) - AUX", "rol": "AUX", "est": ""}, {"t": "Quinde, Janeth (PR)", "rol": "", "est": ""}, {"t": "Guevara, Maria Jose", "rol": "", "est": "inactivo"}, {"t": "Espinoza, Danika", "rol": "", "est": "inactivo"}]}, {"n": 3, "nombre": "Esmeraldas", "miembros": [{"t": "Castro Joel (PR)(SM)", "rol": "", "est": ""}, {"t": "Castro, Nelly de", "rol": "", "est": ""}, {"t": "Castro, Oswal (PR) (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Castro, Sebastián de", "rol": "", "est": ""}, {"t": "Correa, Carmen", "rol": "", "est": ""}, {"t": "Macías, Vanesa (PR)", "rol": "", "est": ""}, {"t": "Mestanza, Geovanny (ANC)", "rol": "", "est": ""}, {"t": "Mestanza, Verónica de (PR)", "rol": "", "est": ""}, {"t": "Ortega, Rosa", "rol": "", "est": ""}, {"t": "Pilataxi, Antonio (PR) (ANC) - AUX", "rol": "AUX", "est": ""}, {"t": "Pilataxi, Patricia de (PR)", "rol": "", "est": ""}, {"t": "Tutiven Solórzano, Dayana (PR)", "rol": "", "est": ""}, {"t": "Villamil Solórzano, Briana", "rol": "", "est": ""}, {"t": "Villamil Solórzano, Luciana", "rol": "", "est": ""}, {"t": "Villamil, Johanna de (PR)", "rol": "", "est": ""}, {"t": "Villamil, Juan Carlos", "rol": "", "est": ""}, {"t": "Mendieta, Edward", "rol": "", "est": "inactivo"}, {"t": "Mendieta, Lili", "rol": "", "est": "inactivo"}, {"t": "Mendieta, Ernesto", "rol": "", "est": "inactivo"}, {"t": "Mendieta, Cristina", "rol": "", "est": "inactivo"}]}, {"n": 4, "nombre": "Tiara", "miembros": [{"t": "Bravo, Samantha (PR)", "rol": "", "est": ""}, {"t": "Castro, Denny", "rol": "", "est": ""}, {"t": "Castro, Margarita (PR)", "rol": "", "est": ""}, {"t": "Cedeño, Mariana (PR)", "rol": "", "est": ""}, {"t": "Coloma, Briana (PNB)", "rol": "", "est": ""}, {"t": "Coloma, Kerly de (PA)", "rol": "", "est": ""}, {"t": "Coloma, Naslly (PB)", "rol": "", "est": ""}, {"t": "Coloma, Ronald(SM)", "rol": "", "est": ""}, {"t": "Cumbicos, Ana Paula (PR)", "rol": "", "est": ""}, {"t": "Cumbicos, Grey Del Rosario de", "rol": "", "est": ""}, {"t": "Cumbicos, Henrry (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Cumbicos, José Eduardo", "rol": "", "est": ""}, {"t": "Guerra, Jeanine de", "rol": "", "est": ""}, {"t": "Pita, Antonella (PNB)", "rol": "", "est": ""}, {"t": "Quezada, Angela (PNB)", "rol": "", "est": ""}, {"t": "Rivas, César (ANC) - AUX", "rol": "AUX", "est": ""}, {"t": "Rivas, Joaquin", "rol": "", "est": ""}, {"t": "Rivas, Roxi de", "rol": "", "est": ""}, {"t": "Tigüa, Cristóbal", "rol": "", "est": ""}, {"t": "Tigüa, Daniel (PR)", "rol": "", "est": ""}, {"t": "Tigüa, Jessica de (PR)", "rol": "", "est": ""}, {"t": "Tigüa, Sheilly (PR)", "rol": "", "est": ""}, {"t": "Moreira, Johanna de (Inac)", "rol": "", "est": "inactivo"}]}, {"n": 5, "nombre": "Platino - Turquesa", "miembros": [{"t": "Andrews, Anthony (ANC) (SETC)", "rol": "", "est": ""}, {"t": "Andrews, Patricia de (SETC)", "rol": "", "est": ""}, {"t": "Arreaga, Ana", "rol": "", "est": ""}, {"t": "Barzola, Oscar", "rol": "", "est": ""}, {"t": "Bermeo, Carlos - AUX", "rol": "AUX", "est": ""}, {"t": "Espinoza, Juan José (PNB)", "rol": "", "est": ""}, {"t": "Flores, Jessenia de", "rol": "", "est": ""}, {"t": "Gervacio, Rosario de (PR)", "rol": "", "est": ""}, {"t": "Ladires, Jackeline de (PR)", "rol": "", "est": ""}, {"t": "Landeta, Carlos (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Landeta, Raquel de", "rol": "", "est": ""}, {"t": "Noboa, Carolina (PNB)", "rol": "", "est": ""}, {"t": "Pazan, Beatriz", "rol": "", "est": ""}, {"t": "Pincay, Dimas (Inac)", "rol": "", "est": "inactivo"}, {"t": "González, Ledger", "rol": "", "est": "inactivo"}, {"t": "Inga, Fanny (PNB)", "rol": "", "est": "inactivo"}, {"t": "Aguayo, Mariuxi (Exp)", "rol": "", "est": "expulsado"}]}, {"n": 6, "nombre": "Perla - Gema", "miembros": [{"t": "Bermeo, Juan (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Bermeo, Nelly de", "rol": "", "est": ""}, {"t": "Burgos, Raíza de (PNB)", "rol": "", "est": ""}, {"t": "Bustamante, Rosalía de", "rol": "", "est": ""}, {"t": "Chipre, Elva (PR)", "rol": "", "est": ""}, {"t": "Escudero, Alexandra", "rol": "", "est": ""}, {"t": "Espinoza, Natasha de", "rol": "", "est": ""}, {"t": "Espinoza, Xavier (PR)(SM) - AUX", "rol": "AUX", "est": ""}, {"t": "Matute, Mónica (PNB)", "rol": "", "est": ""}, {"t": "Mora, Isaac", "rol": "", "est": ""}, {"t": "Mora, Solange de", "rol": "", "est": ""}, {"t": "Suárez, Beatriz de", "rol": "", "est": ""}, {"t": "Suárez, Camila (PNB)", "rol": "", "est": ""}, {"t": "Suárez, Diego", "rol": "", "est": ""}, {"t": "Suárez, Enrique (SM)", "rol": "", "est": ""}, {"t": "Andrade, Mercedes de (Inac)", "rol": "", "est": "inactivo"}, {"t": "Portilla, Camila (PNB) (Inac)", "rol": "", "est": "inactivo"}, {"t": "Portilla, Daniela (Inac)", "rol": "", "est": "inactivo"}, {"t": "Ycaza, Betsi de (Inac)", "rol": "", "est": "inactivo"}, {"t": "Manzo, Isaac (Exp)", "rol": "", "est": "expulsado"}]}, {"n": 7, "nombre": "Oro - Aguamarina", "miembros": [{"t": "Cabrera, Paúl", "rol": "", "est": ""}, {"t": "Gonzalez, Javier (PR) - AUX", "rol": "AUX", "est": ""}, {"t": "Gonzalez, Joselyn de (PR)", "rol": "", "est": ""}, {"t": "Lindao, Eva Maria de", "rol": "", "est": ""}, {"t": "Lindao, Roberto (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Méndez, Melissa (PR)", "rol": "", "est": ""}, {"t": "Méndez, Michelle (PR)", "rol": "", "est": ""}, {"t": "Méndez, Mirian de (PR)", "rol": "", "est": ""}, {"t": "Montiel, Alexander", "rol": "", "est": ""}, {"t": "Román, Glenda", "rol": "", "est": ""}, {"t": "Tapia, Linda", "rol": "", "est": ""}, {"t": "Valverde, María Teresa de", "rol": "", "est": ""}, {"t": "Vargas, Alex", "rol": "", "est": ""}, {"t": "Vargas, Sandy de (PR)", "rol": "", "est": ""}, {"t": "Anchundia, Jonathan (Inac)", "rol": "", "est": "inactivo"}, {"t": "Quinde, Marcos (Inac)", "rol": "", "est": "inactivo"}, {"t": "Quinde, Gladys de (Inac)", "rol": "", "est": "inactivo"}]}], "pie": "“Haz la obra de evangelizador, efectúa tu ministerio plenamente.” (2 Timoteo 4:5)"};
 const AR_SEED={"titulo": "PREDICACION JOYA OESTE", "manana": {"hora": "09h00", "filas": [{"dia": "Lunes", "etapa": "Brillante", "familia": "Quimi", "direccion": "Mz. 6 V.44", "conductor": "Rafael Quimi"}, {"dia": "Martes", "etapa": "Oro", "familia": "Vargas", "direccion": "Mz. 3 V.18", "conductor": "Alex Vargas"}, {"dia": "Miércoles", "etapa": "Esmeralda", "familia": "Piltaxi", "direccion": "Mz. 9 V.29", "conductor": "Antonio Pilataxi"}, {"dia": "Jueves", "etapa": "Tiara", "familia": "Cedeño", "direccion": "Mz. 3 V. 7", "conductor": "Roberto Lindao"}, {"dia": "Viernes", "etapa": "Diamante", "familia": "Morejón", "direccion": "Mz. 9 V.47", "conductor": "Jaime Morejón"}]}, "noche": {"hora": "19h30", "filas": [{"dia": "Lunes", "etapa": "Turquesa", "familia": "Andrews", "direccion": "Mz. 12 V.31", "conductor": "Carlos Landeta"}, {"dia": "Martes", "grupos": ["Onix - Brillante - Diamante", "Esmeralda - Tiara", "Platino - Turquesa - Perla", "Gema - Oro - Aquamarina"]}, {"dia": "Miércoles", "etapa": "Gema", "familia": "Burgos", "direccion": "Mz. 18 V. 10", "conductor": "Javier Gonzalez"}]}, "finSemana": {"manana": [{"semana": "Semana 1", "hora": "08h30", "salen": "Salón del Reino", "lugar": "La Candelaria", "cada": false}, {"semana": "Semana 2", "hora": "09h45", "salen": "Salen de cada Grupo", "lugar": "La Joya", "cada": true}, {"semana": "Semana 3", "hora": "08h30", "salen": "Salón del Reino", "lugar": "La Candelaria", "cada": false}, {"semana": "Semana 4", "hora": "09h45", "salen": "Salen de cada Grupo", "lugar": "La Joya", "cada": true}, {"semana": "Semana 5", "hora": "09h45", "salen": "Salen de cada Grupo", "lugar": "La Joya", "cada": true}], "tarde": {"dia": "Sábado", "hora": "17h50", "salen": "Rotativo toda la congregación de acuerdo al programa", "lugar": "La Joya"}}, "notaEtapas": "Nota: Se alternan entre las etapas y de acuerdo a cada superintendente de grupo", "notaMartes": "De acuerdo al arreglo de los grupos los días Martes", "anexo": "* ver anexo calendario", "pie1": "* Los hermanos que no puedan ir a la candelaria, podran hacer arreglos personales (revisitas, estudios, cartas, telefonica)", "pie2": "** Toda la Congregación Sabado"};
@@ -7078,7 +7091,7 @@ const $id=id=>document.getElementById(id);
 function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
-const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['privilegios','Programa de Privilegios (modificar, puntaje y reglas)'],['auditoria','Auditoría Contabilidad (temporal, máx. 1 mes)']];
+const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos y ver Auditoría)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['privilegios','Programa de Privilegios (modificar, puntaje y reglas)'],['auditoria','Auditoría Contabilidad (auditor temporal, máx. 1 mes)']];
 const MODULE_OF_VIEW={organigrama:'secretaria',anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
@@ -7414,3 +7427,4 @@ startAuth();
 </script>
 </body>
 </html>
+
