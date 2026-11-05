@@ -1895,6 +1895,8 @@ img,video,canvas{max-width:100%}
 @media (max-width:620px){.org-row{grid-template-columns:1fr}.org-row:before{display:none}.org-secs{grid-template-columns:1fr}}
 @media print{body.print-rep .org-acts,body.print-rep .org-aux input{display:none}}
 .mg-img{display:block;width:100%;max-height:70vh;object-fit:contain;background:#f4f6fa;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:zoom-in}
+.rg-et{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
+.rg-mz{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}.rg-mz label{display:flex;align-items:center;gap:6px}.rg-mz b{min-width:22px;text-align:right}.rg-mz select{flex:1;min-width:0}
 
 </style>
 </head>
@@ -1925,6 +1927,7 @@ img,video,canvas{max-width:100%}
       <button data-view="attendance"><span class="icon">◫</span><span class="lbl">Asistencia a reuniones</span></button>
       <button data-view="attReports"><span class="icon">▤</span><span class="lbl">Informe de asistencias</span></button>
       <button data-view="actividades"><span class="icon">☰</span><span class="lbl">Actividades</span></button>
+      <button data-view="organigrama"><span class="icon">⌘</span><span class="lbl">Organigrama</span></button>
     </nav>
 
     <div class="navgroup-label">Vida y Ministerio</div>
@@ -1940,7 +1943,6 @@ img,video,canvas{max-width:100%}
        <button data-view="groupReport"><span class="icon">▦</span><span class="lbl">Informe por grupo y mes</span></button>
       <button data-view="publisherData"><span class="icon">▤</span><span class="lbl">Datos de Publicadores</span></button>
       <button data-view="cartas"><span class="icon">✉</span><span class="lbl">Cartas &amp; Anuncios</span></button>
-      <button data-view="organigrama"><span class="icon">⌘</span><span class="lbl">Organigrama</span></button>
       <button data-view="minutas" style="display:none"><span class="icon">☰</span><span class="lbl">Minutas Reunión de Ancianos</span></button>
     </nav>
 
@@ -3897,6 +3899,7 @@ function normalizeData(parsed){
   if(!Array.isArray(parsed.actividades.roster)) parsed.actividades.roster=[];
   if(!parsed.privilegios||typeof parsed.privilegios!=='object') parsed.privilegios={};
   if(!parsed.anuncios||!Array.isArray(parsed.anuncios.items)) parsed.anuncios={items:[]};
+  if(Array.isArray(parsed.preachingGroups)) parsed.preachingGroups.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'es',{numeric:true,sensitivity:'base'}));
   if(!parsed.limpieza||typeof parsed.limpieza!=='object') parsed.limpieza={cfg:{ref:'2026-10-19',refGrupo:1,grupos:7},semanas:{},profunda:{}};
   if(!parsed.discursos||typeof parsed.discursos!=='object') parsed.discursos={};
   parsed.discursos.seq=Object.assign({discursante:1,discurso:1,asignacion:1,visita:1,arregloPublico:1},parsed.discursos.seq||{});
@@ -5709,19 +5712,26 @@ function mgEliminar(id){
 
 /* ---------- Registro de asignación: manzanas por territorio y hojas ---------- */
 const RG_ESPECIALES=['Club Social','Piscina','Administración'];
-function regManzanas(t){
+const RG_TIPOS=['Casas','Club Social','Piscina','Administración','Parque'];
+function regCmpG(a,b){ return String(a.name||'').localeCompare(String(b.name||''),'es',{numeric:true,sensitivity:'base'}); }
+function regDeGrupo(t,g){ return !!g&&(t.preachingGroupId===g.id||(g.stages||[]).some(x=>x&&x.territoryId===t.id)); }
+function regEtapas(t){ const c=t&&t.etapasCfg; return (c&&c.length)?c.map(e=>e.nombre):getTerrStages(t); }
+function regManzanas(t,stage){
+  const c=t&&(t.etapasCfg||[]).find(e=>e.nombre===stage); if(c&&c.manzanas&&c.manzanas.length) return c.manzanas.map(String);
   if(t&&Array.isArray(t.manzanas)&&t.manzanas.length) return t.manzanas.map(String);
-  const g=(DATA.preachingGroups||[]).find(x=>x.id===(t&&t.preachingGroupId)); let n=0;
+  const g=(DATA.preachingGroups||[]).find(x=>regDeGrupo(t,x)); let n=0;
   if(g&&g.stageConfig&&Array.isArray(g.stageConfig.blocks)) n=Math.max(0,...g.stageConfig.blocks.map(x=>Number(x)||0));
   n=n||1; return Array.from({length:n},(_,i)=>String(i+1));
 }
+function regTipoDe(l){ l=String(l); if(/^\d+$/.test(l)) return 'Casas'; const m=/^\d+ · (.+)$/.exec(l); const x=m?m[1]:l; return RG_TIPOS.includes(x)?x:'Casas'; }
+function regLabel(i,tipo){ return tipo==='Casas'?String(i+1):(i+1)+' · '+tipo; }
 function regLleno(r){ return !!r&&[0,1,2].every(j=>{const a=(r.assignments||[])[j]||{}; return a.name&&a.date;}); }
 function regTieneDatos(r){ return (r.assignments||[]).some(a=>a&&(a.name||a.date||a.completed)); }
 function regFilas(t,stage,year){ return assignmentRowsFor(t,stage,year); }
 function regHojas(t,stage,year){ const hs=new Set([1]); regFilas(t,stage,year).forEach(r=>hs.add(r.hoja||1)); return [...hs].sort((a,b)=>a-b); }
 function regSync(t,stage,year){
   if(!t||READONLY) return; if(!DATA.territoryAssignments) DATA.territoryAssignments=[];
-  const labels=regManzanas(t); let cambio=false; const y=Number(year);
+  const labels=regManzanas(t,stage); let cambio=false; const y=Number(year);
   const todas=()=>regFilas(t,stage,year);
   const nueva=(label,h)=>{ DATA.territoryAssignments.push({id:uid('ta'),territoryId:t.id,stage,serviceYear:y,sequence:labels.indexOf(label)+1,manzana:label,hoja:h,assignments:[{},{},{}]}); cambio=true; };
   labels.forEach(l=>{ if(!todas().some(r=>(r.hoja||1)===1&&String(r.manzana)===l)) nueva(l,1); });
@@ -5746,7 +5756,7 @@ function regTabs(t,st){
 function renderAssignmentRows(t,stage,year){
   const st=window.TERR_REG_STATE||{}; const key=[t.id,stage,year].join('|'); if(st.hojaKey!==key){ st.hojaKey=key; st.hoja=1; }
   const hs=regHojas(t,stage,year); if(!hs.includes(st.hoja||1)) st.hoja=1; const h=st.hoja||1;
-  const labels=regManzanas(t); const all=regFilas(t,stage,year).filter(r=>(r.hoja||1)===h);
+  const labels=regManzanas(t,stage); const all=regFilas(t,stage,year).filter(r=>(r.hoja||1)===h);
   let filas=labels.map(l=>all.find(r=>String(r.manzana)===l)).map((r,i)=>r||(h===1?{id:'new',manzana:labels[i],assignments:[{},{},{}],_v:1}:null)).filter(Boolean);
   all.filter(r=>!labels.includes(String(r.manzana))).forEach(r=>filas.push(r));
   return filas.map(r=>`<tr>
@@ -5757,18 +5767,28 @@ function renderAssignmentRows(t,stage,year){
   </tr>`).join('')||'<tr><td colspan="9">Sin manzanas definidas.</td></tr>';
 }
 function regDefinir(t){
-  if(!t||READONLY) return; const l=regManzanas(t);
-  const nums=l.filter(x=>/^\d+$/.test(x)).length, esp=RG_ESPECIALES.filter(e=>l.includes(e)), otras=l.filter(x=>!/^\d+$/.test(x)&&!RG_ESPECIALES.includes(x));
-  showModal(`<h3>Manzanas — #${escapeHtml(t.number)} ${escapeHtml(t.name||'')}</h3>
-   <div class="field"><label>Número de manzanas (1, 2, 3…)</label><input type="number" id="rgN" min="0" max="99" value="${nums}"></div>
-   <div class="field"><label>Si no son casas, agrega el sitio como manzana</label>${RG_ESPECIALES.map((e,i)=>`<label class="chk"><input type="checkbox" id="rgE${i}" ${esp.includes(e)?'checked':''}> ${e}</label>`).join('<br>')}</div>
-   <div class="field"><label>Otras (separadas por coma)</label><input id="rgO" value="${escapeAttr(otras.join(', '))}" placeholder="Ej.: Parque, Garita"></div>
-   <p class="note">Solo se mostrarán estas manzanas en el registro del territorio. Al quitar una manzana sin datos se elimina su fila; las que tienen asignaciones se conservan.</p>
+  if(!t||READONLY) return;
+  const nombres=regEtapas(t); const oldNames=[...nombres], oldLabels=nombres.map(n=>regManzanas(t,n));
+  let M=nombres.map((n,k)=>({nombre:n,tipos:oldLabels[k].map(regTipoDe)}));
+  const sync=()=>{ const cards=[...document.querySelectorAll('#rgEt .rg-et')]; if(!cards.length) return; M=cards.map(c=>({nombre:c.querySelector('[data-rgn]').value.trim(),tipos:[...c.querySelectorAll('[data-rgt]')].map(s=>s.value)})); };
+  const draw=()=>{ document.getElementById('rgEt').innerHTML=M.map((e,k)=>`<div class="rg-et"><div class="grid2"><div class="field"><label>Etapa ${k+1}</label><input data-rgn value="${escapeAttr(e.nombre)}"></div><div class="field"><label>Número de manzanas</label><input type="number" min="0" max="99" data-rgc="${k}" value="${e.tipos.length}"></div></div><div class="rg-mz">${e.tipos.map((tp,i)=>`<label><b>${i+1}</b><select data-rgt>${RG_TIPOS.map(x=>`<option ${x===tp?'selected':''}>${x}</option>`).join('')}</select></label>`).join('')}</div></div>`).join('');
+    document.querySelectorAll('[data-rgc]').forEach(inp=>inp.onchange=()=>{ sync(); if(inp.value==='') return; const k=Number(inp.dataset.rgc), n=Math.max(0,Math.min(99,Number(inp.value)||0)); if(n===M[k].tipos.length) return; sync(); const tp=M[k].tipos; M[k].tipos=Array.from({length:n},(_,i)=>tp[i]||'Casas'); draw(); }); };
+  showModal(`<h3>Etapas y manzanas — #${escapeHtml(t.number)} ${escapeHtml(t.name||'')}</h3>
+   <div class="field"><label>Número de etapas de este territorio</label><input type="number" id="rgNE" min="1" max="20" value="${M.length}"></div>
+   <div id="rgEt"></div>
+   <p class="note">Cada manzana se genera según el número indicado y eliges si es Casas, Club Social, Piscina, Administración o Parque. Esta configuración es solo de este territorio.</p>
    <div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="rgOk">Guardar</button></div>`);
+  draw();
+  document.getElementById('rgNE').onchange=e=>{ if(e.target.value===''||!(Number(e.target.value)>=1)) return; const n=Math.max(1,Math.min(20,Number(e.target.value))); if(n===M.length) return; sync(); M=Array.from({length:n},(_,i)=>M[i]||{nombre:'Etapa '+(i+1),tipos:['Casas']}); draw(); };
   document.getElementById('rgOk').onclick=()=>{
-    const n=Math.max(0,Math.min(99,Number(document.getElementById('rgN').value)||0));
-    const out=[...Array.from({length:n},(_,i)=>String(i+1)),...RG_ESPECIALES.filter((e,i)=>document.getElementById('rgE'+i).checked),...document.getElementById('rgO').value.split(',').map(x=>x.trim()).filter(Boolean)];
-    t.manzanas=out.length?out:['1']; saveData(); closeModal(); renderTerritoryRegister(document.getElementById('content'),document.getElementById('topbarActions')); showToast('Manzanas actualizadas');
+    sync(); M.forEach((e,i)=>{ e.nombre=e.nombre||('Etapa '+(i+1)); });
+    const dup=new Set(M.map(e=>e.nombre)); if(dup.size!==M.length){ showToast('Los nombres de etapa deben ser distintos'); return; }
+    // migrar registros existentes: nombre de etapa y número/tipo de manzana
+    (DATA.territoryAssignments||[]).forEach(r=>{ if(r.territoryId!==t.id) return; const k=oldNames.indexOf(r.stage); if(k<0||!M[k]) return; const j=oldLabels[k].indexOf(String(r.manzana)); if(j>=0&&j<M[k].tipos.length) r.manzana=regLabel(j,M[k].tipos[j]); r.stage=M[k].nombre; });
+    t.etapasCfg=M.map(e=>({nombre:e.nombre,manzanas:e.tipos.map((tp,i)=>regLabel(i,tp))}));
+    t.stages=M.map(e=>e.nombre); delete t.manzanas;
+    if(window.TERR_REG_STATE){ TERR_REG_STATE.stage=M[Math.max(0,oldNames.indexOf(TERR_REG_STATE.stage))]?M[Math.max(0,oldNames.indexOf(TERR_REG_STATE.stage))].nombre:M[0].nombre; }
+    saveData(); closeModal(); renderTerritoryRegister(document.getElementById('content'),document.getElementById('topbarActions')); showToast('Etapas y manzanas actualizadas');
   };
 }
 
@@ -6318,6 +6338,7 @@ function renderTerritories(content, actions){
     };
   }
   const groupRows=document.getElementById('groupRows');
+  DATA.preachingGroups=(DATA.preachingGroups||[]).slice().sort(regCmpG);
   groupRows.innerHTML=(DATA.preachingGroups||[]).map(g=>{
     const stages=[...(g.stages||[]).map(x=>x.name),...(g.customStages||[])];
     const sup=DATA.publishers.find(p=>p.id===g.superintendentId),aux=DATA.publishers.find(p=>p.id===g.assistantId);
@@ -6624,13 +6645,13 @@ function lastCompletion(rows){
 }
 function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpAttach(content); }catch(e){ console.error(e); } },0);
   const state=window.TERR_REG_STATE||{year:currentServiceYear(),group:'',territory:'',stage:''}; window.TERR_REG_STATE=state;
-  const groups=[...(DATA.preachingGroups||[])];
+  const groups=[...(DATA.preachingGroups||[])].sort(regCmpG);
   const terrs=[...DATA.territories].sort((a,b)=>String(a.number).localeCompare(String(b.number),undefined,{numeric:true}));
   if(!state.group && terrs[0]?.preachingGroupId) state.group=terrs[0].preachingGroupId;
   const group=groups.find(g=>g.id===state.group)||groups[0];
   if(group) state.group=group.id;
-  const groupTerrs=group?terrs.filter(t=>t.preachingGroupId===group.id):terrs;
-  const selected=groupTerrs.find(t=>t.id===state.territory)||groupTerrs[0]||terrs.find(t=>t.id===state.territory)||terrs[0];
+  const groupTerrs=group?terrs.filter(t=>regDeGrupo(t,group)):terrs;
+  const selected=group?(groupTerrs.find(t=>t.id===state.territory)||groupTerrs[0]):(terrs.find(t=>t.id===state.territory)||terrs[0]);
   if(selected) state.territory=selected.id;
 
   let stageNames=[];
@@ -6641,7 +6662,7 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
     const legacy=Array.isArray(group.stages)?group.stages.map(x=>typeof x==='string'?x:x.name):[];
     for(let i=0;i<Math.max(count,custom.length,legacy.length);i++) stageNames.push(custom[i]||legacy[i]||`Etapa ${i+1}`);
   }
-  if(!stageNames.length && selected) stageNames=getTerrStages(selected);
+  if(selected) stageNames=regEtapas(selected);
   if(selected && (!state.stage||!stageNames.includes(state.stage))) state.stage=stageNames[0]||'General';
   const idx=Math.max(0,stageNames.indexOf(state.stage));
   const blockCount=Math.max(0,Number(group?.stageConfig?.blocks?.[idx])||0);
@@ -6651,8 +6672,8 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
     <select id="trGroup"><option value="">Seleccionar grupo...</option>${groups.map(g=>`<option value="${g.id}" ${g.id===state.group?'selected':''}>${escapeHtml(g.name)}</option>`).join('')}</select>
     <select id="trTerr"><option value="">Seleccionar territorio...</option>${groupTerrs.map(t=>`<option value="${t.id}" ${t.id===state.territory?'selected':''}>#${escapeHtml(t.number)} ${escapeHtml(t.name)}</option>`).join('')}</select>
     <select id="trStage">${stageNames.map(x=>`<option ${x===state.stage?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select>
-    <button class="btn secondary" id="trConfig">Configurar etapas y manzanas</button>
-    ${READONLY?'':'<button class="btn secondary" id="trMz">Definir manzanas</button>'}<button class="btn secondary" id="trPrint">Imprimir / PDF</button>`;
+    <button class="btn secondary" id="trConfig">Etapas y manzanas</button>
+    <button class="btn secondary" id="trPrint">Imprimir / PDF</button>`;
 
   if(state.hojaKey!==[selected&&selected.id,state.stage,state.year].join('|')){ state.hojaKey=[selected&&selected.id,state.stage,state.year].join('|'); state.hoja=1; }
   regSync(selected,state.stage,state.year);
@@ -6666,7 +6687,7 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
   content.innerHTML=`<div class="card territory-register">
     <div class="s13-title">REGISTRO DE ASIGNACIÓN DE TERRITORIO</div>
     <div class="s13-year"><strong>Año de servicio:</strong> ${state.year} ${selected?`<span style="float:right"><strong>Etapa:</strong> ${escapeHtml(state.stage)}</span>`:''}</div>
-    <div class="s13-sub">${selected?`<strong>Núm. de terr.:</strong> #${escapeHtml(selected.number)} &nbsp; <strong>Grupo:</strong> ${escapeHtml(group?.name||'—')} &nbsp; <strong>Territorio:</strong> ${escapeHtml(selected.name||'')} &nbsp; <strong>Manzanas:</strong> ${regManzanas(selected).length}`:'Selecciona un grupo y territorio.'}</div>
+    <div class="s13-sub">${selected?`<strong>Núm. de terr.:</strong> #${escapeHtml(selected.number)} &nbsp; <strong>Grupo:</strong> ${escapeHtml(group?.name||'—')} &nbsp; <strong>Territorio:</strong> ${escapeHtml(selected.name||'')} &nbsp; <strong>Manzanas:</strong> ${regManzanas(selected,state.stage).length}`:'Selecciona un grupo y territorio.'}</div>
     ${regTabs(selected,state)}<div class="s13-scroll"><table class="s13-table"><thead>
       <tr><th rowspan="2">Núm.<br>de manzana</th><th rowspan="2">Última fecha<br>en que se<br>completó*</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th><th colspan="2">Asignado a</th></tr>
       <tr><th>Fecha en que se asignó</th><th>Fecha en que se completó</th><th>Fecha en que se asignó</th><th>Fecha en que se completó</th><th>Fecha en que se asignó</th><th>Fecha en que se completó</th></tr>
@@ -6678,8 +6699,8 @@ function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpA
   document.getElementById('trGroup').onchange=e=>{state.group=e.target.value;state.territory='';state.stage='';renderTerritoryRegister(content,actions)};
   document.getElementById('trTerr').onchange=e=>{state.territory=e.target.value;state.stage='';renderTerritoryRegister(content,actions)};
   document.getElementById('trStage').onchange=e=>{state.stage=e.target.value;renderTerritoryRegister(content,actions)};
-  document.getElementById('trPrint').onclick=()=>window.print(); { const mz=document.getElementById('trMz'); if(mz) mz.onclick=()=>regDefinir(selected); }
-  document.getElementById('trConfig').onclick=()=>openTerritoryStageConfig(group,state.stage,()=>renderTerritoryRegister(content,actions));
+  document.getElementById('trPrint').onclick=()=>window.print();
+  document.getElementById('trConfig').onclick=()=>regDefinir(selected);
   content.querySelectorAll('[data-tr]').forEach(el=>el.onchange=()=>saveAssignmentCell(el,selected,state.stage,state.year));
   content.querySelectorAll('[data-tradd]').forEach(btn=>btn.onclick=()=>addAssignmentRow(selected,state.stage,state.year));
 }
@@ -7033,6 +7054,7 @@ function computeReadOnly(view){
   if(view==='limpieza'||view==='limpgeneral'||view==='limpprofunda'||view==='limphosp') return !canLimp();
   if(view==='minutas') return !canMin();
   if(view==='privilegios') return !canPrv();
+  if(view==='organigrama') return !isAdmin();
   if(CUR.role==='lector') return true;
   if(view==='actividades') return CUR.role!=='admin';
   if(CUR.role!=='colab') return false;
