@@ -4767,9 +4767,62 @@ function avCard(){
 }
 if(typeof window!=='undefined'){ window.addEventListener('load',()=>{
   try{ const sd=saveData; saveData=function(){ const r=sd.apply(this,arguments); try{ if(AV.started) avProgramar(); }catch(e){} return r; }; }catch(e){}
-  try{ const rd=render; render=function(){ const r=rd.apply(this,arguments); try{ avIniciar(); navVisibilidad(); }catch(e){} return r; }; }catch(e){}
+  try{ const rd=render; render=function(){ const r=rd.apply(this,arguments); try{ avIniciar(); navVisibilidad(); accRegistrar(); }catch(e){} return r; }; }catch(e){}
 }); }
 
+
+/* ===== REGISTRO DE ACCESOS (IP) — solo administradores lo ven ===== */
+const ACC={done:false,list:[],unsub:null,q:'',err:null};
+function accCol(){ return (typeof SYNC!=='undefined'&&SYNC.db)?SYNC.db.collection('accesos'):null; }
+async function accRegistrar(){
+  if(ACC.done||!CUR||!CUR.id||!accCol()) return; ACC.done=true;
+  let ip='no disponible';
+  try{
+    const c=new AbortController(); const t=setTimeout(()=>c.abort(),5000);
+    const r=await fetch('https://api.ipify.org?format=json',{signal:c.signal}); clearTimeout(t);
+    const j=await r.json(); if(j&&j.ip) ip=String(j.ip).slice(0,64);
+  }catch(e){}
+  try{
+    const id='a'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+    await accCol().doc(id).set({email:String(CUR.id).toLowerCase(),name:CUR.name||'',role:CUR.role||'',ip,ua:(navigator.userAgent||'').slice(0,180),tz:(Intl.DateTimeFormat().resolvedOptions().timeZone||''),fecha:new Date().toISOString()});
+  }catch(e){ console.warn('accesos',e); }
+}
+function accWatch(){
+  const col=accCol(); if(!col||ACC.unsub||!isAdmin()) return;
+  ACC.unsub=col.orderBy('fecha','desc').limit(500).onSnapshot(s=>{ ACC.list=s.docs.map(d=>({id:d.id,...d.data()})); ACC.err=null; accPintar(); },e=>{ ACC.err=e; ACC.unsub=null; accPintar(); });
+}
+function accFecha(iso){ try{ return new Date(iso).toLocaleString('es-EC',{dateStyle:'short',timeStyle:'short'}); }catch(e){ return iso||''; } }
+function accCard(){
+  const box=document.getElementById('accCard'); if(!box) return;
+  if(!isAdmin()){ box.remove(); return; }
+  box.innerHTML=`<h2>Accesos e IP<small>Se registra la IP pública, el usuario y la fecha cada vez que alguien con sesión iniciada abre la página. Solo los administradores ven este registro.</small></h2>
+   <div class="ct-filtros"><div class="field wide"><label>Buscar (correo, nombre o IP)</label><input type="search" id="accQ" placeholder="Escribe para filtrar"></div></div>
+   <div id="accBody"></div>
+   <div class="actions"><button class="btn secondary small" id="accCsv" type="button">Descargar CSV</button><button class="btn danger small" id="accPurga" type="button">Borrar registros de más de 90 días</button></div>`;
+  document.getElementById('accQ').oninput=e=>{ ACC.q=e.target.value; accPintar(); };
+  document.getElementById('accCsv').onclick=accCsv; document.getElementById('accPurga').onclick=accPurgar;
+  accWatch(); accPintar();
+}
+function accFiltrada(){ const q=ACC.q.trim().toLowerCase(); return ACC.list.filter(a=>!q||[a.email,a.name,a.ip].join(' ').toLowerCase().includes(q)); }
+function accPintar(){
+  const b=document.getElementById('accBody'); if(!b) return;
+  if(ACC.err){ b.innerHTML='<div class="empty">No se pudo leer el registro ('+escapeHtml(ACC.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>'; return; }
+  const l=accFiltrada(); if(!l.length){ b.innerHTML='<div class="empty">Sin accesos registrados todavía.</div>'; return; }
+  const ips={}; l.forEach(a=>{ const o=ips[a.ip]||(ips[a.ip]={n:0,u:new Set(),ult:a.fecha}); o.n++; o.u.add(a.email); if(a.fecha>o.ult)o.ult=a.fecha; });
+  const resumen=Object.entries(ips).sort((x,y)=>y[1].n-x[1].n).slice(0,12);
+  b.innerHTML=`<h3 class="lp-h3">Direcciones IP (${Object.keys(ips).length})</h3><div class="ct-wrap"><table class="ct-table stack"><thead><tr><th>IP</th><th class="r">Ingresos</th><th>Usuarios</th><th>Último</th></tr></thead><tbody>${resumen.map(([ip,o])=>`<tr><td data-l="IP">${escapeHtml(ip)}</td><td data-l="Ingresos" class="r">${o.n}</td><td data-l="Usuarios">${escapeHtml([...o.u].join(', '))}</td><td data-l="Último">${escapeHtml(accFecha(o.ult))}</td></tr>`).join('')}</tbody></table></div>
+   <h3 class="lp-h3">Últimos ingresos</h3><div class="ct-wrap"><table class="ct-table stack"><thead><tr><th>Fecha</th><th>Usuario</th><th>Rol</th><th>IP</th><th>Dispositivo</th></tr></thead><tbody>${l.slice(0,100).map(a=>`<tr><td data-l="Fecha">${escapeHtml(accFecha(a.fecha))}</td><td data-l="Usuario">${escapeHtml(a.name||'')}<br><small>${escapeHtml(a.email||'')}</small></td><td data-l="Rol">${escapeHtml(a.role||'')}</td><td data-l="IP">${escapeHtml(a.ip||'')}</td><td data-l="Dispositivo"><small>${escapeHtml((a.ua||'').slice(0,70))}</small></td></tr>`).join('')}</tbody></table></div>`;
+}
+function accCsv(){
+  const q=s=>'"'+String(s==null?'':s).replace(/"/g,'""')+'"';
+  const csv='﻿fecha,correo,nombre,rol,ip,dispositivo\n'+accFiltrada().map(a=>[a.fecha,a.email,a.name,a.role,a.ip,a.ua].map(q).join(',')).join('\n');
+  const u=URL.createObjectURL(new Blob([csv],{type:'text/csv'})), a=document.createElement('a'); a.href=u; a.download='accesos.csv'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),3000);
+}
+async function accPurgar(){
+  if(!isAdmin()||!confirm('¿Borrar los registros de acceso de más de 90 días?')) return;
+  const lim=new Date(Date.now()-90*864e5).toISOString(), viejos=ACC.list.filter(a=>a.fecha<lim);
+  try{ for(const a of viejos) await accCol().doc(a.id).delete(); showToast(viejos.length+' registros borrados'); }catch(e){ showToast('No se pudo borrar'); }
+}
 
 /* ===== LIMPIEZA & ASISTENCIA (solo supervisores modifican) ===== */
 function canLimp(){ return isAdmin()||(!!CUR&&CUR.role==='colab'&&!!CUR.modules&&CUR.modules.limpieza===true); }
@@ -5259,7 +5312,7 @@ function render(){
   else if(VIEW==='minutas'){ title.textContent='Minutas Reunión de Ancianos'; meta.textContent='Minutas en PDF, visitas y discursantes'; renderMinutas(content, actions); }
   else if(VIEW==='cartas'){ title.textContent='Cartas & Anuncios'; meta.textContent='Cartas y anuncios en PDF con su resumen'; renderCartas(content, actions); }
   else if(VIEW==='vidaministerio'){ title.textContent='Vida y Ministerio'; meta.textContent='Programas en PDF ordenados por mes'; renderVym(content, actions); }
-  else if(VIEW==='users'){ title.textContent='Usuarios y accesos'; meta.textContent='Administradores, colaboradores y lectores'; renderUsers(content, actions); content.insertAdjacentHTML('beforeend','<div class="card" id="avCard"></div>'); avIniciar(); avCard(); }
+  else if(VIEW==='users'){ title.textContent='Usuarios y accesos'; meta.textContent='Administradores, colaboradores y lectores'; renderUsers(content, actions); content.insertAdjacentHTML('beforeend','<div class="card" id="avCard"></div>'); avIniciar(); avCard(); content.insertAdjacentHTML('beforeend','<div class="card" id="accCard"></div>'); accCard(); }
   if(typeof lockUI==='function') lockUI();
 }
 document.getElementById('congName').addEventListener('input', e=>{ DATA.congregation = e.target.value; saveData(); });
@@ -6790,4 +6843,3 @@ startAuth();
 </script>
 </body>
 </html>
-
