@@ -1812,6 +1812,67 @@ img,video,canvas{max-width:100%}
 .prv-frame{display:block;width:100%;height:calc(100vh - 150px);min-height:560px;border:1px solid var(--line);border-radius:12px;background:#fff}
 @media (max-width:900px){.prv-frame{height:calc(100vh - 120px)}}
 
+/* ===== Anuncios · Grupos · Arreglos · Mapas ===== */
+.an-pers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:8px}
+.an-box{background:#F3F6FB;border-left:3px solid #1F4E79;border-radius:0 10px 10px 0;padding:8px 12px;margin:6px 0}.an-box p{margin:4px 0 0;white-space:pre-wrap}
+.an-item{border-bottom:1px solid var(--line);padding:10px 0}.an-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.an-tipo{background:#1F4E79;color:#fff;border-radius:999px;padding:3px 11px;font-size:12px;font-weight:700}
+.gp-wrap,.ar-wrap{background:#fff;border:1px solid #1b1b1b;max-width:1300px}
+.gp-title{background:#3FB5A5;color:#fff;text-align:center;font-weight:800;font-size:26px;letter-spacing:.5px;padding:8px;border-bottom:1px solid #1b1b1b}
+.gp-title input{width:100%;text-align:center;font:inherit;color:#fff;background:transparent;border:1px dashed #fff}
+.gp-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.gp-col{border-right:1px solid #1b1b1b;border-bottom:1px solid #1b1b1b;min-height:200px}
+.gp-h{background:#4A8EDB;color:#fff;text-align:center;font-weight:700;font-size:20px;padding:6px;border-bottom:1px solid #1b1b1b}
+.gp-sub{background:#E8E8E8;text-align:center;font-weight:700;font-size:17px;padding:6px;border-bottom:1px solid #1b1b1b}.gp-sub input{width:100%;text-align:center;font-weight:700}
+.gp-m{display:flex;gap:6px;padding:4px 6px;font-size:14px;align-items:center}.gp-m i{font-style:normal;width:20px;text-align:right;color:#444;flex:none}
+.gp-m.sg{background:#7D4E9A;color:#fff;font-weight:700}.gp-m.sg i{color:#fff}.gp-m.aux{color:#1F6FD0;font-weight:700}
+.gp-m.ina{background:#FFE69C}.gp-m.exp{background:#F4A97D}
+.gp-m.ed input{flex:1;min-width:0;padding:3px 5px;font-size:13px;color:#111;background:#fff}.gp-m.ed select{width:auto;padding:2px;font-size:12px}
+.gp-x{border:0;background:transparent;color:#B42318;font-size:18px;cursor:pointer;line-height:1}
+.gp-add{display:flex;gap:6px;flex-wrap:wrap;padding:8px}
+.gp-newg{display:flex;align-items:center;justify-content:center;padding:14px}
+.gp-foot{display:flex;gap:20px;justify-content:space-between;align-items:center;padding:14px;flex-wrap:wrap}
+.gp-leg p{margin:4px 0;font-size:13.5px}.sw{display:inline-block;width:26px;height:14px;vertical-align:middle;margin-right:8px;border:1px solid #ccc}
+.sw.ina{background:#FFE69C}.sw.exp{background:#F4A97D}.sw.sg{background:#7D4E9A;width:14px}.sw.aux{background:#1F6FD0;width:14px;margin-left:8px}
+.gp-pie{max-width:340px;font-style:italic;color:#444;font-size:14px}.gp-pie textarea{width:100%}
+.ar-grid{display:grid;grid-template-columns:minmax(0,3fr) minmax(180px,1fr);gap:20px;padding:12px;align-items:start}
+.ar-t{width:100%;border-collapse:collapse;table-layout:auto}.ar-t th,.ar-t td{border:1px solid #1b1b1b;padding:7px;text-align:center;font-size:14px}
+.ar-t input{width:100%;border:1px dashed #bbb;padding:4px;text-align:center;font:inherit}.ar-t input.ar-s{width:80px;display:inline-block}
+.ar-blue th{background:#4A8EDB;color:#fff}.ar-blue2 th{background:#4A8EDB;color:#fff}.ar-purple th{background:#7D4E9A;color:#fff}.ar-purple2 th{background:#7D4E9A;color:#fff}
+.ar-teal{background:#3FB5A5;color:#fff;font-weight:700}.ar-sub{background:#E8E8E8;color:#7D4E9A;font-weight:700}
+.ar-gap{height:14px}.ar-x{border:0!important;width:30px;padding:0!important}.ar-chk{display:block;font-size:11px}.ar-chk input{width:auto}
+.ar-nota{border:1px solid #1b1b1b;padding:10px;margin-bottom:16px;text-align:center;font-size:14px}.ar-nota textarea{width:100%}
+.ar-link{color:#1565C0;text-decoration:underline;font-size:13px;text-align:center}
+.ar-pie p{margin:8px 0;font-size:14px}.ar-wide{width:100%}
+.mg-g{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}.mg-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.mg-f{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 0;border-top:1px dashed var(--line);flex-wrap:wrap}.mg-up{cursor:pointer}
+@media (max-width:1000px){.gp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ar-grid{grid-template-columns:1fr}.ar-t{font-size:12px}}
+@media (max-width:620px){.gp-grid{grid-template-columns:1fr}.gp-title{font-size:19px}.ar-t th,.ar-t td{padding:5px 3px;font-size:12px}}
+@media print{body.print-rep .sidebar,body.print-rep .topbar,body.print-rep .ct-note,body.print-rep .gp-add,body.print-rep .nav-overlay{display:none!important}
+ body.print-rep .main{margin:0!important;padding:0!important}body.print-rep .gp-grid{grid-template-columns:repeat(4,1fr)}
+ body.print-rep .gp-title,body.print-rep .gp-h,body.print-rep .gp-m,body.print-rep .ar-t th,body.print-rep .ar-teal,body.print-rep .sw{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+.ar-grid>*{min-width:0}.ar-main{overflow-x:auto}.ar-t{min-width:520px}
+/* simetría y adaptación PC / tablet / celular */
+.gp-wrap,.ar-wrap{width:100%;max-width:1300px;margin:0 auto;box-sizing:border-box}
+.gp-grid{grid-auto-rows:auto}
+.gp-col{display:flex;flex-direction:column;min-width:0}
+.gp-m span,.gp-m b{min-width:0;overflow-wrap:anywhere}
+.gp-foot,.ar-grid{box-sizing:border-box}
+.ar-t{table-layout:fixed}.ar-t th,.ar-t td{overflow-wrap:anywhere}
+.mg-g{box-sizing:border-box}.mg-f>span:first-child{min-width:0;overflow-wrap:anywhere;flex:1 1 200px}
+.an-pers>*{min-width:0}.an-top{flex-wrap:wrap}
+#mapGrpCard,#content .card{max-width:100%;box-sizing:border-box}
+@media (max-width:1000px){.gp-wrap,.ar-wrap{max-width:100%}.gp-h{font-size:17px}.ar-main{overflow-x:visible}.ar-t{min-width:0}}
+@media (max-width:620px){
+ .gp-grid{grid-template-columns:1fr}.gp-m{font-size:13px}.gp-h{font-size:16px}.gp-sub{font-size:15px}.gp-foot{flex-direction:column;align-items:stretch}
+ .ar-grid{padding:8px;gap:12px}.ar-teal{font-size:18px}.ar-t th,.ar-t td{padding:4px 2px;font-size:11px}.ar-t input.ar-s{width:56px}
+ .an-pers{grid-template-columns:1fr}.mg-top{flex-direction:column;align-items:stretch}.mg-up{text-align:center}}
+.ar-t td.ar-teal{background:#3FB5A5!important;color:#fff!important}.ar-t td.ar-teal input{color:#fff;background:transparent;border-color:#fff}
+.ar-t th{overflow:hidden;text-overflow:clip}
+@media (max-width:620px){.ar-t th{font-size:10px;padding:4px 1px;letter-spacing:0}.ar-t td{overflow-wrap:break-word;word-break:normal}.ar-t td,.ar-t th{hyphens:auto}}
+@media (max-width:620px){.ar-t{table-layout:auto}.ar-t th{white-space:nowrap;overflow:visible}.ar-t td{height:auto;overflow:visible;vertical-align:middle;line-height:1.25}.ar-t td,.ar-wrap td{max-height:none}}
+@media (max-width:620px){.ar-t{table-layout:fixed;width:100%;min-width:0}.ar-t th{white-space:normal;font-size:9px;padding:4px 0;overflow:visible}.ar-t td{font-size:11px;padding:4px 2px}.ar-t td,.ar-t th{word-break:break-word}.ar-main{overflow-x:auto}}
+
 </style>
 </head>
 <body>
@@ -1847,6 +1908,7 @@ img,video,canvas{max-width:100%}
     <nav id="navH">
       <button data-view="vidaministerio"><span class="icon">☑</span><span class="lbl">Vida y Ministerio</span></button>
       <button data-view="privilegios"><span class="icon">★</span><span class="lbl">Programa de Privilegios</span></button>
+      <button data-view="anuncios"><span class="icon">📢</span><span class="lbl">Anuncios a la Congregación</span></button>
     </nav>
 
     <div class="navgroup-label">Secretaría</div>
@@ -1869,6 +1931,8 @@ img,video,canvas{max-width:100%}
       <button data-view="territories"><span class="icon">⌖</span><span class="lbl">Mapa de territorios</span></button>
       <button data-view="territoryRegister"><span class="icon">▤</span><span class="lbl">Registro de asignación de territorio</span></button>
       <button data-view="noTouch"><span class="icon">⊘</span><span class="lbl">No tocar</span></button>
+      <button data-view="gruposPred"><span class="icon">☷</span><span class="lbl">Conformación de grupos</span></button>
+      <button data-view="arreglosPred"><span class="icon">☰</span><span class="lbl">Arreglos de predicación</span></button>
     </nav>
 
     <div class="navgroup-label">Predicación Pública</div>
@@ -3808,6 +3872,7 @@ function normalizeData(parsed){
   if(!parsed.actividades||typeof parsed.actividades!=='object'||!Array.isArray(parsed.actividades.items)) parsed.actividades={"items": [{"id": 1, "fecha": "2026-10-08", "evento": "Capacitación", "departamento": "Servicio", "actividad": "Ministerio", "descripcion": "Capacitar a los Hnos que participan en la Pred.Publica - sfg cap.3 puntos 4 al 8", "sugerencia": "Anunciar a la congregación a los Hnos a participar en la Pred. Publica y asistir a la capacitación que se dara por zoom - SR", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Rafael Quimi", "auxiliares": ["Cesar Rivas", "Javier Gonzalez"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 2, "fecha": "2026-10-08", "evento": "Recordatorio", "departamento": "Secretaria", "actividad": "Informes", "descripcion": "Actualización de Datos", "sugerencia": "Solicitar mediante recordatorio los informes de Actualización de datos faltantes por medio del chat", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Henrry Cumbicos", "auxiliares": ["David Quinde"], "asignado": "David Quinde", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 3, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Servicio", "actividad": "Ministerio", "descripcion": "Predicación Etapas", "sugerencia": "", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Rafael Quimi", "auxiliares": ["Cesar Rivas", "Javier Gonzalez"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 4, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Servicio", "actividad": "Ministerio", "descripcion": "Predicación Publica", "sugerencia": "", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Rafael Quimi", "auxiliares": ["Cesar Rivas", "Javier Gonzalez"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 5, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Reunión", "descripcion": "Reunión de Prec. Regulares y Auxiliares", "sugerencia": "Reunión con el CA", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 6, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Reunión", "descripcion": "Reunión de ANC y SM", "sugerencia": "Se programó para que varios Hnos preparen temas de acuerdo a las necesidades de la congregación en el SR", "fechaPresentacion": "2026-10-18", "estado": "En Proceso", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "Juan Bermeo", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 7, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Hospitalidad", "descripcion": "Arreglo de Almuerzos para el Hno Guillermo y esposa", "sugerencia": "Asignar a un Hno que ayude con el privilegio de Hospitalidad -  Hno Cesar Rivas Asignado", "fechaPresentacion": "2026-10-08", "estado": "Terminado", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "Juan Bermeo", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 8, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Coordinación", "actividad": "Reunión", "descripcion": "Establecer los arreglos de Pastoreo y acompañantes", "sugerencia": "Reunión con el CA", "fechaPresentacion": "", "estado": "Pendiente", "principal": "Juan Bermeo", "auxiliares": ["Israel Garcia", "Carlos Landeta"], "asignado": "Carlos Landeta", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}, {"id": 9, "fecha": "2026-10-08", "evento": "Visita Superintendente", "departamento": "Secretaria", "actividad": "Informes", "descripcion": "Revisión de los informes para presentar al Superintendente", "sugerencia": "", "fechaPresentacion": "", "estado": "Pendiente", "principal": "", "auxiliares": [], "asignado": "", "sprint": "", "prioridad": "Media", "fechaInicio": "", "fechaFin": "", "criterios": "", "dod": "", "bloqueos": "", "dependencias": ""}], "roster": [{"departamento": "Coordinación", "persona": "Carlos Landeta", "estado": "Terminado"}, {"departamento": "Secretaria", "persona": "Cesar Rivas", "estado": "En Proceso"}, {"departamento": "Servicio", "persona": "David Quinde", "estado": "Pendiente"}, {"departamento": "", "persona": "Henrry Cumbicos", "estado": ""}, {"departamento": "", "persona": "Israel Garcia", "estado": ""}, {"departamento": "", "persona": "Javier Gonzalez", "estado": ""}, {"departamento": "", "persona": "Juan Bermeo", "estado": ""}, {"departamento": "", "persona": "Rafael Quimi", "estado": ""}]};
   if(!Array.isArray(parsed.actividades.roster)) parsed.actividades.roster=[];
   if(!parsed.privilegios||typeof parsed.privilegios!=='object') parsed.privilegios={};
+  if(!parsed.anuncios||!Array.isArray(parsed.anuncios.items)) parsed.anuncios={items:[]};
   if(!parsed.limpieza||typeof parsed.limpieza!=='object') parsed.limpieza={cfg:{ref:'2026-10-19',refGrupo:1,grupos:7},semanas:{},profunda:{}};
   if(!parsed.discursos||typeof parsed.discursos!=='object') parsed.discursos={};
   parsed.discursos.seq=Object.assign({discursante:1,discurso:1,asignacion:1,visita:1,arregloPublico:1},parsed.discursos.seq||{});
@@ -5265,6 +5330,229 @@ function navAdaptable(){
 }
 function navVisibilidad(){ const nm=document.querySelector('button[data-view="minutas"]'); if(nm) nm.style.display=(typeof canMin==='function'&&CUR&&canMin())?'':'none'; }
 window.addEventListener('load',navAdaptable);
+const GP_SEED={"titulo": "GRUPOS DE PREDICACIÓN - JOYA OESTE", "grupos": [{"n": 1, "nombre": "Onix - Brillante", "miembros": [{"t": "Aguirre Badillo, Elsa (PR)", "rol": "", "est": ""}, {"t": "Calderón, Lady", "rol": "", "est": ""}, {"t": "Calderón, Sonia (PR)", "rol": "", "est": ""}, {"t": "Campo Julia de", "rol": "", "est": ""}, {"t": "Coronel Rodríguez, Jerline (PNB)", "rol": "", "est": ""}, {"t": "Escalante, Leonor", "rol": "", "est": ""}, {"t": "Parrales, Grazziana (PR)", "rol": "", "est": ""}, {"t": "Pincay Calderón, Sophia", "rol": "", "est": ""}, {"t": "Quimí Terán, Yaritza de", "rol": "", "est": ""}, {"t": "Quimí, Daniel (SM) - AUX", "rol": "AUX", "est": ""}, {"t": "Quimí, Rafael (PR) (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Quimí, Teresa de (PR)", "rol": "", "est": ""}, {"t": "Rendón, Gloria (PAI)", "rol": "", "est": ""}, {"t": "Sánchez, Valeria", "rol": "", "est": ""}, {"t": "Vera Villafuerte, Bryan", "rol": "", "est": "inactivo"}, {"t": "Vera, Joselyn Valeria de", "rol": "", "est": "inactivo"}]}, {"n": 2, "nombre": "Diamante", "miembros": [{"t": "Bohórquez, Mabell", "rol": "", "est": ""}, {"t": "Delgado, Xavier", "rol": "", "est": ""}, {"t": "Delgado, Yesther de", "rol": "", "est": ""}, {"t": "Garcia, Israel (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Garcia, Maria de los Angeles de", "rol": "", "est": ""}, {"t": "Garcia, Matías (PNB)", "rol": "", "est": ""}, {"t": "Layana, Jenny de (PAI)", "rol": "", "est": ""}, {"t": "Layana, Silvia", "rol": "", "est": ""}, {"t": "Morejón, Fabiola (PAI)", "rol": "", "est": ""}, {"t": "Morejón, Jaime", "rol": "", "est": ""}, {"t": "Palma, Flora", "rol": "", "est": ""}, {"t": "Peñafiel, Alex", "rol": "", "est": ""}, {"t": "Peñafiel, Fiorela (PAI)", "rol": "", "est": ""}, {"t": "Peñafiel, Nicole (PAI)", "rol": "", "est": ""}, {"t": "Quinde, David (PR) (ANC) - AUX", "rol": "AUX", "est": ""}, {"t": "Quinde, Janeth (PR)", "rol": "", "est": ""}, {"t": "Guevara, Maria Jose", "rol": "", "est": "inactivo"}, {"t": "Espinoza, Danika", "rol": "", "est": "inactivo"}]}, {"n": 3, "nombre": "Esmeraldas", "miembros": [{"t": "Castro Joel (PR)(SM)", "rol": "", "est": ""}, {"t": "Castro, Nelly de", "rol": "", "est": ""}, {"t": "Castro, Oswal (PR) (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Castro, Sebastián de", "rol": "", "est": ""}, {"t": "Correa, Carmen", "rol": "", "est": ""}, {"t": "Macías, Vanesa (PR)", "rol": "", "est": ""}, {"t": "Mestanza, Geovanny (ANC)", "rol": "", "est": ""}, {"t": "Mestanza, Verónica de (PR)", "rol": "", "est": ""}, {"t": "Ortega, Rosa", "rol": "", "est": ""}, {"t": "Pilataxi, Antonio (PR) (ANC) - AUX", "rol": "AUX", "est": ""}, {"t": "Pilataxi, Patricia de (PR)", "rol": "", "est": ""}, {"t": "Tutiven Solórzano, Dayana (PR)", "rol": "", "est": ""}, {"t": "Villamil Solórzano, Briana", "rol": "", "est": ""}, {"t": "Villamil Solórzano, Luciana", "rol": "", "est": ""}, {"t": "Villamil, Johanna de (PR)", "rol": "", "est": ""}, {"t": "Villamil, Juan Carlos", "rol": "", "est": ""}, {"t": "Mendieta, Edward", "rol": "", "est": "inactivo"}, {"t": "Mendieta, Lili", "rol": "", "est": "inactivo"}, {"t": "Mendieta, Ernesto", "rol": "", "est": "inactivo"}, {"t": "Mendieta, Cristina", "rol": "", "est": "inactivo"}]}, {"n": 4, "nombre": "Tiara", "miembros": [{"t": "Bravo, Samantha (PR)", "rol": "", "est": ""}, {"t": "Castro, Denny", "rol": "", "est": ""}, {"t": "Castro, Margarita (PR)", "rol": "", "est": ""}, {"t": "Cedeño, Mariana (PR)", "rol": "", "est": ""}, {"t": "Coloma, Briana (PNB)", "rol": "", "est": ""}, {"t": "Coloma, Kerly de (PA)", "rol": "", "est": ""}, {"t": "Coloma, Naslly (PB)", "rol": "", "est": ""}, {"t": "Coloma, Ronald(SM)", "rol": "", "est": ""}, {"t": "Cumbicos, Ana Paula (PR)", "rol": "", "est": ""}, {"t": "Cumbicos, Grey Del Rosario de", "rol": "", "est": ""}, {"t": "Cumbicos, Henrry (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Cumbicos, José Eduardo", "rol": "", "est": ""}, {"t": "Guerra, Jeanine de", "rol": "", "est": ""}, {"t": "Pita, Antonella (PNB)", "rol": "", "est": ""}, {"t": "Quezada, Angela (PNB)", "rol": "", "est": ""}, {"t": "Rivas, César (ANC) - AUX", "rol": "AUX", "est": ""}, {"t": "Rivas, Joaquin", "rol": "", "est": ""}, {"t": "Rivas, Roxi de", "rol": "", "est": ""}, {"t": "Tigüa, Cristóbal", "rol": "", "est": ""}, {"t": "Tigüa, Daniel (PR)", "rol": "", "est": ""}, {"t": "Tigüa, Jessica de (PR)", "rol": "", "est": ""}, {"t": "Tigüa, Sheilly (PR)", "rol": "", "est": ""}, {"t": "Moreira, Johanna de (Inac)", "rol": "", "est": "inactivo"}]}, {"n": 5, "nombre": "Platino - Turquesa", "miembros": [{"t": "Andrews, Anthony (ANC) (SETC)", "rol": "", "est": ""}, {"t": "Andrews, Patricia de (SETC)", "rol": "", "est": ""}, {"t": "Arreaga, Ana", "rol": "", "est": ""}, {"t": "Barzola, Oscar", "rol": "", "est": ""}, {"t": "Bermeo, Carlos - AUX", "rol": "AUX", "est": ""}, {"t": "Espinoza, Juan José (PNB)", "rol": "", "est": ""}, {"t": "Flores, Jessenia de", "rol": "", "est": ""}, {"t": "Gervacio, Rosario de (PR)", "rol": "", "est": ""}, {"t": "Ladires, Jackeline de (PR)", "rol": "", "est": ""}, {"t": "Landeta, Carlos (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Landeta, Raquel de", "rol": "", "est": ""}, {"t": "Noboa, Carolina (PNB)", "rol": "", "est": ""}, {"t": "Pazan, Beatriz", "rol": "", "est": ""}, {"t": "Pincay, Dimas (Inac)", "rol": "", "est": "inactivo"}, {"t": "González, Ledger", "rol": "", "est": "inactivo"}, {"t": "Inga, Fanny (PNB)", "rol": "", "est": "inactivo"}, {"t": "Aguayo, Mariuxi (Exp)", "rol": "", "est": "expulsado"}]}, {"n": 6, "nombre": "Perla - Gema", "miembros": [{"t": "Bermeo, Juan (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Bermeo, Nelly de", "rol": "", "est": ""}, {"t": "Burgos, Raíza de (PNB)", "rol": "", "est": ""}, {"t": "Bustamante, Rosalía de", "rol": "", "est": ""}, {"t": "Chipre, Elva (PR)", "rol": "", "est": ""}, {"t": "Escudero, Alexandra", "rol": "", "est": ""}, {"t": "Espinoza, Natasha de", "rol": "", "est": ""}, {"t": "Espinoza, Xavier (PR)(SM) - AUX", "rol": "AUX", "est": ""}, {"t": "Matute, Mónica (PNB)", "rol": "", "est": ""}, {"t": "Mora, Isaac", "rol": "", "est": ""}, {"t": "Mora, Solange de", "rol": "", "est": ""}, {"t": "Suárez, Beatriz de", "rol": "", "est": ""}, {"t": "Suárez, Camila (PNB)", "rol": "", "est": ""}, {"t": "Suárez, Diego", "rol": "", "est": ""}, {"t": "Suárez, Enrique (SM)", "rol": "", "est": ""}, {"t": "Andrade, Mercedes de (Inac)", "rol": "", "est": "inactivo"}, {"t": "Portilla, Camila (PNB) (Inac)", "rol": "", "est": "inactivo"}, {"t": "Portilla, Daniela (Inac)", "rol": "", "est": "inactivo"}, {"t": "Ycaza, Betsi de (Inac)", "rol": "", "est": "inactivo"}, {"t": "Manzo, Isaac (Exp)", "rol": "", "est": "expulsado"}]}, {"n": 7, "nombre": "Oro - Aguamarina", "miembros": [{"t": "Cabrera, Paúl", "rol": "", "est": ""}, {"t": "Gonzalez, Javier (PR) - AUX", "rol": "AUX", "est": ""}, {"t": "Gonzalez, Joselyn de (PR)", "rol": "", "est": ""}, {"t": "Lindao, Eva Maria de", "rol": "", "est": ""}, {"t": "Lindao, Roberto (ANC) - SG", "rol": "SG", "est": ""}, {"t": "Méndez, Melissa (PR)", "rol": "", "est": ""}, {"t": "Méndez, Michelle (PR)", "rol": "", "est": ""}, {"t": "Méndez, Mirian de (PR)", "rol": "", "est": ""}, {"t": "Montiel, Alexander", "rol": "", "est": ""}, {"t": "Román, Glenda", "rol": "", "est": ""}, {"t": "Tapia, Linda", "rol": "", "est": ""}, {"t": "Valverde, María Teresa de", "rol": "", "est": ""}, {"t": "Vargas, Alex", "rol": "", "est": ""}, {"t": "Vargas, Sandy de (PR)", "rol": "", "est": ""}, {"t": "Anchundia, Jonathan (Inac)", "rol": "", "est": "inactivo"}, {"t": "Quinde, Marcos (Inac)", "rol": "", "est": "inactivo"}, {"t": "Quinde, Gladys de (Inac)", "rol": "", "est": "inactivo"}]}], "pie": "“Haz la obra de evangelizador, efectúa tu ministerio plenamente.” (2 Timoteo 4:5)"};
+const AR_SEED={"titulo": "PREDICACION JOYA OESTE", "manana": {"hora": "09h00", "filas": [{"dia": "Lunes", "etapa": "Brillante", "familia": "Quimi", "direccion": "Mz. 6 V.44", "conductor": "Rafael Quimi"}, {"dia": "Martes", "etapa": "Oro", "familia": "Vargas", "direccion": "Mz. 3 V.18", "conductor": "Alex Vargas"}, {"dia": "Miércoles", "etapa": "Esmeralda", "familia": "Piltaxi", "direccion": "Mz. 9 V.29", "conductor": "Antonio Pilataxi"}, {"dia": "Jueves", "etapa": "Tiara", "familia": "Cedeño", "direccion": "Mz. 3 V. 7", "conductor": "Roberto Lindao"}, {"dia": "Viernes", "etapa": "Diamante", "familia": "Morejón", "direccion": "Mz. 9 V.47", "conductor": "Jaime Morejón"}]}, "noche": {"hora": "19h30", "filas": [{"dia": "Lunes", "etapa": "Turquesa", "familia": "Andrews", "direccion": "Mz. 12 V.31", "conductor": "Carlos Landeta"}, {"dia": "Martes", "grupos": ["Onix - Brillante - Diamante", "Esmeralda - Tiara", "Platino - Turquesa - Perla", "Gema - Oro - Aquamarina"]}, {"dia": "Miércoles", "etapa": "Gema", "familia": "Burgos", "direccion": "Mz. 18 V. 10", "conductor": "Javier Gonzalez"}]}, "finSemana": {"manana": [{"semana": "Semana 1", "hora": "08h30", "salen": "Salón del Reino", "lugar": "La Candelaria", "cada": false}, {"semana": "Semana 2", "hora": "09h45", "salen": "Salen de cada Grupo", "lugar": "La Joya", "cada": true}, {"semana": "Semana 3", "hora": "08h30", "salen": "Salón del Reino", "lugar": "La Candelaria", "cada": false}, {"semana": "Semana 4", "hora": "09h45", "salen": "Salen de cada Grupo", "lugar": "La Joya", "cada": true}, {"semana": "Semana 5", "hora": "09h45", "salen": "Salen de cada Grupo", "lugar": "La Joya", "cada": true}], "tarde": {"dia": "Sábado", "hora": "17h50", "salen": "Rotativo toda la congregación de acuerdo al programa", "lugar": "La Joya"}}, "notaEtapas": "Nota: Se alternan entre las etapas y de acuerdo a cada superintendente de grupo", "notaMartes": "De acuerdo al arreglo de los grupos los días Martes", "anexo": "* ver anexo calendario", "pie1": "* Los hermanos que no puedan ir a la candelaria, podran hacer arreglos personales (revisitas, estudios, cartas, telefonica)", "pie2": "** Toda la Congregación Sabado"};
+/* ===== ANUNCIOS A LA CONGREGACIÓN ===== */
+const AN_TIPOS=['Lectura de Carta','Nombramiento o Baja','Cambio de Congregación','Llegada de nuevos'];
+const AN_CARGOS=['Precursores Auxiliares','Precursores Auxiliares Indefinido','Precursores Regulares','Ancianos','Siervos Ministeriales'];
+const AN={tipo:'Lectura de Carta',n:1,q:'',filtro:''};
+function anData(){ if(!DATA.anuncios||!Array.isArray(DATA.anuncios.items)) DATA.anuncios={items:[]}; return DATA.anuncios; }
+function anNombres(){ return (DATA.publishers||[]).map(p=>pubName(p)).filter(Boolean).sort((a,b)=>a.localeCompare(b,'es')); }
+function anFecha(iso){ if(!iso) return ''; const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-EC',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}); }
+function anCamposTipo(){
+  const t=AN.tipo, n=Math.max(1,Math.min(30,+AN.n||1));
+  const personas=()=>`<div class="field" style="max-width:220px"><label>Número de personas</label><input type="number" min="1" max="30" id="anN" value="${n}"></div>
+    <datalist id="anDL">${anNombres().map(x=>`<option value="${escapeAttr(x)}">`).join('')}</datalist>
+    <div class="an-pers">${Array.from({length:n},(_,i)=>`<div class="field"><label>Persona ${i+1} (escribe para filtrar la lista de publicadores)</label><input list="anDL" data-anp="${i}" placeholder="Apellido, Nombre"></div>`).join('')}</div>`;
+  if(t==='Lectura de Carta') return `<div class="field"><label>Carta o anuncio *</label><select id="anCarta"><option value="">Seleccione…</option></select></div><div id="anCartaRes" class="an-res"></div>`;
+  if(t==='Nombramiento o Baja') return `<div class="grid2"><div class="field"><label>Acción *</label><select id="anAccion"><option>Nombramiento</option><option>Baja</option></select></div><div class="field"><label>Cargo *</label><select id="anCargo">${AN_CARGOS.map(c=>`<option>${c}</option>`).join('')}</select></div></div>${personas()}`;
+  if(t==='Cambio de Congregación') return `<div class="grid2"><div class="field"><label>Movimiento *</label><select id="anDir"><option value="va">Se va a otra congregación</option><option value="viene">Viene de otra congregación</option></select></div><div class="field"><label>Congregación *</label><input id="anCong" maxlength="100" placeholder="Nombre de la congregación"></div></div>${personas()}`;
+  return `<div class="field"><label>Congregación de la que vienen *</label><input id="anCong" maxlength="100" placeholder="Nombre de la congregación"></div>${personas()}`;
+}
+function anLlenarCartas(){
+  const s=document.getElementById('anCarta'); if(!s) return; const v=s.value;
+  s.innerHTML='<option value="">Seleccione…</option>'+(CARTAS.list||[]).map(c=>`<option value="${escapeAttr(c.id)}" ${c.id===v?'selected':''}>${escapeHtml(c.titulo||'')}</option>`).join('');
+  anResCarta();
+}
+function anResCarta(){
+  const s=document.getElementById('anCarta'), b=document.getElementById('anCartaRes'); if(!s||!b) return;
+  const c=(CARTAS.list||[]).find(x=>x.id===s.value);
+  b.innerHTML=c?`<div class="an-box"><b>${escapeHtml(c.titulo||'')}</b><p>${escapeHtml(c.resumen||'')}</p></div>`:(CARTAS.loaded&&!(CARTAS.list||[]).length?'<small class="muted">Aún no hay cartas ni anuncios cargados en «Cartas &amp; Anuncios».</small>':'');
+}
+function renderAnuncios(content,actions){
+  actions.innerHTML=''; anData(); try{ watchCartas(); }catch(e){}
+  const ed=!READONLY;
+  const form=ed?`<div class="card"><h2>Nuevo anuncio<small>Registra lo que se anunciará a la congregación.</small></h2>
+    <div class="grid2"><div class="field"><label>Fecha *</label><input type="date" id="anFecha" value="${new Date().toISOString().slice(0,10)}"></div>
+    <div class="field"><label>Tipo de anuncio *</label><select id="anTipo">${AN_TIPOS.map(t=>`<option ${t===AN.tipo?'selected':''}>${t}</option>`).join('')}</select></div></div>
+    <div id="anCampos">${anCamposTipo()}</div>
+    <div class="actions"><button class="btn" id="anGuardar" type="button">Guardar anuncio</button></div></div>`:'';
+  content.innerHTML=`${ed?'':'<div class="ct-note">Modo lectura.</div>'}${form}<div class="card"><h2>Anuncios registrados</h2>
+    <div class="ct-filtros"><div class="field wide"><label>Buscar</label><input type="search" id="anQ" data-ro-ok value="${escapeAttr(AN.q)}" placeholder="Tipo, persona, congregación…"></div></div><div id="anLista"></div></div>`;
+  if(ed){
+    const bind=()=>{ const n=document.getElementById('anN'); if(n) n.onchange=()=>{ AN.n=+n.value||1; document.getElementById('anCampos').innerHTML=anCamposTipo(); bind(); };
+      const c=document.getElementById('anCarta'); if(c) c.onchange=anResCarta; anLlenarCartas(); };
+    document.getElementById('anTipo').onchange=e=>{ AN.tipo=e.target.value; AN.n=1; document.getElementById('anCampos').innerHTML=anCamposTipo(); bind(); };
+    document.getElementById('anGuardar').onclick=anGuardar; bind(); setTimeout(anLlenarCartas,700); setTimeout(anLlenarCartas,2000);
+  }
+  document.getElementById('anQ').oninput=e=>{ AN.q=e.target.value; anLista(); };
+  anLista();
+}
+function anGuardar(){
+  if(READONLY) return; const v=id=>{ const e=document.getElementById(id); return e?e.value.trim():''; };
+  const it={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),fecha:v('anFecha'),tipo:AN.tipo,por:(CUR&&CUR.name)||'',creado:new Date().toISOString()};
+  if(!it.fecha){ showToast('Indica la fecha'); return; }
+  if(AN.tipo==='Lectura de Carta'){
+    const c=(CARTAS.list||[]).find(x=>x.id===v('anCarta')); if(!c){ showToast('Selecciona la carta o anuncio'); return; }
+    it.cartaId=c.id; it.cartaTitulo=c.titulo||''; it.cartaResumen=c.resumen||'';
+  }else{
+    it.personas=[...document.querySelectorAll('[data-anp]')].map(i=>i.value.trim()).filter(Boolean);
+    if(!it.personas.length){ showToast('Indica al menos una persona'); return; }
+    if(AN.tipo==='Nombramiento o Baja'){ it.accion=v('anAccion'); it.cargo=v('anCargo'); }
+    else{ it.cong=v('anCong'); if(!it.cong){ showToast('Indica la congregación'); return; } if(AN.tipo==='Cambio de Congregación') it.dir=v('anDir'); }
+  }
+  anData().items.push(it); try{ saveData(); }catch(e){ console.error(e); }
+  showToast('Anuncio guardado'); AN.n=1; renderAnuncios(document.getElementById('content'),document.getElementById('topbarActions')||document.createElement('div'));
+}
+function anTexto(a){
+  const p=(a.personas||[]).join('; ');
+  if(a.tipo==='Lectura de Carta') return `<b>${escapeHtml(a.cartaTitulo||'')}</b><div class="an-box"><p>${escapeHtml(a.cartaResumen||'')}</p></div>`;
+  if(a.tipo==='Nombramiento o Baja') return `<b>${escapeHtml(a.accion||'')} · ${escapeHtml(a.cargo||'')}</b><br>${escapeHtml(p)}`;
+  if(a.tipo==='Cambio de Congregación') return `<b>${a.dir==='viene'?'Viene de':'Se va a'}: ${escapeHtml(a.cong||'')}</b><br>${escapeHtml(p)}`;
+  return `<b>Llegan de: ${escapeHtml(a.cong||'')}</b><br>${escapeHtml(p)}`;
+}
+function anLista(){
+  const b=document.getElementById('anLista'); if(!b) return; const q=AN.q.trim().toLowerCase();
+  const l=anData().items.filter(a=>!q||JSON.stringify(a).toLowerCase().includes(q)).sort((x,y)=>String(y.fecha).localeCompare(String(x.fecha)));
+  if(!l.length){ b.innerHTML='<div class="empty">Sin anuncios registrados.</div>'; return; }
+  b.innerHTML=l.map(a=>`<div class="an-item"><div class="an-top"><div><span class="an-tipo">${escapeHtml(a.tipo)}</span> <small>${escapeHtml(anFecha(a.fecha))}</small></div>${READONLY?'':`<button class="btn danger small" data-andel="${a.id}" type="button">Eliminar</button>`}</div><div>${anTexto(a)}</div><small class="muted">Registró: ${escapeHtml(a.por||'')}</small></div>`).join('');
+  b.querySelectorAll('[data-andel]').forEach(x=>x.onclick=()=>{ if(READONLY||!confirm('¿Eliminar este anuncio?')) return; const d=anData(); d.items=d.items.filter(i=>i.id!==x.dataset.andel); try{ saveData(); }catch(e){} anLista(); });
+}
+
+/* ===== CONFORMACIÓN DE GRUPOS · ARREGLOS DE PREDICACIÓN · MAPAS POR GRUPO ===== */
+const GPST={edit:false};
+function gpD(){ if(!DATA.gruposPred||!Array.isArray(DATA.gruposPred.grupos)) DATA.gruposPred=JSON.parse(JSON.stringify(GP_SEED)); return DATA.gruposPred; }
+function gpGuardar(){ try{ saveData(); }catch(e){ console.error(e); } }
+function gpImprimir(){ document.body.classList.add('print-rep'); setTimeout(()=>{ window.print(); setTimeout(()=>document.body.classList.remove('print-rep'),500); },50); }
+function gpNombresPub(){ return (DATA.publishers||[]).map(p=>pubName(p)).filter(Boolean).sort((a,b)=>a.localeCompare(b,'es')); }
+function gpAcciones(actions){
+  actions.innerHTML=`${READONLY?'':`<button class="btn secondary" id="gpEdit" type="button">${GPST.edit?'✔ Terminar edición':'✎ Editar'}</button>`}<button class="btn secondary" id="gpPrint" type="button">🖨 Imprimir / PDF</button>`;
+  document.getElementById('gpPrint').onclick=gpImprimir;
+  const e=document.getElementById('gpEdit'); if(e) e.onclick=()=>{ GPST.edit=!GPST.edit; setView(VIEW); };
+}
+/* ---------- Conformación de grupos ---------- */
+function renderGruposPred(content,actions){
+  if(READONLY) GPST.edit=false; gpAcciones(actions); gpPintarGrupos(content);
+}
+function gpMiembroHtml(m,i,gi,ed){
+  const cls='gp-m'+(m.rol==='SG'?' sg':m.rol==='AUX'?' aux':'')+(m.est==='inactivo'?' ina':m.est==='expulsado'?' exp':'');
+  if(!ed) return `<div class="${cls}"><i>${i+1}</i><span>${escapeHtml(m.t)}</span></div>`;
+  return `<div class="${cls} ed"><i>${i+1}</i><input list="gpDL" data-gpm="${gi}.${i}.t" value="${escapeAttr(m.t)}">
+   <select data-gpm="${gi}.${i}.rol"><option value="">—</option><option value="SG" ${m.rol==='SG'?'selected':''}>SG</option><option value="AUX" ${m.rol==='AUX'?'selected':''}>AUX</option></select>
+   <select data-gpm="${gi}.${i}.est"><option value="">Activo</option><option value="inactivo" ${m.est==='inactivo'?'selected':''}>Inactivo</option><option value="expulsado" ${m.est==='expulsado'?'selected':''}>Expulsado</option></select>
+   <button type="button" class="gp-x" data-gpdel="${gi}.${i}" title="Quitar">×</button></div>`;
+}
+function gpPintarGrupos(content){
+  const D=gpD(), ed=GPST.edit&&!READONLY;
+  const cols=D.grupos.map((g,gi)=>`<section class="gp-col"><div class="gp-h">GRUPO # ${g.n}</div>
+    <div class="gp-sub">${ed?`<input data-gpg="${gi}.nombre" value="${escapeAttr(g.nombre)}">`:escapeHtml(g.nombre)}</div>
+    <div class="gp-list">${g.miembros.map((m,i)=>gpMiembroHtml(m,i,gi,ed)).join('')}</div>
+    ${ed?`<div class="gp-add"><button class="btn secondary small" type="button" data-gpadd="${gi}">+ Hermano</button><button class="btn danger small" type="button" data-gpdelg="${gi}">Eliminar grupo</button></div>`:''}</section>`).join('');
+  content.innerHTML=`${READONLY?'<div class="ct-note">Modo lectura.</div>':''}<datalist id="gpDL">${gpNombresPub().map(x=>`<option value="${escapeAttr(x)}">`).join('')}</datalist>
+  <div class="gp-wrap" id="gpReporte"><div class="gp-title">${ed?`<input data-gpt="titulo" value="${escapeAttr(D.titulo)}">`:escapeHtml(D.titulo)}</div>
+   <div class="gp-grid">${cols}${ed?'<div class="gp-newg"><button class="btn" type="button" id="gpAddG">+ Agregar grupo</button></div>':''}</div>
+   <div class="gp-foot"><div class="gp-leg"><p><span class="sw ina"></span>Inactivos los que están resaltados con color ladrillo</p><p><span class="sw exp"></span>Expulsados que viven dentro del territorio marcados con color tomate</p><p><span class="sw sg"></span>Superintendente de grupo (SG) · <span class="sw aux"></span>Auxiliar (AUX)</p></div>
+   <div class="gp-pie">${ed?`<textarea data-gpt="pie" rows="3">${escapeHtml(D.pie||'')}</textarea>`:escapeHtml(D.pie||'')}</div></div></div>`;
+  if(!ed) return;
+  const get=(p)=>{ const [gi,i,k]=p.split('.'); return [D.grupos[+gi].miembros[+i],k]; };
+  content.querySelectorAll('[data-gpm]').forEach(e=>e.onchange=()=>{ const [m,k]=get(e.dataset.gpm); m[k]=e.value.trim?e.value.trim():e.value; gpGuardar(); if(k!=='t') gpPintarGrupos(content); });
+  content.querySelectorAll('[data-gpg]').forEach(e=>e.onchange=()=>{ const [gi,k]=e.dataset.gpg.split('.'); D.grupos[+gi][k]=e.value.trim(); gpGuardar(); });
+  content.querySelectorAll('[data-gpt]').forEach(e=>e.onchange=()=>{ D[e.dataset.gpt]=e.value; gpGuardar(); });
+  content.querySelectorAll('[data-gpdel]').forEach(b=>b.onclick=()=>{ const [gi,i]=b.dataset.gpdel.split('.'); D.grupos[+gi].miembros.splice(+i,1); gpGuardar(); gpPintarGrupos(content); });
+  content.querySelectorAll('[data-gpadd]').forEach(b=>b.onclick=()=>{ D.grupos[+b.dataset.gpadd].miembros.push({t:'',rol:'',est:''}); gpGuardar(); gpPintarGrupos(content); setTimeout(()=>{ const l=content.querySelectorAll(`[data-gpm^="${b.dataset.gpadd}."][data-gpm$=".t"]`); if(l.length) l[l.length-1].focus(); },30); });
+  content.querySelectorAll('[data-gpdelg]').forEach(b=>b.onclick=()=>{ if(!confirm('¿Eliminar este grupo completo?')) return; D.grupos.splice(+b.dataset.gpdelg,1); gpGuardar(); gpPintarGrupos(content); });
+  const ag=document.getElementById('gpAddG'); if(ag) ag.onclick=()=>{ const n=D.grupos.reduce((a,g)=>Math.max(a,g.n),0)+1; D.grupos.push({n,nombre:'',miembros:[]}); gpGuardar(); gpPintarGrupos(content); };
+}
+/* ---------- Arreglos de predicación ---------- */
+function arD(){ if(!DATA.arreglosPred||!DATA.arreglosPred.manana) DATA.arreglosPred=JSON.parse(JSON.stringify(AR_SEED)); return DATA.arreglosPred; }
+function arGet(path){ return path.split('.').reduce((o,k)=>o==null?o:o[k],arD()); }
+function arSetPath(path,val){ const ks=path.split('.'), last=ks.pop(); const o=ks.reduce((a,k)=>a[k],arD()); o[last]=val; }
+const arEd=()=>GPST.edit&&!READONLY;
+const arI=(path,cls)=>{ const v=arGet(path)||''; return arEd()?`<input data-ar="${path}" class="${cls||''}" value="${escapeAttr(v)}">`:escapeHtml(v); };
+function arDel(path){ return arEd()?`<button type="button" class="gp-x" data-ardel="${path}" title="Quitar">×</button>`:''; }
+function arFilasHtml(base,cols){
+  return arD()[base.split('.')[0]].filas.map((f,i)=>`<tr>${cols.map(c=>`<td>${arI(base+'.'+i+'.'+c)}</td>`).join('')}</tr>`);
+}
+function arMananaHtml(){
+  const M=arD().manana;
+  return `<table class="ar-t"><thead><tr class="ar-blue"><th colspan="5">Predicación en las mañanas - Hora ${arI('manana.hora','ar-s')}</th></tr><tr class="ar-blue2"><th>Día</th><th>Etapa</th><th>Familia</th><th>Dirección</th><th>Conductor</th></tr></thead><tbody>
+  ${M.filas.map((f,i)=>`<tr>${['dia','etapa','familia','direccion','conductor'].map(c=>`<td>${arI('manana.filas.'+i+'.'+c)}</td>`).join('')}${arEd()?`<td class="ar-x">${arDel('manana.filas.'+i)}</td>`:''}</tr>`).join('')}</tbody></table>${arEd()?'<button class="btn secondary small" type="button" data-aradd="manana.filas">+ Fila</button>':''}`;
+}
+function arNocheHtml(){
+  const N=arD().noche; let rows='';
+  N.filas.forEach((f,i)=>{
+    if(f.grupos){
+      rows+=`<tr><td rowspan="${f.grupos.length+1}">${arI('noche.filas.'+i+'.dia')}</td><td colspan="4" class="ar-teal">Arreglos por Grupos</td>${arEd()?`<td class="ar-x">${arDel('noche.filas.'+i)}</td>`:''}</tr>`+
+        f.grupos.map((g,k)=>`<tr><td colspan="4">${arI('noche.filas.'+i+'.grupos.'+k)}</td>${arEd()?`<td class="ar-x">${arDel('noche.filas.'+i+'.grupos.'+k)}</td>`:''}</tr>`).join('');
+    }else rows+=`<tr>${['dia','etapa','familia','direccion','conductor'].map(c=>`<td>${arI('noche.filas.'+i+'.'+c)}</td>`).join('')}${arEd()?`<td class="ar-x">${arDel('noche.filas.'+i)}</td>`:''}</tr>`;
+  });
+  return `<table class="ar-t"><thead><tr class="ar-purple"><th colspan="5">Predicación en las noches - Hora ${arI('noche.hora','ar-s')}</th></tr><tr class="ar-purple2"><th>Día</th><th>Etapa</th><th>Familia</th><th>Dirección</th><th>Conductor</th></tr></thead><tbody>${rows}</tbody></table>${arEd()?'<button class="btn secondary small" type="button" data-aradd="noche.filas">+ Fila</button> <button class="btn secondary small" type="button" data-aradd="noche.grupo">+ Línea de arreglo por grupos</button>':''}`;
+}
+function arFinHtml(){
+  const F=arD().finSemana, T=F.tarde;
+  const filas=F.manana.map((s,i)=>`<tr><td>${arI('finSemana.manana.'+i+'.semana')}</td><td>${arI('finSemana.manana.'+i+'.hora')}</td><td class="${s.cada?'ar-teal':''}">${arI('finSemana.manana.'+i+'.salen')}${arEd()?`<label class="ar-chk"><input type="checkbox" data-arcada="${i}" ${s.cada?'checked':''}> cada grupo</label>`:''}</td><td>${arI('finSemana.manana.'+i+'.lugar')}</td>${arEd()?`<td class="ar-x">${arDel('finSemana.manana.'+i)}</td>`:''}</tr>`).join('');
+  return `<table class="ar-t"><thead><tr class="ar-purple"><th colspan="4">Predicación Fin de Semana</th></tr><tr class="ar-purple2"><th>Día</th><th>Hora</th><th>Salen desde</th><th>Lugar</th></tr></thead><tbody>
+   <tr><td colspan="4" class="ar-sub">Sábado - Mañana</td></tr>${filas}<tr><td colspan="4" class="ar-sub">Sábado - Tarde</td></tr>
+   <tr><td>${arI('finSemana.tarde.dia')}</td><td>${arI('finSemana.tarde.hora')}</td><td>${arI('finSemana.tarde.salen')}</td><td>${arI('finSemana.tarde.lugar')}</td></tr></tbody></table>${arEd()?'<button class="btn secondary small" type="button" data-aradd="finSemana.manana">+ Semana</button>':''}`;
+}
+function renderArreglos(content,actions){
+  if(READONLY) GPST.edit=false; gpAcciones(actions); arPintar(content);
+}
+function arPintar(content){
+  const D=arD(), ed=arEd();
+  const nota=(p)=>ed?`<textarea data-ar="${p}" rows="4">${escapeHtml(arGet(p)||'')}</textarea>`:escapeHtml(arGet(p)||'');
+  content.innerHTML=`${READONLY?'<div class="ct-note">Modo lectura.</div>':''}<div class="ar-wrap" id="gpReporte"><div class="gp-title">${arI('titulo','ar-title')}</div>
+   <div class="ar-grid"><div class="ar-main">${arMananaHtml()}<div class="ar-gap"></div>${arNocheHtml()}<div class="ar-gap"></div>${arFinHtml()}
+   <div class="ar-pie"><p>${arI('pie1','ar-wide')}</p><p>${arI('pie2','ar-wide')}</p></div></div>
+   <aside class="ar-side"><div class="ar-nota">${nota('notaEtapas')}</div><div class="ar-nota">${nota('notaMartes')}</div><div class="ar-link">${ed?arI('anexo'):escapeHtml(D.anexo||'')}</div></aside></div></div>`;
+  if(!ed) return;
+  content.querySelectorAll('[data-ar]').forEach(e=>e.onchange=()=>{ arSetPath(e.dataset.ar,e.value); gpGuardar(); });
+  content.querySelectorAll('[data-arcada]').forEach(e=>e.onchange=()=>{ D.finSemana.manana[+e.dataset.arcada].cada=e.checked; gpGuardar(); arPintar(content); });
+  content.querySelectorAll('[data-ardel]').forEach(b=>b.onclick=()=>{ const ks=b.dataset.ardel.split('.'), i=+ks.pop(); const arr=ks.reduce((a,k)=>a[k],D); arr.splice(i,1); gpGuardar(); arPintar(content); });
+  content.querySelectorAll('[data-aradd]').forEach(b=>b.onclick=()=>{
+    const p=b.dataset.aradd;
+    if(p==='noche.grupo'){ let f=D.noche.filas.find(x=>x.grupos); if(!f){ f={dia:'Martes',grupos:[]}; D.noche.filas.push(f); } f.grupos.push(''); }
+    else if(p==='finSemana.manana') D.finSemana.manana.push({semana:'Semana '+(D.finSemana.manana.length+1),hora:'',salen:'',lugar:'',cada:false});
+    else (p==='manana.filas'?D.manana.filas:D.noche.filas).push({dia:'',etapa:'',familia:'',direccion:'',conductor:''});
+    gpGuardar(); arPintar(content);
+  });
+}
+/* ---------- Mapas de cada grupo (Registro de asignación de territorio) ---------- */
+const MG={list:[],loaded:false,unsub:null,err:null};
+function mgGrupos(){ const g=(DATA.preachingGroups||[]).map(x=>({id:String(x.id),nombre:x.name})); if(g.length) return g; return (gpD().grupos||[]).map(x=>({id:'g'+x.n,nombre:'Grupo '+x.n+(x.nombre?' · '+x.nombre:'')})); }
+function mgWatch(){
+  const c=binCol('mapasgrupos'); if(!c||MG.unsub) return;
+  MG.unsub=c.where('kind','==','meta').onSnapshot(s=>{ MG.list=s.docs.map(d=>d.data()).sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha))); MG.loaded=true; MG.err=null; mgPintar(); },e=>{ MG.err=e; MG.loaded=true; MG.unsub=null; mgPintar(); });
+}
+function mapGrpAttach(content){
+  if(!content||!document.body.contains(content)) return;
+  if(!document.getElementById('mapGrpCard')){ const d=document.createElement('div'); d.className='card'; d.id='mapGrpCard'; content.appendChild(d); }
+  mgWatch(); mgPintar();
+}
+function mgPintar(){
+  const box=document.getElementById('mapGrpCard'); if(!box) return; const ed=!READONLY;
+  if(!binCol('mapasgrupos')){ box.innerHTML='<h2>Mapas de cada grupo</h2><div class="empty">Requiere la conexión con Firebase.</div>'; return; }
+  if(MG.err){ box.innerHTML='<h2>Mapas de cada grupo</h2><div class="empty">No se pudieron cargar los mapas ('+escapeHtml(MG.err.code||'error')+'). Publica las reglas de Firestore actualizadas.</div>'; return; }
+  const sel=String((window.TERR_REG_STATE&&window.TERR_REG_STATE.group)||''); let gs=mgGrupos(); const one=gs.filter(g=>g.id===sel); if(one.length) gs=one;
+  box.innerHTML=`<h2>Mapa del grupo seleccionado<small>${ed?'Sube el mapa del grupo elegido arriba en PDF o imagen (máx. 5 MB por archivo).':'Mapa del grupo elegido arriba.'}</small></h2>`+
+   (gs.length?gs.map(g=>{ const l=MG.list.filter(m=>String(m.grupoId)===g.id);
+     return `<div class="mg-g"><div class="mg-top"><b>${escapeHtml(g.nombre)}</b>${ed?`<label class="btn secondary small mg-up">Subir mapa<input type="file" multiple accept="application/pdf,image/*" hidden data-mgup="${escapeAttr(g.id)}" data-mgn="${escapeAttr(g.nombre)}"></label>`:''}</div>
+     ${l.length?l.map(m=>`<div class="mg-f"><span>${escapeHtml(m.titulo||m.archivo)}<small> · ${binSize(m.size||0)} · ${escapeHtml(m.por||'')}</small></span><span><button class="btn small" data-ro-ok data-mgver="${escapeAttr(m.id)}" type="button">Ver</button>${isLector()?'':` <button class="btn secondary small" data-ro-ok data-mgdl="${escapeAttr(m.id)}" type="button">Descargar</button>`}${ed?` <button class="btn danger small" data-mgdel="${escapeAttr(m.id)}" type="button">Eliminar</button>`:''}</span></div>`).join(''):'<small class="muted">Sin mapas.</small>'}</div>`; }).join(''):'<div class="empty">No hay grupos definidos.</div>');
+  box.querySelectorAll('[data-mgup]').forEach(i=>i.onchange=()=>mgSubir(i));
+  box.querySelectorAll('[data-mgver]').forEach(b=>b.onclick=()=>mgAbrir(b.dataset.mgver,false));
+  box.querySelectorAll('[data-mgdl]').forEach(b=>b.onclick=()=>mgAbrir(b.dataset.mgdl,true));
+  box.querySelectorAll('[data-mgdel]').forEach(b=>b.onclick=()=>mgEliminar(b.dataset.mgdel));
+}
+async function mgSubir(inp){
+  if(READONLY) return; const c=binCol('mapasgrupos'); if(!c){ showToast('Sin conexión con Firebase'); return; }
+  const files=[...inp.files]; inp.value='';
+  for(const f of files){
+    if(!/pdf|image/.test(f.type)&&!/\.(pdf|png|jpe?g|webp)$/i.test(f.name)){ showToast('"'+f.name+'" no es PDF ni imagen'); continue; }
+    if(f.size>BIN_MAX){ showToast('"'+f.name+'" supera los 5 MB'); continue; }
+    const id=ctUid('m'); showToast('Subiendo '+f.name+'…');
+    try{ const n=await binSubir('mapasgrupos',id,f); await c.doc('m_'+id).set({kind:'meta',id,grupoId:inp.dataset.mgup,grupoNombre:inp.dataset.mgn,titulo:f.name.replace(/\.[^.]+$/,''),archivo:f.name,size:f.size,n,fecha:new Date().toISOString(),por:(CUR&&CUR.name)||''}); showToast('Mapa guardado'); }
+    catch(e){ console.error(e); showToast(e&&e.code==='permission-denied'?'Sin permiso: publica las reglas de Firestore actualizadas':'No se pudo guardar el mapa'); }
+  }
+}
+async function mgAbrir(id,dl){
+  const m=MG.list.find(x=>x.id===id); if(!m) return; if(dl&&isLector()){ showToast('Sin permiso para descargar'); return; }
+  try{ const blob=await binBlob('mapasgrupos',m); if(dl) binDescargar(blob,m.archivo); else binAbrir(m.titulo||m.archivo,blob,m.archivo,!isLector()); }catch(e){ showToast('No se pudo abrir el archivo'); }
+}
+function mgEliminar(id){
+  const m=MG.list.find(x=>x.id===id); if(!m||READONLY||!confirm('¿Eliminar el mapa "'+(m.titulo||m.archivo)+'"?')) return;
+  binBorrar('mapasgrupos',id,m.n).then(()=>showToast('Mapa eliminado')).catch(()=>showToast('No se pudo eliminar'));
+}
+
 function setView(view, extra){
   if(view==='users'&&!isAdmin()) view='panel';
   if(view==='backup'&&(!CUR||CUR.role==='lector')) view='panel';
@@ -5309,6 +5597,9 @@ function render(){
   else if(VIEW==='limphosp'){ title.innerHTML=LP_ICO_H+' Hospitalidad'; meta.textContent=canLimp()?'Semanas por grupo de hospitalidad':'Consulta (solo lectura)'; renderLimpieza(content, actions,'hosp'); }
   else if(VIEW==='limpprofunda'){ title.innerHTML=LP_ICO+' Limpieza Profunda'; meta.textContent=canLimp()?'Programa de limpieza profunda':'Consulta (solo lectura)'; renderLimpieza(content, actions,'profunda'); }
   else if(VIEW==='privilegios'){ title.textContent='Programa de Privilegios'; meta.textContent=canPrv()?'Asignaciones, rotación, puntaje y reglas':'Consulta (solo lectura)'; renderPrivilegios(content, actions); }
+  else if(VIEW==='anuncios'){ title.textContent='Anuncios a la Congregación'; meta.textContent=READONLY?'Consulta (solo lectura)':'Cartas, nombramientos, bajas y cambios'; renderAnuncios(content, actions); }
+  else if(VIEW==='gruposPred'){ title.textContent='Conformación de grupos'; meta.textContent=READONLY?'Consulta (solo lectura)':'Grupos de predicación'; renderGruposPred(content, actions); }
+  else if(VIEW==='arreglosPred'){ title.textContent='Arreglos de predicación'; meta.textContent=READONLY?'Consulta (solo lectura)':'Mañanas, noches y fin de semana'; renderArreglos(content, actions); }
   else if(VIEW==='minutas'){ title.textContent='Minutas Reunión de Ancianos'; meta.textContent='Minutas en PDF, visitas y discursantes'; renderMinutas(content, actions); }
   else if(VIEW==='cartas'){ title.textContent='Cartas & Anuncios'; meta.textContent='Cartas y anuncios en PDF con su resumen'; renderCartas(content, actions); }
   else if(VIEW==='vidaministerio'){ title.textContent='Vida y Ministerio'; meta.textContent='Programas en PDF ordenados por mes'; renderVym(content, actions); }
@@ -6111,7 +6402,7 @@ function lastCompletion(rows){
   const dates=rows.flatMap(r=>(r.assignments||[]).map(a=>a.completed)).filter(Boolean).sort();
   return dates.length?dates[dates.length-1]:'';
 }
-function renderTerritoryRegister(content,actions){
+function renderTerritoryRegister(content,actions){ setTimeout(()=>{ try{ mapGrpAttach(content); }catch(e){ console.error(e); } },0);
   const state=window.TERR_REG_STATE||{year:currentServiceYear(),group:'',territory:'',stage:''}; window.TERR_REG_STATE=state;
   const groups=[...(DATA.preachingGroups||[])];
   const terrs=[...DATA.territories].sort((a,b)=>String(a.number).localeCompare(String(b.number),undefined,{numeric:true}));
@@ -6509,7 +6800,7 @@ function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
 const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['privilegios','Programa de Privilegios (modificar, puntaje y reglas)'],['auditoria','Auditoría Contabilidad (temporal, máx. 1 mes)']];
-const MODULE_OF_VIEW={privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
+const MODULE_OF_VIEW={anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
 function computeReadOnly(view){
