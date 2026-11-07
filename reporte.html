@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reporte de asistencia</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--tx:#1b2433;--mut:#667085;--pri:#2a4d8f;--ln:#d9dee8;--ok:#15803d;--er:#b42318}
+@media(prefers-color-scheme:dark){:root{--bg:#10151d;--card:#19212d;--tx:#e8edf5;--mut:#9aa6b8;--pri:#6b94e0;--ln:#2b3647}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,Segoe UI,Roboto,sans-serif}
+.w{max-width:480px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:6px 0 2px}p.s{color:var(--mut);margin:0 0 14px;font-size:14px}
+.c{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:16px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input,select{width:100%;padding:12px;font-size:17px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx)}
+.r{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.t{margin-top:16px;padding:12px;border-radius:10px;background:var(--bg);text-align:center;font-size:15px}.t b{font-size:28px;display:block}
+button{width:100%;margin-top:16px;padding:14px;font-size:17px;font-weight:700;border:0;border-radius:10px;background:var(--pri);color:#fff}
+button:disabled{opacity:.6}.m{margin-top:12px;font-size:14px;text-align:center}.er{color:var(--er)}.ok{color:var(--ok)}
+.sec{text-align:center;font-size:12px;color:var(--mut);margin-top:12px}
+</style></head><body><div class="w">
+<h1>Reporte de asistencia a reuniones</h1><p class="s">Congregación Joya Oeste</p>
+<div class="c" id="box"></div><div class="sec">Este reporte lo revisa un administrador antes de incluirlo en el informe.</div></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+var TOKEN='893806ad49d4e507';
+var K=new URLSearchParams(location.search).get('k')||'';
+var box=document.getElementById('box');
+function hoy(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function esc(s){return String(s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
+var db=null;
+try{firebase.initializeApp({apiKey:"AIzaSyBZAqmWWjHmM7CCmNV1MYgCI9OyfXlxw5s",authDomain:"congjoyaoest.firebaseapp.com",projectId:"congjoyaoest",storageBucket:"congjoyaoest.firebasestorage.app",messagingSenderId:"85005622371",appId:"1:85005622371:web:16a4feea77ac6953312c56"});db=firebase.firestore();}catch(e){}
+function form(){
+  box.innerHTML='<label>Fecha</label><input type="date" id="f" value="'+hoy()+'">'+
+  '<label>Reunión</label><select id="t"><option value="">Selecciona…</option><option value="entre">Reunión entre semana</option><option value="fin">Reunión fin de semana</option></select>'+
+  '<label>Hermano que hace el conteo</label><input id="n" maxlength="80" autocomplete="name" placeholder="Nombre y apellido">'+
+  '<div class="r"><div><label>Presencial</label><input type="number" id="p" min="0" max="3000" inputmode="numeric" placeholder="0"></div><div><label>Zoom</label><input type="number" id="z" min="0" max="3000" inputmode="numeric" placeholder="0"></div></div>'+
+  '<div class="t">Total<b id="tt">0</b></div><button id="b" type="button">Enviar reporte</button><div class="m" id="m"></div>';
+  var p=document.getElementById('p'),z=document.getElementById('z');
+  function tot(){document.getElementById('tt').textContent=(parseInt(p.value)||0)+(parseInt(z.value)||0);}
+  p.oninput=z.oninput=tot;
+  document.getElementById('b').onclick=enviar;
+}
+function msg(t,c){var m=document.getElementById('m');m.className='m '+(c||'');m.textContent=t;}
+function enviar(){
+  var f=document.getElementById('f').value,t=document.getElementById('t').value,n=document.getElementById('n').value.trim();
+  var ps=document.getElementById('p').value,zs=document.getElementById('z').value;
+  var p=ps===''?NaN:parseInt(ps,10),z=zs===''?NaN:parseInt(zs,10);
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(f)) return msg('Indica la fecha','er');
+  if(!t) return msg('Selecciona el tipo de reunión','er');
+  if(n.length<2) return msg('Escribe el nombre del hermano que hace el conteo','er');
+  if(isNaN(p)||isNaN(z)||p<0||z<0||p>3000||z>3000) return msg('Escribe Presencial y Zoom (usa 0 si no hubo)','er');
+  var b=document.getElementById('b');b.disabled=true;msg('Enviando…');
+  db.collection('asistReportes').add({fecha:f,tipo:t,contador:n,presencial:p,zoom:z,total:p+z,key:K,estado:'pendiente',creado:firebase.firestore.FieldValue.serverTimestamp()})
+  .then(function(){box.innerHTML='<div style="text-align:center"><div style="font-size:46px">✓</div><h2 style="margin:6px 0">¡Reporte enviado!</h2><p class="s">'+esc(f)+' · '+(t==='entre'?'Entre semana':'Fin de semana')+'<br>Presencial '+p+' · Zoom '+z+' · Total '+(p+z)+'</p><button id="o" type="button">Enviar otro reporte</button></div>';document.getElementById('o').onclick=form;})
+  .catch(function(){b.disabled=false;msg('No se pudo enviar. Revisa tu conexión o que el enlace sea el correcto.','er');});
+}
+if(K!==TOKEN||!db){box.innerHTML='<p class="er" style="text-align:center">Enlace no válido. Escanea nuevamente el código QR entregado por el administrador.</p>';}else form();
+</script></body></html>
