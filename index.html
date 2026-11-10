@@ -1933,6 +1933,23 @@ img,video,canvas{max-width:100%}
 .btc-t small{display:block;color:#667}.btc-c{font-size:13px;overflow-wrap:anywhere}
 @media(max-width:620px){#dsAviso{left:12px;right:12px;bottom:12px;max-width:none}}
 
+.camp-g{border:1px solid var(--line,#dde);border-radius:12px;padding:10px;margin-bottom:12px}.camp-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:6px}
+.att-opts{display:flex;flex-direction:column;gap:4px;margin:6px 0}.att-opt{font-size:13px;display:flex;gap:6px;align-items:center}.att-opt small{color:#667}
+.att-asam{background:#fff4e0;color:#8a5200;border-radius:8px;padding:4px 10px;font-size:13px;font-weight:700;margin-bottom:6px}.att-conm{background:#e8effb;color:#2a4d8f;border-radius:8px;padding:4px 10px;font-size:13px;margin-bottom:6px}
+
+/* Eventos */
+.ev-item{display:flex;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line,#e3e8f0)}.ev-item:first-of-type{border-top:0}
+.ev-date{min-width:70px;text-align:center;background:#eef3fb;border-radius:10px;padding:8px 6px;font-size:14px;text-transform:capitalize}.ev-info{flex:1;min-width:0}.ev-n{font-weight:700}.ev-m{font-size:13px;color:#667;overflow-wrap:anywhere}.ev-a{display:flex;gap:6px;flex-wrap:wrap}.ev-dur{display:flex;gap:6px}.ev-dur input{width:90px}
+/* Tablero de Anuncios */
+.tb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.tb-tile{background:var(--card,#fff);border:1px solid var(--line,#dde3ee);border-radius:14px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.tb-tile header{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;background:#eef3fb;border-bottom:1px solid var(--line,#dde3ee)}.tb-tile header h3{margin:0;font-size:15px}.tb-tile header select{max-width:100%}
+.tb-body{overflow:auto;min-height:120px}.tb-pdf .tb-body,.tb-med .tb-body{max-height:640px}.tb-full{grid-column:1/-1}.tb-full .tb-body{max-height:720px;padding:10px}
+.tb-frame{display:block;width:100%;height:620px;border:0;background:#fff}.tb-body .empty{margin:14px}
+.tb-sub{font-weight:700;background:#1f4e79;color:#fff;padding:6px 10px;font-size:13px}.tb-sub2{background:#6b4fa0}
+.tb-t{width:100%;border-collapse:collapse;font-size:13px}.tb-t th{background:#dbe7f5;text-align:left;padding:6px 8px}.tb-t td{padding:6px 8px;border-top:1px solid #e3e8f0;overflow-wrap:anywhere}.tb-mes{display:flex;gap:6px;align-items:center;font-size:14px}
+@media(max-width:1000px){.tb-grid{grid-template-columns:1fr}.tb-pdf .tb-body,.tb-med .tb-body{max-height:520px}.tb-frame{height:500px}}
+
 </style>
 </head>
 <body>
@@ -1964,6 +1981,8 @@ img,video,canvas{max-width:100%}
       <button data-view="attReports"><span class="icon">▤</span><span class="lbl">Informe de asistencias</span></button>
       <button data-view="actividades"><span class="icon">☰</span><span class="lbl">Actividades</span></button>
       <button data-view="organigrama"><span class="icon">⌘</span><span class="lbl">Organigrama</span></button>
+      <button data-view="eventos"><span class="icon">✦</span><span class="lbl">Eventos</span></button>
+      <button data-view="tablero"><span class="icon">▦</span><span class="lbl">Tablero de Anuncios</span></button>
     </nav>
 
     <div class="navgroup-label">Vida y Ministerio</div>
@@ -3806,7 +3825,7 @@ window.MD = Object.assign({ state: state, mount: mount }, { actualizarDatosDiscu
 (function(){
 let ROOT=null;
 const $p=i=>ROOT.querySelector('#'+i);
-const PP_HTML="<header><h1>Predicación Pública</h1></header>\n<main class=\"wrap\"><nav class=\"tabs no-print\"><button class=\"tab active\" data-tab=\"inicio\">Inicio</button><button class=\"tab\" data-tab=\"etapas\">Por etapas</button><button class=\"tab\" data-tab=\"comercial\">Comercial</button><button class=\"tab\" data-tab=\"horario\">Horario</button><button class=\"tab\" data-tab=\"reportes\">Reportes</button><button class=\"tab\" data-tab=\"config\">Configuración</button><button class=\"tab\" data-tab=\"aprobados\">Publicadores aprobados</button><button class=\"tab\" data-tab=\"datos\">Respaldo</button></nav>\n<section id=\"pp-inicio\" class=\"panel active\"><div class=\"card pastel-lav\"><h2>Elige el tipo de predicación</h2><p>Registra disponibilidades y consulta el horario de cada modalidad.</p><div class=\"grid\"><button class=\"primary choose\" data-target=\"etapas\">Predicación por etapas<br><small>11 etapas y sus carritos</small></button><button class=\"primary choose\" data-target=\"comercial\">Predicación Comercial<br><small>Locales y publicadores aprobados</small></button></div></div><div class=\"card pastel-mint\"><h2>Horario de esta semana</h2><p class=\"hint\">El horario se genera automáticamente con las disponibilidades registradas.</p><button class=\"primary choose\" data-target=\"horario\">Ver e imprimir horario</button></div></section>\n<section id=\"pp-etapas\" class=\"panel\"><div class=\"card pastel-peach\"><div class=\"section-title\"><h2>Disponibilidad · Predicación por etapas</h2><span class=\"tag\">Registro libre</span></div><p class=\"hint\">Puede anotarse individualmente o en pareja. El carrito aparece al seleccionar el lugar.</p><form id=\"stageForm\"></form></div><div class=\"card\"><h2>Disponibilidades por etapas</h2><div id=\"stageList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-comercial\" class=\"panel\"><div class=\"card pastel-sky\"><div class=\"section-title\"><h2>Disponibilidad · Predicación Comercial</h2><span class=\"tag\">Solo aprobados</span></div><p class=\"hint\">La primera persona se elige exclusivamente de la tabla de publicadores aprobados.</p><form id=\"commercialForm\"></form></div><div class=\"card\"><h2>Disponibilidades comerciales</h2><div id=\"commercialList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-horario\" class=\"panel\"><div class=\"card pastel-butter\"><div class=\"section-title\"><div><h2>Horario semanal</h2><p class=\"hint\">Incluye las disponibilidades del mes y año elegidos, ordenadas por día y hora.</p></div><button class=\"primary no-print\" onclick=\"window.print()\">Imprimir horario</button></div><div class=\"grid no-print\" style=\"max-width:540px\"><label>Mes del horario<select id=\"scheduleMonth\" data-ro-ok></select></label><label>Año<select id=\"scheduleYear\" data-ro-ok></select></label></div><div id=\"schedule\" class=\"schedule\"></div></div></section>\n<section id=\"pp-reportes\" class=\"panel\"><div class=\"card pastel-rose\"><div class=\"section-title\"><div><h2>Reporte mensual de horarios y participantes</h2><p class=\"hint\">Resumen de las participaciones registradas para el mes y año seleccionados.</p></div><button class=\"primary no-print\" onclick=\"window.print()\">Imprimir reporte</button></div><div class=\"grid no-print\" style=\"max-width:540px\"><label>Mes a reportar<select id=\"reportMonth\" data-ro-ok></select></label><label>Año a reportar<select id=\"reportYear\" data-ro-ok></select></label></div><div id=\"monthlyReport\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-config\" class=\"panel\"><div class=\"card pastel-rose\"><h2>Configuración de lugares y carritos</h2><p class=\"hint\">Registre las etapas o locales, su ubicación, carrito y estado. Los locales comerciales permiten guardar una foto.</p><form id=\"configForm\" class=\"grid\"></form></div><div class=\"card\"><h2>Lugares configurados</h2><div id=\"configList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-aprobados\" class=\"panel\"><div class=\"card pastel-mint\"><h2>Publicadores Aprobados para la Predicación Comercial</h2><form id=\"approvedForm\" class=\"grid\"></form></div><div class=\"card\"><h2>Lista de aprobados</h2><div id=\"approvedList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-datos\" class=\"panel\"><div class=\"card pastel-lav\"><h2>Respaldo de datos</h2><p class=\"hint\">Los cambios se guardan automáticamente y se comparten con los demás usuarios. Exporte un respaldo antes de borrar datos.</p><div class=\"actions\"><button id=\"ppExportBtn\" type=\"button\" class=\"primary\">Exportar JSON</button><button id=\"ppImportBtn\" type=\"button\" class=\"primary\">Importar JSON</button><input id=\"ppImportFile\" type=\"file\" accept=\"application/json\" class=\"hidden\"><button id=\"ppRestoreBtn\" type=\"button\" class=\"danger\">Restaurar datos iniciales</button><button id=\"ppClearBtn\" type=\"button\" class=\"danger\">Borrar todos los datos</button></div></div></section>\n</main>";
+const PP_HTML="<header><h1>Predicación Pública</h1></header>\n<main class=\"wrap\"><nav class=\"tabs no-print\"><button class=\"tab active\" data-tab=\"inicio\">Inicio</button><button class=\"tab\" data-tab=\"etapas\">Por etapas</button><button class=\"tab\" data-tab=\"comercial\">Comercial</button><button class=\"tab\" data-tab=\"campanas\">Campañas</button><button class=\"tab\" data-tab=\"horario\">Horario</button><button class=\"tab\" data-tab=\"reportes\">Reportes</button><button class=\"tab\" data-tab=\"config\">Configuración</button><button class=\"tab\" data-tab=\"aprobados\">Publicadores aprobados</button><button class=\"tab\" data-tab=\"datos\">Respaldo</button></nav>\n<section id=\"pp-inicio\" class=\"panel active\"><div class=\"card pastel-lav\"><h2>Elige el tipo de predicación</h2><p>Registra disponibilidades y consulta el horario de cada modalidad.</p><div class=\"grid\"><button class=\"primary choose\" data-target=\"etapas\">Predicación por etapas<br><small>11 etapas y sus carritos</small></button><button class=\"primary choose\" data-target=\"comercial\">Predicación Comercial<br><small>Locales y publicadores aprobados</small></button></div></div><div class=\"card pastel-mint\"><h2>Horario de esta semana</h2><p class=\"hint\">El horario se genera automáticamente con las disponibilidades registradas.</p><button class=\"primary choose\" data-target=\"horario\">Ver e imprimir horario</button></div></section>\n<section id=\"pp-etapas\" class=\"panel\"><div class=\"card pastel-peach\"><div class=\"section-title\"><h2>Disponibilidad · Predicación por etapas</h2><span class=\"tag\">Registro libre</span></div><p class=\"hint\">Puede anotarse individualmente o en pareja. El carrito aparece al seleccionar el lugar.</p><form id=\"stageForm\"></form></div><div class=\"card\"><h2>Disponibilidades por etapas</h2><div id=\"stageList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-comercial\" class=\"panel\"><div class=\"card pastel-sky\"><div class=\"section-title\"><h2>Disponibilidad · Predicación Comercial</h2><span class=\"tag\">Solo aprobados</span></div><p class=\"hint\">La primera persona se elige exclusivamente de la tabla de publicadores aprobados.</p><form id=\"commercialForm\"></form></div><div class=\"card\"><h2>Disponibilidades comerciales</h2><div id=\"commercialList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-campanas\" class=\"panel\"><div class=\"card pastel-peach\"><div class=\"section-title\"><h2>Campañas · Asambleas, visita, Conmemoración y especiales</h2><span class=\"tag\">Solo aprobados</span></div><p class=\"hint\">Los nombres se eligen exclusivamente de la lista de publicadores aprobados.</p><form id=\"campForm\"></form></div><div class=\"card\"><div class=\"section-title\"><h2>Campañas registradas</h2><div id=\"campFiltro\" class=\"no-print\"></div></div><div id=\"campList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-horario\" class=\"panel\"><div class=\"card pastel-butter\"><div class=\"section-title\"><div><h2>Horario semanal</h2><p class=\"hint\">Incluye las disponibilidades del mes y año elegidos, ordenadas por día y hora.</p></div><button class=\"primary no-print\" onclick=\"window.print()\">Imprimir horario</button></div><div class=\"grid no-print\" style=\"max-width:540px\"><label>Mes del horario<select id=\"scheduleMonth\" data-ro-ok></select></label><label>Año<select id=\"scheduleYear\" data-ro-ok></select></label></div><div id=\"schedule\" class=\"schedule\"></div></div></section>\n<section id=\"pp-reportes\" class=\"panel\"><div class=\"card pastel-rose\"><div class=\"section-title\"><div><h2>Reporte mensual de horarios y participantes</h2><p class=\"hint\">Resumen de las participaciones registradas para el mes y año seleccionados.</p></div><button class=\"primary no-print\" onclick=\"window.print()\">Imprimir reporte</button></div><div class=\"grid no-print\" style=\"max-width:540px\"><label>Mes a reportar<select id=\"reportMonth\" data-ro-ok></select></label><label>Año a reportar<select id=\"reportYear\" data-ro-ok></select></label></div><div id=\"monthlyReport\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-config\" class=\"panel\"><div class=\"card pastel-rose\"><h2>Configuración de lugares y carritos</h2><p class=\"hint\">Registre las etapas o locales, su ubicación, carrito y estado. Los locales comerciales permiten guardar una foto.</p><form id=\"configForm\" class=\"grid\"></form></div><div class=\"card\"><h2>Lugares configurados</h2><div id=\"configList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-aprobados\" class=\"panel\"><div class=\"card pastel-mint\"><h2>Publicadores Aprobados para la Predicación Comercial</h2><form id=\"approvedForm\" class=\"grid\"></form></div><div class=\"card\"><h2>Lista de aprobados</h2><div id=\"approvedList\" class=\"table-wrap\"></div></div></section>\n<section id=\"pp-datos\" class=\"panel\"><div class=\"card pastel-lav\"><h2>Respaldo de datos</h2><p class=\"hint\">Los cambios se guardan automáticamente y se comparten con los demás usuarios. Exporte un respaldo antes de borrar datos.</p><div class=\"actions\"><button id=\"ppExportBtn\" type=\"button\" class=\"primary\">Exportar JSON</button><button id=\"ppImportBtn\" type=\"button\" class=\"primary\">Importar JSON</button><input id=\"ppImportFile\" type=\"file\" accept=\"application/json\" class=\"hidden\"><button id=\"ppRestoreBtn\" type=\"button\" class=\"danger\">Restaurar datos iniciales</button><button id=\"ppClearBtn\" type=\"button\" class=\"danger\">Borrar todos los datos</button></div></div></section>\n</main>";
 
 const DAYS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'], TIMES=['08:00–10:00','10:00–12:00','16:00–18:00'], MONTHS=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'], YEARS=[2026,2027,2028,2029,2030];
 const STAGES=['Onix','Brillante','Diamante','Esmeralda','Tiara','Platino','Turquesa','Perla','Gema','Oro','Aquamarina']; const COMM=['Gran Aki','Veris','Tuti','Plaza Orlando','Plaza San Miguel'];
@@ -3819,10 +3838,89 @@ function availabilityForm(kind, record={}){let commercial=kind==='comercial', pl
 function renderAvailability(kind, editId=''){let form=$p(kind==='etapas'?'stageForm':'commercialForm'),r=db.availability.find(x=>x.id===editId);form.innerHTML=availabilityForm(kind,r);bindAvailability(form,kind,r);let rows=db.availability.filter(x=>x.kind===kind);$p(kind==='etapas'?'stageList':'commercialList').innerHTML=rows.length?`<table><thead><tr><th>Mes</th><th>Persona(s)</th><th>Días / horas</th><th>Lugares y carrito</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td><span class="tag">${esc(x.month||'Sin mes')}</span></td><td>${esc(x.person)}<br>${esc(x.phone)}${x.mode==='Pareja'?`<br>+ ${esc(x.partner)} · ${esc(x.partnerPhone)}`:''}</td><td>${x.days.map(d=>`<span class="tag">${d}</span>`).join('')}<br>${x.times.map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${x.places.map(p=>`<b>${esc(p)}</b><br><span class="hint">${esc(cartOf(p))}</span>`).join('<br>')}</td><td><button class="small editAvail" data-id="${x.id}" data-kind="${kind}">Editar</button> <button class="small danger delAvail" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Aún no hay disponibilidades registradas.</p>';ROOT.querySelectorAll('.editAvail').forEach(b=>b.onclick=()=>renderAvailability(b.dataset.kind,b.dataset.id));ROOT.querySelectorAll('.delAvail').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este registro?')){db.availability=db.availability.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
 function bindAvailability(form,kind,record){let update=()=>{let pair=form.mode.value==='Pareja';form.querySelector('.pair').classList.toggle('hidden',!pair);form.partner.required=form.partnerPhone.required=pair;let ps=selected(form,configFor(kind).map(x=>x.name));form.querySelector('#cartHint').innerHTML=ps.length?'<b>Carritos asignados:</b> '+ps.map(p=>`${esc(p)}: ${esc(cartOf(p))}`).join(' · '):'Seleccione uno o más lugares para ver el carrito asignado.';if(kind==='comercial'){let a=db.approved.find(x=>x.id===form.approvedId.value);form.querySelector('#approvedNote').textContent=a?`Teléfono registrado: ${a.phone} · Vehículo: ${a.vehicle} · Privilegio: ${(a.months||[]).join(', ')||'sin meses definidos'}`:'Seleccione un publicador aprobado.'}};form.onchange=update;update();form.onsubmit=e=>{e.preventDefault();let places=configFor(kind).map(x=>x.name),a=kind==='comercial'&&db.approved.find(x=>x.id===form.approvedId.value);if(kind==='comercial'&&!(a.months||[]).includes(form.month.value))return alert('Este publicador no tiene el privilegio asignado para el mes seleccionado.');let data={id:record?.id||id(),kind,month:form.month.value,year:Number(form.year.value),person:kind==='comercial'?a.first+' '+a.last:form.person.value.trim(),phone:kind==='comercial'?a.phone:form.phone.value.trim(),approvedId:kind==='comercial'?a.id:undefined,mode:form.mode.value,partner:form.partner.value.trim(),partnerPhone:form.partnerPhone.value.trim(),days:selected(form,DAYS),times:selected(form,TIMES),places:selected(form,places)};if(!data.days.length||!data.times.length||!data.places.length)return alert('Seleccione al menos un día, hora y lugar.');if(record){Object.assign(record,data)}else db.availability.push(data);save();renderAll()};form.querySelector('.cancel')?.addEventListener('click',()=>renderAvailability(kind))}
 function renderConfig(editId=''){let r=db.config.find(x=>x.id===editId)||{},f=$p('configForm');f.innerHTML=`<label>Tipo<select name="kind"><option value="etapas" ${r.kind==='etapas'?'selected':''}>Por etapas</option><option value="comercial" ${r.kind==='comercial'?'selected':''}>Comercial</option></select></label><label>Etapa / local<input name="name" required value="${esc(r.name||'')}"></label><label>Lugar / ubicación<input name="place" required value="${esc(r.place||'')}"></label><label>Tipo de carrito<select name="cart">${opts(['Carrito con Ruedas','Una sola Cara','en V'],r.cart)}</select></label><label>Estado<select name="status">${opts(['Activo','Inactivo','Mantenimiento'],r.status||'Activo')}</select></label><label>Foto (solo comercial)<input name="photoFile" type="file" accept="image/*">${r.photo?'<img class="photo" src="'+r.photo+'">':''}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar lugar'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;f.onsubmit=async e=>{e.preventDefault();let pic=f.photoFile.files[0],photo=r.photo||'';if(pic)photo=await new Promise(ok=>{let q=new FileReader;q.onload=()=>ok(q.result);q.readAsDataURL(pic)});let x={id:r.id||id(),kind:f.kind.value,name:f.name.value.trim(),place:f.place.value.trim(),cart:f.cart.value,status:f.status.value,photo};if(r.id)Object.assign(r,x);else db.config.push(x);save();renderAll()};f.querySelector('.cancel')?.addEventListener('click',()=>renderConfig());let rows=db.config;$p('configList').innerHTML=`<table><thead><tr><th>Tipo</th><th>Etapa / local</th><th>Lugar</th><th>Carrito</th><th>Estado</th><th>Foto</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.kind==='etapas'?'Por etapas':'Comercial'}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.place)}</td><td>${esc(x.cart)}</td><td><span class="tag">${esc(x.status)}</span></td><td>${x.photo?`<img class="photo" src="${x.photo}">`:'—'}</td><td><button class="small editConfig" data-id="${x.id}">Editar</button> <button class="small danger delConfig" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;ROOT.querySelectorAll('.editConfig').forEach(b=>b.onclick=()=>renderConfig(b.dataset.id));ROOT.querySelectorAll('.delConfig').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este lugar?')){db.config=db.config.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
-function renderApproved(editId=''){let r=db.approved.find(x=>x.id===editId)||{},f=$p('approvedForm');f.innerHTML=`<label>Nombre<input name="first" required value="${esc(r.first||'')}"></label><label>Apellido<input name="last" required value="${esc(r.last||'')}"></label><label>Servicio<select name="service">${opts(['PNB','PB','PA','PAI','PR','PS'],r.service||'PNB')}</select></label><label>Edad<input name="age" required type="number" min="1" value="${esc(r.age||'')}"></label><label>Sexo<select name="sex">${opts(['Femenino','Masculino'],r.sex||'Femenino')}</select></label><label>Teléfono<input name="phone" required value="${esc(r.phone||'')}"></label><label>Tiene vehículo<select name="vehicle">${opts(['Sí','No'],r.vehicle||'No')}</select></label><label style="grid-column:1/-1">Meses en que tiene este privilegio${checks(MONTHS,r.months||[])}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar publicador'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;f.onsubmit=e=>{e.preventDefault();let x={id:r.id||id(),first:f.first.value.trim(),last:f.last.value.trim(),service:f.service.value,age:f.age.value,sex:f.sex.value,phone:f.phone.value.trim(),vehicle:f.vehicle.value,months:selected(f,MONTHS)};if(!x.months.length)return alert('Seleccione al menos un mes de privilegio.');if(r.id)Object.assign(r,x);else db.approved.push(x);save();renderAll()};f.querySelector('.cancel')?.addEventListener('click',()=>renderApproved());$p('approvedList').innerHTML=`<table><thead><tr><th>Nombre</th><th>Servicio</th><th>Edad</th><th>Sexo</th><th>Teléfono</th><th>Vehículo</th><th>Meses de privilegio</th><th></th></tr></thead><tbody>${db.approved.map(x=>`<tr><td>${esc(x.first+' '+x.last)}</td><td>${esc(x.service)}</td><td>${esc(x.age)}</td><td>${esc(x.sex)}</td><td>${esc(x.phone)}</td><td>${esc(x.vehicle)}</td><td>${(x.months||[]).map(m=>`<span class="tag">${esc(m)}</span>`).join('')}</td><td><button class="small editApproved" data-id="${x.id}">Editar</button> <button class="small danger delApproved" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;ROOT.querySelectorAll('.editApproved').forEach(b=>b.onclick=()=>renderApproved(b.dataset.id));ROOT.querySelectorAll('.delApproved').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este publicador?')){db.approved=db.approved.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
+function renderApproved(editId=''){
+  let r=db.approved.find(x=>x.id===editId)||{},f=$p('approvedForm');
+  const usados=new Set(db.approved.filter(x=>x.pubId&&x.id!==r.id).map(x=>x.pubId));
+  const libres=pubsList().filter(p=>!usados.has(p.id)||p.id===r.pubId);
+  f.innerHTML=`<label style="grid-column:1/-1">Publicador (de la lista de Publicadores)<select name="pubId" required><option value="">Seleccione…</option>${libres.map(p=>`<option value="${p.id}" ${p.id===r.pubId?'selected':''}>${esc(pubLabel(p))}</option>`).join('')}</select></label><p class="hint" id="apInfo" style="grid-column:1/-1"></p>
+  <label>Servicio<select name="service">${opts(['PNB','PB','PA','PAI','PR','PS'],r.service||'PB')}</select></label><label>Tiene vehículo<select name="vehicle">${opts(['Sí','No'],r.vehicle||'No')}</select></label><label style="grid-column:1/-1">Meses en que tiene este privilegio${checks(MONTHS,r.months||[])}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar publicador'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;
+  const info=()=>{const p=(DATA.publishers||[]).find(x=>x.id===f.pubId.value);$p('apInfo').textContent=p?`Edad: ${edadDe(p)||'—'} · Sexo: ${sexoDe(p)} · Teléfono: ${telDe(p)||'(sin teléfono en Publicadores)'}`:'Los datos (nombre, edad, sexo y teléfono) se toman de Publicadores; si allá cambian, aquí se actualizan solos.'};
+  f.pubId.onchange=()=>{const p=(DATA.publishers||[]).find(x=>x.id===f.pubId.value);if(p&&!r.id)f.service.value=servicioDe(p);info()};info();
+  f.onsubmit=e=>{e.preventDefault();const p=(DATA.publishers||[]).find(x=>x.id===f.pubId.value);if(!p)return alert('Elige un publicador de la lista.');
+    let x={id:r.id||id(),pubId:p.id,first:p.firstName||'',last:p.lastName||'',service:f.service.value,age:edadDe(p),sex:sexoDe(p),phone:telDe(p),vehicle:f.vehicle.value,months:selected(f,MONTHS)};
+    if(!x.months.length)return alert('Seleccione al menos un mes de privilegio.');if(r.id)Object.assign(r,x);else db.approved.push(x);save();renderAll()};
+  f.querySelector('.cancel')?.addEventListener('click',()=>renderApproved());
+  $p('approvedList').innerHTML=`<table><thead><tr><th>Nombre</th><th>Servicio</th><th>Edad</th><th>Sexo</th><th>Teléfono</th><th>Vehículo</th><th>Meses de privilegio</th><th></th></tr></thead><tbody>${db.approved.map(x=>`<tr><td>${esc(x.first+' '+x.last)}${x.pubId?'':'<br><small class="hint">⚠ sin vincular a Publicadores: edítalo y elige al publicador</small>'}</td><td>${esc(x.service)}</td><td>${esc(x.age)}</td><td>${esc(x.sex)}</td><td>${esc(x.phone)}</td><td>${esc(x.vehicle)}</td><td>${(x.months||[]).map(m=>`<span class="tag">${esc(m)}</span>`).join('')}</td><td><button class="small editApproved" data-id="${x.id}">Editar</button> <button class="small danger delApproved" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;
+  ROOT.querySelectorAll('.editApproved').forEach(b=>b.onclick=()=>renderApproved(b.dataset.id));
+  ROOT.querySelectorAll('.delApproved').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este publicador de la lista de aprobados?')){db.approved=db.approved.filter(x=>x.id!==b.dataset.id);save();renderAll()}});
+}
+/* ---------- Aprobados alimentados desde Publicadores ---------- */
+function pubsList(){return (DATA.publishers||[]).filter(p=>!p.expelledDate&&!p.disassociated&&p.active!==false).slice().sort((a,b)=>(a.lastName+a.firstName).localeCompare(b.lastName+b.firstName,'es'))}
+function pubLabel(p){return (p.lastName||'')+', '+(p.firstName||'')}
+function servicioDe(p){return p.unbaptizedPublisher?'PNB':p.specialPioneer?'PS':p.regularPioneer?'PR':p.indefinitePioneer?'PAI':'PB'}
+function edadDe(p){try{return p.dob?String(elapsedYears(p.dob)):''}catch(e){return ''}}
+function sexoDe(p){return p.sex==='Masculino'?'Masculino':'Femenino'}
+function telDe(p){return p.mobile||p.phone||''}
+function normN(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/[^a-z0-9 ]+/g,' ').split(/\s+/).filter(Boolean).sort().join(' ')}
+function pubPorNombre(first,last){const k=normN(first+' '+last);return pubsList().find(p=>normN(p.firstName+' '+p.lastName)===k)}
+/* mantiene al día nombre, edad, sexo y teléfono de cada aprobado con lo que dice Publicadores */
+function syncAprobados(){
+  if(READONLY)return;let ch=false;
+  db.approved.forEach(a=>{
+    let p=a.pubId&&(DATA.publishers||[]).find(x=>x.id===a.pubId);
+    if(!p){p=pubPorNombre(a.first,a.last);if(p){a.pubId=p.id;ch=true}}
+    if(!p)return;
+    const n={first:p.firstName||'',last:p.lastName||'',age:edadDe(p)||a.age,sex:sexoDe(p),phone:telDe(p)||a.phone};
+    Object.keys(n).forEach(k=>{if(String(a[k]??'')!==String(n[k]??'')){a[k]=n[k];ch=true}});
+  });
+  if(ch)save();
+}
+function approvedName(id){const a=db.approved.find(x=>x.id===id);return a?(a.first+' '+a.last).trim():'(ya no está en aprobados)'}
+
+/* ---------- Campañas ---------- */
+const CAMP_TIPOS={asamblea:'Asambleas',visita:'Visita del superintendente',conmemoracion:'Conmemoración',especial:'Campañas especiales'};
+const CAMP_DEF={visita:'Visita del superintendente de circuito',conmemoracion:'Conmemoración de la muerte de Cristo'};
+let campFiltro='todas';
+function semanaTxt(f){try{const d=new Date(f+'T00:00:00'),w=(d.getDay()+6)%7,a=new Date(d);a.setDate(d.getDate()-w);const b=new Date(a);b.setDate(a.getDate()+6);const o={day:'numeric',month:'long'};return 'Semana del '+a.toLocaleDateString('es-EC',o)+' al '+b.toLocaleDateString('es-EC',o)}catch(e){return f}}
+function fechaTxt(c){if(!c.fecha)return 'Sin fecha';return c.tipo==='visita'?semanaTxt(c.fecha):new Date(c.fecha+'T00:00:00').toLocaleDateString('es-EC',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function campForm(r={}){
+  const places=db.config.map(x=>x.name), tipo=r.tipo||(campFiltro!=='todas'?campFiltro:'asamblea');
+  const ap=(name,sel,req)=>`<select name="${name}" ${req?'required':''}><option value="">${req?'Seleccione…':'— ninguno —'}</option>${db.approved.slice().sort((a,b)=>(a.last+a.first).localeCompare(b.last+b.first,'es')).map(a=>`<option value="${a.id}" ${sel===a.id?'selected':''}>${esc(a.first+' '+a.last+' · '+a.service)}</option>`).join('')}</select>`;
+  return `<label>Tipo<select name="tipo">${Object.entries(CAMP_TIPOS).map(([k,v])=>`<option value="${k}" ${k===tipo?'selected':''}>${v}</option>`).join('')}</select></label>
+  <label class="cTit">Título<input name="titulo" list="campSug" value="${esc(r.titulo||CAMP_DEF[tipo]||'')}" placeholder="Ej.: Asamblea de circuito"><datalist id="campSug"><option value="Asamblea de circuito"><option value="Asamblea regional"><option value="Asamblea especial"></datalist></label>
+  <label><span id="cFecLbl">Fecha</span><input name="fecha" type="date" required value="${esc(r.fecha||'')}"></label><p class="hint" id="cSem" style="grid-column:1/-1"></p>
+  <label>Publicador aprobado${ap('approvedId',r.approvedId,true)}</label>
+  <label>Modalidad<select name="mode"><option value="Solo" ${r.mode!=='Pareja'?'selected':''}>Participaré solo/a</option><option value="Pareja" ${r.mode==='Pareja'?'selected':''}>Participaré en pareja</option></select></label>
+  <div class="pair ${r.mode==='Pareja'?'':'hidden'}"><label>Pareja (de la lista de aprobados)${ap('partnerId',r.partnerId,false)}</label></div>
+  <div class="grid" style="grid-column:1/-1"><label>Días disponibles (opcional)${checks(DAYS,r.days||[])}</label><label>Horas (opcional)${checks(TIMES,r.times||[])}</label><label>Lugares (opcional)${checks(places,r.places||[])}</label></div>
+  <div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;
+}
+function renderCampanas(editId=''){
+  const f=$p('campForm');if(!f)return;const all=db.campanas||[],r=all.find(x=>x.id===editId)||{};
+  f.innerHTML=campForm(r);
+  const upd=()=>{const t=f.tipo.value,v=t==='visita';f.querySelector('.cTit').style.display=v?'none':'';$p('cFecLbl').textContent=v?'Un día de la semana de la visita':'Fecha';f.querySelector('.pair').classList.toggle('hidden',f.mode.value!=='Pareja');$p('cSem').textContent=v&&f.fecha.value?semanaTxt(f.fecha.value):'';if(!f.titulo.value||Object.values(CAMP_DEF).includes(f.titulo.value))f.titulo.value=CAMP_DEF[t]||''};
+  f.onchange=upd;upd();
+  f.onsubmit=e=>{e.preventDefault();const t=f.tipo.value,a=db.approved.find(x=>x.id===f.approvedId.value);if(!a)return alert('Elige un publicador de la lista de aprobados.');
+    const pareja=f.mode.value==='Pareja'?f.partnerId.value:'';if(f.mode.value==='Pareja'&&!pareja)return alert('Elige la pareja de la lista de aprobados.');if(pareja&&pareja===a.id)return alert('La pareja debe ser otra persona.');
+    const titulo=t==='visita'?CAMP_DEF.visita:f.titulo.value.trim();if(!titulo)return alert('Escribe el título.');
+    const x={id:r.id||id(),tipo:t,titulo,fecha:f.fecha.value,approvedId:a.id,mode:f.mode.value,partnerId:pareja,days:selected(f,DAYS),times:selected(f,TIMES),places:selected(f,db.config.map(y=>y.name))};
+    db.campanas=db.campanas||[];if(r.id)Object.assign(r,x);else db.campanas.push(x);save();renderAll()};
+  f.querySelector('.cancel')?.addEventListener('click',()=>renderCampanas());
+  $p('campFiltro').innerHTML=`<select id="campSel" data-ro-ok><option value="todas">Todas</option>${Object.entries(CAMP_TIPOS).map(([k,v])=>`<option value="${k}" ${campFiltro===k?'selected':''}>${v}</option>`).join('')}</select>`;
+  $p('campSel').onchange=e=>{campFiltro=e.target.value;renderCampanas()};
+  const rows=all.filter(x=>campFiltro==='todas'||x.tipo===campFiltro),grp={};
+  rows.forEach(x=>{const k=x.tipo+'|'+x.titulo+'|'+x.fecha;(grp[k]=grp[k]||{tipo:x.tipo,titulo:x.titulo,fecha:x.fecha,items:[]}).items.push(x)});
+  const gs=Object.values(grp).sort((a,b)=>(a.fecha||'').localeCompare(b.fecha||''));
+  $p('campList').innerHTML=gs.length?gs.map(g=>`<div class="camp-g"><div class="camp-h"><div><span class="tag">${esc(CAMP_TIPOS[g.tipo])}</span> <b>${esc(g.titulo)}</b><br><span class="hint">${esc(fechaTxt(g))}</span></div><button class="small editCamp" data-k="${esc(g.tipo+'|'+g.titulo+'|'+g.fecha)}">Editar título y fecha</button></div><table><thead><tr><th>Participante(s)</th><th>Días / horas</th><th>Lugares</th><th></th></tr></thead><tbody>${g.items.map(x=>`<tr><td>${esc(approvedName(x.approvedId))}${x.mode==='Pareja'?'<br>+ '+esc(approvedName(x.partnerId)):''}</td><td>${(x.days||[]).map(d=>`<span class="tag">${d}</span>`).join('')}${(x.times||[]).map(t=>`<span class="tag">${t}</span>`).join('')||'—'}</td><td>${(x.places||[]).map(esc).join(', ')||'—'}</td><td><button class="small editCampRow" data-id="${x.id}">Editar</button> <button class="small danger delCampRow" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table></div>`).join(''):'<p class="empty">Aún no hay campañas registradas.</p>';
+  ROOT.querySelectorAll('.editCampRow').forEach(b=>b.onclick=()=>{renderCampanas(b.dataset.id);f.scrollIntoView({behavior:'smooth'})});
+  ROOT.querySelectorAll('.delCampRow').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este registro?')){db.campanas=db.campanas.filter(x=>x.id!==b.dataset.id);save();renderAll()}});
+  ROOT.querySelectorAll('.editCamp').forEach(b=>b.onclick=()=>{const g=grp[b.dataset.k];if(!g)return;
+    showModal(`<h3>Editar campaña</h3>${g.tipo==='visita'?'':`<div class="field"><label>Título</label><input id="cgT" value="${esc(g.titulo)}"></div>`}<div class="field"><label>${g.tipo==='visita'?'Un día de la semana de la visita':'Fecha'}</label><input id="cgF" type="date" value="${esc(g.fecha||'')}"></div><div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="cgOk">Guardar</button></div>`);
+    document.querySelector('#cgOk').onclick=()=>{const t=g.tipo==='visita'?g.titulo:document.querySelector('#cgT').value.trim(),fe=document.querySelector('#cgF').value;if(!t||!fe)return alert('Completa el título y la fecha.');g.items.forEach(x=>{x.titulo=t;x.fecha=fe});save();closeModal();renderAll()}});
+}
 function renderSchedule(){let month=$p('scheduleMonth').value||'Septiembre',year=Number($p('scheduleYear').value||2026),html=DAYS.map(d=>{let slots=TIMES.map(t=>{let matches=db.availability.filter(x=>(x.month||'Septiembre')===month&&Number(x.year||2026)===year&&x.days.includes(d)&&x.times.includes(t));let cards=matches.map(x=>x.places.map(p=>`<div class="slot"><strong>${esc(t)} · ${esc(p)}</strong>${esc(x.person)}${x.mode==='Pareja'?` + ${esc(x.partner)}`:''}<br><span class="hint">${esc(cartOf(p))} · ${x.kind==='comercial'?'Comercial':'Por etapas'}</span></div>`).join('')).join('');return cards}).join('')||'<p class="empty">Sin asignaciones</p>';return `<article class="day"><h3>${d}</h3>${slots}</article>`}).join('');$p('schedule').innerHTML=html}
 function renderReport(){let month=$p('reportMonth').value||'Septiembre',year=Number($p('reportYear').value||2026),rows=db.availability.filter(x=>(x.month||'Septiembre')===month&&Number(x.year||2026)===year),participants=[];rows.forEach(x=>{participants.push(x.person);if(x.mode==='Pareja'&&x.partner)participants.push(x.partner)});let unique=[...new Set(participants)];$p('monthlyReport').innerHTML=rows.length?`<p><b>${esc(month)} ${year}:</b> ${rows.length} disponibilidades y ${unique.length} participantes.</p><table><thead><tr><th>Participante(s)</th><th>Tipo</th><th>Día(s)</th><th>Hora(s)</th><th>Lugar(es)</th></tr></thead><tbody>${rows.map(x=>`<tr><td>${esc(x.person)}${x.mode==='Pareja'?`<br>+ ${esc(x.partner)}`:''}</td><td>${x.kind==='comercial'?'Comercial':'Por etapas'}</td><td>${x.days.map(esc).join(', ')}</td><td>${x.times.map(esc).join(', ')}</td><td>${x.places.map(esc).join(', ')}</td></tr>`).join('')}</tbody></table><h3 style="margin-top:18px">Hermanos y hermanas que participaron</h3><p>${unique.map(n=>`<span class="tag">${esc(n)}</span>`).join(' ')}</p>`:`<p class="empty">No hay horarios registrados para ${esc(month)} ${year}.</p>`}
-function setupMonthSelects(){['scheduleMonth','reportMonth'].forEach(i=>{let s=$p(i),current=s.value||'Septiembre';s.innerHTML=opts(MONTHS,current);s.onchange=()=>{renderSchedule();renderReport()}});['scheduleYear','reportYear'].forEach(i=>{let s=$p(i),current=s.value||2026;s.innerHTML=opts(YEARS,current);s.onchange=()=>{renderSchedule();renderReport()}})}function renderAll(){setupMonthSelects();renderAvailability('etapas');renderAvailability('comercial');renderConfig();renderApproved();renderSchedule();renderReport();if(typeof lockUI==='function')lockUI()}
+function setupMonthSelects(){['scheduleMonth','reportMonth'].forEach(i=>{let s=$p(i),current=s.value||'Septiembre';s.innerHTML=opts(MONTHS,current);s.onchange=()=>{renderSchedule();renderReport()}});['scheduleYear','reportYear'].forEach(i=>{let s=$p(i),current=s.value||2026;s.innerHTML=opts(YEARS,current);s.onchange=()=>{renderSchedule();renderReport()}})}function renderAll(){setupMonthSelects();renderAvailability('etapas');renderAvailability('comercial');renderConfig();renderApproved();renderCampanas();renderSchedule();renderReport();if(typeof lockUI==='function')lockUI()}
 let curTab='inicio';
 function show(x){curTab=x;ROOT.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='pp-'+x));ROOT.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===x));try{window.scrollTo({top:0,behavior:'smooth'})}catch(e){}}
 function bindStatic(){
@@ -3850,7 +3948,7 @@ function mount(el){
   ROOT=el;
   db=DATA.predicacion;
   migrarLocal();
-  if(!READONLY){try{db.approved.forEach(x=>x.months=x.months||['Septiembre']);db.availability.forEach(x=>{x.month=x.month||'Septiembre';x.year=x.year||2026})}catch(e){}}
+  if(!READONLY){try{if(!Array.isArray(db.campanas))db.campanas=[];syncAprobados();db.approved.forEach(x=>x.months=x.months||['Septiembre']);db.availability.forEach(x=>{x.month=x.month||'Septiembre';x.year=x.year||2026})}catch(e){}}
   ROOT.innerHTML='<div class="mod-predicacion">'+PP_HTML+'</div>';
   bindStatic();
   renderAll();
@@ -5726,6 +5824,157 @@ function aeAplicarTodos(){
   if(ok) saveData(); showToast(ok+' aplicado'+(ok===1?'':'s')+(mal?' · '+mal+' con fecha que no coincide con el día de la reunión (revísalos)':''));
 }
 
+/* ===== Asistencia: días de reunión por año · semana de asamblea (0) · nota de Conmemoración ===== */
+const AT_DIAS=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+function attK(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function attMonday(k){ const [y,m,d]=k.split('-').map(Number), dt=new Date(y,m-1,d); dt.setDate(dt.getDate()-((dt.getDay()+6)%7)); return attK(dt); }
+function attDiasAnio(y){ const S=DATA.meetingSettings||{}, o=(S.years||{})[y]; return {mid:(o&&o.midweekDay)||S.midweekDay||'Miércoles',end:(o&&o.weekendDay)||S.weekendDay||'Sábado'}; }
+function attDis(r,k){ return (r.asambleas&&r.asambleas[attMonday(k)])?'disabled':''; }
+function attConmMes(mes){ const l=(DATA.predicacion&&DATA.predicacion.campanas)||[]; return l.some(c=>c.tipo==='conmemoracion'&&c.fecha&&c.fecha.slice(0,7)===mes); }
+function attCardExtra(r,k){
+  const as=!!(r.asambleas&&r.asambleas[attMonday(k)]), o=(r.days&&r.days[k])||{}, mes=k.slice(0,7);
+  let h='<label class="att-opt"><input type="checkbox" data-asam="'+k+'" '+(as?'checked':'')+'> Semana de asamblea <small>(asistencia en 0)</small></label>';
+  if(attConmMes(mes)) h+='<label class="att-opt"><input type="checkbox" data-conm="'+k+'" '+(o.conmemoracion?'checked':'')+'> Asistencia de la Conmemoración <small>(solo nota)</small></label>';
+  return '<div class="att-opts">'+h+'</div>'+(as?'<div class="att-asam">Asamblea · esta semana cuenta como 0</div>':'')+(o.conmemoracion?'<div class="att-conm">Nota: asistencia de la Conmemoración</div>':'');
+}
+function attAnioCard(y){
+  const d=attDiasAnio(y), op=(arr,v)=>arr.map(x=>'<option '+(x===v?'selected':'')+'>'+x+'</option>').join('');
+  return '<div class="card"><h2>Días de reunión del año '+y+'</h2><div class="grid2"><div class="field"><label>Reunión entre semana ('+y+')</label><select id="yMid">'+op(AT_DIAS.slice(1,6),d.mid)+'</select></div><div class="field"><label>Reunión fin de semana ('+y+')</label><select id="yEnd">'+op(AT_DIAS,d.end)+'</select></div></div><small>Cada año puede tener sus propios días. El cambio se aplica a los meses de '+y+' que todavía no tienen asistencia cargada; los meses con datos conservan sus días (se cambian en «Configuración de reuniones» de ese mes).'+(attConmMes(y+'-03')||attConmMes(y+'-04')?'':' La nota de Conmemoración se activa en el mes en que registres la Conmemoración en Predicación › Campañas.')+'</small></div>';
+}
+function attSinDatos(r){ return !Object.values(r.days||{}).some(v=>(Number(v.presencial)||0)+(Number(v.zoom)||0)>0||v.conmemoracion); }
+function attBind(content,actions,ensureMonth,y){
+  const yM=document.getElementById('yMid'), yE=document.getElementById('yEnd');
+  const guardar=()=>{ const S=DATA.meetingSettings=DATA.meetingSettings||{}; S.years=S.years||{}; S.years[y]={midweekDay:yM.value,weekendDay:yE.value};
+    Object.keys(DATA.meetingAttendance||{}).forEach(k=>{ if(k.slice(0,4)!==String(y)) return; const r=DATA.meetingAttendance[k]; if(attSinDatos(r)&&!(r.asambleas&&Object.keys(r.asambleas).length)){ r.midweekDay=yM.value; r.weekendDay=yE.value; } });
+    saveData(); renderAttendance(content,actions); };
+  if(yM) yM.onchange=guardar; if(yE) yE.onchange=guardar;
+  content.querySelectorAll('[data-asam]').forEach(c=>c.onchange=()=>{ attSetAsamblea(c.dataset.asam,c.checked,ensureMonth); saveData(); renderAttendance(content,actions); });
+  content.querySelectorAll('[data-conm]').forEach(c=>c.onchange=()=>{ const rr=ensureMonth(c.dataset.conm.slice(0,7)), k=c.dataset.conm; rr.days[k]=rr.days[k]||{}; if(c.checked) rr.days[k].conmemoracion=true; else { delete rr.days[k].conmemoracion; if(!Object.keys(rr.days[k]).length) delete rr.days[k]; } saveData(); renderAttendance(content,actions); });
+}
+function attSetAsamblea(k,on,ensureMonth){
+  const lun=attMonday(k), [y,m,d]=lun.split('-').map(Number);
+  for(let i=0;i<7;i++){
+    const dt=new Date(y,m-1,d+i), key=attK(dt), mk=key.slice(0,7), ex=DATA.meetingAttendance[mk];
+    const cfg=ex?{mid:ex.midweekDay,end:ex.weekendDay}:attDiasAnio(dt.getFullYear()), dn=AT_DIAS[dt.getDay()];
+    if(dn!==cfg.mid&&dn!==cfg.end) continue;
+    const rr=ensureMonth(mk); rr.asambleas=rr.asambleas||{};
+    if(on){ rr.asambleas[lun]=true; rr.days[key]=Object.assign(rr.days[key]||{},{presencial:0,zoom:0}); }
+    else { delete rr.asambleas[lun]; if(rr.days[key]){ delete rr.days[key].presencial; delete rr.days[key].zoom; if(!Object.keys(rr.days[key]).length) delete rr.days[key]; } }
+  }
+}
+
+/* ===== EVENTOS — solo administradores editan; el resto consulta ===== */
+function evD(){ if(!DATA.eventos||!Array.isArray(DATA.eventos.items)) DATA.eventos={items:[]}; return DATA.eventos; }
+const EV={ed:null};
+function evDur(e){ const n=Number(e.durNum)||0; if(!n) return ''; return n+' '+(e.durUnidad==='dias'?(n===1?'día':'días'):(n===1?'hora':'horas')); }
+function evFin(e){ if(e.durUnidad!=='dias'||!e.fecha||(Number(e.durNum)||0)<2) return ''; const [y,m,d]=e.fecha.split('-').map(Number), f=new Date(y,m-1,d+Number(e.durNum)-1); return f.getFullYear()+'-'+String(f.getMonth()+1).padStart(2,'0')+'-'+String(f.getDate()).padStart(2,'0'); }
+function evFecha(iso,corto){ try{ const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d).toLocaleDateString('es-EC',corto?{day:'numeric',month:'short'}:{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }catch(e){ return iso||''; } }
+function evCuando(e){ const fin=evFin(e); return evFecha(e.fecha)+(fin?' → '+evFecha(fin):'')+(e.hora?' · '+e.hora:''); }
+function renderEventos(content,actions){
+  const adm=isAdmin(), D=evD(), hoy=new Date().toISOString().slice(0,10);
+  actions.innerHTML=adm?'<button class="btn" id="evNuevo" type="button">+ Nuevo evento</button>':'';
+  const items=D.items.slice().sort((a,b)=>String(a.fecha).localeCompare(String(b.fecha)));
+  const prox=items.filter(e=>(evFin(e)||e.fecha)>=hoy), pas=items.filter(e=>(evFin(e)||e.fecha)<hoy).reverse();
+  const fila=e=>`<div class="ev-item"><div class="ev-date"><b>${escapeHtml(evFecha(e.fecha,true))}</b></div><div class="ev-info"><div class="ev-n">${escapeHtml(e.nombre||'')}</div><div class="ev-m">${escapeHtml(evCuando(e))}${evDur(e)?' · Duración: '+escapeHtml(evDur(e)):''}${e.lugar?' · 📍 '+escapeHtml(e.lugar):''}</div></div>${adm?`<div class="ev-a"><button class="btn small secondary" data-evedit="${escapeAttr(e.id)}" type="button">Editar</button><button class="btn small danger" data-evdel="${escapeAttr(e.id)}" type="button">Eliminar</button></div>`:''}</div>`;
+  content.innerHTML=`${adm?'':'<div class="ct-note">Modo lectura: puedes consultar los eventos. Solo los administradores pueden registrarlos o modificarlos.</div>'}<div id="evForm"></div>
+   <div class="card"><h2>Próximos eventos<small>${prox.length} programado${prox.length===1?'':'s'}</small></h2>${prox.length?prox.map(fila).join(''):'<div class="empty">No hay eventos próximos.</div>'}</div>
+   ${pas.length?`<div class="card"><h2>Eventos pasados</h2>${pas.map(fila).join('')}</div>`:''}`;
+  if(!adm) return;
+  const form=()=>{ const e=EV.ed==='nuevo'?{}:D.items.find(x=>x.id===EV.ed); if(!EV.ed||!e){ document.getElementById('evForm').innerHTML=''; return; }
+    document.getElementById('evForm').innerHTML=`<div class="card"><h2>${e.id?'Editar evento':'Nuevo evento'}</h2><div class="grid2"><div class="field"><label>Nombre del evento *</label><input id="evN" maxlength="140" value="${escapeAttr(e.nombre||'')}"></div><div class="field"><label>Lugar</label><input id="evL" maxlength="140" value="${escapeAttr(e.lugar||'')}"></div></div>
+     <div class="grid3"><div class="field"><label>Fecha *</label><input type="date" id="evF" value="${escapeAttr(e.fecha||'')}"></div><div class="field"><label>Hora (opcional)</label><input type="time" id="evH" value="${escapeAttr(e.hora||'')}"></div><div class="field"><label>Duración</label><div class="ev-dur"><input type="number" min="0" max="999" id="evDn" value="${escapeAttr(e.durNum||'')}"><select id="evDu"><option value="horas" ${e.durUnidad!=='dias'?'selected':''}>horas</option><option value="dias" ${e.durUnidad==='dias'?'selected':''}>días</option></select></div></div></div>
+     <div class="actions"><button class="btn secondary" id="evCan" type="button">Cancelar</button><button class="btn" id="evOk" type="button">Guardar</button></div></div>`;
+    document.getElementById('evCan').onclick=()=>{ EV.ed=null; form(); };
+    document.getElementById('evOk').onclick=()=>{ const v=id=>document.getElementById(id).value.trim(), nombre=v('evN'), fecha=v('evF'); if(!nombre||!fecha){ showToast('Escribe el nombre y la fecha'); return; }
+      const rec={id:e.id||('ev'+Date.now().toString(36)+Math.random().toString(36).slice(2,5)),nombre,fecha,hora:v('evH'),durNum:Math.max(0,Math.min(999,Math.floor(Number(v('evDn'))||0)))||'',durUnidad:v('evDu'),lugar:v('evL')};
+      if(e.id) Object.assign(e,rec); else D.items.push(rec); saveData(); EV.ed=null; renderEventos(content,actions); showToast('Evento guardado'); };
+  };
+  document.getElementById('evNuevo').onclick=()=>{ EV.ed='nuevo'; form(); document.getElementById('evForm').scrollIntoView({behavior:'smooth'}); };
+  content.querySelectorAll('[data-evedit]').forEach(b=>b.onclick=()=>{ EV.ed=b.dataset.evedit; form(); document.getElementById('evForm').scrollIntoView({behavior:'smooth'}); });
+  content.querySelectorAll('[data-evdel]').forEach(b=>b.onclick=()=>{ if(!confirm('¿Eliminar este evento?')) return; D.items=D.items.filter(x=>x.id!==b.dataset.evdel); saveData(); renderEventos(content,actions); });
+  form();
+}
+
+/* ===== TABLERO DE ANUNCIOS — una sola página con lo que se muestra a la congregación ===== */
+const TB={mes:null,vym:[],cts:[],uv:null,uc:null,urls:{},errV:null,errC:null,okV:false,okC:false};
+const TB_MN=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+function tbHoy(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+function tbMesTxt(k){ const [y,m]=k.split('-').map(Number); return TB_MN[m-1]+' '+y; }
+function tbMesesOpc(){ const d=new Date(), out=[]; for(let i=-11;i<=2;i++){ const x=new Date(d.getFullYear(),d.getMonth()+i,1); out.push(x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')); } return out.reverse(); }
+function tbWatch(){
+  const cv=(typeof binCol==='function')&&binCol('vidaministerio'), cc=(typeof binCol==='function')&&binCol('contabilidad');
+  if(cv&&!TB.uv) TB.uv=cv.where('kind','==','meta').onSnapshot(s=>{ TB.vym=s.docs.map(d=>d.data()); TB.okV=true; TB.errV=null; tbPdfs(); },e=>{ TB.errV=e; TB.okV=true; TB.uv=null; tbPdfs(); });
+  if(cc&&!TB.uc) TB.uc=cc.where('cat','==','4.0').onSnapshot(s=>{ TB.cts=s.docs.map(d=>d.data()).filter(d=>d.kind==='doc'); TB.okC=true; TB.errC=null; tbPdfs(); },e=>{ TB.errC=e; TB.okC=true; TB.uc=null; tbPdfs(); });
+}
+function tbFrame(box,meta,col,sel){
+  const k=col+'|'+(meta.fid||meta.id); box.innerHTML='<div class="empty">Cargando PDF…</div>';
+  const poner=u=>{ if(box.dataset.cur!==k) return; box.innerHTML='<iframe class="tb-frame" title="'+escapeAttr(meta.titulo||'PDF')+'" src="'+u+((typeof sinDescarga==='function'&&sinDescarga())?'#toolbar=0&navpanes=0':'')+'"></iframe>'; };
+  box.dataset.cur=k; if(TB.urls[k]) return poner(TB.urls[k]);
+  binBlob(col,meta).then(b=>{ TB.urls[k]=URL.createObjectURL(b); poner(TB.urls[k]); }).catch(()=>{ if(box.dataset.cur===k) box.innerHTML='<div class="empty">No se pudo mostrar el PDF.</div>'; });
+}
+function tbPdfs(){
+  if(typeof VIEW==='undefined'||VIEW!=='tablero') return;
+  /* Vida y Ministerio: PDF(s) del mes, por semana */
+  const vb=document.getElementById('tbVym'), vs=document.getElementById('tbVymSel');
+  if(vb){
+    const l=TB.vym.filter(c=>String(c.semana||'').slice(0,7)===TB.mes).sort((a,b)=>String(a.semana).localeCompare(String(b.semana)));
+    if(TB.errV) vb.innerHTML='<div class="empty">No se pudo leer Vida y Ministerio.</div>'; else if(!TB.okV) vb.innerHTML='<div class="empty">Cargando…</div>';
+    else if(!l.length){ vs.innerHTML=''; vs.style.display='none'; vb.innerHTML='<div class="empty">No hay PDF de Vida y Ministerio para '+escapeHtml(tbMesTxt(TB.mes))+'.</div>'; }
+    else { vs.style.display=''; const hoy=new Date().toISOString().slice(0,10); let cur=TB.vSel&&l.find(c=>c.id===TB.vSel)||[...l].reverse().find(c=>String(c.semana)<=hoy)||l[0];
+      vs.innerHTML=l.map(c=>'<option value="'+escapeAttr(c.id)+'" '+(c.id===cur.id?'selected':'')+'>'+escapeHtml((typeof vymFechaLarga==='function'?vymFechaLarga(c.semana):c.semana)+' · '+(c.titulo||''))+'</option>').join('');
+      vs.onchange=()=>{ TB.vSel=vs.value; tbPdfs(); }; if(vb.dataset.cur!=='vidaministerio|'+(cur.fid||cur.id)) tbFrame(vb,cur,'vidaministerio'); }
+  }
+  /* Informe mensual de cuentas (S-30) */
+  const cb=document.getElementById('tbCt');
+  if(cb){
+    const mk=d=>ctAnioMes(d.periodo,d.mes)+'-'+String(d.mes).padStart(2,'0'), l=TB.cts.filter(d=>mk(d)===TB.mes).sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha)));
+    if(TB.errC) cb.innerHTML='<div class="empty">No se pudo leer el informe de cuentas.</div>'; else if(!TB.okC) cb.innerHTML='<div class="empty">Cargando…</div>';
+    else if(!l.length) cb.innerHTML='<div class="empty">Aún no se ha cargado el Informe Mensual de las Cuentas (S-30) de '+escapeHtml(tbMesTxt(TB.mes))+'.</div>';
+    else if(cb.dataset.cur!=='contabilidad|'+(l[0].fid||l[0].id)) tbFrame(cb,l[0],'contabilidad');
+  }
+}
+function tbConf(){
+  const b=document.getElementById('tbConf'); if(!b) return; const D=DATA.discursos||{}, [y,m]=TB.mes.split('-').map(Number), mi=m-1;
+  const en=f=>{ if(!f) return false; const d=new Date(f+'T00:00:00'); return d.getFullYear()===y&&d.getMonth()===mi; };
+  const tema=id=>{ const r=(D.discursos||[]).find(x=>x.id===id); return r?{n:r.numero,t:r.titulo||r.tema||''}:{n:'',t:''}; };
+  const nom=id=>{ const d=(D.discursantes||[]).find(x=>x.id===id); return d?d.nombre:''; };
+  const filas=[];
+  (D.asignaciones||[]).filter(a=>a.tipo==='Local'&&en(a.fecha)).forEach(a=>{ const t=tema(a.discursoId); filas.push({f:a.fecha,tipo:'Local',d:nom(a.discursanteId),t:t.t,n:t.n}); });
+  (D.visitas||[]).filter(v=>en(v.fecha)).forEach(v=>{ const t=tema(v.discursoId); filas.push({f:v.fecha,tipo:'Visita externa',d:v.discursante||'',t:t.t,n:t.n}); });
+  filas.sort((a,b)=>a.f.localeCompare(b.f));
+  const sal=(D.asignaciones||[]).filter(a=>a.tipo==='Visita'&&en(a.fecha)), lugares=[...new Set(sal.map(a=>(a.lugar||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+  const ft=f=>{ const d=new Date(f+'T00:00:00'); return d.toLocaleDateString('es-EC',{weekday:'short',day:'2-digit',month:'2-digit'}); };
+  b.innerHTML='<div class="tb-sub">ARREGLO DE CONFERENCIAS '+TB_MN[mi].toUpperCase()+' '+y+'</div>'+(filas.length?'<table class="tb-t"><thead><tr><th>Fecha</th><th>Tipo</th><th>Discursante</th><th>Tema</th><th>N.º</th></tr></thead><tbody>'+filas.map(r=>'<tr><td>'+escapeHtml(ft(r.f))+'</td><td>'+r.tipo+'</td><td><b>'+escapeHtml(r.d)+'</b></td><td>'+escapeHtml(r.t)+'</td><td>'+escapeHtml(r.n===''?'—':r.n)+'</td></tr>').join('')+'</tbody></table>':'<div class="empty">No hay conferencias registradas este mes.</div>')
+   +lugares.map(l=>'<div class="tb-sub tb-sub2">CONGREGACIÓN «'+escapeHtml(l)+'»</div><table class="tb-t"><thead><tr><th>Fecha</th><th>Discursantes que salen</th><th>Tema</th><th>N.º</th></tr></thead><tbody>'+sal.filter(a=>(a.lugar||'').trim()===l).sort((a,b)=>a.fecha.localeCompare(b.fecha)).map(a=>{ const t=tema(a.discursoId); return '<tr><td>'+escapeHtml(ft(a.fecha))+'</td><td><b>'+escapeHtml(nom(a.discursanteId))+'</b></td><td>'+escapeHtml(t.t)+'</td><td>'+escapeHtml(t.n===''?'—':t.n)+'</td></tr>'; }).join('')+'</tbody></table>').join('');
+}
+function tbPrv(){
+  const b=document.getElementById('tbPrv'); if(!b) return; const P=DATA.privilegios||{};
+  if(!(P.db&&P.db.people)){ b.innerHTML='<div class="empty">Aún no se ha generado el Programa de Privilegios.</div>'; return; }
+  const st={edit:false,admin:false,db:P.db,cfg:P.cfg||null,ui:{view:'mes',month:TB.mes}};
+  b.innerHTML='<iframe class="tb-frame" id="tbPrvFrame" title="Programa de Privilegios"></iframe>';
+  document.getElementById('tbPrvFrame').srcdoc=PRV_HTML.replace('/*__PRV_INIT__*/',()=>'window.__PRV='+JSON.stringify(st).replace(/</g,'\\u003c')+';');
+}
+function tbReporte(id,fn){
+  const b=document.getElementById(id); if(!b) return; const e=GPST.edit; GPST.edit=false;
+  try{ fn(b); b.querySelectorAll('.ct-note,datalist').forEach(x=>x.remove()); }catch(x){ console.warn(x); b.innerHTML='<div class="empty">No se pudo mostrar.</div>'; } finally{ GPST.edit=e; }
+}
+function renderTablero(content,actions){
+  TB.mes=TB.mes||tbHoy();
+  actions.innerHTML='<label class="tb-mes">Mes <select id="tbMes" data-ro-ok>'+tbMesesOpc().map(k=>'<option value="'+k+'" '+(k===TB.mes?'selected':'')+'>'+tbMesTxt(k)+'</option>').join('')+'</select></label>';
+  document.getElementById('tbMes').onchange=e=>{ TB.mes=e.target.value; TB.vSel=null; renderTablero(content,actions); };
+  const tile=(cls,tit,head,id)=>'<section class="tb-tile '+cls+'"><header><h3>'+tit+'</h3>'+(head||'')+'</header><div class="tb-body" id="'+id+'"></div></section>';
+  content.innerHTML='<div class="tb-grid">'
+   +tile('tb-pdf','Vida y Ministerio Cristiano','<select id="tbVymSel" data-ro-ok></select>','tbVym')
+   +tile('tb-pdf','Informe Mensual de las Cuentas (S-30) · '+tbMesTxt(TB.mes),'','tbCt')
+   +tile('tb-med','Arreglo mensual de conferencias · Joya Oeste','','tbConf')
+   +tile('tb-med','Programa de Privilegios · Congregación «Joya Oeste»','','tbPrv')
+   +tile('tb-full','Arreglo de predicación','','tbArr')
+   +tile('tb-full','Conformación de grupos','','tbGr')+'</div>';
+  tbWatch(); tbPdfs(); tbConf(); tbPrv();
+  tbReporte('tbArr',b=>arPintar(b)); tbReporte('tbGr',b=>gpPintarGrupos(b));
+  if(typeof lockUI==='function') lockUI();
+}
+
 /* ===== Bitácora de cambios (solo admins) · Olvidé mi contraseña · Correo de publicadores · Aviso de discursos ===== */
 const BTC={snap:null,t:null,pagina:'',vista:'',list:[],unsub:null,err:null,q:'',u:'',loaded:false};
 const BTC_ETQ={publishers:'Publicadores',meetingAttendance:'Asistencia a reuniones',meetingSettings:'Asistencia a reuniones',discursos:'Discursos Públicos',actividades:'Actividades',privilegios:'Programa de Privilegios',limpieza:'Limpieza & Asistencia',organigrama:'Organigrama',preachingGroups:'Conformación de grupos',territories:'Territorios',territoryAssignments:'Registro de asignación de territorio',anuncios:'Anuncios a la Congregación',arreglosPred:'Arreglos de predicación',asistExt:'Reporte de asistencia'};
@@ -6180,6 +6429,8 @@ function render(){
   else if(VIEW==='limphosp'){ title.innerHTML=LP_ICO_H+' Hospitalidad'; meta.textContent=canLimp()?'Semanas por grupo de hospitalidad':'Consulta (solo lectura)'; renderLimpieza(content, actions,'hosp'); }
   else if(VIEW==='limpprofunda'){ title.innerHTML=LP_ICO+' Limpieza Profunda'; meta.textContent=canLimp()?'Programa de limpieza profunda':'Consulta (solo lectura)'; renderLimpieza(content, actions,'profunda'); }
   else if(VIEW==='privilegios'){ title.textContent='Programa de Privilegios'; meta.textContent=canPrv()?'Asignaciones, rotación, puntaje y reglas':'Consulta (solo lectura)'; renderPrivilegios(content, actions); }
+  else if(VIEW==='eventos'){ title.textContent='Eventos'; meta.textContent=READONLY?'Consulta (solo lectura)':'Fecha, duración y lugar de los eventos'; renderEventos(content, actions); }
+  else if(VIEW==='tablero'){ title.textContent='Tablero de Anuncios'; meta.textContent='Lo que se muestra a la congregación este mes'; renderTablero(content, actions); }
   else if(VIEW==='bitacora'){ title.textContent='Bitácora de cambios'; meta.textContent='Quién cambió qué y en qué página · solo administradores'; renderBitacora(content, actions); }
   else if(VIEW==='asistExt'){ title.textContent='Reporte de asistencia (externo)'; meta.textContent='QR y reportes recibidos · solo administradores'; renderAsistExt(content, actions); }
   else if(VIEW==='organigrama'){ title.textContent='Organigrama'; meta.textContent=READONLY?'Consulta (solo lectura)':'Departamentos, responsables y auxiliares'; renderOrganigrama(content, actions); }
@@ -6525,15 +6776,16 @@ function renderAttendance(content,actions){
   function apply(){SELECTED_MONTH=ys.value+'-'+String(Number(ms.value)+1).padStart(2,'0');SELECTED_SERVICE_YEAR=serviceYearOfMonthKey(SELECTED_MONTH);renderAttendance(content,actions);}
   ys.onchange=apply;ms.onchange=apply;
   const m={key:selectedKey,year:initialYear,monthIndex};
-  function ensureMonth(key){if(!DATA.meetingAttendance[key])DATA.meetingAttendance[key]={days:{},weeks:{},midweekDay:DATA.meetingSettings.midweekDay,weekendDay:DATA.meetingSettings.weekendDay};const r=DATA.meetingAttendance[key];r.days=r.days||{};r.midweekDay=r.midweekDay||DATA.meetingSettings.midweekDay;r.weekendDay=r.weekendDay||DATA.meetingSettings.weekendDay;return r;}
+  function ensureMonth(key){const yd=attDiasAnio(Number(key.slice(0,4)));if(!DATA.meetingAttendance[key])DATA.meetingAttendance[key]={days:{},weeks:{},midweekDay:yd.mid,weekendDay:yd.end};const r=DATA.meetingAttendance[key];r.days=r.days||{};r.midweekDay=r.midweekDay||yd.mid;r.weekendDay=r.weekendDay||yd.end;return r;}
   function datesFor(year,mi,dayName){const out=[],target=days.indexOf(dayName),d=new Date(year,mi,1);while(d.getMonth()===mi){if(d.getDay()===target)out.push(new Date(d));d.setDate(d.getDate()+1);}return out;}
   function dateKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
   const r=ensureMonth(m.key),all=[];datesFor(m.year,m.monthIndex,r.midweekDay).forEach(d=>all.push({d,label:'Reunión entre semana'}));datesFor(m.year,m.monthIndex,r.weekendDay).forEach(d=>all.push({d,label:'Reunión fin de semana'}));all.sort((a,b)=>a.d-b.d);
   let mp=0,mz=0;Object.values(r.days).forEach(v=>{mp+=Number(v.presencial)||0;mz+=Number(v.zoom)||0;});
-  content.innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><h2>Asistencia a reuniones — ${MONTH_NAMES[m.monthIndex]} ${m.year}</h2><small>Filtro activo: un solo mes. Las fechas se guardan con año, mes y día exactos.</small></div><div class="attendance-total" data-month-summary style="margin-top:0;min-width:360px"><div><small>Presencial del mes</small><strong>${mp}</strong></div><div><small>Zoom del mes</small><strong>${mz}</strong></div><div><small>Total del mes</small><strong>${mp+mz}</strong></div></div></div></div><div class="card"><h2>Configuración de reuniones</h2><div class="grid2"><div class="field"><label>Día reunión entre semana</label><select id="midDay">${days.slice(1,6).map(d=>`<option ${d===r.midweekDay?'selected':''}>${d}</option>`).join('')}</select></div><div class="field"><label>Día reunión fin de semana</label><select id="weekDay">${days.map(d=>`<option ${d===r.weekendDay?'selected':''}>${d}</option>`).join('')}</select></div></div></div><div class="week-grid">${all.map(x=>{const k=dateKey(x.d),o=r.days[k]||{},p=Number(o.presencial)||0,z=Number(o.zoom)||0;return `<div class="week-card meeting-day" data-date="${k}" data-month="${m.key}"><h3>${x.label} · ${x.d.toLocaleDateString('es-EC',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})}</h3><div class="grid2"><div class="field"><label>Presencial</label><input type="number" min="0" data-att="presencial" value="${o.presencial??''}"></div><div class="field"><label>Zoom</label><input type="number" min="0" data-att="zoom" value="${o.zoom??''}"></div></div><div class="attendance-total"><div><small>Total del día</small><strong>${p+z}</strong></div><div><small>Presencial + Zoom</small><strong>${p} + ${z}</strong></div></div></div>`}).join('')||'<div class="empty">No hay reuniones configuradas para este mes.</div>'}</div>`;
-  function changeDay(which,val){DATA.meetingSettings[which]=val;r[which]=val;saveData();renderAttendance(content,actions);}
+  content.innerHTML=`<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><h2>Asistencia a reuniones — ${MONTH_NAMES[m.monthIndex]} ${m.year}</h2><small>Filtro activo: un solo mes. Las fechas se guardan con año, mes y día exactos.</small></div><div class="attendance-total" data-month-summary style="margin-top:0;min-width:360px"><div><small>Presencial del mes</small><strong>${mp}</strong></div><div><small>Zoom del mes</small><strong>${mz}</strong></div><div><small>Total del mes</small><strong>${mp+mz}</strong></div></div></div></div><div class="card"><h2>Configuración de reuniones de ${MONTH_NAMES[m.monthIndex]} ${m.year}</h2><div class="grid2"><div class="field"><label>Día reunión entre semana</label><select id="midDay">${days.slice(1,6).map(d=>`<option ${d===r.midweekDay?'selected':''}>${d}</option>`).join('')}</select></div><div class="field"><label>Día reunión fin de semana</label><select id="weekDay">${days.map(d=>`<option ${d===r.weekendDay?'selected':''}>${d}</option>`).join('')}</select></div></div></div>${attAnioCard(m.year)}<div class="week-grid">${all.map(x=>{const k=dateKey(x.d),o=r.days[k]||{},p=Number(o.presencial)||0,z=Number(o.zoom)||0;return `<div class="week-card meeting-day" data-date="${k}" data-month="${m.key}"><h3>${x.label} · ${x.d.toLocaleDateString('es-EC',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})}</h3>${attCardExtra(r,k)}<div class="grid2"><div class="field"><label>Presencial</label><input type="number" min="0" data-att="presencial" ${attDis(r,k)} value="${o.presencial??''}"></div><div class="field"><label>Zoom</label><input type="number" min="0" data-att="zoom" ${attDis(r,k)} value="${o.zoom??''}"></div></div><div class="attendance-total"><div><small>Total del día</small><strong>${p+z}</strong></div><div><small>Presencial + Zoom</small><strong>${p} + ${z}</strong></div></div></div>`}).join('')||'<div class="empty">No hay reuniones configuradas para este mes.</div>'}</div>`;
+  function changeDay(which,val){r[which]=val;saveData();renderAttendance(content,actions);}
   document.getElementById('midDay').onchange=e=>changeDay('midweekDay',e.target.value);document.getElementById('weekDay').onchange=e=>changeDay('weekendDay',e.target.value);
   content.querySelectorAll('.meeting-day input').forEach(inp=>inp.onchange=()=>{const card=inp.closest('.meeting-day'),rr=ensureMonth(card.dataset.month),k=card.dataset.date;rr.days[k]=rr.days[k]||{};rr.days[k][inp.dataset.att]=Math.max(0,Number(inp.value)||0);saveData();const v=rr.days[k],t=(Number(v.presencial)||0)+(Number(v.zoom)||0);const ds=card.querySelectorAll('.attendance-total strong');ds[0].textContent=t;ds[1].textContent=(Number(v.presencial)||0)+' + '+(Number(v.zoom)||0);let p=0,z=0;Object.values(rr.days).forEach(x=>{p+=Number(x.presencial)||0;z+=Number(x.zoom)||0;});const mt=document.querySelectorAll('[data-month-summary] strong');if(mt.length){mt[0].textContent=p;mt[1].textContent=z;mt[2].textContent=p+z;}});
+  attBind(content,actions,ensureMonth,m.year);
 }
 
 /* =========================================================
@@ -7387,7 +7639,7 @@ function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
 const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos y ver Auditoría)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['privilegios','Programa de Privilegios (modificar, puntaje y reglas)'],['auditoria','Auditoría Contabilidad (auditor temporal, máx. 1 mes)']];
-const MODULE_OF_VIEW={bitacora:'secretaria',asistExt:'secretaria',organigrama:'secretaria',anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
+const MODULE_OF_VIEW={eventos:'secretaria',tablero:'secretaria',bitacora:'secretaria',asistExt:'secretaria',organigrama:'secretaria',anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
 function computeReadOnly(view){
@@ -7398,7 +7650,7 @@ function computeReadOnly(view){
   if(view==='limpieza'||view==='limpgeneral'||view==='limpprofunda'||view==='limphosp') return !canLimp();
   if(view==='minutas') return !canMin();
   if(view==='privilegios') return !canPrv();
-  if(view==='organigrama'||view==='asistExt'||view==='bitacora') return !isAdmin();
+  if(view==='organigrama'||view==='asistExt'||view==='bitacora'||view==='eventos') return !isAdmin();
   if(CUR.role==='lector') return true;
   if(view==='actividades') return CUR.role!=='admin';
   if(CUR.role!=='colab') return false;
