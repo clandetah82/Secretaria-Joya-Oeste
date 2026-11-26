@@ -677,7 +677,16 @@ svg.leaflet-image-layer.leaflet-interactive path {
 .leaflet-draw-toolbar .leaflet-draw-edit-remove{background-position:-182px -2px}.leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove{background-position:-180px -1px}.leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled{background-position:-212px -2px}.leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled{background-position:-210px -1px}.leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled{background-position:-242px -2px}.leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-remove.leaflet-disabled{background-position:-240px -2px}
 .leaflet-mouse-marker{background-color:#fff;cursor:crosshair}.leaflet-draw-tooltip{background:#363636;background:rgba(0,0,0,0.5);border:1px solid transparent;-webkit-border-radius:4px;border-radius:4px;color:#fff;font:12px/18px "Helvetica Neue",Arial,Helvetica,sans-serif;margin-left:20px;margin-top:-21px;padding:4px 8px;position:absolute;visibility:hidden;white-space:nowrap;z-index:6}.leaflet-draw-tooltip:before{border-right:6px solid black;border-right-color:rgba(0,0,0,0.5);border-top:6px solid transparent;border-bottom:6px solid transparent;content:"";position:absolute;top:7px;left:-7px}
 .leaflet-error-draw-tooltip{background-color:#f2dede;border:1px solid #e6b6bd;color:#b94a48}.leaflet-error-draw-tooltip:before{border-right-color:#e6b6bd}.leaflet-draw-tooltip-single{margin-top:-12px}.leaflet-draw-tooltip-subtext{color:#f8d5e4}.leaflet-draw-guide-dash{font-size:1%;opacity:.6;position:absolute;width:5px;height:5px}.leaflet-edit-marker-selected{background-color:rgba(254,87,161,0.1);border:4px dashed rgba(254,87,161,0.6);-webkit-border-radius:4px;border-radius:4px;box-sizing:content-box}
-.leaflet-edit-move{cursor:move}.leaflet-edit-resize{cursor:pointer}.leaflet-oldie .leaflet-draw-toolbar{border:1px solid #999}</style>
+.leaflet-edit-move{cursor:move}.leaflet-edit-resize{cursor:pointer}.leaflet-oldie .leaflet-draw-toolbar{border:1px solid #999}
+/* ===== Estudios Progresivos y consentimiento de menores ===== */
+.est-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}.est-tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}.est-tile b{display:block;font-size:26px}.est-tile span{font-size:12px;color:var(--ink-soft)}
+.est-chip{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11.5px;font-weight:600;margin:2px 3px 2px 0;white-space:normal}.est-chip.alta{background:#fde8e6;color:#b42318}.est-chip.media{background:#fff3d6;color:#8a5a00}.est-chip.ok{background:#e3f4e8;color:#1c6b36}.est-chip.menor{background:#e8eafd;color:#4f5a9a}
+.est-h{margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line);font-size:16px}.est-row{cursor:pointer}.est-row:hover{background:#f4f6ff}.est-al{padding:8px 4px;border-bottom:1px solid var(--line-soft);cursor:pointer}.est-al:hover{background:#f4f6ff}
+.minor-box{border:1px solid #cdd0ef;background:#f6f7ff;border-radius:10px;padding:12px 14px;margin:14px 0}.minor-box h4{margin:0 0 6px;font-size:14px}.minor-note{font-size:12px;color:var(--ink-soft);margin:0 0 8px;display:block}
+.mh-add{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:8px}.mh-add input,.mh-add select{padding:7px;border:1px solid var(--line);border-radius:8px;width:auto;flex:0 0 auto}.mh-add input[type=text]{flex:1 1 150px;min-width:120px}.est-chk{display:flex;align-items:center;gap:6px;font-weight:600}.est-chk input{width:auto;margin:0}
+.mh-tbl{width:100%;border-collapse:collapse;font-size:12.5px}.mh-tbl th,.mh-tbl td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.mod-predicacion .cfg-blk{grid-column:1/-1;border:1px solid var(--line);border-radius:10px;padding:8px 12px 12px;margin:0}.mod-predicacion .cfg-blk legend{font-weight:700;padding:0 6px}.mod-predicacion .cfg-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end}.mod-predicacion .cfg-row .cfgGeo{justify-self:start}
+</style>
 <style>
   :root{
     --ink:#1E2A2A; --ink-soft:#3E4A47;
@@ -1997,6 +2006,7 @@ img,video,canvas{max-width:100%}
       <button data-view="publishers"><span class="icon">☰</span><span class="lbl">Publicadores</span></button>
        <button data-view="groupReport"><span class="icon">▦</span><span class="lbl">Informe por grupo y mes</span></button>
       <button data-view="publisherData"><span class="icon">▤</span><span class="lbl">Datos de Publicadores</span></button>
+      <button data-view="estudios"><span class="icon">❖</span><span class="lbl">Estudios Progresivos</span></button>
       <button data-view="cartas"><span class="icon">✉</span><span class="lbl">Cartas &amp; Anuncios</span></button>
       <button data-view="minutas" style="display:none"><span class="icon">☰</span><span class="lbl">Minutas Reunión de Ancianos</span></button>
     </nav>
@@ -3831,13 +3841,75 @@ const DAYS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'
 const STAGES=['Onix','Brillante','Diamante','Esmeralda','Tiara','Platino','Turquesa','Perla','Gema','Oro','Aquamarina']; const COMM=['Gran Aki','Veris','Tuti','Plaza Orlando','Plaza San Miguel'];
 const LEGACY_KEY='joyaOestePredicacionV2', esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function initial(){const carts=['Carrito con Ruedas','Una sola Cara','en V'], make=(id,kind,person,phone,mode,partner,partnerPhone,month,days,times,places,approvedId)=>({id,kind,person,phone,mode,partner,partnerPhone,month,year:2026,days,times,places,approvedId});return {config:[...STAGES.map((n,i)=>({id:'s'+i,kind:'etapas',name:n,place:'Etapa '+n,cart:carts[i%3],status:'Activo',photo:''})),...COMM.map((n,i)=>({id:'c'+i,kind:'comercial',name:n,place:n,cart:carts[(i+1)%3],status:'Activo',photo:''}))],approved:[{id:'a1',first:'María',last:'López',service:'PA',age:34,sex:'Femenino',phone:'099 123 4567',vehicle:'Sí',months:['Septiembre','Octubre','Noviembre']},{id:'a2',first:'Carlos',last:'Mendoza',service:'PB',age:41,sex:'Masculino',phone:'098 456 7890',vehicle:'No',months:['Septiembre','Octubre']},{id:'a3',first:'Ana',last:'Vega',service:'PAI',age:28,sex:'Femenino',phone:'097 234 5678',vehicle:'Sí',months:['Septiembre','Noviembre']},{id:'a4',first:'Luis',last:'Paredes',service:'PR',age:39,sex:'Masculino',phone:'096 345 6789',vehicle:'Sí',months:['Septiembre','Octubre']},{id:'a5',first:'Elena',last:'Cruz',service:'PS',age:45,sex:'Femenino',phone:'095 678 9012',vehicle:'No',months:['Septiembre','Noviembre']}],availability:[make('d1','etapas','Sofía Ramírez','099 555 1020','Pareja','Daniel Torres','098 555 1030','Septiembre',['Sábado'],['08:00–10:00'],['Onix']),make('d2','etapas','Jorge Almeida','098 777 1212','Solo','','','Septiembre',['Miércoles','Viernes'],['16:00–18:00'],['Diamante']),make('d3','etapas','Lucía Herrera','099 802 1122','Pareja','Pedro Ruiz','098 802 1133','Octubre',['Lunes'],['10:00–12:00'],['Esmeralda']),make('d4','etapas','Marta Silva','098 603 2244','Solo','','','Octubre',['Jueves'],['08:00–10:00'],['Turquesa']),make('d5','etapas','Andrés León','097 904 3355','Pareja','Paola Cedeño','097 904 3366','Noviembre',['Domingo'],['16:00–18:00'],['Oro']),make('d6','comercial','María López','099 123 4567','Pareja','Carlos Mendoza','098 456 7890','Septiembre',['Martes'],['10:00–12:00'],['Gran Aki'],'a1'),make('d7','comercial','Carlos Mendoza','098 456 7890','Solo','','','Septiembre',['Viernes'],['08:00–10:00'],['Veris'],'a2'),make('d8','comercial','Ana Vega','097 234 5678','Pareja','Luis Paredes','096 345 6789','Septiembre',['Sábado'],['16:00–18:00'],['Tuti'],'a3'),make('d9','comercial','Luis Paredes','096 345 6789','Solo','','','Octubre',['Miércoles'],['10:00–12:00'],['Plaza Orlando'],'a4'),make('d10','comercial','Elena Cruz','095 678 9012','Solo','','','Noviembre',['Domingo'],['08:00–10:00'],['Plaza San Miguel'],'a5')]}};
-let db=null;function save(){try{saveData()}catch(e){console.error(e)}}function setDb(q){DATA.predicacion=q;db=q}const id=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+let db=null;function save(){try{saveData()}catch(e){console.error(e)}}function setDb(q){DATA.predicacion=q;db=q;try{migrarConfig()}catch(e){console.warn(e)}}const id=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 function opts(items,selected=''){return items.map(x=>`<option ${x===selected?'selected':''}>${esc(x)}</option>`).join('')};function checks(items,selected=[]){return `<div class="checks">${items.map(x=>`<label><input type="checkbox" name="${esc(x)}" ${selected.includes(x)?'checked':''}>${esc(x)}</label>`).join('')}</div>`};function selected(container,items){return items.filter(x=>container.querySelector(`[name="${CSS.escape(x)}"]`)?.checked)}
-function configFor(kind){return db.config.filter(x=>x.kind===kind)}function cartOf(name){return db.config.find(x=>x.name===name)?.cart||'Sin asignar'}
+/* ---------- Configuración de lugares y carritos: etapa residencia, encargado, tipo (etapas y/o comercial) y coordenadas ---------- */
+const CART_TIPOS=['Carrito con Ruedas','Una sola Cara','en V'];
+/* Vista normalizada de un registro: los registros antiguos (un solo "kind", name y place) se leen como etapa o comercial. */
+function V(r){
+  if(r&&(r.etapa||r.comercial))return r;
+  const c=r.kind==='comercial',b=on=>({on,nombre:on?(r.name||''):'',lugar:on?(r.place||''):'',ubicacion:'',lat:'',lng:''});
+  return Object.assign({},r,{residencia:r.residencia||'',direccion:r.direccion||'',encargado:r.encargado||'',telefono:r.telefono||'',celular:r.celular||'',etapa:b(!c),comercial:b(c)});
+}
+function migrarConfig(){
+  if(READONLY||!db||!Array.isArray(db.config))return;let ch=false;
+  db.config.forEach(r=>{if(!(r.etapa||r.comercial)){const v=V(r);Object.keys(r).forEach(k=>delete r[k]);Object.assign(r,v);delete r.kind;delete r.name;delete r.place;ch=true}});
+  if(ch)save();
+}
+/* Lugares de cada modalidad ('etapas' | 'comercial') tal como los usan Disponibilidad, Horario y Campañas */
+function lugares(kind){
+  const key=kind==='etapas'?'etapa':'comercial',out=[];
+  (db.config||[]).map(V).forEach(r=>{const k=r[key];if(k&&k.on&&k.nombre)out.push({id:r.id,kind,name:k.nombre,place:k.lugar||'',ubicacion:k.ubicacion||'',lat:k.lat,lng:k.lng,cart:r.cart,status:r.status,photo:r.photo,rec:r})});
+  return out;
+}
+function configFor(kind){return lugares(kind)}
+function cartOf(name){const a=lugares('etapas').concat(lugares('comercial')).find(x=>x.name===name);return a?.cart||'Sin asignar'}
+function allPlaceNames(){return [...new Set(lugares('etapas').concat(lugares('comercial')).map(x=>x.name))]}
+function hayCoord(k){return k&&k.lat!==''&&k.lat!=null&&k.lng!==''&&k.lng!=null}
+function coordHtml(k){return hayCoord(k)?`<a href="https://www.google.com/maps?q=${encodeURIComponent(k.lat+','+k.lng)}" target="_blank" rel="noopener">${esc(k.lat)}, ${esc(k.lng)}</a>`:'<span class="hint">sin coordenadas</span>'}
+function bloqueHtml(p,titulo,lbl,k,ro){
+  k=k||{};
+  return `<fieldset class="cfg-blk" id="cfg_${p}" style="${k.on?'':'display:none'}"><legend>${titulo}</legend><div class="cfg-row"><label>${lbl}<input name="${p}Nombre" value="${esc(k.nombre||'')}"></label><label>Lugar<input name="${p}Lugar" value="${esc(k.lugar||'')}"></label><label>Ubicación (referencia)<input name="${p}Ubic" value="${esc(k.ubicacion||'')}" placeholder="Ej.: frente al parque"></label><label>Latitud<input name="${p}Lat" inputmode="decimal" placeholder="-0.180653" value="${esc(k.lat??'')}"></label><label>Longitud<input name="${p}Lng" inputmode="decimal" placeholder="-78.467834" value="${esc(k.lng??'')}"></label>${ro?'':`<button type="button" class="small cfgGeo" data-p="${p}">📍 Usar mi ubicación</button>`}</div></fieldset>`;
+}
+function renderConfig(editId=''){
+  const r0=db.config.find(x=>x.id===editId),r=r0?V(r0):{etapa:{on:true},comercial:{on:false}},f=$p('configForm'),E=r.etapa||{},C=r.comercial||{},ro=!!READONLY;
+  f.innerHTML=`<label>Etapa residencia<input name="residencia" value="${esc(r.residencia||'')}"></label><label style="grid-column:span 2">Dirección del carrito<input name="direccion" value="${esc(r.direccion||'')}"></label><label>Hermano encargado / Familia<input name="encargado" value="${esc(r.encargado||'')}"></label><label>Teléfono<input name="telefono" value="${esc(r.telefono||'')}"></label><label>Celular<input name="celular" value="${esc(r.celular||'')}"></label>
+  <div style="grid-column:1/-1"><b>Tipo</b> <span class="hint">(puede salir por Etapas, a Comercial o por ambas)</span><div class="checks"><label><input type="checkbox" name="etOn" ${E.on?'checked':''}>Sale por Etapas</label><label><input type="checkbox" name="coOn" ${C.on?'checked':''}>Sale a Comercial</label></div></div>
+  ${bloqueHtml('et','Etapas','Nombre de la etapa',E,ro)}${bloqueHtml('co','Comercial','Nombre del local',C,ro)}
+  <label>Tipo de carrito<select name="cart">${opts(CART_TIPOS,r.cart)}</select></label><label>Estado<select name="status">${opts(['Activo','Inactivo','Mantenimiento'],r.status||'Activo')}</select></label><label>Foto (solo comercial)<input name="photoFile" type="file" accept="image/*">${r.photo?'<img class="photo" src="'+r.photo+'">':''}</label><div class="actions"><button class="primary">${r0?'Guardar cambios':'Agregar lugar'}</button>${r0?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;
+  const tog=()=>{f.querySelector('#cfg_et').style.display=f.etOn.checked?'':'none';f.querySelector('#cfg_co').style.display=f.coOn.checked?'':'none'};
+  f.etOn.onchange=f.coOn.onchange=tog;tog();
+  f.querySelectorAll('.cfgGeo').forEach(b=>b.onclick=()=>{if(!navigator.geolocation)return alert('Este navegador no permite obtener la ubicación.');navigator.geolocation.getCurrentPosition(pos=>{f[b.dataset.p+'Lat'].value=pos.coords.latitude.toFixed(6);f[b.dataset.p+'Lng'].value=pos.coords.longitude.toFixed(6)},()=>alert('No se pudo obtener la ubicación. Escriba la latitud y longitud manualmente.'))});
+  f.onsubmit=async e=>{
+    e.preventDefault();
+    const etOn=f.etOn.checked,coOn=f.coOn.checked;
+    if(!etOn&&!coOn)return alert('Marque si sale por Etapas, a Comercial o por ambas.');
+    const bad=[],num=(v,lo,hi,n)=>{v=String(v||'').trim().replace(',','.');if(v==='')return '';const x=Number(v);if(!isFinite(x)||x<lo||x>hi){bad.push(n);return ''}return String(x)};
+    const blk=(p,on,nom)=>({on,nombre:on?f[p+'Nombre'].value.trim():'',lugar:on?f[p+'Lugar'].value.trim():'',ubicacion:on?f[p+'Ubic'].value.trim():'',lat:on?num(f[p+'Lat'].value,-90,90,'latitud de '+nom):'',lng:on?num(f[p+'Lng'].value,-180,180,'longitud de '+nom):''});
+    const et=blk('et',etOn,'la etapa'),co=blk('co',coOn,'el local comercial');
+    if(bad.length)return alert('Revise: '+bad.join(', ')+' (latitud entre -90 y 90, longitud entre -180 y 180).');
+    if(etOn&&!et.nombre)return alert('Escriba el nombre de la etapa.');
+    if(coOn&&!co.nombre)return alert('Escriba el nombre del local comercial.');
+    let pic=f.photoFile.files[0],photo=r.photo||'';if(pic)photo=await new Promise(ok=>{let q=new FileReader;q.onload=()=>ok(q.result);q.readAsDataURL(pic)});
+    const x={id:r.id||id(),residencia:f.residencia.value.trim(),direccion:f.direccion.value.trim(),encargado:f.encargado.value.trim(),telefono:f.telefono.value.trim(),celular:f.celular.value.trim(),cart:f.cart.value,status:f.status.value,photo,etapa:et,comercial:co};
+    if(r0){
+      /* si cambió el nombre de la etapa o del local, se actualizan las disponibilidades y campañas que lo usaban */
+      const ren=(a,b)=>{if(a&&b&&a!==b){(db.availability||[]).concat(db.campanas||[]).forEach(z=>{if(Array.isArray(z.places))z.places=z.places.map(p=>p===a?b:p)})}};
+      ren(E.nombre,et.nombre);ren(C.nombre,co.nombre);
+      Object.keys(r0).forEach(k=>delete r0[k]);Object.assign(r0,x);
+    }else db.config.push(x);
+    save();renderAll();
+  };
+  f.querySelector('.cancel')?.addEventListener('click',()=>renderConfig());
+  const lug=(k,ttl)=>k&&k.on?`<b>${esc(k.nombre||'—')}</b><br>${esc(k.lugar||'')}${k.ubicacion?'<br><span class="hint">'+esc(k.ubicacion)+'</span>':''}<br>${coordHtml(k)}`:'—';
+  $p('configList').innerHTML=db.config.length?`<table><thead><tr><th>Etapa residencia</th><th>Hermano encargado / Familia</th><th>Teléfono / Celular</th><th>Dirección del carrito</th><th>Tipo</th><th>Etapa · lugar · ubicación · coordenadas</th><th>Comercial · lugar · ubicación · coordenadas</th><th>Carrito</th><th>Estado</th><th>Foto</th><th></th></tr></thead><tbody>${db.config.map(V).map(x=>`<tr><td><b>${esc(x.residencia||'—')}</b></td><td>${esc(x.encargado||'—')}</td><td>${esc(x.telefono||'—')}<br>${esc(x.celular||'')}</td><td>${esc(x.direccion||'—')}</td><td>${x.etapa.on?'<span class="tag">Etapas</span>':''}${x.comercial.on?'<span class="tag">Comercial</span>':''}</td><td>${lug(x.etapa)}</td><td>${lug(x.comercial)}</td><td>${esc(x.cart||'')}</td><td><span class="tag">${esc(x.status||'')}</span></td><td>${x.photo?`<img class="photo" src="${x.photo}">`:'—'}</td><td><button class="small editConfig" data-id="${x.id}">Editar</button> <button class="small danger delConfig" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Aún no hay lugares configurados.</p>';
+  ROOT.querySelectorAll('.editConfig').forEach(b=>b.onclick=()=>{renderConfig(b.dataset.id);f.scrollIntoView({behavior:'smooth'})});
+  ROOT.querySelectorAll('.delConfig').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este lugar?')){db.config=db.config.filter(x=>x.id!==b.dataset.id);save();renderAll()}});
+}
 function availabilityForm(kind, record={}){let commercial=kind==='comercial', places=configFor(kind).map(x=>x.name);let person=commercial?`<label>Publicador aprobado<select name="approvedId" required><option value="">Seleccione…</option>${db.approved.map(a=>`<option value="${a.id}" ${record.approvedId===a.id?'selected':''}>${esc(a.first+' '+a.last+' · '+a.service)}</option>`).join('')}</select></label><p id="approvedNote" class="hint"></p>`:`<label>Nombre completo<input name="person" required value="${esc(record.person||'')}"></label><label>Teléfono<input name="phone" required value="${esc(record.phone||'')}"></label>`;return `<label>Mes del horario<select name="month" required>${opts(MONTHS,record.month||'Septiembre')}</select></label><label>Año del horario<select name="year" required>${opts(YEARS,record.year||2026)}</select></label>${person}<label>Modalidad<select name="mode"><option value="Solo" ${record.mode==='Solo'?'selected':''}>Predicaré solo/a</option><option value="Pareja" ${record.mode==='Pareja'?'selected':''}>Predicaré en Pareja</option></select></label><div class="pair ${record.mode==='Pareja'?'':'hidden'}"><label>Nombre de la pareja<input name="partner" ${record.mode==='Pareja'?'required':''} value="${esc(record.partner||'')}"></label><label>Teléfono de la pareja<input name="partnerPhone" ${record.mode==='Pareja'?'required':''} value="${esc(record.partnerPhone||'')}"></label></div><div class="grid" style="grid-column:1/-1"><label>Días disponibles${checks(DAYS,record.days||[])}</label><label>Horas disponibles${checks(TIMES,record.times||[])}</label><label>Lugares preferidos${checks(places,record.places||[])}</label></div><div id="cartHint" class="hint" style="grid-column:1/-1"></div><div class="actions" style="grid-column:1/-1"><button class="primary" type="submit">${record.id?'Guardar cambios':'Registrar disponibilidad'}</button>${record.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`}
 function renderAvailability(kind, editId=''){let form=$p(kind==='etapas'?'stageForm':'commercialForm'),r=db.availability.find(x=>x.id===editId);form.innerHTML=availabilityForm(kind,r);bindAvailability(form,kind,r);let rows=db.availability.filter(x=>x.kind===kind);$p(kind==='etapas'?'stageList':'commercialList').innerHTML=rows.length?`<table><thead><tr><th>Mes</th><th>Persona(s)</th><th>Días / horas</th><th>Lugares y carrito</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td><span class="tag">${esc(x.month||'Sin mes')}</span></td><td>${esc(x.person)}<br>${esc(x.phone)}${x.mode==='Pareja'?`<br>+ ${esc(x.partner)} · ${esc(x.partnerPhone)}`:''}</td><td>${x.days.map(d=>`<span class="tag">${d}</span>`).join('')}<br>${x.times.map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${x.places.map(p=>`<b>${esc(p)}</b><br><span class="hint">${esc(cartOf(p))}</span>`).join('<br>')}</td><td><button class="small editAvail" data-id="${x.id}" data-kind="${kind}">Editar</button> <button class="small danger delAvail" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`:'<p class="empty">Aún no hay disponibilidades registradas.</p>';ROOT.querySelectorAll('.editAvail').forEach(b=>b.onclick=()=>renderAvailability(b.dataset.kind,b.dataset.id));ROOT.querySelectorAll('.delAvail').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este registro?')){db.availability=db.availability.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
 function bindAvailability(form,kind,record){let update=()=>{let pair=form.mode.value==='Pareja';form.querySelector('.pair').classList.toggle('hidden',!pair);form.partner.required=form.partnerPhone.required=pair;let ps=selected(form,configFor(kind).map(x=>x.name));form.querySelector('#cartHint').innerHTML=ps.length?'<b>Carritos asignados:</b> '+ps.map(p=>`${esc(p)}: ${esc(cartOf(p))}`).join(' · '):'Seleccione uno o más lugares para ver el carrito asignado.';if(kind==='comercial'){let a=db.approved.find(x=>x.id===form.approvedId.value);form.querySelector('#approvedNote').textContent=a?`Teléfono registrado: ${a.phone} · Vehículo: ${a.vehicle} · Privilegio: ${(a.months||[]).join(', ')||'sin meses definidos'}`:'Seleccione un publicador aprobado.'}};form.onchange=update;update();form.onsubmit=e=>{e.preventDefault();let places=configFor(kind).map(x=>x.name),a=kind==='comercial'&&db.approved.find(x=>x.id===form.approvedId.value);if(kind==='comercial'&&!(a.months||[]).includes(form.month.value))return alert('Este publicador no tiene el privilegio asignado para el mes seleccionado.');let data={id:record?.id||id(),kind,month:form.month.value,year:Number(form.year.value),person:kind==='comercial'?a.first+' '+a.last:form.person.value.trim(),phone:kind==='comercial'?a.phone:form.phone.value.trim(),approvedId:kind==='comercial'?a.id:undefined,mode:form.mode.value,partner:form.partner.value.trim(),partnerPhone:form.partnerPhone.value.trim(),days:selected(form,DAYS),times:selected(form,TIMES),places:selected(form,places)};if(!data.days.length||!data.times.length||!data.places.length)return alert('Seleccione al menos un día, hora y lugar.');if(record){Object.assign(record,data)}else db.availability.push(data);save();renderAll()};form.querySelector('.cancel')?.addEventListener('click',()=>renderAvailability(kind))}
-function renderConfig(editId=''){let r=db.config.find(x=>x.id===editId)||{},f=$p('configForm');f.innerHTML=`<label>Tipo<select name="kind"><option value="etapas" ${r.kind==='etapas'?'selected':''}>Por etapas</option><option value="comercial" ${r.kind==='comercial'?'selected':''}>Comercial</option></select></label><label>Etapa / local<input name="name" required value="${esc(r.name||'')}"></label><label>Lugar / ubicación<input name="place" required value="${esc(r.place||'')}"></label><label>Tipo de carrito<select name="cart">${opts(['Carrito con Ruedas','Una sola Cara','en V'],r.cart)}</select></label><label>Estado<select name="status">${opts(['Activo','Inactivo','Mantenimiento'],r.status||'Activo')}</select></label><label>Foto (solo comercial)<input name="photoFile" type="file" accept="image/*">${r.photo?'<img class="photo" src="'+r.photo+'">':''}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar lugar'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;f.onsubmit=async e=>{e.preventDefault();let pic=f.photoFile.files[0],photo=r.photo||'';if(pic)photo=await new Promise(ok=>{let q=new FileReader;q.onload=()=>ok(q.result);q.readAsDataURL(pic)});let x={id:r.id||id(),kind:f.kind.value,name:f.name.value.trim(),place:f.place.value.trim(),cart:f.cart.value,status:f.status.value,photo};if(r.id)Object.assign(r,x);else db.config.push(x);save();renderAll()};f.querySelector('.cancel')?.addEventListener('click',()=>renderConfig());let rows=db.config;$p('configList').innerHTML=`<table><thead><tr><th>Tipo</th><th>Etapa / local</th><th>Lugar</th><th>Carrito</th><th>Estado</th><th>Foto</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.kind==='etapas'?'Por etapas':'Comercial'}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.place)}</td><td>${esc(x.cart)}</td><td><span class="tag">${esc(x.status)}</span></td><td>${x.photo?`<img class="photo" src="${x.photo}">`:'—'}</td><td><button class="small editConfig" data-id="${x.id}">Editar</button> <button class="small danger delConfig" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;ROOT.querySelectorAll('.editConfig').forEach(b=>b.onclick=()=>renderConfig(b.dataset.id));ROOT.querySelectorAll('.delConfig').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este lugar?')){db.config=db.config.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
+function renderConfigLegacy(editId=''){let r=db.config.find(x=>x.id===editId)||{},f=$p('configForm');f.innerHTML=`<label>Tipo<select name="kind"><option value="etapas" ${r.kind==='etapas'?'selected':''}>Por etapas</option><option value="comercial" ${r.kind==='comercial'?'selected':''}>Comercial</option></select></label><label>Etapa / local<input name="name" required value="${esc(r.name||'')}"></label><label>Lugar / ubicación<input name="place" required value="${esc(r.place||'')}"></label><label>Tipo de carrito<select name="cart">${opts(['Carrito con Ruedas','Una sola Cara','en V'],r.cart)}</select></label><label>Estado<select name="status">${opts(['Activo','Inactivo','Mantenimiento'],r.status||'Activo')}</select></label><label>Foto (solo comercial)<input name="photoFile" type="file" accept="image/*">${r.photo?'<img class="photo" src="'+r.photo+'">':''}</label><div class="actions"><button class="primary">${r.id?'Guardar cambios':'Agregar lugar'}</button>${r.id?'<button type="button" class="cancel">Cancelar</button>':''}</div>`;f.onsubmit=async e=>{e.preventDefault();let pic=f.photoFile.files[0],photo=r.photo||'';if(pic)photo=await new Promise(ok=>{let q=new FileReader;q.onload=()=>ok(q.result);q.readAsDataURL(pic)});let x={id:r.id||id(),kind:f.kind.value,name:f.name.value.trim(),place:f.place.value.trim(),cart:f.cart.value,status:f.status.value,photo};if(r.id)Object.assign(r,x);else db.config.push(x);save();renderAll()};f.querySelector('.cancel')?.addEventListener('click',()=>renderConfig());let rows=db.config;$p('configList').innerHTML=`<table><thead><tr><th>Tipo</th><th>Etapa / local</th><th>Lugar</th><th>Carrito</th><th>Estado</th><th>Foto</th><th></th></tr></thead><tbody>${rows.map(x=>`<tr><td>${x.kind==='etapas'?'Por etapas':'Comercial'}</td><td><b>${esc(x.name)}</b></td><td>${esc(x.place)}</td><td>${esc(x.cart)}</td><td><span class="tag">${esc(x.status)}</span></td><td>${x.photo?`<img class="photo" src="${x.photo}">`:'—'}</td><td><button class="small editConfig" data-id="${x.id}">Editar</button> <button class="small danger delConfig" data-id="${x.id}">Eliminar</button></td></tr>`).join('')}</tbody></table>`;ROOT.querySelectorAll('.editConfig').forEach(b=>b.onclick=()=>renderConfig(b.dataset.id));ROOT.querySelectorAll('.delConfig').forEach(b=>b.onclick=()=>{if(confirm('¿Eliminar este lugar?')){db.config=db.config.filter(x=>x.id!==b.dataset.id);save();renderAll()}})}
 function renderApproved(editId=''){
   let r=db.approved.find(x=>x.id===editId)||{},f=$p('approvedForm');
   const usados=new Set(db.approved.filter(x=>x.pubId&&x.id!==r.id).map(x=>x.pubId));
@@ -3884,7 +3956,7 @@ let campFiltro='todas';
 function semanaTxt(f){try{const d=new Date(f+'T00:00:00'),w=(d.getDay()+6)%7,a=new Date(d);a.setDate(d.getDate()-w);const b=new Date(a);b.setDate(a.getDate()+6);const o={day:'numeric',month:'long'};return 'Semana del '+a.toLocaleDateString('es-EC',o)+' al '+b.toLocaleDateString('es-EC',o)}catch(e){return f}}
 function fechaTxt(c){if(!c.fecha)return 'Sin fecha';return c.tipo==='visita'?semanaTxt(c.fecha):new Date(c.fecha+'T00:00:00').toLocaleDateString('es-EC',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
 function campForm(r={}){
-  const places=db.config.map(x=>x.name), tipo=r.tipo||(campFiltro!=='todas'?campFiltro:'asamblea');
+  const places=allPlaceNames(), tipo=r.tipo||(campFiltro!=='todas'?campFiltro:'asamblea');
   const ap=(name,sel,req)=>`<select name="${name}" ${req?'required':''}><option value="">${req?'Seleccione…':'— ninguno —'}</option>${db.approved.slice().sort((a,b)=>(a.last+a.first).localeCompare(b.last+b.first,'es')).map(a=>`<option value="${a.id}" ${sel===a.id?'selected':''}>${esc(a.first+' '+a.last+' · '+a.service)}</option>`).join('')}</select>`;
   return `<label>Tipo<select name="tipo">${Object.entries(CAMP_TIPOS).map(([k,v])=>`<option value="${k}" ${k===tipo?'selected':''}>${v}</option>`).join('')}</select></label>
   <label class="cTit">Título<input name="titulo" list="campSug" value="${esc(r.titulo||CAMP_DEF[tipo]||'')}" placeholder="Ej.: Asamblea de circuito"><datalist id="campSug"><option value="Asamblea de circuito"><option value="Asamblea regional"><option value="Asamblea especial"></datalist></label>
@@ -3903,7 +3975,7 @@ function renderCampanas(editId=''){
   f.onsubmit=e=>{e.preventDefault();const t=f.tipo.value,a=db.approved.find(x=>x.id===f.approvedId.value);if(!a)return alert('Elige un publicador de la lista de aprobados.');
     const pareja=f.mode.value==='Pareja'?f.partnerId.value:'';if(f.mode.value==='Pareja'&&!pareja)return alert('Elige la pareja de la lista de aprobados.');if(pareja&&pareja===a.id)return alert('La pareja debe ser otra persona.');
     const titulo=t==='visita'?CAMP_DEF.visita:f.titulo.value.trim();if(!titulo)return alert('Escribe el título.');
-    const x={id:r.id||id(),tipo:t,titulo,fecha:f.fecha.value,approvedId:a.id,mode:f.mode.value,partnerId:pareja,days:selected(f,DAYS),times:selected(f,TIMES),places:selected(f,db.config.map(y=>y.name))};
+    const x={id:r.id||id(),tipo:t,titulo,fecha:f.fecha.value,approvedId:a.id,mode:f.mode.value,partnerId:pareja,days:selected(f,DAYS),times:selected(f,TIMES),places:selected(f,allPlaceNames())};
     db.campanas=db.campanas||[];if(r.id)Object.assign(r,x);else db.campanas.push(x);save();renderAll()};
   f.querySelector('.cancel')?.addEventListener('click',()=>renderCampanas());
   $p('campFiltro').innerHTML=`<select id="campSel" data-ro-ok><option value="todas">Todas</option>${Object.entries(CAMP_TIPOS).map(([k,v])=>`<option value="${k}" ${campFiltro===k?'selected':''}>${v}</option>`).join('')}</select>`;
@@ -3948,7 +4020,7 @@ function mount(el){
   ROOT=el;
   db=DATA.predicacion;
   migrarLocal();
-  if(!READONLY){try{if(!Array.isArray(db.campanas))db.campanas=[];syncAprobados();db.approved.forEach(x=>x.months=x.months||['Septiembre']);db.availability.forEach(x=>{x.month=x.month||'Septiembre';x.year=x.year||2026})}catch(e){}}
+  if(!READONLY){try{if(!Array.isArray(db.campanas))db.campanas=[];migrarConfig();syncAprobados();db.approved.forEach(x=>x.months=x.months||['Septiembre']);db.availability.forEach(x=>{x.month=x.month||'Septiembre';x.year=x.year||2026})}catch(e){}}
   ROOT.innerHTML='<div class="mod-predicacion">'+PP_HTML+'</div>';
   bindStatic();
   renderAll();
@@ -4034,6 +4106,7 @@ function normalizeData(parsed){
   if(!Array.isArray(parsed.actividades.roster)) parsed.actividades.roster=[];
   if(!parsed.privilegios||typeof parsed.privilegios!=='object') parsed.privilegios={};
   if(!parsed.anuncios||!Array.isArray(parsed.anuncios.items)) parsed.anuncios={items:[]};
+  if(!parsed.estudios||!Array.isArray(parsed.estudios.items)) parsed.estudios={items:[]};
   if(Array.isArray(parsed.preachingGroups)) parsed.preachingGroups.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'es',{numeric:true,sensitivity:'base'}));
   if(!parsed.limpieza||typeof parsed.limpieza!=='object') parsed.limpieza={cfg:{ref:'2026-10-19',refGrupo:1,grupos:7},semanas:{},profunda:{}};
   if(!parsed.discursos||typeof parsed.discursos!=='object') parsed.discursos={};
@@ -5977,7 +6050,7 @@ function renderTablero(content,actions){
 
 /* ===== Bitácora de cambios (solo admins) · Olvidé mi contraseña · Correo de publicadores · Aviso de discursos ===== */
 const BTC={snap:null,t:null,pagina:'',vista:'',list:[],unsub:null,err:null,q:'',u:'',loaded:false};
-const BTC_ETQ={publishers:'Publicadores',meetingAttendance:'Asistencia a reuniones',meetingSettings:'Asistencia a reuniones',discursos:'Discursos Públicos',actividades:'Actividades',privilegios:'Programa de Privilegios',limpieza:'Limpieza & Asistencia',organigrama:'Organigrama',preachingGroups:'Conformación de grupos',territories:'Territorios',territoryAssignments:'Registro de asignación de territorio',anuncios:'Anuncios a la Congregación',arreglosPred:'Arreglos de predicación',asistExt:'Reporte de asistencia'};
+const BTC_ETQ={publishers:'Publicadores',meetingAttendance:'Asistencia a reuniones',meetingSettings:'Asistencia a reuniones',discursos:'Discursos Públicos',actividades:'Actividades',privilegios:'Programa de Privilegios',limpieza:'Limpieza & Asistencia',organigrama:'Organigrama',preachingGroups:'Conformación de grupos',territories:'Territorios',territoryAssignments:'Registro de asignación de territorio',anuncios:'Anuncios a la Congregación',arreglosPred:'Arreglos de predicación',asistExt:'Reporte de asistencia',estudios:'Estudios Progresivos'};
 function btcCol(){ return (typeof SYNC!=='undefined'&&SYNC.db)?SYNC.db.collection('bitacora'):null; }
 function btcKeys(){ return Object.keys(DATA||{}); }
 function btcInit(){ try{ BTC.snap={}; btcKeys().forEach(k=>{ BTC.snap[k]=JSON.stringify(DATA[k]===undefined?null:DATA[k]); }); }catch(e){ BTC.snap=null; } }
@@ -5986,7 +6059,7 @@ function btcVal(v){ if(v===undefined||v===null||v==='') return '(vacío)'; if(ty
 function btcDiff(a,b,path,out,d){
   if(out.length>=10||JSON.stringify(a)===JSON.stringify(b)) return;
   const oa=a&&typeof a==='object', ob=b&&typeof b==='object';
-  if(!oa||!ob||Array.isArray(a)!==Array.isArray(b)){ out.push(path+': '+btcVal(a)+' → '+btcVal(b)); return; }
+  if(!oa||!ob||Array.isArray(a)!==Array.isArray(b)){ out.push(/alergias|condiciones|discapacidad|emerg|minorConsent|obsPastorales|metas|progresoNota|necesidades/.test(path)?path+': modificado (dato sensible, sin mostrar valores)':path+': '+btcVal(a)+' → '+btcVal(b)); return; }
   if(d>=5){ out.push(path+': modificado'); return; }
   if(Array.isArray(a)){
     const con=x=>x.every(e=>e&&typeof e==='object'&&e.id!==undefined);
@@ -6120,6 +6193,188 @@ function dsAviso(){
     olvInit();
   }catch(e){ console.warn('bitacora enganches',e); }
 })();
+
+/* ===== CONSENTIMIENTO DE DATOS DE MENORES (compartido: Publicadores y Estudios Progresivos) ===== */
+const MH_TMP={};
+function mhHoy(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function mhEdad(dob){ if(!dob) return null; const b=new Date(dob+'T00:00:00'); if(isNaN(b.getTime())) return null; const n=new Date(); let a=n.getFullYear()-b.getFullYear(); if(n.getMonth()<b.getMonth()||(n.getMonth()===b.getMonth()&&n.getDate()<b.getDate())) a--; return a<0?null:a; }
+function esMenor(rec){ const a=mhEdad(rec&&rec.dob); return a!==null&&a<18; }
+function mhFecha(f){ if(!f) return ''; const p=String(f).split('-'); return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:f; }
+function mhUltimo(rec){ const h=((rec&&rec.consentHistory)||[]).slice().sort((a,b)=>String(a.fecha).localeCompare(String(b.fecha))||String(a.registrado||'').localeCompare(String(b.registrado||''))); return h.length?h[h.length-1]:null; }
+function minorSectionHtml(rec,x){
+  rec=rec||{}; const m=rec.minorConsent||{}; MH_TMP[x]=(rec.consentHistory||[]).map(e=>Object.assign({},e));
+  const f=(id,l,v,t)=>`<div class="field"><label>${l}</label><input ${t?'type="'+t+'" ':''}id="${x}Mt_${id}" value="${escapeAttr(v||'')}"></div>`;
+  return `<div id="${x}MinorBox" class="minor-box" style="display:none"><h4>👶 Consentimiento de datos · menor de edad</h4>
+  <p class="minor-note">Se muestra porque la fecha de nacimiento indica que es menor de 18 años. Registre al padre, madre, tutor o representante legal que autoriza el uso de los datos.</p>
+  <div class="grid2">${f('name','Nombre completo del tutor / padre / madre / representante',m.tutorName)}${f('relation','Parentesco',m.relation)}</div>
+  <div class="grid3">${f('phone','Teléfono',m.phone)}${f('email','Correo electrónico',m.email,'email')}<div class="field"><label>¿Es Testigo de Jehová?</label><select id="${x}Mt_jw"><option value="">Seleccionar...</option><option ${m.tutorJW==='Sí'?'selected':''}>Sí</option><option ${m.tutorJW==='No'?'selected':''}>No</option></select></div></div>
+  ${f('address','Dirección',m.address)}
+  <div class="field" id="${x}Mt_infoWrap" style="display:none"><label>Información adicional relevante (tutor que no es Testigo de Jehová)</label><textarea id="${x}Mt_info" rows="2">${escapeHtml(m.tutorInfo||'')}</textarea></div>
+  <div class="field"><label>Observaciones</label><textarea id="${x}Mt_notes" rows="2">${escapeHtml(m.notes||'')}</textarea></div>
+  <div class="field"><label>Historial de consentimientos y fechas de autorización</label><div id="${x}MHist"></div>
+  <div class="mh-add"><input type="date" id="${x}Mh_fecha" value="${mhHoy()}" title="Fecha de la autorización"><select id="${x}Mh_estado"><option>Autorizó</option><option>Renovó</option><option>Revocó</option></select><input type="text" id="${x}Mh_nota" placeholder="Observación (opcional)"><button type="button" class="btn secondary" id="${x}Mh_add">+ Registrar</button></div>
+  <small class="minor-note">El historial solo se amplía: cada registro guarda la fecha, quién lo registró y cuándo.</small></div></div>`;
+}
+function mhPintar(x){
+  const b=document.getElementById(x+'MHist'); if(!b) return;
+  const l=(MH_TMP[x]||[]).slice().sort((a,c)=>String(c.fecha).localeCompare(String(a.fecha))||String(c.registrado||'').localeCompare(String(a.registrado||'')));
+  b.innerHTML=l.length?`<table class="mh-tbl"><thead><tr><th>Fecha</th><th>Estado</th><th>Tutor</th><th>Observación</th><th>Registró</th></tr></thead><tbody>${l.map(e=>`<tr><td>${escapeHtml(mhFecha(e.fecha))}</td><td><b>${escapeHtml(e.estado||'')}</b></td><td>${escapeHtml(e.tutor||'')}</td><td>${escapeHtml(e.nota||'')}</td><td>${escapeHtml(e.registradoPor||'')}<br><small>${escapeHtml(String(e.registrado||'').slice(0,10))}</small></td></tr>`).join('')}</tbody></table>`:'<div class="empty" style="padding:8px">Sin registros todavía.</div>';
+}
+function wireMinor(x){
+  const dob=document.getElementById(x+'Dob'), box=document.getElementById(x+'MinorBox'); if(!dob||!box) return;
+  const vis=()=>{ const a=mhEdad(dob.value); box.style.display=(a!==null&&a<18)?'':'none'; };
+  dob.addEventListener('change',vis); dob.addEventListener('input',vis); vis();
+  const jw=document.getElementById(x+'Mt_jw'), iw=document.getElementById(x+'Mt_infoWrap'); const sj=()=>{ iw.style.display=jw.value==='No'?'':'none'; }; jw.addEventListener('change',sj); sj();
+  mhPintar(x);
+  document.getElementById(x+'Mh_add').onclick=()=>{
+    const fecha=document.getElementById(x+'Mh_fecha').value; if(!fecha){ showToast('Indica la fecha de la autorización'); return; }
+    (MH_TMP[x]=MH_TMP[x]||[]).push({id:uid('mh'),fecha,estado:document.getElementById(x+'Mh_estado').value,tutor:(document.getElementById(x+'Mt_name').value||'').trim(),nota:(document.getElementById(x+'Mh_nota').value||'').trim(),registradoPor:(CUR&&(CUR.name||CUR.id))||'',registrado:new Date().toISOString()});
+    document.getElementById(x+'Mh_nota').value=''; mhPintar(x); showToast('Registro agregado: se guardará al pulsar Guardar');
+  };
+}
+function collectMinor(x,rec){
+  if(!document.getElementById(x+'MinorBox')) return;
+  const v=id=>{ const e=document.getElementById(x+'Mt_'+id); return e?e.value.trim():''; };
+  rec.minorConsent={tutorName:v('name'),relation:v('relation'),phone:v('phone'),email:v('email').toLowerCase(),address:v('address'),tutorJW:v('jw'),tutorInfo:v('jw')==='No'?v('info'):'',notes:v('notes')};
+  rec.consentHistory=(MH_TMP[x]||[]).map(e=>Object.assign({},e));
+}
+function minorCols(p){
+  const menor=esMenor(p), m=p.minorConsent||{}, u=mhUltimo(p);
+  return `<td>${menor?'Sí':'No'}</td><td>${menor?escapeHtml(m.tutorName||''):''}</td><td>${menor?escapeHtml(m.relation||''):''}</td><td>${menor?escapeHtml(m.phone||''):''}</td><td>${menor?escapeHtml(m.tutorJW||''):''}</td><td>${u?escapeHtml(u.estado+' · '+mhFecha(u.fecha)):''}</td>`;
+}
+
+/* =========================================================
+   ESTUDIOS PROGRESIVOS (Secretaría · mismo nivel de seguridad que Datos de Publicadores)
+   Personas que aún no son publicadores no bautizados y ya tienen asignaciones en la Escuela de Vida y Ministerio.
+   ========================================================= */
+const EST={sel:null,q:'',f:'',tmpA:[],tmpV:[]};
+const EST_TIPOS=['Lectura de la Biblia','Primera conversación','Revisita','Curso bíblico','Discurso','Otra'];
+const EST_PROG=['Inicial','En progreso','Avanzado','Listo para ser publicador no bautizado'];
+function estD(){ if(!DATA.estudios||!Array.isArray(DATA.estudios.items)) DATA.estudios={items:[]}; return DATA.estudios; }
+function estDias(f){ if(!f) return null; const a=new Date(mhHoy()+'T00:00:00'), b=new Date(f+'T00:00:00'); if(isNaN(b.getTime())) return null; return Math.round((a-b)/864e5); }
+function estPrimera(e){ const l=(e.asignaciones||[]).map(a=>a.fecha).filter(Boolean).sort(); return e.primeraAsig||l[0]||''; }
+function estUltima(e){ const l=(e.asignaciones||[]).map(a=>a.fecha).filter(Boolean).sort(); return l.length?l[l.length-1]:''; }
+function estTiempo(f){ return f?elapsedYearsMonths(f):''; }
+function estNombre(e){ return e.nombre||'(sin nombre)'; }
+function estAlertas(e){
+  const out=[], hoy=mhHoy();
+  if(e.alerta&&e.alerta.activa) out.push({t:e.alerta.texto||'Alerta de seguimiento',n:'alta'});
+  if(e.alerta&&e.alerta.revision&&e.alerta.revision<hoy) out.push({t:'Revisión vencida ('+mhFecha(e.alerta.revision)+')',n:'alta'});
+  if(e.proximaVisita&&e.proximaVisita<hoy) out.push({t:'Visita pendiente desde '+mhFecha(e.proximaVisita),n:'alta'});
+  if(esMenor(e)){
+    const m=e.minorConsent||{}; const u=mhUltimo(e);
+    if(!m.tutorName) out.push({t:'Menor sin tutor registrado',n:'alta'});
+    else if(!u) out.push({t:'Menor sin consentimiento registrado',n:'media'});
+    else if(u.estado==='Revocó') out.push({t:'Consentimiento revocado',n:'alta'});
+  }
+  const ult=estUltima(e), d=estDias(ult);
+  if(ult&&d!==null&&d>90) out.push({t:'Sin asignaciones hace '+d+' días',n:'media'});
+  if(!ult&&e.ingreso){ const di=estDias(e.ingreso); if(di!==null&&di>30) out.push({t:'Aún sin asignaciones registradas',n:'media'}); }
+  return out;
+}
+function estChips(e){ const a=estAlertas(e); return a.length?a.map(x=>`<span class="est-chip ${x.n}">${escapeHtml(x.t)}</span>`).join(''):'<span class="est-chip ok">Sin alertas</span>'; }
+function estFiltrar(){
+  const q=EST.q.trim().toLowerCase();
+  return estD().items.filter(e=>{
+    if(q&&!(estNombre(e)+' '+(e.conductor||'')+' '+(e.celular||'')).toLowerCase().includes(q)) return false;
+    if(EST.f==='alertas') return estAlertas(e).length>0;
+    if(EST.f==='menores') return esMenor(e);
+    return true;
+  }).sort((a,b)=>estNombre(a).localeCompare(estNombre(b),'es'));
+}
+function estGrupoNombre(e){ const g=(DATA.preachingGroups||[]).find(x=>x.id===e.grupoId); return g?g.name:''; }
+function estSupervisorGrupo(id){ const g=(DATA.preachingGroups||[]).find(x=>x.id===id); const p=g&&g.superintendentId?getPub(g.superintendentId):null; return p?pubName(p):''; }
+function renderEstudios(content,actions){
+  const ro=READONLY, D=estD();
+  actions.innerHTML=`<select id="estFiltro"><option value="">Todos</option><option value="alertas" ${EST.f==='alertas'?'selected':''}>Con alertas</option><option value="menores" ${EST.f==='menores'?'selected':''}>Menores de edad</option></select><input id="estBuscar" class="top-search" placeholder="Buscar persona..." value="${escapeAttr(EST.q)}">${ro?'':'<button class="btn" id="estNuevo" type="button">+ Nuevo estudio</button>'}`;
+  document.getElementById('estFiltro').onchange=e=>{ EST.f=e.target.value; EST.sel=null; renderEstudios(content,actions); };
+  document.getElementById('estBuscar').oninput=e=>{ EST.q=e.target.value; EST.sel=null; renderEstudios(content,actions); const i=document.getElementById('estBuscar'); if(i){ i.focus(); try{ i.setSelectionRange(i.value.length,i.value.length); }catch(_){} } };
+  if(!ro) document.getElementById('estNuevo').onclick=()=>{ EST.sel='nuevo'; renderEstudios(content,actions); setTimeout(()=>{ const f=document.getElementById('estForm'); if(f) f.scrollIntoView({behavior:'smooth'}); },30); };
+  const todos=D.items, lista=estFiltrar(), conAl=todos.filter(e=>estAlertas(e).length);
+  const fila=e=>{ const pr=estPrimera(e), n=(e.asignaciones||[]).length, u=estUltima(e); return `<tr class="est-row" data-esid="${escapeAttr(e.id)}"><td class="l"><strong>${escapeHtml(estNombre(e))}</strong>${esMenor(e)?' <span class="est-chip menor">Menor</span>':''}<br><small>${escapeHtml(e.sexo||'')}${e.estadoCivil?' · '+escapeHtml(e.estadoCivil):''}</small></td><td>${mhEdad(e.dob)??''}</td><td>${escapeHtml(mhFecha(e.ingreso))}</td><td>${pr?escapeHtml(mhFecha(pr))+'<br><small>'+escapeHtml(estTiempo(pr))+'</small>':'—'}</td><td>${n}${u?'<br><small>última: '+escapeHtml(mhFecha(u))+'</small>':''}</td><td>${e.estudioInicio?escapeHtml(mhFecha(e.estudioInicio))+'<br><small>'+escapeHtml(e.conductor||'')+'</small>':escapeHtml(e.conductor||'—')}</td><td>${escapeHtml(e.progreso||'')}</td><td>${escapeHtml(estGrupoNombre(e))}</td><td class="l">${estChips(e)}</td></tr>`; };
+  content.innerHTML=`${ro?'<div class="ct-note">Modo lectura: puedes consultar las fichas. Solo quienes tienen permiso en Secretaría pueden modificarlas.</div>':''}
+  <div class="est-tiles"><div class="est-tile"><b>${todos.length}</b><span>Personas en estudio progresivo</span></div><div class="est-tile"><b>${todos.filter(esMenor).length}</b><span>Menores de edad</span></div><div class="est-tile"><b>${conAl.length}</b><span>Con alertas de seguimiento</span></div><div class="est-tile"><b>${todos.reduce((s,e)=>s+(e.asignaciones||[]).length,0)}</b><span>Asignaciones registradas</span></div></div>
+  ${conAl.length&&!EST.f&&!EST.q?`<div class="card"><h2>⚠ Alertas de seguimiento<small>Casos que requieren atención</small></h2>${conAl.map(e=>`<div class="est-al" data-esid="${escapeAttr(e.id)}"><b>${escapeHtml(estNombre(e))}</b> ${estChips(e)}</div>`).join('')}</div>`:''}
+  <div id="estForm"></div>
+  <div class="card"><h2>Estudios Progresivos<small>${lista.length} de ${todos.length}</small></h2><div class="publisher-data-scroll"><table class="publisher-data-table"><thead><tr><th>Persona</th><th>Edad</th><th>Ingreso a la escuela</th><th>Asignaciones desde</th><th>Asignaciones</th><th>Estudio bíblico</th><th>Progreso</th><th>Grupo</th><th>Seguimiento</th></tr></thead><tbody>${lista.map(fila).join('')||'<tr><td colspan="9"><div class="empty">No hay personas registradas'+(todos.length?' con ese filtro':'')+'.</div></td></tr>'}</tbody></table></div></div>`;
+  content.querySelectorAll('[data-esid]').forEach(r=>r.onclick=()=>{ EST.sel=r.dataset.esid; renderEstudios(content,actions); setTimeout(()=>{ const f=document.getElementById('estForm'); if(f) f.scrollIntoView({behavior:'smooth'}); },30); });
+  if(EST.sel) estForm(content,actions);
+}
+function estSel(c,v,list){ return `<select id="${c}">${'<option value="">Seleccionar...</option>'+list.map(x=>`<option ${x===v?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select>`; }
+function estForm(content,actions){
+  const D=estD(), nuevo=EST.sel==='nuevo', e=nuevo?{}:D.items.find(x=>x.id===EST.sel);
+  const box=document.getElementById('estForm'); if(!box) return; if(!nuevo&&!e){ EST.sel=null; return; }
+  EST.tmpA=(e.asignaciones||[]).map(a=>Object.assign({},a)); EST.tmpV=(e.visitas||[]).map(a=>Object.assign({},a));
+  const v=k=>escapeAttr(e[k]||''), t=(id,l,k,type,ph)=>`<div class="field"><label>${l}</label><input ${type?'type="'+type+'" ':''}id="es${id}" value="${v(k)}"${ph?' placeholder="'+ph+'"':''}></div>`;
+  const ta=(id,l,k,r)=>`<div class="field"><label>${l}</label><textarea id="es${id}" rows="${r||2}">${escapeHtml(e[k]||'')}</textarea></div>`;
+  const al=e.alerta||{}, grupos=DATA.preachingGroups||[];
+  box.innerHTML=`<div class="card"><h2>${nuevo?'Nuevo estudio progresivo':escapeHtml(estNombre(e))}<small>${nuevo?'Complete los datos y pulse Guardar':'Ficha completa'}</small></h2>
+  <h3 class="est-h">Datos personales</h3>
+  <div class="grid2">${t('Nombre','Nombre completo *','nombre')}${t('Dob','Fecha de nacimiento','dob','date')}</div>
+  <div class="grid3"><div class="field"><label>Edad (se calcula)</label><input id="esEdad" readonly value="${mhEdad(e.dob)??''}"></div><div class="field"><label>¿Es menor de edad?</label><input id="esMenor" readonly value="${e.dob?(esMenor(e)?'Sí':'No'):''}"></div><div class="field"><label>Sexo</label>${estSel('esSexo',e.sexo,['Masculino','Femenino'])}</div></div>
+  <div class="grid3"><div class="field"><label>Estado civil</label>${estSel('esCivil',e.estadoCivil,['Soltero(a)','Casado(a)','Unión libre','Divorciado(a)','Viudo(a)','Separado(a)'])}</div>${t('Celular','Celular','celular')}${t('Telefono','Teléfono convencional','telefono')}</div>
+  <div class="grid2">${t('Direccion','Dirección','direccion')}${t('Correo','Correo electrónico','correo','email')}</div>
+  <div class="grid3">${t('Conyuge','Cónyuge (nombre)','conyuge')}<div class="field"><label>Cantidad de hijos</label><input type="number" min="0" max="20" id="esNumHijos" value="${Number(e.numHijos)||0}"></div><div class="field"><label>Hijos</label><input readonly id="esHijosSiNo" value="${(Number(e.numHijos)||0)>0?'Sí':'No'}"></div></div>
+  <div id="esKids" class="grid3"></div>
+  ${minorSectionHtml(e,'es')}
+  <h3 class="est-h">Escuela de Vida y Ministerio</h3>
+  <div class="grid3">${t('Ingreso','Fecha de ingreso a la escuela','ingreso','date')}${t('PrimeraAsig','Primera asignación en plataforma','primeraAsig','date')}<div class="field"><label>Asignando desde hace</label><input id="esDesde" readonly value=""></div></div>
+  <div class="field"><label>Historial de asignaciones <small id="esAsigResumen"></small></label><div id="esAsigList"></div>
+  <div class="mh-add est-w"><input type="date" id="esAFecha" value="${mhHoy()}"><select id="esATipo">${EST_TIPOS.map(x=>`<option>${x}</option>`).join('')}</select><input type="text" id="esANota" placeholder="Nota (opcional)"><button type="button" class="btn secondary" id="esAAdd">+ Agregar asignación</button></div></div>
+  <div class="grid2"><div class="field"><label>Progreso espiritual</label>${estSel('esProg',e.progreso,EST_PROG)}</div>${ta('ProgNota','Notas sobre el progreso','progresoNota')}</div>
+  ${ta('Pastorales','Observaciones pastorales','obsPastorales',3)}${ta('Metas','Metas espirituales','metas',2)}
+  <h3 class="est-h">Alertas y seguimiento</h3>
+  <div class="grid3"><div class="field"><label class="est-chk"><input type="checkbox" id="esAlAct" ${al.activa?'checked':''}> Alerta de seguimiento activa</label><input id="esAlTxt" placeholder="Motivo de la alerta" value="${escapeAttr(al.texto||'')}"></div>${t('AlRev','Revisar la alerta el','','date').replace('value=""','value="'+escapeAttr(al.revision||'')+'"')}${t('ProxVisita','Próxima visita','proximaVisita','date')}</div>
+  <div class="field"><label>Seguimiento de visitas</label><div id="esVisList"></div>
+  <div class="mh-add est-w"><input type="date" id="esVFecha" value="${mhHoy()}"><input type="text" id="esVPor" placeholder="Quién visitó"><input type="text" id="esVNota" placeholder="Nota de la visita"><button type="button" class="btn secondary" id="esVAdd">+ Agregar visita</button></div></div>
+  <h3 class="est-h">Estudio bíblico y grupo</h3>
+  <div class="grid3">${t('EstInicio','Fecha de inicio del estudio bíblico','estudioInicio','date')}${t('Conductor','Hermano(a) que dirige el estudio','conductor')}<div class="field"><label>Grupo de servicio asignado</label><select id="esGrupo"><option value="">Sin grupo</option>${grupos.map(g=>`<option value="${escapeAttr(g.id)}" ${g.id===e.grupoId?'selected':''}>${escapeHtml(g.name)}</option>`).join('')}</select></div></div>
+  <div class="grid2">${t('Supervisor','Supervisor de grupo (se completa con el grupo; editable)','supervisor')}${ta('Necesidades','Necesidades especiales','necesidades')}</div>
+  <h3 class="est-h">Salud y emergencias</h3>
+  <div class="grid2"><div class="field"><label>Discapacidad</label>${estSel('esDisc',e.discapacidad,['No','Sí'])}</div><div class="field" id="esDiscTipoW"><label>Tipo de discapacidad</label><input id="esDiscTipo" value="${v('discapacidadTipo')}"></div></div>
+  <div class="grid3">${t('EmNombre','Contacto de emergencia','emergNombre')}${t('EmPar','Parentesco','emergParentesco')}${t('EmTel','Teléfono de emergencia','emergTel')}</div>
+  <div class="grid2">${ta('Alergias','Alergias','alergias')}${ta('Condiciones','Condiciones médicas relevantes','condiciones')}</div>
+  <div class="actions"><button class="btn secondary" id="esCancel" type="button">${READONLY?'Cerrar':'Cancelar'}</button>${(!nuevo&&!READONLY)?'<button class="btn danger" id="esDel" type="button">Eliminar</button>':''}${READONLY?'':'<button class="btn" id="esSave" type="button">Guardar</button>'}</div></div>`;
+  const g=id=>document.getElementById(id);
+  const calc=()=>{ const a=mhEdad(g('esDob').value); g('esEdad').value=a===null?'':a; g('esMenor').value=a===null?'':(a<18?'Sí':'No'); };
+  g('esDob').addEventListener('change',calc); g('esDob').addEventListener('input',calc);
+  /* hijos: un campo de nombre por cada hijo */
+  const kidsPrev=(e.hijos||[]).slice();
+  const pintaKids=()=>{ const n=Math.max(0,Math.min(20,Number(g('esNumHijos').value)||0)); const cur=[...document.querySelectorAll('#esKids input')].map(i=>i.value); const base=cur.length?cur:kidsPrev; g('esHijosSiNo').value=n>0?'Sí':'No'; g('esKids').innerHTML=Array.from({length:n},(_,i)=>`<div class="field"><label>Nombre del hijo(a) ${i+1}</label><input data-kid="${i}" value="${escapeAttr(base[i]||'')}"></div>`).join(''); };
+  g('esNumHijos').addEventListener('input',pintaKids); pintaKids();
+  wireMinor('es');
+  /* asignaciones */
+  const pintaA=()=>{ const l=EST.tmpA.slice().sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha))); g('esAsigList').innerHTML=l.length?`<table class="mh-tbl"><thead><tr><th>Fecha</th><th>Asignación</th><th>Nota</th><th></th></tr></thead><tbody>${l.map(a=>`<tr><td>${escapeHtml(mhFecha(a.fecha))}</td><td>${escapeHtml(a.tipo||'')}</td><td>${escapeHtml(a.nota||'')}</td><td class="est-w"><button type="button" class="small-btn" data-adel="${escapeAttr(a.id)}">Quitar</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty" style="padding:8px">Sin asignaciones registradas.</div>';
+    const fs=EST.tmpA.map(a=>a.fecha).filter(Boolean).sort(), pr=g('esPrimeraAsig').value||fs[0]||'';
+    g('esDesde').value=pr?(estTiempo(pr)+' (desde '+mhFecha(pr)+')'):''; g('esAsigResumen').textContent=EST.tmpA.length?'· '+EST.tmpA.length+' asignaciones, última: '+mhFecha(fs[fs.length-1]):'';
+    g('esAsigList').querySelectorAll('[data-adel]').forEach(b=>b.onclick=()=>{ EST.tmpA=EST.tmpA.filter(a=>a.id!==b.dataset.adel); pintaA(); }); };
+  g('esPrimeraAsig').addEventListener('change',pintaA);
+  g('esAAdd').onclick=()=>{ const f=g('esAFecha').value; if(!f){ showToast('Indica la fecha de la asignación'); return; } EST.tmpA.push({id:uid('as'),fecha:f,tipo:g('esATipo').value,nota:g('esANota').value.trim()}); g('esANota').value=''; if(!g('esPrimeraAsig').value){ const fs=EST.tmpA.map(a=>a.fecha).sort(); g('esPrimeraAsig').value=fs[0]; } pintaA(); };
+  pintaA();
+  /* visitas */
+  const pintaV=()=>{ const l=EST.tmpV.slice().sort((a,b)=>String(b.fecha).localeCompare(String(a.fecha))); g('esVisList').innerHTML=l.length?`<table class="mh-tbl"><thead><tr><th>Fecha</th><th>Visitó</th><th>Nota</th><th></th></tr></thead><tbody>${l.map(a=>`<tr><td>${escapeHtml(mhFecha(a.fecha))}</td><td>${escapeHtml(a.por||'')}</td><td>${escapeHtml(a.nota||'')}</td><td class="est-w"><button type="button" class="small-btn" data-vdel="${escapeAttr(a.id)}">Quitar</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty" style="padding:8px">Sin visitas registradas.</div>';
+    g('esVisList').querySelectorAll('[data-vdel]').forEach(b=>b.onclick=()=>{ EST.tmpV=EST.tmpV.filter(a=>a.id!==b.dataset.vdel); pintaV(); }); };
+  g('esVAdd').onclick=()=>{ const f=g('esVFecha').value; if(!f){ showToast('Indica la fecha de la visita'); return; } EST.tmpV.push({id:uid('vi'),fecha:f,por:g('esVPor').value.trim(),nota:g('esVNota').value.trim()}); g('esVPor').value=''; g('esVNota').value=''; pintaV(); };
+  pintaV();
+  g('esGrupo').onchange=()=>{ const s=estSupervisorGrupo(g('esGrupo').value); if(s&&!g('esSupervisor').value.trim()) g('esSupervisor').value=s; };
+  const dd=()=>{ g('esDiscTipoW').style.display=g('esDisc').value==='Sí'?'':'none'; }; g('esDisc').onchange=dd; dd();
+  g('esCancel').onclick=()=>{ EST.sel=null; renderEstudios(content,actions); };
+  if(READONLY){ box.querySelectorAll('input,select,textarea').forEach(el=>{ el.disabled=true; }); box.querySelectorAll('.est-w,.mh-add').forEach(el=>{ el.style.display='none'; }); return; }
+  if(g('esDel')) g('esDel').onclick=()=>{ if(!confirm('¿Eliminar la ficha de '+estNombre(e)+'? Esta acción no se puede deshacer.')) return; D.items=D.items.filter(x=>x.id!==e.id); saveData(); EST.sel=null; showToast('Ficha eliminada'); renderEstudios(content,actions); };
+  g('esSave').onclick=()=>{
+    const val=id=>g(id).value.trim(); if(!val('esNombre')){ showToast('Escribe el nombre completo'); return; }
+    const rec=nuevo?{id:uid('es'),creado:new Date().toISOString(),creadoPor:(CUR&&(CUR.name||CUR.id))||''}:e;
+    Object.assign(rec,{nombre:val('esNombre'),dob:g('esDob').value,sexo:g('esSexo').value,estadoCivil:g('esCivil').value,celular:val('esCelular'),telefono:val('esTelefono'),direccion:val('esDireccion'),correo:val('esCorreo').toLowerCase(),conyuge:val('esConyuge'),numHijos:Math.max(0,Math.min(20,Number(g('esNumHijos').value)||0)),hijos:[...document.querySelectorAll('#esKids input')].map(i=>i.value.trim()),
+      ingreso:g('esIngreso').value,primeraAsig:g('esPrimeraAsig').value,asignaciones:EST.tmpA.map(a=>Object.assign({},a)),progreso:g('esProg').value,progresoNota:val('esProgNota'),obsPastorales:val('esPastorales'),metas:val('esMetas'),
+      alerta:{activa:g('esAlAct').checked,texto:val('esAlTxt'),revision:g('esAlRev').value},proximaVisita:g('esProxVisita').value,visitas:EST.tmpV.map(a=>Object.assign({},a)),
+      estudioInicio:g('esEstInicio').value,conductor:val('esConductor'),grupoId:g('esGrupo').value,supervisor:val('esSupervisor'),necesidades:val('esNecesidades'),
+      discapacidad:g('esDisc').value,discapacidadTipo:g('esDisc').value==='Sí'?val('esDiscTipo'):'',emergNombre:val('esEmNombre'),emergParentesco:val('esEmPar'),emergTel:val('esEmTel'),alergias:val('esAlergias'),condiciones:val('esCondiciones'),
+      actualizado:new Date().toISOString(),actualizadoPor:(CUR&&(CUR.name||CUR.id))||''});
+    collectMinor('es',rec);
+    if(nuevo) D.items.push(rec);
+    if(saveData()){ EST.sel=null; showToast('Ficha guardada'); renderEstudios(content,actions); }
+  };
+}
 
 /* ===== CONFORMACIÓN DE GRUPOS · ARREGLOS DE PREDICACIÓN · MAPAS POR GRUPO ===== */
 const GPST={edit:false};
@@ -6409,6 +6664,7 @@ function render(){
   else if(VIEW==='publishers'){ title.textContent='Publicadores'; meta.textContent='Registro del publicador por persona'; renderPublishers(content, actions); }
   else if(VIEW==='record'){ title.textContent='Registro del publicador'; meta.textContent = SELECTED_PUB ? pubName(getPub(SELECTED_PUB)) : ''; renderRecord(content, actions); }
   else if(VIEW==='groupReport'){ title.textContent='Informe por grupo y mes'; meta.textContent='Detalle mensual del grupo de predicación'; renderGroupReport(content, actions); }
+  else if(VIEW==='estudios'){ title.textContent='Estudios Progresivos'; meta.textContent=READONLY?'Consulta (solo lectura)':'Personas con asignaciones en la Escuela de Vida y Ministerio que aún no son publicadores no bautizados'; renderEstudios(content, actions); }
   else if(VIEW==='publisherData'){ title.textContent='Datos de Publicadores'; meta.textContent='Información general de los publicadores por grupo de predicación'; renderPublisherData(content, actions); }
   else if(VIEW==='congregation'){ title.textContent='Resumen de la congregación'; meta.textContent='Totales mensuales por categoría'; renderCongregation(content, actions); }
   else if(VIEW==='attendance'){ title.textContent='Asistencia a reuniones'; meta.textContent='Registro mensual de asistencia'; renderAttendance(content, actions); }
@@ -6541,7 +6797,7 @@ function publisherFormHtml(p={},prefix='np'){
  <div class="grid2"><div class="field"><label>Urbanización</label><input id="${prefix}Urban" value="${escapeAttr(p.urbanization||'')}"></div><div class="field"><label>Dirección</label><input id="${prefix}Address" value="${escapeAttr(p.address||'')}"></div></div>
  <div class="grid3"><div class="field"><label>Celular</label><input id="${prefix}Mobile" value="${escapeAttr(p.mobile||'')}"></div><div class="field"><label>Teléfono convencional</label><input id="${prefix}Phone" value="${escapeAttr(p.phone||'')}"></div><div class="field"><label>Contacto de emergencia</label><input id="${prefix}Emergency" value="${escapeAttr(p.emergencyContact||'')}"></div></div>
  <div class="grid3"><div class="field"><label>Parentesco contacto E.</label><input id="${prefix}Relation" value="${escapeAttr(p.emergencyRelation||'')}"></div><div class="field"><label>Teléfono Contacto E.</label><input id="${prefix}EmergencyPhone" value="${escapeAttr(p.emergencyPhone||'')}"></div><div class="field"><label>Dirección de Contacto E.</label><input id="${prefix}EmergencyAddress" value="${escapeAttr(p.emergencyAddress||'')}"></div></div>
- <div class="field"><label>Necesidades Especiales</label><textarea id="${prefix}SpecialNeeds" rows="2">${escapeHtml(p.specialNeeds||'')}</textarea></div><div class="field"><label>Observaciones</label><textarea id="${prefix}Obs" rows="3">${escapeHtml(p.observations||'')}</textarea></div>`;
+ <div class="field"><label>Necesidades Especiales</label><textarea id="${prefix}SpecialNeeds" rows="2">${escapeHtml(p.specialNeeds||'')}</textarea></div><div class="field"><label>Observaciones</label><textarea id="${prefix}Obs" rows="3">${escapeHtml(p.observations||'')}</textarea></div>${minorSectionHtml(p,prefix)}`;
 }
 function wirePublisherConditional(x){
   const sex=document.getElementById(x+'Sex'),elder=document.getElementById(x+'Elder'),ms=document.getElementById(x+'MS'),unb=document.getElementById(x+'Unbaptized'),rp=document.getElementById(x+'RP'),pi=document.getElementById(x+'PI'),ex=document.getElementById(x+'Exp'),dob=document.getElementById(x+'Dob'),age=document.getElementById(x+'Age');
@@ -6565,10 +6821,11 @@ function wirePublisherConditional(x){
   [sex,elder,ms,unb,rp,pi,ex].forEach(e=>e.onchange=sync);
   dob.addEventListener('change',calcAge);
   calcAge();sync();
+  try{ wireMinor(x); }catch(e){ console.warn('menores',e); }
   [x+'Last',x+'First'].forEach(id=>document.getElementById(id).oninput=()=>document.getElementById(x+'Card').value=document.getElementById(x+'Last').value.trim()+', '+document.getElementById(x+'First').value.trim());
 }
 
-function collectPublisher(x,p){p=p||{id:uid('p'),records:{}};p.lastName=document.getElementById(x+'Last').value.trim();p.firstName=document.getElementById(x+'First').value.trim();p.sex=document.getElementById(x+'Sex').value;p.age=document.getElementById(x+'Age').value;p.dob=document.getElementById(x+'Dob').value;p.baptismDate=document.getElementById(x+'Bap').value;p.elder=document.getElementById(x+'Elder').checked;p.ministerialServant=document.getElementById(x+'MS').checked;p.regularPioneer=document.getElementById(x+'RP').checked;p.indefinitePioneer=document.getElementById(x+'PI').checked;p.expelled=document.getElementById(x+'Exp').checked;p.otherSheep=document.getElementById(x+'OtherSheep').checked;p.anointed=document.getElementById(x+'Anointed').checked;p.unbaptizedPublisher=document.getElementById(x+'Unbaptized').checked;p.inactive=document.getElementById(x+'Inactive').checked;p.specialPioneer=document.getElementById(x+'SP').checked;p.fieldMissionary=document.getElementById(x+'Missionary').checked;p.appointmentDate=document.getElementById(x+'Appt').value;p.regularPioneerStartDate=document.getElementById(x+'RpStart').value;p.indefinitePioneerStartDate=document.getElementById(x+'PiStart').value;p.indefinitePioneerEndDate=document.getElementById(x+'PiEnd').value;p.expelledDate=document.getElementById(x+'ExpDate').value;p.preachingGroupId=document.getElementById(x+'Group').value;p.hasDPA=document.getElementById(x+'Dpa').value;p.dataConsent=document.getElementById(x+'Consent').value;p.email=(document.getElementById(x+'Email').value||'').trim();p.urbanization=document.getElementById(x+'Urban').value;p.address=document.getElementById(x+'Address').value;p.mobile=document.getElementById(x+'Mobile').value;p.phone=document.getElementById(x+'Phone').value;p.emergencyContact=document.getElementById(x+'Emergency').value;p.emergencyRelation=document.getElementById(x+'Relation').value;p.emergencyPhone=document.getElementById(x+'EmergencyPhone').value;p.emergencyAddress=document.getElementById(x+'EmergencyAddress').value;p.specialNeeds=document.getElementById(x+'SpecialNeeds').value;p.observations=document.getElementById(x+'Obs').value;return p}
+function collectPublisher(x,p){p=p||{id:uid('p'),records:{}};p.lastName=document.getElementById(x+'Last').value.trim();p.firstName=document.getElementById(x+'First').value.trim();p.sex=document.getElementById(x+'Sex').value;p.age=document.getElementById(x+'Age').value;p.dob=document.getElementById(x+'Dob').value;p.baptismDate=document.getElementById(x+'Bap').value;p.elder=document.getElementById(x+'Elder').checked;p.ministerialServant=document.getElementById(x+'MS').checked;p.regularPioneer=document.getElementById(x+'RP').checked;p.indefinitePioneer=document.getElementById(x+'PI').checked;p.expelled=document.getElementById(x+'Exp').checked;p.otherSheep=document.getElementById(x+'OtherSheep').checked;p.anointed=document.getElementById(x+'Anointed').checked;p.unbaptizedPublisher=document.getElementById(x+'Unbaptized').checked;p.inactive=document.getElementById(x+'Inactive').checked;p.specialPioneer=document.getElementById(x+'SP').checked;p.fieldMissionary=document.getElementById(x+'Missionary').checked;p.appointmentDate=document.getElementById(x+'Appt').value;p.regularPioneerStartDate=document.getElementById(x+'RpStart').value;p.indefinitePioneerStartDate=document.getElementById(x+'PiStart').value;p.indefinitePioneerEndDate=document.getElementById(x+'PiEnd').value;p.expelledDate=document.getElementById(x+'ExpDate').value;p.preachingGroupId=document.getElementById(x+'Group').value;p.hasDPA=document.getElementById(x+'Dpa').value;p.dataConsent=document.getElementById(x+'Consent').value;p.email=(document.getElementById(x+'Email').value||'').trim();p.urbanization=document.getElementById(x+'Urban').value;p.address=document.getElementById(x+'Address').value;p.mobile=document.getElementById(x+'Mobile').value;p.phone=document.getElementById(x+'Phone').value;p.emergencyContact=document.getElementById(x+'Emergency').value;p.emergencyRelation=document.getElementById(x+'Relation').value;p.emergencyPhone=document.getElementById(x+'EmergencyPhone').value;p.emergencyAddress=document.getElementById(x+'EmergencyAddress').value;p.specialNeeds=document.getElementById(x+'SpecialNeeds').value;p.observations=document.getElementById(x+'Obs').value;try{ collectMinor(x,p); }catch(e){ console.warn('menores',e); }return p}
 function openNewPublisherModal(){showModal(`<h3>Nuevo publicador</h3>${publisherFormHtml({},'np')}<div class="actions"><button class="btn secondary" onclick="closeModal()">Cancelar</button><button class="btn" id="npSave">Guardar</button></div>`);wirePublisherConditional('np');document.getElementById('npSave').onclick=()=>{const p=collectPublisher('np');if(!p.lastName||!p.firstName||!p.sex){showToast('Completa apellido, nombre y sexo');return}DATA.publishers.push(p);if(saveData()){closeModal();showToast('Publicador agregado');render();}}}
 
 /* =========================================================
@@ -6697,7 +6954,7 @@ function renderPublisherData(content,actions){
   const updateDate=new Date().toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'});
   const condition=p=>[p.otherSheep?'Otras Ovejas':'',p.anointed?'Ungido':''].filter(Boolean).join(' / ')||'—';
   const privileges=p=>[p.elder?'Anciano':'',p.ministerialServant?'Siervo ministerial':'',p.unbaptizedPublisher?'Publicador no bautizado':'',p.regularPioneer?'Precursor regular':'',p.specialPioneer?'Precursor especial':'',p.fieldMissionary?'Misionero que sirve en el campo':'',p.indefinitePioneer?'Precursor indefinido':''].filter(Boolean).join(' / ')||'—';
-  content.innerHTML=`<div class="publisher-data-shell"><div class="publisher-data-head"><div><div class="report-title">DATOS DE PUBLICADORES</div><div class="report-group-name">${escapeHtml(selected?(groups.find(g=>g.id===selected)?.name||'Grupo'):'Todos los grupos')}</div></div><div class="report-date"><strong>Fecha de actualización</strong><br>${updateDate}<br><strong>Total</strong><br>${rows.length}</div></div><div class="publisher-data-scroll"><table class="publisher-data-table"><thead><tr><th>Publicador</th><th>Sexo</th><th>Edad</th><th>Fecha nacimiento</th><th>Fecha bautismo</th><th>Años bautizado</th><th>Condición espiritual</th><th>Privilegios / servicio</th><th>Fecha nombramiento</th><th>Años nombramiento</th><th>Precursor regular</th><th>Inicio precursor regular</th><th>Años precursor regular</th><th>Grupo de predicación</th><th>DPA</th><th>Consentimiento de Datos</th><th>Correo</th><th>Urbanización</th><th>Dirección</th><th>Celular</th><th>Teléfono</th><th>Contacto de emergencia</th><th>Parentesco</th><th>Teléfono E.</th><th>Dirección E.</th><th>Necesidades especiales</th><th>Observaciones</th></tr></thead><tbody>${rows.map(p=>{const ys=publisherYears(p);return `<tr><td class="l"><strong>${escapeHtml(pubName(p))}</strong><br><small>${escapeHtml(pubTag(p)||'')}</small></td><td>${escapeHtml(p.sex||'')}</td><td>${publisherAge(p)??''}</td><td>${escapeHtml(p.dob||'')}</td><td>${escapeHtml(p.baptismDate||'')}</td><td>${ys.baptized===''?'':ys.baptized}</td><td>${escapeHtml(condition(p))}</td><td>${escapeHtml(privileges(p))}</td><td>${escapeHtml(p.appointmentDate||'')}</td><td>${ys.appointed===''?'':ys.appointed}</td><td>${p.regularPioneer?'Sí':'No'}</td><td>${escapeHtml(p.regularPioneerStartDate||'')}</td><td>${ys.regularPioneer===''?'':ys.regularPioneer}</td><td>${escapeHtml(publisherGroupName(p))}</td><td>${escapeHtml(p.hasDPA||'')}</td><td>${escapeHtml(p.dataConsent||'')}</td><td>${escapeHtml(p.email||'')}</td><td>${escapeHtml(p.urbanization||'')}</td><td>${escapeHtml(p.address||'')}</td><td>${escapeHtml(p.mobile||'')}</td><td>${escapeHtml(p.phone||'')}</td><td>${escapeHtml(p.emergencyContact||'')}</td><td>${escapeHtml(p.emergencyRelation||'')}</td><td>${escapeHtml(p.emergencyPhone||'')}</td><td>${escapeHtml(p.emergencyAddress||'')}</td><td>${escapeHtml(p.specialNeeds||'')}</td><td>${escapeHtml(p.observations||'')}</td></tr>`;}).join('')||'<tr><td colspan="27"><div class="empty">No hay publicadores que coincidan con el filtro.</div></td></tr>'}</tbody></table></div></div>`;
+  content.innerHTML=`<div class="publisher-data-shell"><div class="publisher-data-head"><div><div class="report-title">DATOS DE PUBLICADORES</div><div class="report-group-name">${escapeHtml(selected?(groups.find(g=>g.id===selected)?.name||'Grupo'):'Todos los grupos')}</div></div><div class="report-date"><strong>Fecha de actualización</strong><br>${updateDate}<br><strong>Total</strong><br>${rows.length}</div></div><div class="publisher-data-scroll"><table class="publisher-data-table"><thead><tr><th>Publicador</th><th>Sexo</th><th>Edad</th><th>Fecha nacimiento</th><th>Fecha bautismo</th><th>Años bautizado</th><th>Condición espiritual</th><th>Privilegios / servicio</th><th>Fecha nombramiento</th><th>Años nombramiento</th><th>Precursor regular</th><th>Inicio precursor regular</th><th>Años precursor regular</th><th>Grupo de predicación</th><th>DPA</th><th>Consentimiento de Datos</th><th>Menor de edad</th><th>Tutor / representante</th><th>Parentesco del tutor</th><th>Teléfono del tutor</th><th>Tutor Testigo de Jehová</th><th>Último consentimiento</th><th>Correo</th><th>Urbanización</th><th>Dirección</th><th>Celular</th><th>Teléfono</th><th>Contacto de emergencia</th><th>Parentesco</th><th>Teléfono E.</th><th>Dirección E.</th><th>Necesidades especiales</th><th>Observaciones</th></tr></thead><tbody>${rows.map(p=>{const ys=publisherYears(p);return `<tr><td class="l"><strong>${escapeHtml(pubName(p))}</strong><br><small>${escapeHtml(pubTag(p)||'')}</small></td><td>${escapeHtml(p.sex||'')}</td><td>${publisherAge(p)??''}</td><td>${escapeHtml(p.dob||'')}</td><td>${escapeHtml(p.baptismDate||'')}</td><td>${ys.baptized===''?'':ys.baptized}</td><td>${escapeHtml(condition(p))}</td><td>${escapeHtml(privileges(p))}</td><td>${escapeHtml(p.appointmentDate||'')}</td><td>${ys.appointed===''?'':ys.appointed}</td><td>${p.regularPioneer?'Sí':'No'}</td><td>${escapeHtml(p.regularPioneerStartDate||'')}</td><td>${ys.regularPioneer===''?'':ys.regularPioneer}</td><td>${escapeHtml(publisherGroupName(p))}</td><td>${escapeHtml(p.hasDPA||'')}</td><td>${escapeHtml(p.dataConsent||'')}</td>${minorCols(p)}<td>${escapeHtml(p.email||'')}</td><td>${escapeHtml(p.urbanization||'')}</td><td>${escapeHtml(p.address||'')}</td><td>${escapeHtml(p.mobile||'')}</td><td>${escapeHtml(p.phone||'')}</td><td>${escapeHtml(p.emergencyContact||'')}</td><td>${escapeHtml(p.emergencyRelation||'')}</td><td>${escapeHtml(p.emergencyPhone||'')}</td><td>${escapeHtml(p.emergencyAddress||'')}</td><td>${escapeHtml(p.specialNeeds||'')}</td><td>${escapeHtml(p.observations||'')}</td></tr>`;}).join('')||'<tr><td colspan="33"><div class="empty">No hay publicadores que coincidan con el filtro.</div></td></tr>'}</tbody></table></div></div>`;
 }
 
 /* =========================================================
@@ -7639,7 +7896,7 @@ function isAdmin(){ return !!CUR && CUR.role==='admin'; }
 function isLector(){ return !!CUR && CUR.role==='lector'; }
 /* ---------- módulos y permisos de colaborador ---------- */
 const MODULES=[['secretaria','Secretaría'],['territorios','Territorios'],['discursos','Discursos Públicos'],['predicacion','Predicación Pública'],['contabilidad','Contabilidad (cargar datos y ver Auditoría)'],['vidaministerio','Vida y Ministerio (cargar PDF)'],['limpieza','Limpieza & Asistencia (supervisor)'],['minutas','Minutas Reunión de Ancianos'],['privilegios','Programa de Privilegios (modificar, puntaje y reglas)'],['auditoria','Auditoría Contabilidad (auditor temporal, máx. 1 mes)']];
-const MODULE_OF_VIEW={eventos:'secretaria',tablero:'secretaria',bitacora:'secretaria',asistExt:'secretaria',organigrama:'secretaria',anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
+const MODULE_OF_VIEW={estudios:'secretaria',eventos:'secretaria',tablero:'secretaria',bitacora:'secretaria',asistExt:'secretaria',organigrama:'secretaria',anuncios:'secretaria',gruposPred:'territorios',arreglosPred:'territorios',privilegios:'secretaria',limpieza:'secretaria',limpgeneral:'secretaria',limpprofunda:'secretaria',limphosp:'secretaria',minutas:'minutas',contabilidad:'contabilidad',auditoria:'auditoria',vidaministerio:'secretaria',actividades:'secretaria',cartas:'secretaria',panel:'secretaria',congregation:'secretaria',attendance:'secretaria',attReports:'secretaria',publishers:'secretaria',record:'secretaria',groupReport:'secretaria',publisherData:'secretaria',territories:'territorios',territoryRegister:'territorios',noTouch:'territorios',discursos:'discursos',predicacion:'predicacion'};
 /* Solo lectura según rol, módulo de la vista actual y permisos del colaborador.
    Colaborador sin campo "modules" (cuentas anteriores): conserva edición en todo. */
 function computeReadOnly(view){
